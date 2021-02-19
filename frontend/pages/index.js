@@ -2,11 +2,9 @@ import React from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
-import Link from '@material-ui/core/Link'
 import Paper from '@material-ui/core/Paper'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
 import {makeStyles} from '@material-ui/core/styles'
 import InputBase from '@material-ui/core/InputBase'
@@ -18,10 +16,12 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
-  Tab, Tabs,
+  Tab,
+  Tabs,
   Toolbar
 } from '@material-ui/core'
 import Copyright from '../components/elements/Copyright'
+import Logo from '../components/elements/Logo'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -83,8 +83,8 @@ export default function Index() {
           <AppBar style={{top: -8}} position="relative">
             <Toolbar>
               <Tabs value={0}>
-                <Tab label="訊息" />
-                <Tab label="Log" />
+                <Tab label="訊息"/>
+                <Tab label="Log"/>
               </Tabs>
             </Toolbar>
           </AppBar>
@@ -157,12 +157,7 @@ export default function Index() {
       </Grid>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon/>
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Jessiclient
-          </Typography>
+          <Logo/>
           <form className={classes.form} noValidate>
             <Paper style={{marginTop: 32}} className={classes.connectForm}>
               <InputBase
@@ -175,9 +170,9 @@ export default function Index() {
             </Paper>
 
             <Tabs indicatorColor="primary" style={{marginTop: 48}} value={0}>
-              <Tab label="基本" />
-              <Tab label="排程" />
-              <Tab label="驗證" />
+              <Tab label="基本"/>
+              <Tab label="排程"/>
+              <Tab label="驗證"/>
             </Tabs>
             <Paper style={{padding: 16}}>
               <TextField
