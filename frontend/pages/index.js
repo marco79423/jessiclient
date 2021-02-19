@@ -21,17 +21,7 @@ import {
   Tab, Tabs,
   Toolbar
 } from '@material-ui/core'
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://marco79423.net/">兩大類</Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
+import Copyright from '../components/elements/Copyright'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -82,16 +72,6 @@ const useStyles = makeStyles((theme) => ({
     margin: 4,
   },
 }))
-
-function renderRow(props) {
-  const {index, style} = props
-
-  return (
-    <ListItem button style={style} key={index}>
-      <ListItemText primary={`Item ${index + 1}`}/>
-    </ListItem>
-  )
-}
 
 export default function Index() {
   const classes = useStyles()
