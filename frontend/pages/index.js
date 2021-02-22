@@ -1,49 +1,29 @@
 import React from 'react'
-import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Paper from '@material-ui/core/Paper'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
 import {makeStyles} from '@material-ui/core/styles'
 import InputBase from '@material-ui/core/InputBase'
-import {
-  AppBar,
-  Divider,
-  InputAdornment,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Tab,
-  Tabs,
-  Toolbar
-} from '@material-ui/core'
+import {InputAdornment, Tab, Tabs} from '@material-ui/core'
+
 import Copyright from '../components/elements/Copyright'
 import Logo from '../components/elements/Logo'
+import MainPanel from '../components/modules/MainPanel'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
   },
-  image: {
-    // backgroundImage: 'url(https://source.unsplash.com/random)',
-    backgroundRepeat: 'no-repeat',
-    backgroundColor:
-      theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
+  mainPanel: {
+
   },
   paper: {
     margin: theme.spacing(8, 4),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -78,82 +58,8 @@ export default function Index() {
 
   return (
     <Grid container component="main" className={classes.root}>
-      <Grid item xs={false} sm={4} md={7} className={classes.image}>
-        <List className={classes.root}>
-          <AppBar style={{top: -8}} position="relative">
-            <Toolbar>
-              <Tabs value={0}>
-                <Tab label="訊息"/>
-                <Tab label="Log"/>
-              </Tabs>
-            </Toolbar>
-          </AppBar>
-          <ListItem alignItems="flex-start">
-            <ListItemAvatar>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg"/>
-            </ListItemAvatar>
-            <ListItemText
-              primary={new Date().toLocaleString()}
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    component="span"
-                    variant="body2"
-                    className={classes.inline}
-                    color="textPrimary"
-                  >
-                    Ali Connors
-                  </Typography>
-                  {' — I\'ll be in your neighborhood doing errands this…'}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <Divider variant="inset" component="li"/>
-          <ListItem alignItems="flex-start">
-            <ListItemAvatar>
-              <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg"/>
-            </ListItemAvatar>
-            <ListItemText
-              primary={new Date().toLocaleString()}
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    component="span"
-                    variant="body2"
-                    className={classes.inline}
-                    color="textPrimary"
-                  >
-                    to Scott, Alex, Jennifer
-                  </Typography>
-                  {' — Wish I could come, but I\'m out of town this…'}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <Divider variant="inset" component="li"/>
-          <ListItem alignItems="flex-start">
-            <ListItemAvatar>
-              <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg"/>
-            </ListItemAvatar>
-            <ListItemText
-              primary={new Date().toLocaleString()}
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    component="span"
-                    variant="body2"
-                    className={classes.inline}
-                    color="textPrimary"
-                  >
-                    Sandra Adams
-                  </Typography>
-                  {' — Do you have Paris recommendations? Have you ever…'}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-        </List>
+      <Grid className={classes.mainPanel} item xs={false} sm={4} md={7}>
+        <MainPanel/>
       </Grid>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
@@ -181,7 +87,6 @@ export default function Index() {
                 multiline
                 rows={8}
                 fullWidth
-                id="email"
                 label="請求內容"
                 name="請求內容"
                 autoComplete="請求內容"
