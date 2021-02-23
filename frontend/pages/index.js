@@ -1,24 +1,22 @@
 import React from 'react'
 import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
 import Paper from '@material-ui/core/Paper'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import {makeStyles} from '@material-ui/core/styles'
 import InputBase from '@material-ui/core/InputBase'
-import {InputAdornment, Tab, Tabs} from '@material-ui/core'
+import {InputAdornment} from '@material-ui/core'
 
 import Copyright from '../components/elements/Copyright'
 import Logo from '../components/elements/Logo'
 import MainPanel from '../components/modules/MainPanel'
+import RequestPanel from '../components/modules/RequestPanel'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
   },
-  mainPanel: {
-
-  },
+  mainPanel: {},
   paper: {
     margin: theme.spacing(8, 4),
     display: 'flex',
@@ -75,40 +73,7 @@ export default function Index() {
               <Button color="primary" className={classes.iconButton} aria-label="open">建立連線</Button>
             </Paper>
 
-            <Tabs indicatorColor="primary" style={{marginTop: 48}} value={0}>
-              <Tab label="基本"/>
-              <Tab label="排程"/>
-              <Tab label="驗證"/>
-            </Tabs>
-            <Paper style={{padding: 16}}>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                multiline
-                rows={8}
-                fullWidth
-                label="請求內容"
-                name="請求內容"
-                autoComplete="請求內容"
-                autoFocus
-              />
-
-              <Grid container>
-                <Grid item xs>
-
-                </Grid>
-                <Grid item>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                  >
-                    送出
-                  </Button>
-                </Grid>
-              </Grid>
-            </Paper>
+            <RequestPanel/>
 
             <Box mt={5}>
               <Copyright/>
