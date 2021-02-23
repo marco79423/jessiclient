@@ -7,8 +7,8 @@ import {makeStyles} from '@material-ui/core/styles'
 import InputBase from '@material-ui/core/InputBase'
 import {InputAdornment} from '@material-ui/core'
 
-import Copyright from '../components/elements/Copyright'
-import Logo from '../components/elements/Logo'
+import Copyright from '../components/modules/Copyright'
+import Logo from '../components/modules/Logo'
 import MainPanel from '../components/modules/MainPanel'
 import RequestPanel from '../components/modules/RequestPanel'
 
