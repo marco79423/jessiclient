@@ -11,10 +11,14 @@ import Copyright from '../components/modules/Copyright'
 import Logo from '../components/modules/Logo'
 import MainPanel from '../components/modules/MainPanel'
 import RequestPanel from '../components/modules/RequestPanel'
+import ConnectionPanel from '../components/modules/ConnectionPanel'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
+  },
+  connectionPanel: {
+    marginTop: theme.spacing(3),
   },
   mainPanel: {},
   paper: {
@@ -25,29 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-
-  // connect
-  connectForm: {
-    padding: '2px 4px',
-    display: 'flex',
-    alignItems: 'center',
-    width: 400,
-  },
-  input: {
-    marginLeft: theme.spacing(1),
-    flex: 1,
-  },
-  iconButton: {
-    padding: 10,
-  },
-  divider: {
-    height: 28,
-    margin: 4,
+    marginTop: theme.spacing(6),
   },
 }))
 
@@ -60,18 +42,8 @@ export default function Index() {
         <div className={classes.paper}>
           <Logo/>
           <form className={classes.form} noValidate>
-            <Paper style={{marginTop: 32}} className={classes.connectForm}>
-              <InputBase
-                startAdornment={<InputAdornment position="start">ws://</InputAdornment>}
-                className={classes.input}
-                placeholder="欲連線的網址"
-                inputProps={{'aria-label': '欲連線的網址'}}
-              />
-              <Button color="primary" className={classes.iconButton} aria-label="open">建立連線</Button>
-            </Paper>
-
+            <ConnectionPanel className={classes.connectionPanel}/>
             <RequestPanel/>
-
             <Box mt={5}>
               <Copyright/>
             </Box>
@@ -81,7 +53,6 @@ export default function Index() {
       <Grid className={classes.mainPanel} item xs={false} sm={4} md={7}>
         <MainPanel/>
       </Grid>
-
     </Grid>
   )
 }
