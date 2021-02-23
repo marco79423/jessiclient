@@ -1,5 +1,27 @@
 import Head from 'next/head'
-import CssBaseline from '@material-ui/core/CssBaseline'
+import {Provider} from 'react-redux'
+import {configureStore} from '@reduxjs/toolkit'
+import {CssBaseline} from '@material-ui/core'
+
+import currentReducer from '../slices/currentSlice'
+import projectsReducer from '../slices/projectsSlice'
+import settingsReducer from '../slices/settingsSlice'
+import connectionsReducer from '../slices/connectionsSlice'
+import requestsReducer from '../slices/requestsSlice'
+import historiesReducer from '../slices/historiesSlice'
+import logsReducer from '../slices/logsSlice'
+
+const store = configureStore({
+  reducer: {
+    current: currentReducer,
+    projects: projectsReducer,
+    settings: settingsReducer,
+    connections: connectionsReducer,
+    requests: requestsReducer,
+    histories: historiesReducer,
+    logs: logsReducer,
+  },
+})
 
 function App({Component, pageProps}) {
   return (
@@ -15,7 +37,9 @@ function App({Component, pageProps}) {
 
       <CssBaseline/>
 
-      <Component {...pageProps} />
+      <Provider store={store}>
+        <Component {...pageProps} />
+      </Provider>
     </>
   )
 }
