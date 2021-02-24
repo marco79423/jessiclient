@@ -1,21 +1,8 @@
 import Head from 'next/head'
 import {Provider} from 'react-redux'
-import {configureStore} from '@reduxjs/toolkit'
 import {CssBaseline} from '@material-ui/core'
+import store from '../store'
 
-import currentReducer from '../slices/currentSlice'
-import projectReducer from '../slices/projectSlice'
-import historyReducer from '../slices/historySlice'
-import logReducer from '../slices/logSlice'
-
-const store = configureStore({
-  reducer: {
-    current: currentReducer,
-    project: projectReducer,
-    history: historyReducer,
-    log: logReducer,
-  },
-})
 
 function App({Component, pageProps}) {
   return (
