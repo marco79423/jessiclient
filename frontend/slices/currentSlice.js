@@ -3,17 +3,13 @@ import {createSlice} from '@reduxjs/toolkit'
 const currentSlice = createSlice({
   name: 'current',
   initialState: {
-    projectID: null,
+    connectionState: 'idle', // idle, connecting, connected, closed
   },
   reducers: {
-    load: (state, action) => {
-      state.projectID = action.payload.projectID
-    },
+
   },
 })
 
-export const selectProjectID = (state) => state.projectID
-
-export const {load} = currentSlice.actions
+export const selectConnectionState = (state) => state.connectionState
 
 export default currentSlice.reducer
