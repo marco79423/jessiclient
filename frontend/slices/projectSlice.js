@@ -1,10 +1,7 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import {createEmptyProject} from '../features/project'
+import {LoadingState} from '../pages/constants'
 
-export const IDLE_STATE = 'idle'
-export const LOADING_STATE = 'loading'
-export const LOADED_STATE = 'loaded'
-export const FAILED_STATE = 'failed'
 
 
 export const loadProjectData = createAsyncThunk(
@@ -14,24 +11,28 @@ export const loadProjectData = createAsyncThunk(
   }
 )
 
-
 const projectSlice = createSlice({
   name: 'project',
   initialState: {
-    state: IDLE_STATE,
+    state: LoadingState.Idle,
     data: null
+  },
+  reducers: {
+    changeConnectionUrl(state, action) {
+      state.connection.url = action.payload
+    }
   },
   extraReducers: {
     [loadProjectData.pending]: (state) => {
-      state.state = LOADING_STATE
+      state.state = LoadingState.Loading
       state.data = null
     },
     [loadProjectData.fulfilled]: (state, action) => {
-      state.state = LOADED_STATE
+      state.state = LoadingState.Loaded
       state.data = action.payload
     },
     [loadProjectData.rejected]: (state) => {
-      state.state = FAILED_STATE
+      state.state = LoadingState.Failed
       state.data = null
     },
   },

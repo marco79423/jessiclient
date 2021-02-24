@@ -1,11 +1,8 @@
 import {createAsyncThunk, createEntityAdapter, createSlice} from '@reduxjs/toolkit'
 
 import {loadLogs} from '../features/log'
+import {LoadingState} from '../pages/constants'
 
-const IDLE_STATE = 'idle'
-const LOADING_STATE = 'loading'
-const LOADED_STATE = 'loaded'
-const FAILED_STATE = 'failed'
 
 const loadLogData = createAsyncThunk(
   'log/loadData',
@@ -19,20 +16,20 @@ const logAdapter = createEntityAdapter()
 const logSlice = createSlice({
   name: 'log',
   initialState: {
-    state: IDLE_STATE,
+    state: LoadingState.Idle,
     data: logAdapter.getInitialState(),
   },
   extraReducers: {
     [loadLogData.pending]: (state) => {
-      state.state = LOADING_STATE
+      state.state = LoadingState.Loading
       state.data = logAdapter.getInitialState()
     },
     [loadLogData.fulfilled]: (state, action) => {
-      state.state = LOADED_STATE
+      state.state = LoadingState.Loaded
       logAdapter.setAll(state.data, action.payload)
     },
     [loadLogData.rejected]: (state) => {
-      state.state = FAILED_STATE
+      state.state = LoadingState.Failed
       state.data = logAdapter.getInitialState()
     },
   },
