@@ -6,7 +6,7 @@ const projectAdapter = createEntityAdapter()
 const projectSlice = createSlice({
   name: 'project',
   initialState: {
-    state: '', // loading, loaded, failed
+    state: 'idle', // loading, loaded, failed
     data: {
       // 設定
       setting: {

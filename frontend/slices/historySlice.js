@@ -6,7 +6,7 @@ const historyAdapter = createEntityAdapter()
 const historySlice = createSlice({
   name: 'history',
   initialState: {
-    state: '',
+    state: 'idle',
     data: historyAdapter.getInitialState(),
   },
   reducers: {

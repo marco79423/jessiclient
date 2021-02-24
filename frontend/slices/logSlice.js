@@ -6,7 +6,7 @@ const logAdapter = createEntityAdapter()
 const logSlice = createSlice({
   name: 'log',
   initialState: {
-    state: '',
+    state: 'idle',
     data: logAdapter.getInitialState(),
   },
   reducers: {
