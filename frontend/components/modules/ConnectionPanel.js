@@ -1,35 +1,31 @@
 import React from 'react'
 import classNames from 'classnames'
 import {makeStyles} from '@material-ui/core/styles'
-import {Button, Grid, InputAdornment, InputBase, Paper} from '@material-ui/core'
+import {Button, Grid, InputBase, Paper} from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(2),
   },
   urlInput: {},
-  connectButton: {
-    padding: 10,
-  },
+  connectButton: {},
 }))
 
 export default function ConnectionPanel({className}) {
   const classes = useStyles()
 
   return (
-    <Paper className={classNames(classes.root, className)}>
-      <InputBase
-        className={classes.urlInput}
-        placeholder="欲連線的網址"
-        inputProps={{'aria-label': '欲連線的網址'}}
-        startAdornment={<InputAdornment position="start">ws://</InputAdornment>}
-      />
-      <Grid container>
-        <Grid item xs/>
-        <Grid item xs>
-          <Button color="primary" className={classes.connectButton} aria-label="open">建立連線</Button>
-        </Grid>
+    <Grid container component={Paper} className={classNames(classes.root, className)} justify="space-between">
+      <Grid item>
+        <InputBase
+          className={classes.urlInput}
+          placeholder="ws://欲連線的網址"
+          inputProps={{'aria-label': 'ws://欲連線的網址'}}
+        />
       </Grid>
-    </Paper>
+      <Grid item>
+        <Button color="primary" className={classes.connectButton} aria-label="open">建立連線</Button>
+      </Grid>
+    </Grid>
   )
 }

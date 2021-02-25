@@ -10,7 +10,9 @@ import ControlPanel from '../components/modules/ControlPanel'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
-  controlPanel: {},
+  controlPanel: {
+    minWidth: 600,
+  },
   listPanel: {},
 }))
 
@@ -27,7 +29,7 @@ export default function Index() {
       <Grid className={classes.controlPanel} item sm={4} xs={12}>
         <ControlPanel/>
       </Grid>
-      <Grid className={classes.listPanel} item sm={8} xs={12}>
+      <Grid className={classes.listPanel} item sm xs={12}>
         <ListPanel/>
       </Grid>
     </Grid>
