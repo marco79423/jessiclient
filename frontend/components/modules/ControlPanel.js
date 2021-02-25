@@ -11,14 +11,15 @@ import {Grid} from '@material-ui/core'
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
-    padding: theme.spacing(2),
+    padding: theme.spacing(5),
   },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(6),
+  logo: {
+    margin: '0 auto',
   },
   connectionPanel: {
-    marginTop: theme.spacing(3),
+    margin: '0 auto',
+    marginTop: theme.spacing(6),
+    maxWidth: 500,
   },
 }))
 
@@ -26,26 +27,15 @@ export default function ControlPanel() {
   const classes = useStyles()
 
   return (
-    <Paper className={classes.root}>
-      <Grid container
-            direction="column"
-            justify="center"
-            alignItems="center">
-        <Grid container item>
-          <Grid item>
-            <Logo/>
-          </Grid>
-          <Grid item>
-            <form className={classes.form} noValidate>
-              <ConnectionPanel className={classes.connectionPanel}/>
-              <RequestPanel/>
-              <Box mt={5}>
-                <Copyright/>
-              </Box>
-            </form>
-          </Grid>
-        </Grid>
+    <Grid className={classes.root} container component={Paper} direction="column" justify="center">
+      <Grid item>
+        <Logo className={classes.logo}/>
+        <ConnectionPanel className={classes.connectionPanel}/>
+        <RequestPanel/>
+        <Box mt={5}>
+          <Copyright/>
+        </Box>
       </Grid>
-    </Paper>
+    </Grid>
   )
 }

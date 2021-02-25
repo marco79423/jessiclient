@@ -23,11 +23,11 @@ export default function Index() {
   }, [])
 
   return (
-    <Grid container component="main" className={classes.root}>
-      <Grid className={classes.controlPanel} item xs={12} sm={8} md={5}>
+    <Grid className={classes.root} container component="main" >
+      <Grid className={classes.controlPanel} item sm={4} xs={12}>
         <ControlPanel/>
       </Grid>
-      <Grid className={classes.listPanel} item xs={false} sm={4} md={7}>
+      <Grid className={classes.listPanel} item sm={8} xs={12}>
         <ListPanel/>
       </Grid>
     </Grid>

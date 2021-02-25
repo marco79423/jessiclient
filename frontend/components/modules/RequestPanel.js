@@ -1,18 +1,18 @@
 import React from 'react'
-import {Button, Grid, Paper, Tab, Tabs, TextField} from '@material-ui/core'
+import classNames from 'classnames'
 import {makeStyles} from '@material-ui/core/styles'
+import {Button, Grid, Paper, Tab, Tabs, TextField} from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
-  send: {
-  },
+  send: {},
 }))
 
-export default function RequestPanel() {
+export default function RequestPanel({className}) {
   const classes = useStyles()
 
   return (
-    <div className={classes.root}>
+    <div className={classNames(classes.root, className)}>
       <Tabs indicatorColor="primary" style={{marginTop: 48}} value={0}>
         <Tab label="基本"/>
         <Tab label="排程"/>

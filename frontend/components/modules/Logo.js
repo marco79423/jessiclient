@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 import {Avatar, Grid, Typography} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 
@@ -14,11 +15,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function Logo() {
+export default function Logo({className}) {
   const classes = useStyles()
 
   return (
-    <Grid className={classes.root} container>
+    <Grid className={classNames(classes.root, className)} container>
       <Grid xs={4} item>
         <Avatar className={classes.image} src={'/logo.png'}/>
       </Grid>
