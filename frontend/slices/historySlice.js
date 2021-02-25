@@ -1,6 +1,6 @@
 import {createAsyncThunk, createEntityAdapter, createSlice} from '@reduxjs/toolkit'
 import {loadHistories} from '../features/history'
-import {LoadingState} from '../pages/constants'
+import {LoadingState} from '../constants'
 
 const loadHistoryData = createAsyncThunk(
   'history/loadData',

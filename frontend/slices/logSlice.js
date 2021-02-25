@@ -1,7 +1,7 @@
 import {createAsyncThunk, createEntityAdapter, createSlice} from '@reduxjs/toolkit'
 
 import {loadLogs} from '../features/log'
-import {LoadingState} from '../pages/constants'
+import {LoadingState} from '../constants'
 
 
 const loadLogData = createAsyncThunk(

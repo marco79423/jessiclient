@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import {createEmptyProject} from '../features/project'
-import {LoadingState} from '../pages/constants'
+import {LoadingState} from '../constants'
 
 
 

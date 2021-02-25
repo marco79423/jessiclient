@@ -2,7 +2,7 @@ import Head from 'next/head'
 import {Provider} from 'react-redux'
 import {CssBaseline} from '@material-ui/core'
 import store from '../store'
-import * as constants from './constants'
+import * as constants from '../constants'
 
 
 function App({Component, pageProps}) {
