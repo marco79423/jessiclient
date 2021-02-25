@@ -33,6 +33,16 @@ const historySlice = createSlice({
   },
 })
 
+const historySelectors = historyAdapter.getSelectors(state => state.history.data)
+
+const selectHistoryState = state => state.history.state
+const selectHistories = state => historySelectors.selectAll(state)
+
+// Actions
 export {loadHistoryData}
 
+// Selectors
+export {selectHistoryState, selectHistories}
+
+// Reducer
 export default historySlice.reducer

@@ -21,8 +21,6 @@ const currentSlice = createSlice({
   reducers: {},
 })
 
-export const selectConnectionState = (state) => state.connectionState
-
 export {initializeData}
 
 export default currentSlice.reducer

@@ -1,28 +1,50 @@
 import React from 'react'
-import {
-  AppBar,
-  Avatar,
-  Divider,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Tab,
-  Tabs,
-  Toolbar,
-  Typography
-} from '@material-ui/core'
+import {AppBar, Divider, List, ListItem, ListItemText, Tab, Tabs, Toolbar, Typography} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
+import {selectHistories, selectHistoryState} from '../../slices/historySlice'
+import {useSelector} from 'react-redux'
+import {LoadingState} from '../../constants'
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
-
   },
+  messageText: {
+    height: 40,
+    
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  }
 }))
 
 export default function ListPanel() {
   const classes = useStyles()
+
+  const historyState = useSelector(selectHistoryState)
+  const histories = useSelector(selectHistories)
+
+  if (historyState === LoadingState.Idle) {
+    return (
+      <div className={classes.root}>
+      </div>
+    )
+  }
+
+  if (historyState === LoadingState.Loading) {
+    return (
+      <div className={classes.root}>
+        讀取中…
+      </div>
+    )
+  }
+
+  if (historyState === LoadingState.Failed) {
+    return (
+      <div className={classes.root}>
+        讀取失敗
+      </div>
+    )
+  }
 
   return (
     <div className={classes.root}>
@@ -35,71 +57,27 @@ export default function ListPanel() {
         </Toolbar>
       </AppBar>
       <List>
-        <ListItem alignItems="flex-start">
-          <ListItemAvatar>
-            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg"/>
-          </ListItemAvatar>
-          <ListItemText
-            primary={new Date().toLocaleString()}
-            secondary={
-              <React.Fragment>
-                <Typography
-                  component="span"
-                  variant="body2"
-                  className={classes.inline}
-                  color="textPrimary"
-                >
-                  Ali Connors
-                </Typography>
-                {' — I\'ll be in your neighborhood doing errands this…'}
-              </React.Fragment>
-            }
-          />
-        </ListItem>
-        <Divider variant="inset" component="li"/>
-        <ListItem alignItems="flex-start">
-          <ListItemAvatar>
-            <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg"/>
-          </ListItemAvatar>
-          <ListItemText
-            primary={new Date().toLocaleString()}
-            secondary={
-              <React.Fragment>
-                <Typography
-                  component="span"
-                  variant="body2"
-                  className={classes.inline}
-                  color="textPrimary"
-                >
-                  to Scott, Alex, Jennifer
-                </Typography>
-                {' — Wish I could come, but I\'m out of town this…'}
-              </React.Fragment>
-            }
-          />
-        </ListItem>
-        <Divider variant="inset" component="li"/>
-        <ListItem alignItems="flex-start">
-          <ListItemAvatar>
-            <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg"/>
-          </ListItemAvatar>
-          <ListItemText
-            primary={new Date().toLocaleString()}
-            secondary={
-              <React.Fragment>
-                <Typography
-                  component="span"
-                  variant="body2"
-                  className={classes.inline}
-                  color="textPrimary"
-                >
-                  Sandra Adams
-                </Typography>
-                {' — Do you have Paris recommendations? Have you ever…'}
-              </React.Fragment>
-            }
-          />
-        </ListItem>
+        {histories.map(history => (
+          <>
+            <ListItem key={history.id} alignItems="flex-start">
+              <ListItemText
+                primary={history.time.toLocaleString()}
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      variant="body2"
+                      className={classes.messageText}
+                      color="textPrimary"
+                    >
+                      {history.text}
+                    </Typography>
+                  </React.Fragment>
+                }
+              />
+            </ListItem>
+            <Divider component="li"/>
+          </>
+        ))}
       </List>
     </div>
   )
