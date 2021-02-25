@@ -7,8 +7,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(2),
   },
-  urlInput: {},
-  connectButton: {},
 }))
 
 export default function ConnectionPanel({className}) {
@@ -18,13 +16,12 @@ export default function ConnectionPanel({className}) {
     <Grid container component={Paper} className={classNames(classes.root, className)} justify="space-between">
       <Grid item>
         <InputBase
-          className={classes.urlInput}
           placeholder="ws://欲連線的網址"
           inputProps={{'aria-label': 'ws://欲連線的網址'}}
         />
       </Grid>
       <Grid item>
-        <Button color="primary" className={classes.connectButton} aria-label="open">建立連線</Button>
+        <Button color="primary" aria-label="open">建立連線</Button>
       </Grid>
     </Grid>
   )
