@@ -1,26 +1,45 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 
-import {loadProjectData} from './projectSlice'
-import {loadHistoryData} from './historySlice'
-import {loadLogData} from './logSlice'
-
-const initializeData = createAsyncThunk(
-  'current/initializeData',
-  async (_, {dispatch}) => {
-    await dispatch(loadProjectData())
-    await dispatch(loadHistoryData())
-    await dispatch(loadLogData())
-  }
-)
 
 const currentSlice = createSlice({
   name: 'current',
   initialState: {
     connectionState: 'idle', // idle, connecting, connected, closed
+    selectedHistoryID: null,
   },
-  reducers: {},
+  reducers: {
+    historySelected(state, action) {
+      state.selectedHistoryID = action.payload
+    },
+    historyUnselected(state) {
+      state.selectedHistoryID = null
+    }
+  },
 })
 
-export {initializeData}
 
+const selectHistory = createAsyncThunk(
+  'current/selectHistory',
+  async (historyID, {dispatch}) => {
+    await dispatch(currentSlice.actions.historySelected(historyID))
+  }
+)
+
+const unselectHistory = createAsyncThunk(
+  'current/selectHistory',
+  async (historyID, {dispatch}) => {
+    await dispatch(currentSlice.actions.historyUnselected(historyID))
+  }
+)
+
+
+const selectSelectedHistoryID = state => state.current.selectedHistoryID
+
+// Actions
+export {selectHistory, unselectHistory}
+
+// Selectors
+export {selectSelectedHistoryID}
+
+// Reducer
 export default currentSlice.reducer

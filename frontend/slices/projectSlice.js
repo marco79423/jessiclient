@@ -18,9 +18,7 @@ const projectSlice = createSlice({
     data: null
   },
   reducers: {
-    changeConnectionUrl(state, action) {
-      state.connection.url = action.payload
-    }
+
   },
   extraReducers: {
     [loadProjectData.pending]: (state) => {

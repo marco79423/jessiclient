@@ -1,17 +1,30 @@
 import React from 'react'
 import {AppBar, Divider, List, ListItem, ListItemText, Tab, Tabs, Toolbar, Typography} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
-import {selectHistories, selectHistoryState} from '../../slices/historySlice'
-import {useSelector} from 'react-redux'
-import {LoadingState} from '../../constants'
+import {useDispatch, useSelector} from 'react-redux'
 
+import {selectHistories, selectHistoryState} from '../../slices/historySlice'
+import {LoadingState} from '../../constants'
+import {createDraftSafeSelector} from '@reduxjs/toolkit'
+import {selectHistory, selectSelectedHistoryID, unselectHistory} from '../../slices/currentSlice'
+
+
+const selectHistoriesWithSelectedFlag = createDraftSafeSelector(
+  [
+    selectSelectedHistoryID,
+    selectHistories,
+  ],
+  (selectedID, histories) => histories.map(history => ({
+    ...history,
+    selected: history.id === selectedID,
+  })),
+)
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-  },
+  root: {},
   messageText: {
     height: 40,
-    
+
     overflow: 'hidden',
     textOverflow: 'ellipsis',
   }
@@ -19,9 +32,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ListPanel() {
   const classes = useStyles()
+  const dispatch = useDispatch()
 
   const historyState = useSelector(selectHistoryState)
-  const histories = useSelector(selectHistories)
+  const histories = useSelector(selectHistoriesWithSelectedFlag)
+
+  const handleSelected = (history) => {
+    if (history.selected) {
+      dispatch(unselectHistory(history.id))
+    } else {
+      dispatch(selectHistory(history.id))
+    }
+  }
 
   if (historyState === LoadingState.Idle) {
     return (
@@ -59,23 +81,21 @@ export default function ListPanel() {
       <List>
         {histories.map(history => (
           <>
-            <ListItem key={history.id} alignItems="flex-start">
+            <ListItem key={history.id} alignItems="flex-start" selected={history.selected} onClick={() => handleSelected(history)}>
               <ListItemText
-                primary={history.time.toLocaleString()}
+                primary={new Date(history.time).toLocaleString()}
                 secondary={
-                  <React.Fragment>
-                    <Typography
-                      variant="body2"
-                      className={classes.messageText}
-                      color="textPrimary"
-                    >
-                      {history.text}
-                    </Typography>
-                  </React.Fragment>
+                  <Typography
+                    variant="body2"
+                    className={classes.messageText}
+                    color="textPrimary"
+                  >
+                    {history.text}
+                  </Typography>
                 }
               />
             </ListItem>
-            <Divider component="li"/>
+            <Divider key={history.id + '_divider'} component="li"/>
           </>
         ))}
       </List>
