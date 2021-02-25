@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function MainPanel() {
+export default function ListPanel() {
   const classes = useStyles()
 
   return (
