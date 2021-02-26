@@ -3,8 +3,8 @@ import {useDispatch, useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
 import {AppBar, Divider, List, ListItem, ListItemText, Tab, Tabs, Toolbar, Typography} from '@material-ui/core'
 
-import {getHistories, getHistoryState, selectHistory, unselectHistory} from '../../slices'
 import {LoadingState} from '../../constants'
+import {changeSelectedHistoryID, clearSelectedHistoryID, getHistories, getHistoryState} from '../../slices'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -26,9 +26,9 @@ export default function ListPanel() {
 
   const handleSelected = (history) => {
     if (history.selected) {
-      dispatch(unselectHistory())
+      dispatch(clearSelectedHistoryID())
     } else {
-      dispatch(selectHistory(history.id))
+      dispatch(changeSelectedHistoryID(history.id))
     }
   }
 
