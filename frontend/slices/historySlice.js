@@ -37,12 +37,13 @@ const historySelectors = historyAdapter.getSelectors(state => state.history.data
 
 const selectHistoryState = state => state.history.state
 const selectHistories = state => historySelectors.selectAll(state)
+const selectHistoryFunc = state => id => historySelectors.selectById(state, id)
 
 // Actions
 export {loadHistoryData}
 
 // Selectors
-export {selectHistoryState, selectHistories}
+export {selectHistoryState, selectHistories, selectHistoryFunc}
 
 // Reducer
 export default historySlice.reducer
