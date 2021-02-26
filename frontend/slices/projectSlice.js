@@ -1,8 +1,8 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
+import {createAsyncThunk, createDraftSafeSelector, createSlice} from '@reduxjs/toolkit'
 import {LoadingState} from '../constants'
 
 
-export const loadProjectData = createAsyncThunk(
+const loadProjectData = createAsyncThunk(
   'project/loadData',
   async () => {
     return {
@@ -25,15 +25,20 @@ export const loadProjectData = createAsyncThunk(
   }
 )
 
+const changeConnectionUrl = createAsyncThunk(
+  'project/changeConnectionUrl',
+  async (url) => {
+    return url
+  }
+)
+
 const projectSlice = createSlice({
   name: 'project',
   initialState: {
     state: LoadingState.Idle,
     data: null
   },
-  reducers: {
-
-  },
+  reducers: {},
   extraReducers: {
     [loadProjectData.pending]: (state) => {
       state.state = LoadingState.Loading
@@ -47,7 +52,23 @@ const projectSlice = createSlice({
       state.state = LoadingState.Failed
       state.data = null
     },
+    [changeConnectionUrl.fulfilled]: (state, action) => {
+      state.data.connection.url = action.payload
+    }
   },
 })
 
+const selectProjectData = state => state.project.data
+const selectConnectionUrl = createDraftSafeSelector(
+  selectProjectData,
+  projectData => projectData ? projectData.connection.url : ''
+)
+
+// Actions
+export {loadProjectData, changeConnectionUrl}
+
+// Selectors
+export {selectConnectionUrl}
+
+// Reducer
 export default projectSlice.reducer
