@@ -1,13 +1,27 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
-import {createEmptyProject} from '../features/project'
 import {LoadingState} from '../constants'
-
 
 
 export const loadProjectData = createAsyncThunk(
   'project/loadData',
   async () => {
-    return createEmptyProject()
+    return {
+      // 設定
+      setting: {
+        reconnectTimes: 3
+      },
+
+      // 連線資訊
+      connection: {
+        url: '',
+      },
+
+      // 請求
+      request: {
+        text: '',
+        format: 'json'
+      }
+    }
   }
 )
 

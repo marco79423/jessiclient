@@ -1,13 +1,19 @@
 import {createAsyncThunk, createEntityAdapter, createSlice} from '@reduxjs/toolkit'
 
-import {loadLogs} from '../features/log'
 import {LoadingState} from '../constants'
 
 
 const loadLogData = createAsyncThunk(
   'log/loadData',
   async () => {
-    return await loadLogs()
+    return [
+      {
+        id: 1,
+      },
+      {
+        id: 2,
+      }
+    ]
   }
 )
 
