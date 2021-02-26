@@ -11,7 +11,7 @@ import {Grid} from '@material-ui/core'
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
-    padding: theme.spacing(5),
+    padding: theme.spacing(1),
   },
   logo: {
     margin: '0 auto',
@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(6),
     maxWidth: 500,
   },
+  copyright: {},
 }))
 
 export default function ControlPanel() {
