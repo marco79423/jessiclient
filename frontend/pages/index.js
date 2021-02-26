@@ -3,13 +3,10 @@ import {useDispatch, useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
 import {Grid, Slide} from '@material-ui/core'
 
-import {loadProjectData} from '../slices/projectSlice'
-import {loadHistoryData} from '../slices/historySlice'
-import {loadLogData} from '../slices/logSlice'
+import {getSelectedHistoryID, initialize} from '../slices'
 import ListPanel from '../components/modules/ListPanel'
 import ControlPanel from '../components/modules/ControlPanel'
 import DetailPanel from '../components/modules/DetailPanel'
-import {selectSelectedHistoryID} from '../slices/currentSlice'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -24,12 +21,10 @@ export default function Index() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(loadProjectData())
-    dispatch(loadHistoryData())
-    dispatch(loadLogData())
+    dispatch(initialize())
   }, [])
 
-  const historyID = useSelector(selectSelectedHistoryID)
+  const historyID = useSelector(getSelectedHistoryID)
   const detailOpen = historyID !== null
 
   return (

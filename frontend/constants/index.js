@@ -7,3 +7,10 @@ export const LoadingState = Object.freeze({
   Loaded: 'loaded',
   Failed: 'failed',
 })
+
+export const ConnectionState = Object.freeze({
+  Idle: 'idle',
+  Connecting: 'connecting',
+  Connected: 'connected',
+  Closing: 'closing',
+})

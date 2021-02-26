@@ -1,24 +1,11 @@
 import React from 'react'
-import {AppBar, Divider, List, ListItem, ListItemText, Tab, Tabs, Toolbar, Typography} from '@material-ui/core'
-import {makeStyles} from '@material-ui/core/styles'
 import {useDispatch, useSelector} from 'react-redux'
+import {makeStyles} from '@material-ui/core/styles'
+import {AppBar, Divider, List, ListItem, ListItemText, Tab, Tabs, Toolbar, Typography} from '@material-ui/core'
 
-import {selectHistories, selectHistoryState} from '../../slices/historySlice'
+import {getHistories, getHistoryState, selectHistory, unselectHistory} from '../../slices'
 import {LoadingState} from '../../constants'
-import {createDraftSafeSelector} from '@reduxjs/toolkit'
-import {selectHistory, selectSelectedHistoryID, unselectHistory} from '../../slices/currentSlice'
 
-
-const selectHistoriesWithSelectedFlag = createDraftSafeSelector(
-  [
-    selectSelectedHistoryID,
-    selectHistories,
-  ],
-  (selectedID, histories) => histories.map(history => ({
-    ...history,
-    selected: history.id === selectedID,
-  })),
-)
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -34,12 +21,12 @@ export default function ListPanel() {
   const classes = useStyles()
   const dispatch = useDispatch()
 
-  const historyState = useSelector(selectHistoryState)
-  const histories = useSelector(selectHistoriesWithSelectedFlag)
+  const historyState = useSelector(getHistoryState)
+  const histories = useSelector(getHistories)
 
   const handleSelected = (history) => {
     if (history.selected) {
-      dispatch(unselectHistory(history.id))
+      dispatch(unselectHistory())
     } else {
       dispatch(selectHistory(history.id))
     }
@@ -81,7 +68,8 @@ export default function ListPanel() {
       <List>
         {histories.map(history => (
           <>
-            <ListItem key={history.id} alignItems="flex-start" selected={history.selected} onClick={() => handleSelected(history)}>
+            <ListItem key={history.id} alignItems="flex-start" selected={history.selected}
+                      onClick={() => handleSelected(history)}>
               <ListItemText
                 primary={new Date(history.time).toLocaleString()}
                 secondary={

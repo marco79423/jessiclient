@@ -1,20 +1,10 @@
 import React from 'react'
+import {useSelector} from 'react-redux'
 import classNames from 'classnames'
 import {makeStyles} from '@material-ui/core/styles'
 import {Paper, Tab, Tabs, TextField} from '@material-ui/core'
-import {createDraftSafeSelector} from '@reduxjs/toolkit'
-import {selectSelectedHistoryID} from '../../slices/currentSlice'
-import {selectHistoryFunc, selectHistoryState} from '../../slices/historySlice'
-import {useSelector} from 'react-redux'
-import {LoadingState} from '../../constants'
 
-const selectHistory = createDraftSafeSelector(
-  [
-    selectSelectedHistoryID,
-    selectHistoryFunc,
-  ],
-  (selectedID, historyFunc) => historyFunc(selectedID),
-)
+import {getHistory, getSelectedHistoryID} from '../../slices'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -24,8 +14,8 @@ const useStyles = makeStyles((theme) => ({
 export default function RequestPanel({className}) {
   const classes = useStyles()
 
-  const historyID = useSelector(selectSelectedHistoryID)
-  const history = useSelector(selectHistory)
+  const historyID = useSelector(getSelectedHistoryID)
+  const history = useSelector(getHistory)
 
   if (historyID === null) {
     return (

@@ -1,16 +1,8 @@
 import {configureStore} from '@reduxjs/toolkit'
-import currentReducer from '../slices/currentSlice'
-import projectReducer from '../slices/projectSlice'
-import historyReducer from '../slices/historySlice'
-import logReducer from '../slices/logSlice'
+import reducer from '../slices'
 
 const store = configureStore({
-  reducer: {
-    current: currentReducer,
-    project: projectReducer,
-    history: historyReducer,
-    log: logReducer,
-  },
+  reducer: reducer,
 })
 
 export default store

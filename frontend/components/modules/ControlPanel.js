@@ -1,12 +1,11 @@
-import Paper from '@material-ui/core/Paper'
+import React from 'react'
+import {makeStyles} from '@material-ui/core/styles'
+import {Box, Grid, Paper} from '@material-ui/core'
+
 import Logo from './Logo'
 import ConnectionPanel from './ConnectionPanel'
 import RequestPanel from './RequestPanel'
-import Box from '@material-ui/core/Box'
 import Copyright from './Copyright'
-import React from 'react'
-import {makeStyles} from '@material-ui/core/styles'
-import {Grid} from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   root: {

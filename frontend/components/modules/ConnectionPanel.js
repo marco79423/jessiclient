@@ -4,7 +4,8 @@ import classNames from 'classnames'
 import {makeStyles} from '@material-ui/core/styles'
 import {Button, Grid, InputBase, Paper} from '@material-ui/core'
 
-import {changeConnectionUrl, selectConnectionUrl} from '../../slices/projectSlice'
+import {ConnectionState} from '../../constants'
+import {changeConnectionState, changeConnectionUrl, getConnectionState, getConnectionUrl} from '../../slices'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,13 +17,39 @@ export default function ConnectionPanel({className}) {
   const classes = useStyles()
   const dispatch = useDispatch()
 
-  const connectionUrl = useSelector(selectConnectionUrl)
+  const connectionUrl = useSelector(getConnectionUrl)
+  const connectionState = useSelector(getConnectionState)
 
   const onConnectionUrlInputChange = (e) => {
     dispatch(changeConnectionUrl(e.target.value))
   }
 
-  console.log('c', connectionUrl)
+  const onConnectButtonClicked = async () => {
+    dispatch(changeConnectionState(ConnectionState.Connecting))
+    dispatch(changeConnectionState(ConnectionState.Connected))
+  }
+
+  const renderButton = () => {
+    switch (connectionState) {
+      case ConnectionState.Idle:
+        return (
+          <Button color="primary" aria-label="connect" onClick={onConnectButtonClicked}>建立連線</Button>
+        )
+      case ConnectionState.Connecting:
+        return (
+          <Button color="primary" aria-label="connecting" disabled>連線中…</Button>
+        )
+      case ConnectionState.Connected:
+        return (
+          <Button color="primary" aria-label="connected" onClick={onConnectButtonClicked}>關閉連線</Button>
+        )
+      case ConnectionState.Closing:
+        return (
+          <Button color="primary" aria-label="closing" disabled>關閉中…</Button>
+        )
+    }
+  }
+
   return (
     <Grid container component={Paper} className={classNames(classes.root, className)} justify="space-between">
       <Grid item>
@@ -34,7 +61,7 @@ export default function ConnectionPanel({className}) {
         />
       </Grid>
       <Grid item>
-        <Button color="primary" aria-label="open">建立連線</Button>
+        {renderButton()}
       </Grid>
     </Grid>
   )
