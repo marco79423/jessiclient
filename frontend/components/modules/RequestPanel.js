@@ -8,7 +8,10 @@ import {changeRequestText, getConnectionState, getRequestText, sendRequestText} 
 import {ConnectionState} from '../../constants'
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+  },
 }))
 
 export default function RequestPanel({className}) {
