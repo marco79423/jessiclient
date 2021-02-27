@@ -111,12 +111,7 @@ export const loadLogData = createAsyncThunk(
   async (_, {dispatch}) => {
     dispatch(appendLog(`讀取 log 資料...`))
     return [
-      {
-        id: 1,
-      },
-      {
-        id: 2,
-      }
+
     ]
   }
 )
@@ -319,6 +314,10 @@ export const getHistory = createDraftSafeSelector(
   ],
   (selectedID, historyFunc) => historyFunc(selectedID),
 )
+
+const logSelectors = logAdapter.getSelectors(state => state.log.data)
+export const getLogState = state => state.log.state
+export const getLogs = state => logSelectors.selectAll(state)
 
 
 // Reducer
