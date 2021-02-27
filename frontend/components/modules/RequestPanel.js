@@ -1,15 +1,30 @@
 import React from 'react'
+import {useDispatch, useSelector} from 'react-redux'
 import classNames from 'classnames'
 import {makeStyles} from '@material-ui/core/styles'
 import {Button, Grid, Paper, Tab, Tabs, TextField} from '@material-ui/core'
 
+import {changeRequestText, getConnectionState, getRequestText, sendRequestText} from '../../slices'
+import {ConnectionState} from '../../constants'
+
 const useStyles = makeStyles((theme) => ({
   root: {},
-  send: {},
 }))
 
 export default function RequestPanel({className}) {
   const classes = useStyles()
+  const dispatch = useDispatch()
+
+  const connectionState = useSelector(getConnectionState)
+  const requestText = useSelector(getRequestText)
+
+  const onRequestTextInputChange = (e) => {
+    dispatch(changeRequestText(e.target.value))
+  }
+
+  const onSendButtonClicked = async () => {
+    dispatch(sendRequestText())
+  }
 
   return (
     <div className={classNames(classes.root, className)}>
@@ -29,6 +44,8 @@ export default function RequestPanel({className}) {
           name="請求內容"
           autoComplete="請求內容"
           autoFocus
+          value={requestText}
+          onChange={onRequestTextInputChange}
         />
 
         <Grid container>
@@ -39,7 +56,8 @@ export default function RequestPanel({className}) {
             <Button
               variant="contained"
               color="primary"
-              className={classes.send}>
+              disabled={connectionState !== ConnectionState.Connected}
+              onClick={onSendButtonClicked}>
               送出
             </Button>
           </Grid>

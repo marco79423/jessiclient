@@ -7,33 +7,38 @@ import {
 } from '@reduxjs/toolkit'
 
 import {ConnectionState, LoadingState} from '../constants'
+import {webSocket} from 'rxjs/webSocket'
+import generateRandomString from '../utils/generateRandomString'
 
 // Actions
 
 export const changeConnectionState = createAsyncThunk(
   'current/changeConnectionState',
-  async (state) => {
-    return state
+  async (connectionState, {dispatch}) => {
+    dispatch(appendLog(`連線狀態修改為 ${connectionState} ...`))
+    return connectionState
   }
 )
 
 export const changeSelectedHistoryID = createAsyncThunk(
   'current/changeSelectedHistoryID',
-  async (historyID) => {
+  async (historyID, {dispatch}) => {
+    dispatch(appendLog(`調整選擇的傳輸歷史紀錄為 ${historyID} ...`))
     return historyID
   }
 )
 
 export const clearSelectedHistoryID = createAsyncThunk(
   'current/clearSelectedHistoryID',
-  async () => {
-
+  async (_, {dispatch}) => {
+    dispatch(appendLog(`清空調整選擇的傳輸歷史紀錄 ...`))
   }
 )
 
 export const loadProjectData = createAsyncThunk(
   'project/loadData',
-  async () => {
+  async (_, {dispatch}) => {
+    dispatch(appendLog(`讀取專案資料 ...`))
     return {
       // 設定
       setting: {
@@ -42,7 +47,7 @@ export const loadProjectData = createAsyncThunk(
 
       // 連線資訊
       connection: {
-        url: '',
+        url: 'wss://echo.websocket.org',
       },
 
       // 請求
@@ -61,9 +66,17 @@ export const changeConnectionUrl = createAsyncThunk(
   }
 )
 
+export const changeRequestText = createAsyncThunk(
+  'project/changeRequestText',
+  async (requestText) => {
+    return requestText
+  }
+)
+
 export const loadHistoryData = createAsyncThunk(
   'history/loadData',
-  async () => {
+  async (_, {dispatch}) => {
+    dispatch(appendLog(`讀取傳轉歷史資料 ...`))
     return [
       {
         id: '1',
@@ -79,9 +92,24 @@ export const loadHistoryData = createAsyncThunk(
   }
 )
 
+export const appendHistory = createAsyncThunk(
+  'history/appendHistory',
+  async (message, {dispatch}) => {
+    const history = {
+      id: generateRandomString(),
+      time: new Date().toISOString(),
+      text: message,
+    }
+
+    await dispatch(appendLog(`新增傳輸歷史訊息 ${history.toString()}...`))
+    return history
+  }
+)
+
 export const loadLogData = createAsyncThunk(
   'log/loadData',
-  async () => {
+  async (_, {dispatch}) => {
+    dispatch(appendLog(`讀取 log 資料...`))
     return [
       {
         id: 1,
@@ -93,12 +121,74 @@ export const loadLogData = createAsyncThunk(
   }
 )
 
+export const appendLog = createAsyncThunk(
+  'log/appendLog',
+  async (log) => {
+    return {
+      id: generateRandomString(),
+      time: new Date().toISOString(),
+      data: log,
+    }
+  }
+)
+
+
 export const initialize = createAsyncThunk(
   'initialize',
   async (_, {dispatch}) => {
-    await dispatch(loadProjectData())
-    await dispatch(loadHistoryData())
-    await dispatch(loadLogData())
+    dispatch(appendLog(`啟動初始化...`))
+    dispatch(loadProjectData())
+    dispatch(loadHistoryData())
+    dispatch(loadLogData())
+  }
+)
+
+let websocketSubject = null
+export const connect = createAsyncThunk(
+  'connect',
+  async (_, {dispatch, getState}) => {
+    const connectionState = getConnectionState(getState())
+    if (connectionState !== ConnectionState.Idle) {
+      return
+    }
+    dispatch(changeConnectionState(ConnectionState.Connecting))
+    const connectionUrl = getConnectionUrl(getState())
+    websocketSubject = webSocket(connectionUrl)
+    websocketSubject.subscribe(
+      message => dispatch(appendHistory(message)),
+      err => dispatch(appendLog(`連線出錯 ${err.toString()}`)),
+      () => dispatch(disconnect())
+    )
+    dispatch(changeConnectionState(ConnectionState.Connected))
+  }
+)
+
+export const disconnect = createAsyncThunk(
+  'disconnect',
+  async (_, {dispatch, getState}) => {
+    const connectionState = getConnectionState(getState())
+    if (connectionState !== ConnectionState.Connected) {
+      return
+    }
+
+    websocketSubject.complete()
+    dispatch(changeConnectionState(ConnectionState.Idle))
+  }
+)
+
+export const sendRequestText = createAsyncThunk(
+  'sendRequestText',
+  async (_, {dispatch, getState}) => {
+    const connectionState = getConnectionState(getState())
+    if (connectionState !== ConnectionState.Connected) {
+      return
+    }
+
+    const requestText = getRequestText(getState())
+
+    dispatch(appendLog(`發送訊息 ${requestText}`))
+    websocketSubject.next(requestText)
+    dispatch(appendHistory(requestText))
   }
 )
 
@@ -144,6 +234,9 @@ const projectSlice = createSlice({
     },
     [changeConnectionUrl.fulfilled]: (state, action) => {
       state.data.connection.url = action.payload
+    },
+    [changeRequestText.fulfilled]: (state, action) => {
+      state.data.request.text = action.payload
     }
   },
 })
@@ -168,6 +261,9 @@ const historySlice = createSlice({
       state.state = LoadingState.Failed
       state.data = historyAdapter.getInitialState()
     },
+    [appendHistory.fulfilled]: (state, action) => {
+      historyAdapter.addOne(state.data, action.payload)
+    }
   },
 })
 
@@ -191,12 +287,16 @@ const logSlice = createSlice({
       state.state = LoadingState.Failed
       state.data = logAdapter.getInitialState()
     },
+    [appendLog.fulfilled]: (state, action) => {
+      logAdapter.addOne(state.data, action.payload)
+    }
   },
 })
 
 // Selectors
 export const getConnectionState = state => state.current.connectionState
 export const getConnectionUrl = state => state.project.data ? state.project.data.connection.url : ''
+export const getRequestText = state => state.project.data ? state.project.data.request.text : ''
 export const getSelectedHistoryID = state => state.current.selectedHistoryID
 
 const historySelectors = historyAdapter.getSelectors(state => state.history.data)

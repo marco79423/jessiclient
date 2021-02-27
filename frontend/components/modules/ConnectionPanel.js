@@ -5,7 +5,7 @@ import {makeStyles} from '@material-ui/core/styles'
 import {Button, Grid, InputBase, Paper} from '@material-ui/core'
 
 import {ConnectionState} from '../../constants'
-import {changeConnectionState, changeConnectionUrl, getConnectionState, getConnectionUrl} from '../../slices'
+import {changeConnectionUrl, connect, disconnect, getConnectionState, getConnectionUrl} from '../../slices'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,8 +25,11 @@ export default function ConnectionPanel({className}) {
   }
 
   const onConnectButtonClicked = async () => {
-    dispatch(changeConnectionState(ConnectionState.Connecting))
-    dispatch(changeConnectionState(ConnectionState.Connected))
+    if (connectionState === ConnectionState.Idle) {
+      dispatch(connect())
+    } else if (connectionState === ConnectionState.Connected) {
+      dispatch(disconnect())
+    }
   }
 
   const renderButton = () => {
