@@ -1,0 +1,48 @@
+name: Build frontend docker image
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - frontend/**
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # 設定環境
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # 建置和推送
+      - name: Get Version
+        run: |
+          export VERSION=$(date +"%Y%m%d%H%M%S")-${GITHUB_SHA::5}
+          echo "::env VERSION=${VERSION}"
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+
+      - name: Build frontend image
+        run: |
+          docker build \
+          --file frontend/Dockerfile \
+          --tag marco79423/jessiclient-frontend:latest \
+          .
+
+      - name: Push frontend image
+        run: |
+          echo "::env VERSION=${{env.VERSION}}"
+
+          docker push marco79423/jessiclient-frontend:latest
+
+          docker tag marco79423/jessiclient-frontend:latest marco79423/jessiclient-frontend:${{env.VERSION}}
+          docker push marco79423/jessiclient-frontend:${{env.VERSION}}
