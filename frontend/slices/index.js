@@ -7,7 +7,6 @@ import {
 } from '@reduxjs/toolkit'
 
 import {ConnectionState, LoadingState} from '../constants'
-import {webSocket} from 'rxjs/webSocket'
 import generateRandomString from '../utils/generateRandomString'
 
 // Actions
@@ -45,7 +44,8 @@ export const loadProjectData = createAsyncThunk(
 
       // 連線資訊
       connection: {
-        url: 'wss://echo.websocket.org',
+        // url: 'wss://echo.websocket.org',
+        url: 'ws://sbk-mock.p-marco.192.168.192.1.xip.io/player-api/ws',
       },
 
       // 請求
@@ -122,7 +122,8 @@ export const initialize = createAsyncThunk(
   }
 )
 
-let websocketSubject = null
+let wsClient = null
+
 export const connect = createAsyncThunk(
   'action/connect',
   async (_, {dispatch, getState}) => {
@@ -130,15 +131,22 @@ export const connect = createAsyncThunk(
     if (connectionState !== ConnectionState.Idle) {
       return
     }
+
     dispatch(changeConnectionState(ConnectionState.Connecting))
     const connectionUrl = getConnectionUrl(getState())
-    websocketSubject = webSocket(connectionUrl)
-    websocketSubject.subscribe(
-      message => dispatch(appendHistory(message)),
-      err => dispatch(appendLog(`連線出錯 ${err.toString()}`)),
-      () => dispatch(disconnect())
-    )
-    dispatch(changeConnectionState(ConnectionState.Connected))
+    wsClient = new WebSocket(connectionUrl)
+
+    wsClient.onopen = () => {
+      dispatch(changeConnectionState(ConnectionState.Connected))
+    }
+
+    wsClient.onmessage = evt => {
+      dispatch(appendHistory(evt.data))
+    }
+
+    wsClient.onclose = () => {
+      dispatch(disconnect())
+    }
   }
 )
 
@@ -150,7 +158,7 @@ export const disconnect = createAsyncThunk(
       return
     }
 
-    websocketSubject.complete()
+    wsClient.close()
     dispatch(changeConnectionState(ConnectionState.Idle))
   }
 )
@@ -166,7 +174,7 @@ export const sendRequestText = createAsyncThunk(
     const requestText = getRequestText(getState())
 
     dispatch(appendLog(`發送訊息 ${requestText}`))
-    websocketSubject.next(requestText)
+    wsClient.send(requestText)
     dispatch(appendHistory(requestText))
   }
 )
