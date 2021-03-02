@@ -33,8 +33,7 @@ export default function RequestPanel({className}) {
     <div className={classNames(classes.root, className)}>
       <Tabs indicatorColor="primary" style={{marginTop: 48}} value={0}>
         <Tab label="基本"/>
-        <Tab label="排程"/>
-        <Tab label="驗證"/>
+        {/*<Tab label="排程"/>*/}
       </Tabs>
       <Paper style={{padding: 16}}>
         <TextField

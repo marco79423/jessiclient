@@ -41,9 +41,7 @@ export const loadProjectData = createAsyncThunk(
     dispatch(appendLog(`讀取專案資料 ...`))
     return {
       // 設定
-      setting: {
-        reconnectTimes: 3
-      },
+      setting: {},
 
       // 連線資訊
       connection: {
@@ -53,21 +51,20 @@ export const loadProjectData = createAsyncThunk(
       // 請求
       request: {
         text: '',
-        format: 'json'
       }
     }
   }
 )
 
 export const changeConnectionUrl = createAsyncThunk(
-  'project/changeConnectionUrl',
+  'project/connection/changeConnectionUrl',
   async (url) => {
     return url
   }
 )
 
 export const changeRequestText = createAsyncThunk(
-  'project/changeRequestText',
+  'project/request/changeRequestText',
   async (requestText) => {
     return requestText
   }
@@ -77,18 +74,7 @@ export const loadHistoryData = createAsyncThunk(
   'history/loadData',
   async (_, {dispatch}) => {
     dispatch(appendLog(`讀取傳轉歷史資料 ...`))
-    return [
-      {
-        id: '1',
-        time: new Date().toISOString(),
-        text: '{"selections":[{"id":"1","odds":"0.64","euOdds":"1.54","status":"active","ballTitle":"GoianesiaECGO","ballHead":"","matchInfo":{"sportID":"1","tournamentName":"<tournamentName>","isInPlay":true,"period":"等待加时赛","duration":"90:31","competitors":[{"name":"RossCountyFC","imageUrl":"https://img.ttshow.tw/images/media/uploads/2020/02/07/1561674586.JPG","score":{"value":0},"info":{"firstHalf":0,"secondHalf":0,"firstHalfOT":null,"secondHalfOT":null,"penaltyKick":null,"yellowCards":0,"redCards":0,"cornerKicks":0}},{"name":"RossCountyFC2","imageUrl":"https://img.ttshow.tw/images/media/uploads/2020/02/07/1561674586.JPG","score":{"value":0},"info":{"firstHalf":0,"secondHalf":0,"firstHalfOT":null,"secondHalfOT":null,"penaltyKick":null,"yellowCards":0,"redCards":0,"cornerKicks":0}}],"marketName":"1x2"},"playerInfo":{"playerID":"123123","currencyCode":"rmb","minStake":"10","maxStake":"1000"}}],"comboOddsList":[],"playerInfo":{"playerID":"123123","currencyCode":"rmb","minStake":"10","maxStake":"1000"}}'
-      },
-      {
-        id: '2',
-        time: new Date().toISOString(),
-        text: '{"selections":[{"id":"1","odds":"0.64","euOdds":"1.54","status":"active","ballTitle":"GoianesiaECGO","ballHead":"","matchInfo":{"sportID":"1","tournamentName":"<tournamentName>","isInPlay":true,"period":"等待加时赛","duration":"90:31","competitors":[{"name":"RossCountyFC","imageUrl":"https://img.ttshow.tw/images/media/uploads/2020/02/07/1561674586.JPG","score":{"value":0},"info":{"firstHalf":0,"secondHalf":0,"firstHalfOT":null,"secondHalfOT":null,"penaltyKick":null,"yellowCards":0,"redCards":0,"cornerKicks":0}},{"name":"RossCountyFC2","imageUrl":"https://img.ttshow.tw/images/media/uploads/2020/02/07/1561674586.JPG","score":{"value":0},"info":{"firstHalf":0,"secondHalf":0,"firstHalfOT":null,"secondHalfOT":null,"penaltyKick":null,"yellowCards":0,"redCards":0,"cornerKicks":0}}],"marketName":"1x2"},"playerInfo":{"playerID":"123123","currencyCode":"rmb","minStake":"10","maxStake":"1000"}}],"comboOddsList":[],"playerInfo":{"playerID":"123123","currencyCode":"rmb","minStake":"10","maxStake":"1000"}}'
-      }
-    ]
+    return []
   }
 )
 
@@ -110,9 +96,7 @@ export const loadLogData = createAsyncThunk(
   'log/loadData',
   async (_, {dispatch}) => {
     dispatch(appendLog(`讀取 log 資料...`))
-    return [
-
-    ]
+    return []
   }
 )
 
@@ -140,7 +124,7 @@ export const initialize = createAsyncThunk(
 
 let websocketSubject = null
 export const connect = createAsyncThunk(
-  'connect',
+  'action/connect',
   async (_, {dispatch, getState}) => {
     const connectionState = getConnectionState(getState())
     if (connectionState !== ConnectionState.Idle) {
@@ -159,7 +143,7 @@ export const connect = createAsyncThunk(
 )
 
 export const disconnect = createAsyncThunk(
-  'disconnect',
+  'action/disconnect',
   async (_, {dispatch, getState}) => {
     const connectionState = getConnectionState(getState())
     if (connectionState !== ConnectionState.Connected) {
@@ -172,7 +156,7 @@ export const disconnect = createAsyncThunk(
 )
 
 export const sendRequestText = createAsyncThunk(
-  'sendRequestText',
+  'action/sendRequestText',
   async (_, {dispatch, getState}) => {
     const connectionState = getConnectionState(getState())
     if (connectionState !== ConnectionState.Connected) {
