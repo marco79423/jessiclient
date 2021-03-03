@@ -19,6 +19,7 @@ export default function RequestPanel({className}) {
   const dispatch = useDispatch()
 
   const connectionState = useSelector(getConnectionState)
+  const isConnected = connectionState === ConnectionState.Connected
   const requestText = useSelector(getRequestText)
 
   const onRequestTextInputChange = (e) => {
@@ -43,22 +44,18 @@ export default function RequestPanel({className}) {
           rows={8}
           fullWidth
           label="請求內容"
-          name="請求內容"
-          autoComplete="請求內容"
           autoFocus
+          disabled={!isConnected}
           value={requestText}
           onChange={onRequestTextInputChange}
         />
 
-        <Grid container>
-          <Grid item xs>
-
-          </Grid>
+        <Grid container direction="row-reverse">
           <Grid item>
             <Button
               variant="contained"
               color="primary"
-              disabled={connectionState !== ConnectionState.Connected}
+              disabled={!isConnected}
               onClick={onSendButtonClicked}>
               送出
             </Button>
