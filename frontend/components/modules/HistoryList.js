@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
 import {Divider, List, ListItem, ListItemText, Typography} from '@material-ui/core'
 
-import {LoadingState} from '../../constants'
+import {HistorySource, LoadingState} from '../../constants'
 import {changeSelectedHistoryID, clearSelectedHistoryID, getHistories, getHistoryState} from '../../slices'
 
 
@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
 
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+  },
+  source: {
+    marginLeft: theme.spacing(1),
   }
 }))
 
@@ -55,30 +58,39 @@ export default function HistoryList() {
     )
   }
 
-  return (
-    <div className={classes.root}>
-      <List>
-        {histories.map(history => (
-          <>
-            <ListItem key={history.id} alignItems="flex-start" selected={history.selected}
-                      onClick={() => handleSelected(history)}>
-              <ListItemText
-                primary={new Date(history.time).toLocaleString()}
-                secondary={
-                  <Typography
-                    variant="body2"
-                    className={classes.messageText}
-                    color="textPrimary"
-                  >
-                    {history.text}
-                  </Typography>
-                }
-              />
-            </ListItem>
-            <Divider key={history.id + '_divider'} component="li"/>
-          </>
-        ))}
-      </List>
-    </div>
-  )
+  const HistoryTitle = ({history}) => {
+    const time = new Date(history.time).toLocaleString()
+    const source = history.source === HistorySource.Server ? '服務端' : '客戶端'
+
+    return (
+      <span>{time}<Typography className={classes.source} color="textSecondary" variant="body2" display="inline">[{source}]</Typography></span>
+    )
+  }
+
+return (
+  <div className={classes.root}>
+    <List>
+      {histories.map(history => (
+        <>
+          <ListItem key={history.id} alignItems="flex-start" selected={history.selected}
+                    onClick={() => handleSelected(history)}>
+            <ListItemText
+              primary={<HistoryTitle history={history}/>}
+              secondary={
+                <Typography
+                  variant="body2"
+                  className={classes.messageText}
+                  color="textPrimary"
+                >
+                  {history.text}
+                </Typography>
+              }
+            />
+          </ListItem>
+          <Divider key={history.id + '_divider'} component="li"/>
+        </>
+      ))}
+    </List>
+  </div>
+)
 }

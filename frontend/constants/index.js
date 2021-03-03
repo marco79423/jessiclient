@@ -14,3 +14,8 @@ export const ConnectionState = Object.freeze({
   Connected: 'connected',
   Closing: 'closing',
 })
+
+export const HistorySource = Object.freeze({
+  Server: 'server',
+  Client: 'client'
+})

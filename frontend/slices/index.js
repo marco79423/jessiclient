@@ -6,7 +6,7 @@ import {
   createSlice
 } from '@reduxjs/toolkit'
 
-import {ConnectionState, LoadingState} from '../constants'
+import {ConnectionState, HistorySource, LoadingState} from '../constants'
 import generateRandomString from '../utils/generateRandomString'
 
 // Actions
@@ -78,16 +78,32 @@ export const loadHistoryData = createAsyncThunk(
   }
 )
 
-export const appendHistory = createAsyncThunk(
-  'history/appendHistory',
+export const appendServerHistory = createAsyncThunk(
+  'history/appendServerHistory',
   async (message, {dispatch}) => {
     const history = {
       id: generateRandomString(),
       time: new Date().toISOString(),
+      source: HistorySource.Server,
       text: message,
     }
 
-    await dispatch(appendLog(`新增傳輸歷史訊息 ${history.toString()}...`))
+    await dispatch(appendLog(`新增服務端訊息 ${history.toString()}...`))
+    return history
+  }
+)
+
+export const appendClientHistory = createAsyncThunk(
+  'history/appendClientHistory',
+  async (message, {dispatch}) => {
+    const history = {
+      id: generateRandomString(),
+      time: new Date().toISOString(),
+      source: HistorySource.Client,
+      text: message,
+    }
+
+    await dispatch(appendLog(`新增客戶端訊息 ${history.toString()}...`))
     return history
   }
 )
@@ -141,7 +157,7 @@ export const connect = createAsyncThunk(
     }
 
     wsClient.onmessage = evt => {
-      dispatch(appendHistory(evt.data))
+      dispatch(appendServerHistory(evt.data))
     }
 
     wsClient.onclose = () => {
@@ -175,7 +191,7 @@ export const sendRequestText = createAsyncThunk(
 
     dispatch(appendLog(`發送訊息 ${requestText}`))
     wsClient.send(requestText)
-    dispatch(appendHistory(requestText))
+    dispatch(appendClientHistory(requestText))
   }
 )
 
@@ -248,9 +264,12 @@ const historySlice = createSlice({
       state.state = LoadingState.Failed
       state.data = historyAdapter.getInitialState()
     },
-    [appendHistory.fulfilled]: (state, action) => {
+    [appendServerHistory.fulfilled]: (state, action) => {
       historyAdapter.addOne(state.data, action.payload)
-    }
+    },
+    [appendClientHistory.fulfilled]: (state, action) => {
+      historyAdapter.addOne(state.data, action.payload)
+    },
   },
 })
 
