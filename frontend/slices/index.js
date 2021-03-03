@@ -108,6 +108,14 @@ export const appendClientHistory = createAsyncThunk(
   }
 )
 
+export const clearHistories = createAsyncThunk(
+  'history/clearHistories',
+  async (_, {dispatch}) => {
+    await dispatch(appendLog(`清除訊息...`))
+    await dispatch(clearSelectedHistoryID())
+  }
+)
+
 export const loadLogData = createAsyncThunk(
   'log/loadData',
   async (_, {dispatch}) => {
@@ -270,6 +278,9 @@ const historySlice = createSlice({
     [appendClientHistory.fulfilled]: (state, action) => {
       historyAdapter.addOne(state.data, action.payload)
     },
+    [clearHistories.fulfilled]: (state) => {
+      historyAdapter.removeAll(state.data)
+    }
   },
 })
 
