@@ -1,10 +1,11 @@
 import React from 'react'
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
-import {Divider, List, ListItem, ListItemText, Typography} from '@material-ui/core'
+import {Divider, Fab, List, ListItem, ListItemText, Typography} from '@material-ui/core'
+import ClearIcon from '@material-ui/icons/Clear'
 
 import {LoadingState} from '../../constants'
-import {getLogs, getLogState} from '../../slices'
+import {clearLogs, getLogs, getLogState} from '../../slices'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -14,11 +15,17 @@ const useStyles = makeStyles((theme) => ({
 
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-  }
+  },
+  clearAll: {
+    position: 'absolute',
+    right: theme.spacing(3),
+    bottom: theme.spacing(3),
+  },
 }))
 
 export default function LogList() {
   const classes = useStyles()
+  const dispatch = useDispatch()
 
   const logState = useSelector(getLogState)
   const logs = useSelector(getLogs)
@@ -46,6 +53,10 @@ export default function LogList() {
     )
   }
 
+  const onClearAllButtonClick = () => {
+    dispatch(clearLogs())
+  }
+
   return (
     <div className={classes.root}>
       <List>
@@ -69,6 +80,9 @@ export default function LogList() {
           </>
         ))}
       </List>
+      <Fab className={classes.clearAll} onClick={onClearAllButtonClick}>
+        <ClearIcon/>
+      </Fab>
     </div>
   )
 }

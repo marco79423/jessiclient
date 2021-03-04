@@ -135,6 +135,11 @@ export const appendLog = createAsyncThunk(
   }
 )
 
+export const clearLogs = createAsyncThunk(
+  'history/clearLogs',
+  async () => {
+  }
+)
 
 export const initialize = createAsyncThunk(
   'initialize',
@@ -306,6 +311,9 @@ const logSlice = createSlice({
     },
     [appendLog.fulfilled]: (state, action) => {
       logAdapter.addOne(state.data, action.payload)
+    },
+    [clearLogs.fulfilled]: (state) => {
+      logAdapter.removeAll(state.data)
     }
   },
 })
