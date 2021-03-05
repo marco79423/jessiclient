@@ -13,36 +13,35 @@ import generateRandomString from '../utils/generateRandomString'
 
 export const changeConnectionState = createAsyncThunk(
   'current/changeConnectionState',
-  async (connectionState, {dispatch}) => {
-    dispatch(appendLog(`連線狀態修改為 ${connectionState} ...`))
+  async (connectionState) => {
+    console.log(`連線狀態修改為 ${connectionState} ...`)
     return connectionState
   }
 )
 
 export const changeSelectedHistoryID = createAsyncThunk(
   'current/changeSelectedHistoryID',
-  async (historyID, {dispatch}) => {
-    dispatch(appendLog(`調整選擇的傳輸歷史紀錄為 ${historyID} ...`))
+  async (historyID) => {
+    console.log(`調整選擇的訊息為 ${historyID} ...`)
     return historyID
   }
 )
 
 export const clearSelectedHistoryID = createAsyncThunk(
   'current/clearSelectedHistoryID',
-  async (_, {dispatch}) => {
-    dispatch(appendLog(`清空調整選擇的傳輸歷史紀錄 ...`))
+  async () => {
+    console.log(`清除選擇的訊息 ...`)
   }
 )
 
 export const loadProjectData = createAsyncThunk(
   'project/loadData',
-  async (_, {dispatch}) => {
-    dispatch(appendLog(`讀取專案資料 ...`))
+  async () => {
+    console.log(`讀取專案資料 ...`)
     return {
       // 設定
       setting: {
         maxHistoryCount: 100,
-        maxLogCount: 100,
       },
 
       // 連線資訊
@@ -61,17 +60,9 @@ export const loadProjectData = createAsyncThunk(
 
 export const changeSettingMaxHistoryCount = createAsyncThunk(
   'project/setting/changeSettingMaxHistoryCount',
-  async (maxHistoryCount, {dispatch}) => {
-    dispatch(appendLog(`修改最大歷史訊息數為 ${maxHistoryCount}...`))
+  async (maxHistoryCount) => {
+    console.log(`修改最大歷史訊息數為 ${maxHistoryCount}...`)
     return maxHistoryCount
-  }
-)
-
-export const changeSettingMaxLogCount = createAsyncThunk(
-  'project/setting/changeSettingMaxLogCount',
-  async (maxLogCount, {dispatch}) => {
-    dispatch(appendLog(`修改最大 log 數為 ${maxLogCount}...`))
-    return maxLogCount
   }
 )
 
@@ -91,8 +82,8 @@ export const changeRequestText = createAsyncThunk(
 
 export const loadHistoryData = createAsyncThunk(
   'history/loadData',
-  async (_, {dispatch}) => {
-    dispatch(appendLog(`讀取傳轉歷史資料 ...`))
+  async () => {
+    console.log(`讀取訊息歷史資料 ...`)
     return []
   }
 )
@@ -114,7 +105,7 @@ export const appendHistory = createAsyncThunk(
       text: message,
     }
 
-    await dispatch(appendLog(`新增服務端訊息 ${history.toString()}...`))
+    await console.log(`新增服務端訊息 ${message}...`)
     return history
   }
 )
@@ -129,57 +120,18 @@ export const removeFirstHistory = createAsyncThunk(
 export const clearHistories = createAsyncThunk(
   'history/clearHistories',
   async (_, {dispatch}) => {
-    await dispatch(appendLog(`清除訊息...`))
+    await console.log(`清除訊息...`)
     await dispatch(clearSelectedHistoryID())
   }
 )
 
-export const loadLogData = createAsyncThunk(
-  'log/loadData',
-  async (_, {dispatch}) => {
-    dispatch(appendLog(`讀取 log 資料...`))
-    return []
-  }
-)
-
-export const appendLog = createAsyncThunk(
-  'log/appendLog',
-  async (log, {dispatch, getState}) => {
-
-    const maxLogCount = getSettingMaxLogCount(getState())
-    const logCount = getLogCount(getState())
-    if (logCount >= maxLogCount) {
-      await dispatch(removeFirstLog())
-    }
-
-    return {
-      id: generateRandomString(),
-      time: new Date().toISOString(),
-      data: log,
-    }
-  }
-)
-
-export const removeFirstLog = createAsyncThunk(
-  'log/removeFirstLog',
-  async () => {
-
-  }
-)
-
-export const clearLogs = createAsyncThunk(
-  'history/clearLogs',
-  async () => {
-  }
-)
 
 export const initialize = createAsyncThunk(
   'initialize',
   async (_, {dispatch}) => {
-    dispatch(appendLog(`啟動初始化...`))
+    console.log(`啟動初始化...`)
     dispatch(loadProjectData())
     dispatch(loadHistoryData())
-    dispatch(loadLogData())
   }
 )
 
@@ -234,7 +186,7 @@ export const sendRequestText = createAsyncThunk(
 
     const requestText = getRequestText(getState())
 
-    dispatch(appendLog(`發送訊息 ${requestText}`))
+    console.log(`發送訊息 ${requestText}`)
     wsClient.send(requestText)
     dispatch(appendHistory({source: HistorySource.Client, message: requestText}))
   }
@@ -283,9 +235,6 @@ const projectSlice = createSlice({
     [changeSettingMaxHistoryCount.fulfilled]: (state, action) => {
       state.data.setting.maxHistoryCount = action.payload
     },
-    [changeSettingMaxLogCount.fulfilled]: (state, action) => {
-      state.data.setting.maxLogCount = action.payload
-    },
     [changeConnectionUrl.fulfilled]: (state, action) => {
       state.data.connection.url = action.payload
     },
@@ -327,41 +276,8 @@ const historySlice = createSlice({
   },
 })
 
-const logAdapter = createEntityAdapter()
-const logSlice = createSlice({
-  name: 'log',
-  initialState: {
-    state: LoadingState.Idle,
-    data: logAdapter.getInitialState(),
-  },
-  extraReducers: {
-    [loadLogData.pending]: (state) => {
-      state.state = LoadingState.Loading
-      state.data = logAdapter.getInitialState()
-    },
-    [loadLogData.fulfilled]: (state, action) => {
-      state.state = LoadingState.Loaded
-      logAdapter.setAll(state.data, action.payload)
-    },
-    [loadLogData.rejected]: (state) => {
-      state.state = LoadingState.Failed
-      state.data = logAdapter.getInitialState()
-    },
-    [appendLog.fulfilled]: (state, action) => {
-      logAdapter.addOne(state.data, action.payload)
-    },
-    [removeFirstLog.fulfilled]: (state) => {
-      logAdapter.removeOne(state.data, state.data.ids[0])
-    },
-    [clearLogs.fulfilled]: (state) => {
-      logAdapter.removeAll(state.data)
-    }
-  },
-})
-
 // Selectors
 export const getSettingMaxHistoryCount = state => state.project.data ? state.project.data.setting.maxHistoryCount : null
-export const getSettingMaxLogCount = state => state.project.data ? state.project.data.setting.maxLogCount : null
 
 export const getConnectionState = state => state.current.connectionState
 export const getConnectionUrl = state => state.project.data ? state.project.data.connection.url : ''
@@ -390,16 +306,10 @@ export const getHistory = createDraftSafeSelector(
   (selectedID, historyFunc) => historyFunc(selectedID),
 )
 
-const logSelectors = logAdapter.getSelectors(state => state.log.data)
-export const getLogState = state => state.log.state
-export const getLogCount = state => logSelectors.selectTotal(state)
-export const getLogs = state => logSelectors.selectAll(state)
-
 
 // Reducer
 export default combineReducers({
   current: currentSlice.reducer,
   project: projectSlice.reducer,
   history: historySlice.reducer,
-  log: logSlice.reducer,
 })

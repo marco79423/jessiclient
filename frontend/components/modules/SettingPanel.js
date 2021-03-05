@@ -4,12 +4,7 @@ import classNames from 'classnames'
 import {makeStyles} from '@material-ui/core/styles'
 import {Button, Grid, TextField} from '@material-ui/core'
 
-import {
-  changeSettingMaxHistoryCount,
-  changeSettingMaxLogCount,
-  getSettingMaxHistoryCount,
-  getSettingMaxLogCount
-} from '../../slices'
+import {changeSettingMaxHistoryCount, getSettingMaxHistoryCount} from '../../slices'
 import ModifyDialog from './ModifyDialog'
 
 const useStyles = makeStyles((theme) => ({
@@ -20,10 +15,8 @@ export default function SettingPanel({className}) {
   const classes = useStyles()
   const dispatch = useDispatch()
   const [modifyMaxHistoryCountDialogOpen, setModifyMaxHistoryCountDialog] = useState(false)
-  const [modifyMaxLogCountDialogOpen, setModifyMaxLogCountDialog] = useState(false)
 
   const maxHistoryCount = useSelector(getSettingMaxHistoryCount)
-  const maxLogCount = useSelector(getSettingMaxLogCount)
 
   const showModifyMaxHistoryCountDialog = () => {
     setModifyMaxHistoryCountDialog(true)
@@ -36,19 +29,6 @@ export default function SettingPanel({className}) {
 
   const hideModifyMaxHistoryCountDialog = () => {
     setModifyMaxHistoryCountDialog(false)
-  }
-
-  const showModifyMaxLogCountDialog = () => {
-    setModifyMaxLogCountDialog(true)
-  }
-
-  const confirmModifyMaxLogCountDialog = (maxLogCount) => {
-    dispatch(changeSettingMaxLogCount(maxLogCount))
-    hideModifyMaxHistoryCountDialog()
-  }
-
-  const hideModifyMaxLogCountDialog = () => {
-    setModifyMaxLogCountDialog(false)
   }
 
   return (
@@ -77,32 +57,6 @@ export default function SettingPanel({className}) {
           open={modifyMaxHistoryCountDialogOpen}
           onConfirm={confirmModifyMaxHistoryCountDialog}
           onClose={hideModifyMaxHistoryCountDialog}
-        />
-      </Grid>
-      <Grid container item spacing={2}>
-        <Grid item>
-          <TextField
-            variant="outlined"
-            disabled={true}
-            value={maxLogCount}
-            label="最大 Log 數量"
-            size="small"
-          />
-        </Grid>
-        <Grid item>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={showModifyMaxLogCountDialog}>
-            修改
-          </Button>
-        </Grid>
-        <ModifyDialog
-          title="修改最大 Log 數"
-          defaultValue={maxLogCount}
-          open={modifyMaxLogCountDialogOpen}
-          onConfirm={confirmModifyMaxLogCountDialog}
-          onClose={hideModifyMaxLogCountDialog}
         />
       </Grid>
     </Grid>
