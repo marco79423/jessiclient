@@ -40,7 +40,10 @@ export const loadProjectData = createAsyncThunk(
     dispatch(appendLog(`讀取專案資料 ...`))
     return {
       // 設定
-      setting: {},
+      setting: {
+        maxHistoryCount: 100,
+        maxLogCount: 100,
+      },
 
       // 連線資訊
       connection: {
@@ -319,6 +322,9 @@ const logSlice = createSlice({
 })
 
 // Selectors
+export const getSettingMaxHistoryCount = state => state.project.data ? state.project.data.setting.maxHistoryCount : null
+export const getSettingMaxLogCount = state => state.project.data ? state.project.data.setting.maxLogCount : null
+
 export const getConnectionState = state => state.current.connectionState
 export const getConnectionUrl = state => state.project.data ? state.project.data.connection.url : ''
 export const getRequestText = state => state.project.data ? state.project.data.request.text : ''
