@@ -59,6 +59,22 @@ export const loadProjectData = createAsyncThunk(
   }
 )
 
+export const changeSettingMaxHistoryCount = createAsyncThunk(
+  'project/setting/changeSettingMaxHistoryCount',
+  async (maxHistoryCount, {dispatch}) => {
+    dispatch(appendLog(`修改最大歷史訊息數為 ${maxHistoryCount}...`))
+    return maxHistoryCount
+  }
+)
+
+export const changeSettingMaxLogCount = createAsyncThunk(
+  'project/setting/changeSettingMaxLogCount',
+  async (maxLogCount, {dispatch}) => {
+    dispatch(appendLog(`修改最大 log 數為 ${maxLogCount}...`))
+    return maxLogCount
+  }
+)
+
 export const changeConnectionUrl = createAsyncThunk(
   'project/connection/changeConnectionUrl',
   async (url) => {
@@ -263,6 +279,12 @@ const projectSlice = createSlice({
     [loadProjectData.rejected]: (state) => {
       state.state = LoadingState.Failed
       state.data = null
+    },
+    [changeSettingMaxHistoryCount.fulfilled]: (state, action) => {
+      state.data.setting.maxHistoryCount = action.payload
+    },
+    [changeSettingMaxLogCount.fulfilled]: (state, action) => {
+      state.data.setting.maxLogCount = action.payload
     },
     [changeConnectionUrl.fulfilled]: (state, action) => {
       state.data.connection.url = action.payload
