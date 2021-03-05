@@ -81,13 +81,20 @@ export const loadHistoryData = createAsyncThunk(
   }
 )
 
-export const appendServerHistory = createAsyncThunk(
-  'history/appendServerHistory',
-  async (message, {dispatch}) => {
+
+export const appendHistory = createAsyncThunk(
+  'history/appendHistory',
+  async ({source, message}, {dispatch, getState}) => {
+    const maxHistoryCount = getSettingMaxHistoryCount(getState())
+    const historyCount = getHistoryCount(getState())
+    if (historyCount >= maxHistoryCount) {
+      await dispatch(removeFirstHistory())
+    }
+
     const history = {
       id: generateRandomString(),
       time: new Date().toISOString(),
-      source: HistorySource.Server,
+      source: source,
       text: message,
     }
 
@@ -96,18 +103,10 @@ export const appendServerHistory = createAsyncThunk(
   }
 )
 
-export const appendClientHistory = createAsyncThunk(
-  'history/appendClientHistory',
-  async (message, {dispatch}) => {
-    const history = {
-      id: generateRandomString(),
-      time: new Date().toISOString(),
-      source: HistorySource.Client,
-      text: message,
-    }
+export const removeFirstHistory = createAsyncThunk(
+  'history/removeFirstHistory',
+  async () => {
 
-    await dispatch(appendLog(`新增客戶端訊息 ${history.toString()}...`))
-    return history
   }
 )
 
@@ -129,12 +128,26 @@ export const loadLogData = createAsyncThunk(
 
 export const appendLog = createAsyncThunk(
   'log/appendLog',
-  async (log) => {
+  async (log, {dispatch, getState}) => {
+
+    const maxLogCount = getSettingMaxLogCount(getState())
+    const logCount = getLogCount(getState())
+    if (logCount >= maxLogCount) {
+      await dispatch(removeFirstLog())
+    }
+
     return {
       id: generateRandomString(),
       time: new Date().toISOString(),
       data: log,
     }
+  }
+)
+
+export const removeFirstLog = createAsyncThunk(
+  'log/removeFirstLog',
+  async () => {
+
   }
 )
 
@@ -173,7 +186,7 @@ export const connect = createAsyncThunk(
     }
 
     wsClient.onmessage = evt => {
-      dispatch(appendServerHistory(evt.data))
+      dispatch(appendHistory({source: HistorySource.Server, message: evt.data}))
     }
 
     wsClient.onclose = () => {
@@ -207,7 +220,7 @@ export const sendRequestText = createAsyncThunk(
 
     dispatch(appendLog(`發送訊息 ${requestText}`))
     wsClient.send(requestText)
-    dispatch(appendClientHistory(requestText))
+    dispatch(appendHistory({source: HistorySource.Client, message: requestText}))
   }
 )
 
@@ -280,10 +293,10 @@ const historySlice = createSlice({
       state.state = LoadingState.Failed
       state.data = historyAdapter.getInitialState()
     },
-    [appendServerHistory.fulfilled]: (state, action) => {
-      historyAdapter.addOne(state.data, action.payload)
+    [removeFirstHistory.fulfilled]: (state) => {
+      historyAdapter.removeOne(state.data, state.data.ids[0])
     },
-    [appendClientHistory.fulfilled]: (state, action) => {
+    [appendHistory.fulfilled]: (state, action) => {
       historyAdapter.addOne(state.data, action.payload)
     },
     [clearHistories.fulfilled]: (state) => {
@@ -315,6 +328,9 @@ const logSlice = createSlice({
     [appendLog.fulfilled]: (state, action) => {
       logAdapter.addOne(state.data, action.payload)
     },
+    [removeFirstLog.fulfilled]: (state) => {
+      logAdapter.removeOne(state.data, state.data.ids[0])
+    },
     [clearLogs.fulfilled]: (state) => {
       logAdapter.removeAll(state.data)
     }
@@ -332,6 +348,7 @@ export const getSelectedHistoryID = state => state.current.selectedHistoryID
 
 const historySelectors = historyAdapter.getSelectors(state => state.history.data)
 export const getHistoryState = state => state.history.state
+export const getHistoryCount = state => historySelectors.selectTotal(state)
 export const getHistories = createDraftSafeSelector(
   [
     getSelectedHistoryID,
@@ -353,6 +370,7 @@ export const getHistory = createDraftSafeSelector(
 
 const logSelectors = logAdapter.getSelectors(state => state.log.data)
 export const getLogState = state => state.log.state
+export const getLogCount = state => logSelectors.selectTotal(state)
 export const getLogs = state => logSelectors.selectAll(state)
 
 
