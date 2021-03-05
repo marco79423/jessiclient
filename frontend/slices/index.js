@@ -47,8 +47,8 @@ export const loadProjectData = createAsyncThunk(
 
       // 連線資訊
       connection: {
-        // url: 'wss://echo.websocket.org',
-        url: 'ws://sbk-mock.p-marco.192.168.192.1.xip.io/player-api/ws',
+        url: 'wss://echo.websocket.org',
+        // url: 'ws://sbk-mock.p-marco.192.168.192.1.xip.io/player-api/ws',
       },
 
       // 請求

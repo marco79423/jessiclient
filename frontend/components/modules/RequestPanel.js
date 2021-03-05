@@ -4,17 +4,10 @@ import classNames from 'classnames'
 import {makeStyles} from '@material-ui/core/styles'
 import {Button, Grid, Paper, Tab, Tabs, TextField} from '@material-ui/core'
 
-import {
-  changeRequestText, changeSettingMaxHistoryCount, changeSettingMaxLogCount,
-  getConnectionState,
-  getRequestText,
-  getSettingMaxHistoryCount,
-  getSettingMaxLogCount,
-  sendRequestText
-} from '../../slices'
+import {changeRequestText, getConnectionState, getRequestText, sendRequestText} from '../../slices'
 import {ConnectionState} from '../../constants'
 import {TabContext, TabPanel} from '@material-ui/lab'
-import ModifyDialog from './ModifyDialog'
+import SettingPanel from './SettingPanel'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,11 +20,7 @@ export default function RequestPanel({className}) {
   const classes = useStyles()
   const dispatch = useDispatch()
   const [tabValue, setTabValue] = useState('request')
-  const [modifyMaxHistoryCountDialogOpen, setModifyMaxHistoryCountDialog] = useState(false)
-  const [modifyMaxLogCountDialogOpen, setModifyMaxLogCountDialog] = useState(false)
 
-  const maxHistoryCount = useSelector(getSettingMaxHistoryCount)
-  const maxLogCount = useSelector(getSettingMaxLogCount)
   const connectionState = useSelector(getConnectionState)
   const isConnected = connectionState === ConnectionState.Connected
   const requestText = useSelector(getRequestText)
@@ -46,32 +35,6 @@ export default function RequestPanel({className}) {
 
   const onSendButtonClicked = async () => {
     dispatch(sendRequestText())
-  }
-
-  const showModifyMaxHistoryCountDialog = () => {
-    setModifyMaxHistoryCountDialog(true)
-  }
-
-  const confirmModifyMaxHistoryCountDialog = (maxHistoryCount) => {
-    dispatch(changeSettingMaxHistoryCount(maxHistoryCount))
-    hideModifyMaxHistoryCountDialog()
-  }
-
-  const hideModifyMaxHistoryCountDialog = () => {
-    setModifyMaxHistoryCountDialog(false)
-  }
-
-  const showModifyMaxLogCountDialog = () => {
-    setModifyMaxLogCountDialog(true)
-  }
-
-  const confirmModifyMaxLogCountDialog = (maxLogCount) => {
-    dispatch(changeSettingMaxLogCount(maxLogCount))
-    hideModifyMaxHistoryCountDialog()
-  }
-
-  const hideModifyMaxLogCountDialog = () => {
-    setModifyMaxLogCountDialog(false)
   }
 
   return (
@@ -110,60 +73,7 @@ export default function RequestPanel({className}) {
             </Grid>
           </TabPanel>
           <TabPanel value="settings">
-            <Grid container direction="column" spacing={3}>
-              <Grid container item spacing={2}>
-                <Grid item>
-                  <TextField
-                    variant="outlined"
-                    disabled={true}
-                    value={maxHistoryCount}
-                    label="最大訊息數量"
-                    size="small"
-                  />
-                </Grid>
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={showModifyMaxHistoryCountDialog}>
-                    修改
-                  </Button>
-                </Grid>
-                <ModifyDialog
-                  title="修改最大訊息數"
-                  defaultValue={maxHistoryCount}
-                  open={modifyMaxHistoryCountDialogOpen}
-                  onConfirm={confirmModifyMaxHistoryCountDialog}
-                  onClose={hideModifyMaxHistoryCountDialog}
-                />
-              </Grid>
-              <Grid container item spacing={2}>
-                <Grid item>
-                  <TextField
-                    variant="outlined"
-                    disabled={true}
-                    value={maxLogCount}
-                    label="最大 Log 數量"
-                    size="small"
-                  />
-                </Grid>
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={showModifyMaxLogCountDialog}>
-                    修改
-                  </Button>
-                </Grid>
-                <ModifyDialog
-                  title="修改最大 Log 數"
-                  defaultValue={maxLogCount}
-                  open={modifyMaxLogCountDialogOpen}
-                  onConfirm={confirmModifyMaxLogCountDialog}
-                  onClose={hideModifyMaxLogCountDialog}
-                />
-              </Grid>
-            </Grid>
+            <SettingPanel/>
           </TabPanel>
         </TabContext>
       </Paper>
