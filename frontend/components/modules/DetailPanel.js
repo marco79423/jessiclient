@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import {makeStyles} from '@material-ui/core/styles'
 import {Paper, Tab, Tabs, TextField, Toolbar} from '@material-ui/core'
 
-import {getHistory} from '../../slices'
+import {getMessage} from '../../slices'
 import ReactJson from 'react-json-view'
 import {TabContext, TabPanel} from '@material-ui/lab'
 
@@ -27,20 +27,20 @@ export default function RequestPanel({className}) {
   const [tabValue, setTabValue] = useState('plain-text')
   const [jsonData, setJsonData] = useState(null)
 
-  const history = useSelector(getHistory)
+  const message = useSelector(getMessage)
 
   useEffect(() => {
     try {
-      setJsonData(JSON.parse(history.text))
+      setJsonData(JSON.parse(message.text))
       setTabValue('json')
     } catch (_) {
       setJsonData(null)
       setTabValue('plain-text')
     }
-  }, [history])
+  }, [message])
 
 
-  if (!history) {
+  if (!message) {
     return (
       <div className={classNames(classes.root, className)}>
       </div>
@@ -69,7 +69,7 @@ export default function RequestPanel({className}) {
               rows={24}
               fullWidth
               autoFocus
-              value={history.text}
+              value={message.text}
               InputProps={{
                 readOnly: true,
               }}

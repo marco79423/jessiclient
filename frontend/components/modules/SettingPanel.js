@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import {makeStyles} from '@material-ui/core/styles'
 import {Button, Grid, TextField} from '@material-ui/core'
 
-import {changeSettingMaxHistoryCount, getSettingMaxHistoryCount} from '../../slices'
+import {changeSettingMaxMessageCount, getSettingMaxMessageCount} from '../../slices'
 import ModifyDialog from './ModifyDialog'
 
 const useStyles = makeStyles((theme) => ({
@@ -14,21 +14,21 @@ const useStyles = makeStyles((theme) => ({
 export default function SettingPanel({className}) {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const [modifyMaxHistoryCountDialogOpen, setModifyMaxHistoryCountDialog] = useState(false)
+  const [modifyMaxMessageCountDialogOpen, setModifyMaxMessageCountDialog] = useState(false)
 
-  const maxHistoryCount = useSelector(getSettingMaxHistoryCount)
+  const maxMessageCount = useSelector(getSettingMaxMessageCount)
 
-  const showModifyMaxHistoryCountDialog = () => {
-    setModifyMaxHistoryCountDialog(true)
+  const showModifyMaxMessageCountDialog = () => {
+    setModifyMaxMessageCountDialog(true)
   }
 
-  const confirmModifyMaxHistoryCountDialog = (maxHistoryCount) => {
-    dispatch(changeSettingMaxHistoryCount(maxHistoryCount))
-    hideModifyMaxHistoryCountDialog()
+  const confirmModifyMaxMessageCountDialog = (maxMessageCount) => {
+    dispatch(changeSettingMaxMessageCount(maxMessageCount))
+    hideModifyMaxMessageCountDialog()
   }
 
-  const hideModifyMaxHistoryCountDialog = () => {
-    setModifyMaxHistoryCountDialog(false)
+  const hideModifyMaxMessageCountDialog = () => {
+    setModifyMaxMessageCountDialog(false)
   }
 
   return (
@@ -38,7 +38,7 @@ export default function SettingPanel({className}) {
           <TextField
             variant="outlined"
             disabled={true}
-            value={maxHistoryCount}
+            value={maxMessageCount}
             label="最大訊息數量"
             size="small"
           />
@@ -47,16 +47,16 @@ export default function SettingPanel({className}) {
           <Button
             variant="contained"
             color="primary"
-            onClick={showModifyMaxHistoryCountDialog}>
+            onClick={showModifyMaxMessageCountDialog}>
             修改
           </Button>
         </Grid>
         <ModifyDialog
           title="修改最大訊息數"
-          defaultValue={maxHistoryCount}
-          open={modifyMaxHistoryCountDialogOpen}
-          onConfirm={confirmModifyMaxHistoryCountDialog}
-          onClose={hideModifyMaxHistoryCountDialog}
+          defaultValue={maxMessageCount}
+          open={modifyMaxMessageCountDialogOpen}
+          onConfirm={confirmModifyMaxMessageCountDialog}
+          onClose={hideModifyMaxMessageCountDialog}
         />
       </Grid>
     </Grid>

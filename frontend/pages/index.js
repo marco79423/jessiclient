@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
 import {Grid, Slide} from '@material-ui/core'
 
-import {getSelectedHistoryID, initialize} from '../slices'
+import {getSelectedMessageID, initialize} from '../slices'
 import ListPanel from '../components/modules/ListPanel'
 import ControlPanel from '../components/modules/ControlPanel'
 import DetailPanel from '../components/modules/DetailPanel'
@@ -24,8 +24,8 @@ export default function Index() {
     dispatch(initialize())
   }, [])
 
-  const historyID = useSelector(getSelectedHistoryID)
-  const detailOpen = historyID !== null
+  const messageID = useSelector(getSelectedMessageID)
+  const detailOpen = messageID !== null
 
   return (
     <Grid className={classes.root} container component="main">
@@ -35,7 +35,7 @@ export default function Index() {
       <Grid className={classes.listPanel} item sm={detailOpen ? 4 : 8} xs={12}>
         <ListPanel/>
       </Grid>
-      <Slide direction="left" in={historyID !== null} mountOnEnter unmountOnExit>
+      <Slide direction="left" in={messageID !== null} mountOnEnter unmountOnExit>
         <Grid className={classes.detailPanel} item sm={4} xs={false}>
           <DetailPanel/>
         </Grid>

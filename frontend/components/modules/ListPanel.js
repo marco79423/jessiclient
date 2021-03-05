@@ -2,7 +2,7 @@ import React from 'react'
 import {makeStyles} from '@material-ui/core/styles'
 import {Toolbar} from '@material-ui/core'
 
-import HistoryList from './HistoryList'
+import MessageList from './MessageList'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -29,7 +29,7 @@ export default function ListPanel() {
 
       </Toolbar>
       <div className={classes.dataSection}>
-        <HistoryList/>
+        <MessageList/>
       </div>
     </div>
   )

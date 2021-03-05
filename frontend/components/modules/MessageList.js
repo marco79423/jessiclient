@@ -4,13 +4,13 @@ import {makeStyles} from '@material-ui/core/styles'
 import {Divider, Fab, List, ListItem, ListItemText, Typography} from '@material-ui/core'
 import ClearIcon from '@material-ui/icons/Clear'
 
-import {HistorySource, LoadingState} from '../../constants'
+import {MessageSource, LoadingState} from '../../constants'
 import {
-  changeSelectedHistoryID,
-  clearHistories,
-  clearSelectedHistoryID,
-  getHistories,
-  getHistoryState
+  changeSelectedMessageID,
+  clearMessages,
+  clearSelectedMessageID,
+  getMessages,
+  getMessageState
 } from '../../slices'
 
 
@@ -35,29 +35,29 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function HistoryList() {
+export default function MessageList() {
   const classes = useStyles()
   const dispatch = useDispatch()
 
-  const historyState = useSelector(getHistoryState)
-  const histories = useSelector(getHistories)
+  const messageState = useSelector(getMessageState)
+  const messages = useSelector(getMessages)
 
-  const handleSelected = (history) => {
-    if (history.selected) {
-      dispatch(clearSelectedHistoryID())
+  const handleSelected = (message) => {
+    if (message.selected) {
+      dispatch(clearSelectedMessageID())
     } else {
-      dispatch(changeSelectedHistoryID(history.id))
+      dispatch(changeSelectedMessageID(message.id))
     }
   }
 
-  if (historyState === LoadingState.Idle) {
+  if (messageState === LoadingState.Idle) {
     return (
       <div className={classes.root}>
       </div>
     )
   }
 
-  if (historyState === LoadingState.Loading) {
+  if (messageState === LoadingState.Loading) {
     return (
       <div className={classes.root}>
         讀取中…
@@ -65,7 +65,7 @@ export default function HistoryList() {
     )
   }
 
-  if (historyState === LoadingState.Failed) {
+  if (messageState === LoadingState.Failed) {
     return (
       <div className={classes.root}>
         讀取失敗
@@ -74,12 +74,12 @@ export default function HistoryList() {
   }
 
   const onClearAllButtonClick = () => {
-    dispatch(clearHistories())
+    dispatch(clearMessages())
   }
 
-  const HistoryTitle = ({history}) => {
-    const time = new Date(history.time).toLocaleString()
-    const source = history.source === HistorySource.Server ? '服務端' : '客戶端'
+  const MessageTitle = ({message}) => {
+    const time = new Date(message.time).toLocaleString()
+    const source = message.source === MessageSource.Server ? '服務端' : '客戶端'
 
     return (
       <span>{time}<Typography className={classes.source} color="textSecondary" variant="body2"
@@ -90,24 +90,24 @@ export default function HistoryList() {
   return (
     <div className={classes.root}>
       <List>
-        {histories.map(history => (
+        {messages.map(message => (
           <>
-            <ListItem key={history.id} alignItems="flex-start" selected={history.selected}
-                      onClick={() => handleSelected(history)}>
+            <ListItem key={message.id} alignItems="flex-start" selected={message.selected}
+                      onClick={() => handleSelected(message)}>
               <ListItemText
-                primary={<HistoryTitle history={history}/>}
+                primary={<MessageTitle message={message}/>}
                 secondary={
                   <Typography
                     variant="body2"
                     className={classes.messageText}
                     color="textPrimary"
                   >
-                    {history.text}
+                    {message.text}
                   </Typography>
                 }
               />
             </ListItem>
-            <Divider key={history.id + '_divider'} component="li"/>
+            <Divider key={message.id + '_divider'} component="li"/>
           </>
         ))}
       </List>
