@@ -1,9 +1,23 @@
 import Head from 'next/head'
 import {Provider} from 'react-redux'
 import {CssBaseline} from '@material-ui/core'
+import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles'
+
 import store from '../store'
 import * as constants from '../constants'
+import theme from '../components/theme/default'
 
+const muiTheme = createMuiTheme({
+  project: theme,
+  palette: {
+    primary: {
+      main: theme.basic.primary,
+    },
+    secondary: {
+      main: theme.basic.secondary,
+    },
+  },
+})
 
 function App({Component, pageProps}) {
   return (
@@ -19,9 +33,11 @@ function App({Component, pageProps}) {
 
       <CssBaseline/>
 
-      <Provider store={store}>
-        <Component {...pageProps} />
-      </Provider>
+      <ThemeProvider theme={muiTheme}>
+        <Provider store={store}>
+          <Component {...pageProps} />
+        </Provider>
+      </ThemeProvider>
     </>
   )
 }

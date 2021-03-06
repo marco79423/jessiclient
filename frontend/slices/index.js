@@ -66,6 +66,13 @@ export const changeSettingMaxMessageCount = createAsyncThunk(
   }
 )
 
+export const changeConnectionProtocol = createAsyncThunk(
+  'project/connection/changeConnectionProtocol',
+  async (protocol) => {
+    return protocol
+  }
+)
+
 export const changeConnectionUrl = createAsyncThunk(
   'project/connection/changeConnectionUrl',
   async (url) => {
