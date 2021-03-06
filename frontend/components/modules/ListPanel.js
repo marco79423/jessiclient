@@ -9,7 +9,7 @@ import {
   clearMessages,
   clearSelectedMessageID,
   getMessages,
-  getMessageState
+  getProjectState
 } from '../../slices'
 
 
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ListPanel() {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const messageState = useSelector(getMessageState)
+  const projectState = useSelector(getProjectState)
   const messages = useSelector(getMessages)
 
   const onClearAllButtonClick = () => {
@@ -71,14 +71,14 @@ export default function ListPanel() {
     }
   }
 
-  if (messageState === LoadingState.Idle) {
+  if (projectState === LoadingState.Idle) {
     return (
       <div className={classes.root}>
       </div>
     )
   }
 
-  if (messageState === LoadingState.Loading) {
+  if (projectState === LoadingState.Loading) {
     return (
       <div className={classes.root}>
         讀取中…
@@ -86,7 +86,7 @@ export default function ListPanel() {
     )
   }
 
-  if (messageState === LoadingState.Failed) {
+  if (projectState === LoadingState.Failed) {
     return (
       <div className={classes.root}>
         讀取失敗
