@@ -1,7 +1,11 @@
 import React, {useState} from 'react'
 import {makeStyles} from '@material-ui/core/styles'
-import {AppBar as MuiAppBar, Avatar, Grid, IconButton, Toolbar, Typography} from '@material-ui/core'
+import {AppBar as MuiAppBar, Avatar, Divider, Grid, IconButton, Toolbar, Tooltip, Typography} from '@material-ui/core'
+import ArchiveIcon from '@material-ui/icons/Archive'
+import UnarchiveIcon from '@material-ui/icons/Unarchive'
 import SettingsIcon from '@material-ui/icons/Settings'
+import ShareIcon from '@material-ui/icons/Share'
+
 import SettingsPanel from './SettingsPanel'
 
 
@@ -25,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
   },
   settingsButton: {
     color: theme.project.page.header.settingsButton,
+  },
+  icon: {
+    fontSize: '2rem',
   }
 }))
 
@@ -45,18 +52,34 @@ export default function AppBar() {
       <MuiAppBar className={classes.root} position="relative" elevation={1}>
         <Toolbar>
           <Grid container justify="space-between">
-            <Grid className={classes.brand} container item>
+            <Grid className={classes.brand} container item alignItems="center">
               <Grid xs={4} item>
-                <Avatar className={classes.logo} src={'/logo.png'}/>
+                <Avatar className={classes.logo} variant="square" src={'/favicon.ico'}/>
               </Grid>
               <Grid xs={8} item container>
                 <Typography className={classes.title} component="h1" variant="h5">Jessiclient</Typography>
-                <Typography className={classes.subtitle} component="h2" variant="subtitle2">Websocket Client</Typography>
+                <Typography className={classes.subtitle} component="h2" variant="subtitle2">Websocket
+                  Client</Typography>
               </Grid>
             </Grid>
             <Grid item>
-              <IconButton className={classes.settingsButton} variant="outlined" onClick={showSettingsPanel}>
-                <SettingsIcon fontSize="large"/>
+              <Tooltip title="分享">
+                <IconButton className={classes.settingsButton} onClick={showSettingsPanel}>
+                  <ShareIcon className={classes.icon}/>
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="匯出專案">
+                <IconButton className={classes.settingsButton} onClick={showSettingsPanel}>
+                  <ArchiveIcon className={classes.icon}/>
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="匯入專案">
+                <IconButton className={classes.settingsButton} onClick={showSettingsPanel}>
+                  <UnarchiveIcon className={classes.icon}/>
+                </IconButton>
+              </Tooltip>
+              <IconButton className={classes.settingsButton} onClick={showSettingsPanel}>
+                <SettingsIcon className={classes.icon}/>
               </IconButton>
             </Grid>
           </Grid>
