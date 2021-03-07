@@ -141,7 +141,7 @@ export default function ControlPanel() {
                   onChange={onRequestTextInputChange}
                 />
 
-                <Grid container justify="space-between">
+                <Grid style={{marginTop: 8}} container justify="space-between">
                   <Grid item>
                     <Button
                       variant="contained"
