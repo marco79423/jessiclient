@@ -27,18 +27,33 @@ export const changeConnectionState = createAsyncThunk(
   }
 )
 
-export const changeSelectedMessageID = createAsyncThunk(
-  'current/changeSelectedMessageID',
+export const setSelectedMessageID = createAsyncThunk(
+  'current/setSelectedMessageID',
   async (messageID) => {
     console.log(`調整選擇的訊息為 ${messageID} ...`)
     return messageID
   }
 )
 
+
 export const clearSelectedMessageID = createAsyncThunk(
   'current/clearSelectedMessageID',
   async () => {
     console.log(`清除選擇的訊息 ...`)
+  }
+)
+
+export const setAppliedFavoriteRequestID = createAsyncThunk(
+  'current/setAppliedFavoriteRequestID',
+  async (appliedFavoriteRequestID) => {
+    return appliedFavoriteRequestID
+  }
+)
+
+export const clearAppliedFavoriteRequestID = createAsyncThunk(
+  'current/clearAppliedFavoriteRequestID',
+  async () => {
+
   }
 )
 
@@ -69,6 +84,27 @@ export const changeRequestText = createAsyncThunk(
   'project/request/changeRequestText',
   async (requestText) => {
     return requestText
+  }
+)
+
+export const addFavoriteRequest = createAsyncThunk(
+  'project/request/addFavoriteRequest',
+  async (favoriteRequest) => {
+    return favoriteRequest
+  }
+)
+
+export const removeFavoriteRequest = createAsyncThunk(
+  'project/request/removeFavoriteRequest',
+  async (id) => {
+    return id
+  }
+)
+
+export const clearFavoriteRequests = createAsyncThunk(
+  'project/request/clearFavoriteRequests',
+  async () => {
+
   }
 )
 
@@ -126,6 +162,11 @@ export const initialize = createAsyncThunk(
       // 請求
       request: {
         text: '',
+      },
+
+      favoriteRequest: {
+        ids: [],
+        entities: {},
       },
 
       // 訊息
@@ -205,6 +246,7 @@ const currentSlice = createSlice({
     projectState: LoadingState.Idle, // idle, loading, loaded, failed
     connectionState: ConnectionState.Idle, // idle, connecting, connected, closed
     selectedMessageID: null,
+    appliedFavoriteRequestID: null,
   },
   extraReducers: {
     [changeProjectState.fulfilled]: (state, action) => {
@@ -213,16 +255,23 @@ const currentSlice = createSlice({
     [changeConnectionState.fulfilled]: (state, action) => {
       state.connectionState = action.payload
     },
-    [changeSelectedMessageID.fulfilled]: (state, action) => {
+    [setSelectedMessageID.fulfilled]: (state, action) => {
       state.selectedMessageID = action.payload
     },
     [clearSelectedMessageID.fulfilled]: (state) => {
       state.selectedMessageID = null
     },
+    [setAppliedFavoriteRequestID.fulfilled]: (state, action) => {
+      state.appliedFavoriteRequestID = action.payload
+    },
+    [clearAppliedFavoriteRequestID.fulfilled]: (state) => {
+      state.appliedFavoriteRequestID = null
+    },
   }
 })
 
 const messageAdapter = createEntityAdapter()
+const favoriteRequestAdapter = createEntityAdapter()
 const projectSlice = createSlice({
   name: 'project',
   initialState: {
@@ -241,6 +290,9 @@ const projectSlice = createSlice({
       text: '',
     },
 
+    // 常用訊息
+    favoriteRequest: favoriteRequestAdapter.getInitialState(),
+
     // 訊息
     message: messageAdapter.getInitialState(),
   },
@@ -256,6 +308,15 @@ const projectSlice = createSlice({
     },
     [changeRequestText.fulfilled]: (state, action) => {
       state.request.text = action.payload
+    },
+    [addFavoriteRequest.fulfilled]: (state, action) => {
+      favoriteRequestAdapter.addOne(state.favoriteRequest, action.payload)
+    },
+    [removeFavoriteRequest.fulfilled]: (state, action) => {
+      favoriteRequestAdapter.removeOne(state.favoriteRequest, action.payload)
+    },
+    [clearFavoriteRequests.fulfilled]: (state) => {
+      favoriteRequestAdapter.removeAll(state.favoriteRequest)
     },
     [removeFirstMessage.fulfilled]: (state) => {
       messageAdapter.removeOne(state.message, state.message.ids[0])
@@ -274,12 +335,23 @@ const projectSlice = createSlice({
 export const getProjectState = state => state.current.projectState
 export const getConnectionState = state => state.current.connectionState
 export const getSelectedMessageID = state => state.current.selectedMessageID
+export const getAppliedFavoriteRequestID = state => state.current.appliedFavoriteRequestID
 
 export const getSettingMaxMessageCount = state => state.project.setting.maxMessageCount
 
 export const getConnectionUrl = state => state.project.connection.url
 
 export const getRequestText = state => state.project.request.text
+
+const favoriteRequestSelectors = favoriteRequestAdapter.getSelectors(state => state.project.favoriteRequest)
+export const getFavoriteRequests = state => favoriteRequestSelectors.selectAll(state)
+export const getAppliedFavoriteRequest = createDraftSafeSelector(
+  [
+    getAppliedFavoriteRequestID,
+    state => id => favoriteRequestSelectors.selectById(state, id),
+  ],
+  (appliedFavoriteRequestID, favoriteRequestFunc) => favoriteRequestFunc(appliedFavoriteRequestID),
+)
 
 const messageSelectors = messageAdapter.getSelectors(state => state.project.message)
 export const getMessageCount = state => messageSelectors.selectTotal(state)

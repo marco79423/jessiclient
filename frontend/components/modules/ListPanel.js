@@ -5,7 +5,7 @@ import {Button, Grid, InputBase, List, ListItem, ListItemText, Paper, Typography
 
 import {LoadingState, MessageSource} from '../../constants'
 import {
-  changeSelectedMessageID,
+  setSelectedMessageID,
   clearMessages,
   clearSelectedMessageID,
   getMessages,
@@ -67,7 +67,7 @@ export default function ListPanel() {
     if (message.selected) {
       dispatch(clearSelectedMessageID())
     } else {
-      dispatch(changeSelectedMessageID(message.id))
+      dispatch(setSelectedMessageID(message.id))
     }
   }
 

@@ -5,9 +5,20 @@ import {Button, Grid, Paper, Tab, Tabs, TextField} from '@material-ui/core'
 import {TabContext, TabPanel} from '@material-ui/lab'
 
 import {ConnectionState} from '../../constants'
-import {changeRequestText, getConnectionState, getRequestText, sendRequestText} from '../../slices'
+import {
+  addFavoriteRequest,
+  changeRequestText,
+  clearAppliedFavoriteRequestID,
+  getAppliedFavoriteRequest,
+  getConnectionState,
+  getRequestText,
+  sendRequestText,
+  setAppliedFavoriteRequestID
+} from '../../slices'
 import ConnectionPanel from './ConnectionPanel'
 import Copyright from './Copyright'
+import FavoriteRequestsPanel from './FavoriteRequestsPanel'
+import generateRandomString from '../../utils/generateRandomString'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,9 +55,13 @@ const useStyles = makeStyles((theme) => ({
 export default function ControlPanel() {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const [tabValue, setTabValue] = useState('basic')
+
   const connectionState = useSelector(getConnectionState)
   const requestText = useSelector(getRequestText)
+  const appliedFavoriteRequest = useSelector(getAppliedFavoriteRequest)
+
+  const [tabValue, setTabValue] = useState('basic')
+  const [favoriteRequestsPanelOpen, setFavoriteRequestsPanel] = useState(false)
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue)
@@ -54,10 +69,33 @@ export default function ControlPanel() {
 
   const onRequestTextInputChange = (e) => {
     dispatch(changeRequestText(e.target.value))
+    dispatch(clearAppliedFavoriteRequestID())
   }
 
-  const onSendButtonClicked = async () => {
+  const onAppliedFavoriteRequestButtonClicked = () => {
+    if (appliedFavoriteRequest) {
+      dispatch(clearAppliedFavoriteRequestID(appliedFavoriteRequest.id))
+    } else {
+      const favoriteRequest = {
+        id: generateRandomString(),
+        name: new Date().toLocaleString(),
+        text: requestText,
+      }
+      dispatch(addFavoriteRequest(favoriteRequest))
+      dispatch(setAppliedFavoriteRequestID(favoriteRequest.id))
+    }
+  }
+
+  const onSendButtonClicked = () => {
     dispatch(sendRequestText())
+  }
+
+  const showFavoriteRequestsPanel = () => {
+    setFavoriteRequestsPanel(true)
+  }
+
+  const hideFavoriteRequestsPanel = () => {
+    setFavoriteRequestsPanel(false)
   }
 
   const isConnected = connectionState === ConnectionState.Connected
@@ -73,8 +111,8 @@ export default function ControlPanel() {
         <ConnectionPanel/>
         <div className={classes.requestPanel}>
           <Tabs indicatorColor="secondary" value={tabValue} onChange={handleTabChange}>
-            <Tab className={classes.tab}  label="基本" value="basic"/>
-            <Tab className={classes.tab}  label="排程" value="schedule"/>
+            <Tab className={classes.tab} label="基本" value="basic"/>
+            <Tab className={classes.tab} label="排程" value="schedule"/>
           </Tabs>
           <Paper className={classes.tabPanel}>
             <TabContext value={tabValue}>
@@ -84,9 +122,10 @@ export default function ControlPanel() {
                     <Button
                       style={{marginLeft: 8}}
                       variant="contained"
-                      onClick={onSendButtonClicked}>
+                      onClick={showFavoriteRequestsPanel}>
                       展開常用列表
                     </Button>
+                    <FavoriteRequestsPanel open={favoriteRequestsPanelOpen} onClose={hideFavoriteRequestsPanel}/>
                   </Grid>
                 </Grid>
                 <TextField
@@ -106,9 +145,8 @@ export default function ControlPanel() {
                   <Grid item>
                     <Button
                       variant="contained"
-                      disabled={!isConnected}
-                      onClick={onSendButtonClicked}>
-                      設為常用
+                      onClick={onAppliedFavoriteRequestButtonClicked}>
+                      {appliedFavoriteRequest ? '取消常用' : '設為常用'}
                     </Button>
                   </Grid>
                   <Grid item>

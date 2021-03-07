@@ -85,6 +85,14 @@ const theme = {
           tab: colorTable['indigo-200'],
         },
       },
+      favoriteRequestsPanel: {
+        header: {
+          background: colorTable['indigo-800'],
+          textColor: 'white',
+          closeButton: 'white',
+        },
+        background: colorTable['indigo-400'],
+      }
     },
   }
 }
