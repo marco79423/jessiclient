@@ -6,6 +6,7 @@ import {Button, Grid, InputBase, Paper, Tooltip} from '@material-ui/core'
 
 import {ConnectionState} from '../../constants'
 import {changeConnectionUrl, connect, disconnect, getConnectionState, getConnectionUrl} from '../../slices'
+import {useTranslation} from 'next-i18next'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,6 +27,8 @@ const useStyles = makeStyles((theme) => ({
 export default function ConnectionPanel({className}) {
   const classes = useStyles()
   const dispatch = useDispatch()
+  const {t} = useTranslation('common')
+
   const [url, setUrl] = useState('')
 
   const connectionUrl = useSelector(getConnectionUrl)
@@ -52,7 +55,7 @@ export default function ConnectionPanel({className}) {
     switch (connectionState) {
       case ConnectionState.Idle:
         return (
-          <Button className={classes.connectButton} size="large" aria-label="connect" onClick={onConnectButtonClicked}>建立連線</Button>
+          <Button className={classes.connectButton} size="large" aria-label="connect" onClick={onConnectButtonClicked}>{t('connect')}</Button>
         )
       case ConnectionState.Connecting:
         return (

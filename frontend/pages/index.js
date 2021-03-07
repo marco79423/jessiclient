@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {makeStyles} from '@material-ui/core/styles'
 import {Grid, Slide} from '@material-ui/core'
 
@@ -9,6 +10,11 @@ import ControlPanel from '../components/modules/ControlPanel'
 import DetailPanel from '../components/modules/DetailPanel'
 import AppBar from '../components/modules/AppBar'
 
+export const getStaticProps = async ({locale}) => ({
+  props: {
+    ...await serverSideTranslations(locale, ['common']),
+  }
+})
 
 const useStyles = makeStyles((theme) => ({
   root: {},
