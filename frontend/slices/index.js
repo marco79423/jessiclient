@@ -5,9 +5,11 @@ import {
   createEntityAdapter,
   createSlice
 } from '@reduxjs/toolkit'
+import jsDownload from 'js-file-download'
 
 import {ConnectionState, LoadingState, MessageSource} from '../constants'
 import generateRandomString from '../utils/generateRandomString'
+import fileDialog from 'file-dialog'
 
 
 // Actions
@@ -180,6 +182,31 @@ export const initialize = createAsyncThunk(
   }
 )
 
+export const exportProject = createAsyncThunk(
+  'action/exportProject',
+  (_, {getState}) => {
+    const projectData = getProjectData(getState())
+    jsDownload(JSON.stringify(projectData), `${new Date().toISOString()}.json`)
+  }
+)
+
+export const importProject = createAsyncThunk(
+  'action/importProject',
+  async (_, {getState, dispatch}) => {
+    const files = await fileDialog({accept: '.json'})
+    const selectedFile = files[0]
+
+    const fileReader = new FileReader()
+    fileReader.onload = () => {
+      const data = fileReader.result
+      const projectData = JSON.parse(data)
+      dispatch(setProjectData(projectData))
+    }
+    fileReader.readAsText(selectedFile, 'UTF-8')
+  }
+)
+
+
 let wsClient = null
 
 export const connect = createAsyncThunk(
@@ -344,6 +371,7 @@ export const getSelectedMessageID = state => state.current.selectedMessageID
 export const getAppliedFavoriteRequestID = state => state.current.appliedFavoriteRequestID
 export const getSearchInput = state => state.current.searchInput
 
+export const getProjectData = state => state.project
 export const getSettingMaxMessageCount = state => state.project.setting.maxMessageCount
 
 export const getConnectionUrl = state => state.project.connection.url

@@ -7,6 +7,8 @@ import SettingsIcon from '@material-ui/icons/Settings'
 import ShareIcon from '@material-ui/icons/Share'
 
 import SettingsPanel from './SettingsPanel'
+import {useDispatch} from 'react-redux'
+import {exportProject, importProject} from '../../slices'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,7 +39,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AppBar() {
   const classes = useStyles()
+  const dispatch = useDispatch()
   const [settingsPanelOpen, setSettingsPanel] = useState(false)
+
+  const onExportClicked = () => {
+    dispatch(exportProject())
+  }
+
+  const onImportClicked = () => {
+    dispatch(importProject())
+  }
 
   const showSettingsPanel = () => {
     setSettingsPanel(true)
@@ -69,12 +80,12 @@ export default function AppBar() {
                 </IconButton>
               </Tooltip>
               <Tooltip title="匯出專案">
-                <IconButton className={classes.settingsButton} onClick={showSettingsPanel}>
+                <IconButton className={classes.settingsButton} onClick={onExportClicked}>
                   <ArchiveIcon className={classes.icon}/>
                 </IconButton>
               </Tooltip>
               <Tooltip title="匯入專案">
-                <IconButton className={classes.settingsButton} onClick={showSettingsPanel}>
+                <IconButton className={classes.settingsButton} onClick={onImportClicked}>
                   <UnarchiveIcon className={classes.icon}/>
                 </IconButton>
               </Tooltip>
