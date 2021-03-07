@@ -14,7 +14,6 @@ import generateRandomString from '../utils/generateRandomString'
 export const changeProjectState = createAsyncThunk(
   'current/changeProjectState',
   async (projectState) => {
-    console.log(`專案啟動狀態改為 ${projectState} ...`)
     return projectState
   }
 )
@@ -22,7 +21,6 @@ export const changeProjectState = createAsyncThunk(
 export const changeConnectionState = createAsyncThunk(
   'current/changeConnectionState',
   async (connectionState) => {
-    console.log(`連線狀態修改為 ${connectionState} ...`)
     return connectionState
   }
 )
@@ -30,7 +28,6 @@ export const changeConnectionState = createAsyncThunk(
 export const setSelectedMessageID = createAsyncThunk(
   'current/setSelectedMessageID',
   async (messageID) => {
-    console.log(`調整選擇的訊息為 ${messageID} ...`)
     return messageID
   }
 )
@@ -39,7 +36,6 @@ export const setSelectedMessageID = createAsyncThunk(
 export const clearSelectedMessageID = createAsyncThunk(
   'current/clearSelectedMessageID',
   async () => {
-    console.log(`清除選擇的訊息 ...`)
   }
 )
 
@@ -60,7 +56,6 @@ export const clearAppliedFavoriteRequestID = createAsyncThunk(
 export const setProjectData = createAsyncThunk(
   'project/setProjectData',
   async (projectData) => {
-    console.log(`讀取專案資料 ...`)
     return projectData
   }
 )
@@ -68,7 +63,6 @@ export const setProjectData = createAsyncThunk(
 export const changeSettingMaxMessageCount = createAsyncThunk(
   'project/setting/changeSettingMaxMessageCount',
   async (maxMessageCount) => {
-    console.log(`修改最大歷史訊息數為 ${maxMessageCount}...`)
     return maxMessageCount
   }
 )
@@ -117,7 +111,6 @@ export const appendMessage = createAsyncThunk(
       await dispatch(removeFirstMessage())
     }
 
-    await console.log(`新增訊息 ${message}...`)
     return {
       id: generateRandomString(),
       time: new Date().toISOString(),
@@ -137,7 +130,6 @@ export const removeFirstMessage = createAsyncThunk(
 export const clearMessages = createAsyncThunk(
   'project/message/clearMessages',
   async (_, {dispatch}) => {
-    await console.log(`清除訊息...`)
     await dispatch(clearSelectedMessageID())
   }
 )
@@ -146,7 +138,6 @@ export const clearMessages = createAsyncThunk(
 export const initialize = createAsyncThunk(
   'initialize',
   async (_, {dispatch}) => {
-    console.log(`啟動初始化...`)
     const projectData = {
       // 設定
       setting: {
@@ -232,7 +223,6 @@ export const sendRequestText = createAsyncThunk(
 
     const requestText = getRequestText(getState())
 
-    console.log(`發送訊息 ${requestText}`)
     wsClient.send(requestText)
     dispatch(appendMessage({source: MessageSource.Client, message: requestText}))
   }
