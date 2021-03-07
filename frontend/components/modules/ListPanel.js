@@ -1,15 +1,17 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
 import {Button, Grid, InputBase, List, ListItem, ListItemText, Paper, Typography} from '@material-ui/core'
 
 import {LoadingState, MessageSource} from '../../constants'
 import {
-  setSelectedMessageID,
+  changeSearchInput,
   clearMessages,
   clearSelectedMessageID,
   getMessages,
-  getProjectState
+  getProjectState,
+  getSearchInput,
+  setSelectedMessageID
 } from '../../slices'
 
 
@@ -52,6 +54,37 @@ const useStyles = makeStyles((theme) => ({
     textOverflow: 'ellipsis',
   },
 }))
+
+function SearchInput() {
+  const classes = useStyles()
+  const dispatch = useDispatch()
+  const searchInput = useSelector(getSearchInput)
+
+  const [value, setValue] = useState('')
+
+  useEffect(() => {
+    setValue(searchInput)
+  }, [searchInput])
+
+  const onValueChange = (e) => {
+    setValue(e.target.value)
+  }
+
+  const onButtonClicked = () => {
+    dispatch(changeSearchInput(value))
+  }
+
+  return (
+    <Grid className={classes.searchInput} container alignItems="center" component={Paper}>
+      <Grid item xs>
+        <InputBase fullWidth placeholder="搜尋訊息" value={value} onChange={onValueChange}/>
+      </Grid>
+      <Grid item>
+        <Button onClick={onButtonClicked}>搜尋</Button>
+      </Grid>
+    </Grid>
+  )
+}
 
 export default function ListPanel() {
   const classes = useStyles()
@@ -109,12 +142,7 @@ export default function ListPanel() {
       <Grid className={classes.controlBar} container justify="space-between" alignItems="center"
             elevation={1} square>
         <Grid item>
-          <Paper className={classes.searchInput}>
-            <InputBase
-              placeholder="搜尋"
-              fullWidth
-            />
-          </Paper>
+          <SearchInput/>
         </Grid>
         <Grid item>
           <Button className={classes.clearButton} variant="contained" onClick={onClearAllButtonClick}>

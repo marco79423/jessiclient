@@ -53,6 +53,14 @@ export const clearAppliedFavoriteRequestID = createAsyncThunk(
   }
 )
 
+
+export const changeSearchInput = createAsyncThunk(
+  'current/changeSearchInput',
+  async (searchInput) => {
+    return searchInput
+  }
+)
+
 export const setProjectData = createAsyncThunk(
   'project/setProjectData',
   async (projectData) => {
@@ -194,6 +202,10 @@ export const connect = createAsyncThunk(
       dispatch(appendMessage({source: MessageSource.Server, message: evt.data}))
     }
 
+    wsClient.onerror = () => {
+      dispatch(changeConnectionState(ConnectionState.Idle))
+    }
+
     wsClient.onclose = () => {
       dispatch(disconnect())
     }
@@ -237,6 +249,7 @@ const currentSlice = createSlice({
     connectionState: ConnectionState.Idle, // idle, connecting, connected, closed
     selectedMessageID: null,
     appliedFavoriteRequestID: null,
+    searchInput: '',
   },
   extraReducers: {
     [changeProjectState.fulfilled]: (state, action) => {
@@ -257,6 +270,9 @@ const currentSlice = createSlice({
     [clearAppliedFavoriteRequestID.fulfilled]: (state) => {
       state.appliedFavoriteRequestID = null
     },
+    [changeSearchInput.fulfilled]: (state, action) => {
+      state.searchInput = action.payload
+    }
   }
 })
 
@@ -326,6 +342,7 @@ export const getProjectState = state => state.current.projectState
 export const getConnectionState = state => state.current.connectionState
 export const getSelectedMessageID = state => state.current.selectedMessageID
 export const getAppliedFavoriteRequestID = state => state.current.appliedFavoriteRequestID
+export const getSearchInput = state => state.current.searchInput
 
 export const getSettingMaxMessageCount = state => state.project.setting.maxMessageCount
 
@@ -348,12 +365,15 @@ export const getMessageCount = state => messageSelectors.selectTotal(state)
 export const getMessages = createDraftSafeSelector(
   [
     getSelectedMessageID,
+    getSearchInput,
     state => messageSelectors.selectAll(state),
   ],
-  (selectedID, messages) => messages.map(message => ({
-    ...message,
-    selected: message.id === selectedID,
-  })),
+  (selectedID, searchInput, messages) => messages
+    .filter(message => !searchInput || message.text.includes(searchInput))
+    .map(message => ({
+      ...message,
+      selected: message.id === selectedID,
+    })),
 )
 export const getMessage = createDraftSafeSelector(
   [
