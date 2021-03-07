@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
-import {Button, Grid, InputBase, List, ListItem, ListItemText, Paper, Typography} from '@material-ui/core'
+import {Button, Grid, IconButton, InputBase, List, ListItem, ListItemText, Paper, Typography} from '@material-ui/core'
+import ClearIcon from '@material-ui/icons/Clear'
 
 import {LoadingState, MessageSource} from '../../constants'
 import {
@@ -70,8 +71,12 @@ function SearchInput() {
     setValue(e.target.value)
   }
 
-  const onButtonClicked = () => {
+  const onSearchButtonClicked = () => {
     dispatch(changeSearchInput(value))
+  }
+
+  const onClearButtonClicked = () => {
+    dispatch(changeSearchInput(''))
   }
 
   return (
@@ -80,7 +85,14 @@ function SearchInput() {
         <InputBase fullWidth placeholder="搜尋訊息" value={value} onChange={onValueChange}/>
       </Grid>
       <Grid item>
-        <Button onClick={onButtonClicked}>搜尋</Button>
+        {searchInput ? (
+          <IconButton size="small" onClick={onClearButtonClicked}>
+            <ClearIcon/>
+          </IconButton>
+        ) : null}
+      </Grid>
+      <Grid item>
+        <Button onClick={onSearchButtonClicked}>搜尋</Button>
       </Grid>
     </Grid>
   )
