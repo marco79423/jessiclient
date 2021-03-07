@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {makeStyles} from '@material-ui/core/styles'
-import {AppBar as MuiAppBar, Avatar, Divider, Grid, IconButton, Toolbar, Tooltip, Typography} from '@material-ui/core'
+import {AppBar as MuiAppBar, Avatar, Grid, IconButton, Toolbar, Tooltip, Typography} from '@material-ui/core'
 import ArchiveIcon from '@material-ui/icons/Archive'
 import UnarchiveIcon from '@material-ui/icons/Unarchive'
 import SettingsIcon from '@material-ui/icons/Settings'
@@ -75,7 +75,8 @@ export default function AppBar() {
             </Grid>
             <Grid item>
               <Tooltip title="分享">
-                <IconButton className={classes.settingsButton} onClick={showSettingsPanel}>
+                <IconButton style={{visibility: 'hidden'}} className={classes.settingsButton}
+                            onClick={showSettingsPanel}>
                   <ShareIcon className={classes.icon}/>
                 </IconButton>
               </Tooltip>
