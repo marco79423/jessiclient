@@ -180,10 +180,7 @@ export const initialize = createAsyncThunk(
 
       // 連線資訊
       connection: {
-        // url: 'wss://echo.websocket.org',
-        // url: 'ws://sbk-mock.p-marco.192.168.192.1.xip.io/player-api/ws',
-        // url: 'ws://sbk-mock.p-marco.svc.cluster.local:7000/player-api/ws',
-        url: 'ws://10.200.6.101:18700/player-api/ws?token=905ae792-34f3-4424-8776-70a00b88c761',
+        url: 'wss://echo.websocket.org',
       },
 
       // 請求
@@ -247,12 +244,8 @@ let scheduleHandler = null
 export const connect = createAsyncThunk(
   'action/connect',
   async (_, {dispatch, getState}) => {
-    const connectionState = getConnectionState(getState())
-    if (connectionState !== ConnectionState.Idle) {
-      return
-    }
-
     dispatch(changeConnectionState(ConnectionState.Connecting))
+
     const connectionUrl = getConnectionUrl(getState())
     wsClient = new WebSocket(connectionUrl)
 
@@ -277,14 +270,15 @@ export const connect = createAsyncThunk(
 export const disconnect = createAsyncThunk(
   'action/disconnect',
   async (_, {dispatch, getState}) => {
-    const connectionState = getConnectionState(getState())
-    if (connectionState !== ConnectionState.Connected) {
-      return
+    if (scheduleHandler) {
+      dispatch(disableSchedule())
     }
 
-    wsClient.close()
-    dispatch(changeConnectionState(ConnectionState.Idle))
-    dispatch(changeScheduleEnabledStatus(false))
+    if (wsClient) {
+      wsClient.close()
+      wsClient = null
+      dispatch(changeConnectionState(ConnectionState.Idle))
+    }
   }
 )
 
@@ -305,43 +299,29 @@ export const sendRequestText = createAsyncThunk(
 
 export const enableSchedule = createAsyncThunk(
   'action/enableSchedule',
-  async ({requestText, timeInterval}, {dispatch, getState}) => {
-    const connectionState = getConnectionState(getState())
-    if (connectionState !== ConnectionState.Connected) {
-      return
+  async ({requestText, timeInterval}, {dispatch}) => {
+    if (!scheduleHandler) {
+      dispatch(changeScheduleRequestText(requestText))
+      dispatch(changeScheduleTimeInterval(timeInterval))
+
+      scheduleHandler = setInterval(() => {
+        wsClient.send(requestText)
+        dispatch(appendMessage({source: MessageSource.Client, message: requestText}))
+      }, timeInterval * 1000)
+
+      dispatch(changeScheduleEnabledStatus(true))
     }
-
-    if (scheduleHandler) {
-      return
-    }
-
-    dispatch(changeScheduleRequestText(requestText))
-    dispatch(changeScheduleTimeInterval(timeInterval))
-
-    scheduleHandler = setInterval(() => {
-      wsClient.send(requestText)
-      dispatch(appendMessage({source: MessageSource.Client, message: requestText}))
-    }, timeInterval * 1000)
-
-    dispatch(changeScheduleEnabledStatus(true))
   }
 )
 
 export const disableSchedule = createAsyncThunk(
   'action/disableSchedule',
   async (_, {dispatch, getState}) => {
-    const connectionState = getConnectionState(getState())
-    if (connectionState !== ConnectionState.Connected) {
-      return
+    if (scheduleHandler) {
+      clearInterval(scheduleHandler)
+      scheduleHandler = null
+      dispatch(changeScheduleEnabledStatus(false))
     }
-
-    if (!scheduleHandler) {
-      return
-    }
-
-    clearInterval(scheduleHandler)
-    scheduleHandler = null
-    dispatch(changeScheduleEnabledStatus(false))
   }
 )
 
