@@ -1,17 +1,22 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
-import {Button, Grid, Paper, Tab, Tabs, TextField} from '@material-ui/core'
+import {Button, Grid, Paper, Tab, Tabs, TextField, Typography} from '@material-ui/core'
 import {TabContext, TabPanel} from '@material-ui/lab'
 
 import {ConnectionState} from '../../constants'
 import {
   addFavoriteRequest,
-  changeRequestText,
+  changeScheduleTimeInterval,
   clearAppliedFavoriteRequestID,
+  disableSchedule,
+  enableSchedule,
   getAppliedFavoriteRequest,
   getConnectionState,
   getRequestText,
+  getScheduleEnabledStatus,
+  getScheduleRequestText,
+  getScheduleTimeInterval,
   sendRequestText,
   setAppliedFavoriteRequestID
 } from '../../slices'
@@ -52,53 +57,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+
 export default function ControlPanel() {
   const classes = useStyles()
-  const dispatch = useDispatch()
-
-  const connectionState = useSelector(getConnectionState)
-  const requestText = useSelector(getRequestText)
-  const appliedFavoriteRequest = useSelector(getAppliedFavoriteRequest)
 
   const [tabValue, setTabValue] = useState('basic')
-  const [favoriteRequestsPanelOpen, setFavoriteRequestsPanel] = useState(false)
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue)
   }
 
-  const onRequestTextInputChange = (e) => {
-    dispatch(changeRequestText(e.target.value))
-    dispatch(clearAppliedFavoriteRequestID())
-  }
-
-  const onAppliedFavoriteRequestButtonClicked = () => {
-    if (appliedFavoriteRequest) {
-      dispatch(clearAppliedFavoriteRequestID(appliedFavoriteRequest.id))
-    } else {
-      const favoriteRequest = {
-        id: generateRandomString(),
-        name: new Date().toLocaleString(),
-        text: requestText,
-      }
-      dispatch(addFavoriteRequest(favoriteRequest))
-      dispatch(setAppliedFavoriteRequestID(favoriteRequest.id))
-    }
-  }
-
-  const onSendButtonClicked = () => {
-    dispatch(sendRequestText())
-  }
-
-  const showFavoriteRequestsPanel = () => {
-    setFavoriteRequestsPanel(true)
-  }
-
-  const hideFavoriteRequestsPanel = () => {
-    setFavoriteRequestsPanel(false)
-  }
-
-  const isConnected = connectionState === ConnectionState.Connected
   return (
     <Grid className={classes.root}
           container
@@ -116,50 +84,8 @@ export default function ControlPanel() {
           </Tabs>
           <Paper className={classes.tabPanel}>
             <TabContext value={tabValue}>
-              <TabPanel value="basic">
-                <Grid container direction="row-reverse">
-                  <Grid item>
-                    <Button
-                      style={{marginLeft: 8}}
-                      variant="contained"
-                      onClick={showFavoriteRequestsPanel}>
-                      展開常用列表
-                    </Button>
-                    <FavoriteRequestsPanel open={favoriteRequestsPanelOpen} onClose={hideFavoriteRequestsPanel}/>
-                  </Grid>
-                </Grid>
-                <TextField
-                  style={{marginTop: 24}}
-                  variant="outlined"
-                  margin="normal"
-                  multiline
-                  rows={16}
-                  fullWidth
-                  label="請求內容"
-                  autoFocus
-                  value={requestText}
-                  onChange={onRequestTextInputChange}
-                />
-
-                <Grid style={{marginTop: 8}} container justify="space-between">
-                  <Grid item>
-                    <Button
-                      variant="contained"
-                      onClick={onAppliedFavoriteRequestButtonClicked}>
-                      {appliedFavoriteRequest ? '取消常用' : '設為常用'}
-                    </Button>
-                  </Grid>
-                  <Grid item>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      disabled={!isConnected}
-                      onClick={onSendButtonClicked}>
-                      送出
-                    </Button>
-                  </Grid>
-                </Grid>
-              </TabPanel>
+              <BasicTabPanel/>
+              <ScheduleTabPanel/>
             </TabContext>
           </Paper>
         </div>
@@ -168,5 +94,227 @@ export default function ControlPanel() {
         <Copyright/>
       </Grid>
     </Grid>
+  )
+}
+
+
+function BasicTabPanel() {
+  const dispatch = useDispatch()
+
+  const connectionState = useSelector(getConnectionState)
+  const requestText = useSelector(getRequestText)
+  const appliedFavoriteRequest = useSelector(getAppliedFavoriteRequest)
+
+  const [value, setValue] = useState('')
+  const [favoriteRequestsPanelOpen, setFavoriteRequestsPanel] = useState(false)
+
+  useEffect(() => {
+    setValue(requestText)
+  }, [requestText])
+
+  const onRequestTextInputChange = (e) => {
+    setValue(e.target.value)
+    dispatch(clearAppliedFavoriteRequestID())
+  }
+
+  const onAppliedFavoriteRequestButtonClicked = () => {
+    if (appliedFavoriteRequest) {
+      dispatch(clearAppliedFavoriteRequestID(appliedFavoriteRequest.id))
+    } else {
+      const favoriteRequest = {
+        id: generateRandomString(),
+        name: new Date().toLocaleString(),
+        text: value,
+      }
+      dispatch(addFavoriteRequest(favoriteRequest))
+      dispatch(setAppliedFavoriteRequestID(favoriteRequest.id))
+    }
+  }
+
+  const onSendButtonClicked = () => {
+    dispatch(sendRequestText(value))
+  }
+
+  const showFavoriteRequestsPanel = () => {
+    setFavoriteRequestsPanel(true)
+  }
+
+  const hideFavoriteRequestsPanel = () => {
+    setFavoriteRequestsPanel(false)
+  }
+
+  const isConnected = connectionState === ConnectionState.Connected
+  return (
+    <TabPanel value="basic">
+      <Grid container direction="row-reverse">
+        <Grid item>
+          <Button
+            variant="contained"
+            onClick={showFavoriteRequestsPanel}>
+            展開常用列表
+          </Button>
+          <FavoriteRequestsPanel open={favoriteRequestsPanelOpen} onClose={hideFavoriteRequestsPanel}/>
+        </Grid>
+      </Grid>
+      <TextField
+        style={{marginTop: 24}}
+        variant="outlined"
+        margin="normal"
+        multiline
+        rows={16}
+        fullWidth
+        label="請求內容"
+        autoFocus
+        value={value}
+        onChange={onRequestTextInputChange}
+      />
+
+      <Grid style={{marginTop: 8}} container justify="space-between">
+        <Grid item>
+          <Button
+            variant="contained"
+            onClick={onAppliedFavoriteRequestButtonClicked}>
+            {appliedFavoriteRequest ? '取消常用' : '設為常用'}
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            variant="contained"
+            color="primary"
+            disabled={!isConnected}
+            onClick={onSendButtonClicked}>
+            送出
+          </Button>
+        </Grid>
+      </Grid>
+    </TabPanel>
+  )
+}
+
+function ScheduleTabPanel() {
+  const classes = useStyles()
+  const dispatch = useDispatch()
+
+  const connectionState = useSelector(getConnectionState)
+  const requestText = useSelector(getScheduleRequestText)
+  const appliedFavoriteRequest = useSelector(getAppliedFavoriteRequest)
+  const scheduleEnabled = useSelector(getScheduleEnabledStatus)
+  const timeInterval = useSelector(getScheduleTimeInterval)
+
+  const [favoriteRequestsPanelOpen, setFavoriteRequestsPanel] = useState(false)
+
+  const [localRequestText, setLocalRequestText] = useState('')
+  const [localTimeInterval, setLocalTimeInterval] = useState(3)
+
+  useEffect(() => {
+    setLocalRequestText(requestText)
+  }, [requestText])
+
+  useEffect(() => {
+    setLocalTimeInterval(timeInterval)
+  }, [timeInterval])
+
+  const onRequestTextInputChange = (e) => {
+    setLocalRequestText(e.target.value)
+    dispatch(clearAppliedFavoriteRequestID())
+  }
+
+  const onScheduleTimeIntervalChange = (e) => {
+    dispatch(changeScheduleTimeInterval(e.target.value))
+  }
+
+  const onAppliedFavoriteRequestButtonClicked = () => {
+    if (appliedFavoriteRequest) {
+      dispatch(clearAppliedFavoriteRequestID(appliedFavoriteRequest.id))
+    } else {
+      const favoriteRequest = {
+        id: generateRandomString(),
+        name: new Date().toLocaleString(),
+        text: localRequestText,
+      }
+      dispatch(addFavoriteRequest(favoriteRequest))
+      dispatch(setAppliedFavoriteRequestID(favoriteRequest.id))
+    }
+  }
+
+  const onEnableButtonClicked = () => {
+    if (scheduleEnabled) {
+      dispatch(disableSchedule())
+    } else {
+      dispatch(enableSchedule({requestText: localRequestText, timeInterval: localTimeInterval}))
+    }
+  }
+
+  const showFavoriteRequestsPanel = () => {
+    setFavoriteRequestsPanel(true)
+  }
+
+  const hideFavoriteRequestsPanel = () => {
+    setFavoriteRequestsPanel(false)
+  }
+
+  const isConnected = connectionState === ConnectionState.Connected
+
+  return (
+    <TabPanel value="schedule">
+      <Grid container direction="row-reverse">
+        <Grid item>
+          <Button
+            variant="contained"
+            disabled={scheduleEnabled}
+            onClick={showFavoriteRequestsPanel}>
+            展開常用列表
+          </Button>
+          <FavoriteRequestsPanel open={favoriteRequestsPanelOpen} onClose={hideFavoriteRequestsPanel}/>
+        </Grid>
+      </Grid>
+      <TextField
+        style={{marginTop: 24}}
+        variant="outlined"
+        margin="normal"
+        multiline
+        rows={16}
+        fullWidth
+        label="請求內容"
+        autoFocus
+        disabled={scheduleEnabled}
+        value={localRequestText}
+        onChange={onRequestTextInputChange}
+      />
+      <Grid style={{marginTop: 8}} container alignItems="center" justify="space-between">
+        <Grid item>
+          <Button
+            variant="contained"
+            disabled={scheduleEnabled}
+            onClick={onAppliedFavoriteRequestButtonClicked}>
+            {appliedFavoriteRequest ? '取消常用' : '設為常用'}
+          </Button>
+        </Grid>
+        <Grid item>
+          <Grid container alignItems="center" spacing={3}>
+            <Grid item>
+              <Grid container alignItems="center" spacing={1}>
+                <Grid item><TextField style={{width: 50}}
+                                      type="number"
+                                      size="small"
+                                      disabled={scheduleEnabled}
+                                      onChange={onScheduleTimeIntervalChange}
+                                      value={localTimeInterval}/></Grid>
+                <Grid item><Typography>秒傳送一次</Typography></Grid>
+              </Grid>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="contained"
+                color="primary"
+                disabled={!isConnected}
+                onClick={onEnableButtonClicked}>
+                {scheduleEnabled ? '關閉' : '啟用'}
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </TabPanel>
   )
 }

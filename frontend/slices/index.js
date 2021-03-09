@@ -63,6 +63,15 @@ export const changeSearchInput = createAsyncThunk(
   }
 )
 
+
+export const changeScheduleEnabledStatus = createAsyncThunk(
+  'current/changeScheduleEnabledStatus',
+  async (enabled) => {
+    return enabled
+  }
+)
+
+
 export const setProjectData = createAsyncThunk(
   'project/setProjectData',
   async (projectData) => {
@@ -90,6 +99,21 @@ export const changeRequestText = createAsyncThunk(
     return requestText
   }
 )
+
+export const changeScheduleTimeInterval = createAsyncThunk(
+  'project/schedule/changeScheduleTimeInterval',
+  async (period) => {
+    return period
+  }
+)
+
+export const changeScheduleRequestText = createAsyncThunk(
+  'project/schedule/changeScheduleRequestText',
+  async (requestText) => {
+    return requestText
+  }
+)
+
 
 export const addFavoriteRequest = createAsyncThunk(
   'project/request/addFavoriteRequest',
@@ -156,13 +180,23 @@ export const initialize = createAsyncThunk(
 
       // 連線資訊
       connection: {
-        url: 'wss://echo.websocket.org',
+        // url: 'wss://echo.websocket.org',
         // url: 'ws://sbk-mock.p-marco.192.168.192.1.xip.io/player-api/ws',
+        // url: 'ws://sbk-mock.p-marco.svc.cluster.local:7000/player-api/ws',
+        url: 'ws://10.200.6.101:18700/player-api/ws?token=905ae792-34f3-4424-8776-70a00b88c761',
       },
 
       // 請求
       request: {
         text: '',
+      },
+
+      // 排程
+      schedule: {
+        timeInterval: 3,
+        request: {
+          text: '',
+        }
       },
 
       favoriteRequest: {
@@ -208,6 +242,7 @@ export const importProject = createAsyncThunk(
 
 
 let wsClient = null
+let scheduleHandler = null
 
 export const connect = createAsyncThunk(
   'action/connect',
@@ -249,21 +284,64 @@ export const disconnect = createAsyncThunk(
 
     wsClient.close()
     dispatch(changeConnectionState(ConnectionState.Idle))
+    dispatch(changeScheduleEnabledStatus(false))
   }
 )
 
 export const sendRequestText = createAsyncThunk(
   'action/sendRequestText',
+  async (requestText, {dispatch, getState}) => {
+    const connectionState = getConnectionState(getState())
+    if (connectionState !== ConnectionState.Connected) {
+      return
+    }
+
+    dispatch(changeRequestText(requestText))
+
+    wsClient.send(requestText)
+    dispatch(appendMessage({source: MessageSource.Client, message: requestText}))
+  }
+)
+
+export const enableSchedule = createAsyncThunk(
+  'action/enableSchedule',
+  async ({requestText, timeInterval}, {dispatch, getState}) => {
+    const connectionState = getConnectionState(getState())
+    if (connectionState !== ConnectionState.Connected) {
+      return
+    }
+
+    if (scheduleHandler) {
+      return
+    }
+
+    dispatch(changeScheduleRequestText(requestText))
+    dispatch(changeScheduleTimeInterval(timeInterval))
+
+    scheduleHandler = setInterval(() => {
+      wsClient.send(requestText)
+      dispatch(appendMessage({source: MessageSource.Client, message: requestText}))
+    }, timeInterval * 1000)
+
+    dispatch(changeScheduleEnabledStatus(true))
+  }
+)
+
+export const disableSchedule = createAsyncThunk(
+  'action/disableSchedule',
   async (_, {dispatch, getState}) => {
     const connectionState = getConnectionState(getState())
     if (connectionState !== ConnectionState.Connected) {
       return
     }
 
-    const requestText = getRequestText(getState())
+    if (!scheduleHandler) {
+      return
+    }
 
-    wsClient.send(requestText)
-    dispatch(appendMessage({source: MessageSource.Client, message: requestText}))
+    clearInterval(scheduleHandler)
+    scheduleHandler = null
+    dispatch(changeScheduleEnabledStatus(false))
   }
 )
 
@@ -277,6 +355,7 @@ const currentSlice = createSlice({
     selectedMessageID: null,
     appliedFavoriteRequestID: null,
     searchInput: '',
+    scheduleEnabled: false,
   },
   extraReducers: {
     [changeProjectState.fulfilled]: (state, action) => {
@@ -299,7 +378,10 @@ const currentSlice = createSlice({
     },
     [changeSearchInput.fulfilled]: (state, action) => {
       state.searchInput = action.payload
-    }
+    },
+    [changeScheduleEnabledStatus.fulfilled]: (state, action) => {
+      state.scheduleEnabled = action.payload
+    },
   }
 })
 
@@ -323,6 +405,14 @@ const projectSlice = createSlice({
       text: '',
     },
 
+    // 排程
+    schedule: {
+      timeInterval: 3,
+      request: {
+        text: '',
+      }
+    },
+
     // 常用訊息
     favoriteRequest: favoriteRequestAdapter.getInitialState(),
 
@@ -341,6 +431,12 @@ const projectSlice = createSlice({
     },
     [changeRequestText.fulfilled]: (state, action) => {
       state.request.text = action.payload
+    },
+    [changeScheduleTimeInterval.fulfilled]: (state, action) => {
+      state.schedule.timeInterval = action.payload
+    },
+    [changeScheduleRequestText().fulfilled]: (state, action) => {
+      state.schedule.request.text = action.payload
     },
     [addFavoriteRequest.fulfilled]: (state, action) => {
       favoriteRequestAdapter.addOne(state.favoriteRequest, action.payload)
@@ -370,6 +466,7 @@ export const getConnectionState = state => state.current.connectionState
 export const getSelectedMessageID = state => state.current.selectedMessageID
 export const getAppliedFavoriteRequestID = state => state.current.appliedFavoriteRequestID
 export const getSearchInput = state => state.current.searchInput
+export const getScheduleEnabledStatus = state => state.current.scheduleEnabled
 
 export const getProjectData = state => state.project
 export const getSettingMaxMessageCount = state => state.project.setting.maxMessageCount
@@ -377,6 +474,9 @@ export const getSettingMaxMessageCount = state => state.project.setting.maxMessa
 export const getConnectionUrl = state => state.project.connection.url
 
 export const getRequestText = state => state.project.request.text
+
+export const getScheduleTimeInterval = state => state.project.schedule.timeInterval
+export const getScheduleRequestText = state => state.project.schedule.request.text
 
 const favoriteRequestSelectors = favoriteRequestAdapter.getSelectors(state => state.project.favoriteRequest)
 export const getFavoriteRequests = state => favoriteRequestSelectors.selectAll(state)
