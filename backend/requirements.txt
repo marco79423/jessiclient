@@ -1,0 +1,9 @@
+# config
+omegaconf==2.0.6
+
+# server
+fastapi==0.63.0
+uvicorn[standard]==0.13.4
+
+# cache
+redis==3.5.3

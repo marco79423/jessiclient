@@ -1,0 +1,6 @@
+server:
+  redis:
+    host: localhost
+    port: 6379
+flash_project:
+  expired_time: 604800
