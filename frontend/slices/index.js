@@ -168,51 +168,6 @@ export const clearMessages = createAsyncThunk(
   }
 )
 
-
-export const initialize = createAsyncThunk(
-  'initialize',
-  async (_, {dispatch}) => {
-    const projectData = {
-      // 設定
-      setting: {
-        maxMessageCount: 100,
-      },
-
-      // 連線資訊
-      connection: {
-        url: 'wss://echo.websocket.org',
-      },
-
-      // 請求
-      request: {
-        text: '',
-      },
-
-      // 排程
-      schedule: {
-        timeInterval: 3,
-        request: {
-          text: '',
-        }
-      },
-
-      favoriteRequest: {
-        ids: [],
-        entities: {},
-      },
-
-      // 訊息
-      message: {
-        ids: [],
-        entities: {}
-      },
-    }
-
-    dispatch(setProjectData(projectData))
-    dispatch(changeProjectState(LoadingState.Loaded))
-  }
-)
-
 export const exportProject = createAsyncThunk(
   'action/exportProject',
   (_, {getState}) => {
@@ -377,7 +332,10 @@ const projectSlice = createSlice({
 
     // 連線資訊
     connection: {
-      url: '',
+      url: 'wss://echo.websocket.org',
+      // url: 'ws://sbk-mock.p-marco.192.168.192.1.xip.io/player-api/ws',
+      // url: 'ws://sbk-mock.p-marco.svc.cluster.local:7000/player-api/ws',
+      // url: 'ws://10.200.6.101:18700/player-api/ws?token=905ae792-34f3-4424-8776-70a00b88c761',
     },
 
     // 請求
