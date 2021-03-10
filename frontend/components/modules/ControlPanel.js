@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
-import {Button, Grid, Paper, Tab, Tabs, TextField, Typography} from '@material-ui/core'
+import {Button, Grid, Link, Paper, Tab, Tabs, TextField, Typography} from '@material-ui/core'
 import {TabContext, TabPanel} from '@material-ui/lab'
 
 import {ConnectionState} from '../../constants'
@@ -21,7 +21,6 @@ import {
   setAppliedFavoriteRequestID
 } from '../../slices'
 import ConnectionPanel from './ConnectionPanel'
-import Copyright from './Copyright'
 import FavoriteRequestsPanel from './FavoriteRequestsPanel'
 import generateRandomString from '../../utils/generateRandomString'
 
@@ -316,5 +315,17 @@ function ScheduleTabPanel() {
         </Grid>
       </Grid>
     </TabPanel>
+  )
+}
+
+function Copyright() {
+  const classes = useStyles()
+
+  return (
+    <Typography className={classes.copyright} variant="body2" align="center">
+      {'Copyright © '}
+      <Link color="inherit" href="https://eng.marco79423.net/">兩大類</Link>{' '}
+      {new Date().getFullYear()}
+    </Typography>
   )
 }
