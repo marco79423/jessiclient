@@ -1,39 +1,14 @@
 import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  Grid,
-  IconButton,
-  ListItem,
-  Paper,
-  Typography
-} from '@material-ui/core'
-import CloseIcon from '@material-ui/icons/Close'
+import {Button, Grid, Paper, Typography} from '@material-ui/core'
 
 import {changeRequestText, getFavoriteRequests, removeFavoriteRequest, setAppliedFavoriteRequestID} from '../../slices'
+import BasicDialog from '../elements/BasicDialog'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    background: theme.project.page.main.favoriteRequestsPanel.background,
-    borderRadius: theme.spacing(1),
-    width: '100%',
-    minHeight: '80%',
-  },
-  title: {
-    background: theme.project.page.main.favoriteRequestsPanel.header.background,
-    color: theme.project.page.main.favoriteRequestsPanel.header.textColor,
-    fontSize: '1.5rem',
-    fontWeight: 600,
-  },
-  closeButton: {
-    color: theme.project.page.main.favoriteRequestsPanel.header.closeButton,
-  },
-  inputPanel: {
-    marginTop: theme.spacing(1),
+    width: 10000,
   },
   item: {
     padding: theme.spacing(2),
@@ -82,23 +57,14 @@ export default function FavoriteRequestsPanel({open, onClose}) {
   const favoriteRequests = useSelector(getFavoriteRequests)
 
   return (
-    <Dialog classes={{paper: classes.root}} scroll="body" maxWidth="md" open={open} onClose={onClose}>
-      <DialogTitle disableTypography className={classes.title}>
-        <Grid container alignItems="center" justify="space-between">
-          <Grid item>常用請求列表</Grid>
-          <Grid item><IconButton className={classes.closeButton} aria-label="close"
-                                 onClick={onClose}><CloseIcon/></IconButton></Grid>
-        </Grid>
-      </DialogTitle>
-      <DialogContent className={classes.inputPanel}>
-        <Grid container spacing={2} justify="center">
-          {favoriteRequests.map(favoriteRequest => (
-            <Grid key={favoriteRequest.id} className={classes.message} item>
-              <FavoriteRequestItem favoriteRequest={favoriteRequest}/>
-            </Grid>
-          ))}
-        </Grid>
-      </DialogContent>
-    </Dialog>
+    <BasicDialog classname={classes.root} size="large" title={'常用請求列表'} open={open} onClose={onClose}>
+      <Grid container spacing={2} justify="center">
+        {favoriteRequests.map(favoriteRequest => (
+          <Grid key={favoriteRequest.id} className={classes.message} item>
+            <FavoriteRequestItem favoriteRequest={favoriteRequest}/>
+          </Grid>
+        ))}
+      </Grid>
+    </BasicDialog>
   )
 }

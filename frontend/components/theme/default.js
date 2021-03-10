@@ -45,6 +45,15 @@ const basicTheme = {
 const theme = {
   basic: {
     ...basicTheme,
+
+    dialog: {
+      header: {
+        background: colorTable['indigo-800'],
+        textColor: 'white',
+        closeButton: 'white',
+      },
+      background: colorTable['indigo-100'],
+    }
   },
   page: {
     background: colorTable['grey-700'],
@@ -85,14 +94,6 @@ const theme = {
           tab: colorTable['indigo-200'],
         },
       },
-      favoriteRequestsPanel: {
-        header: {
-          background: colorTable['indigo-800'],
-          textColor: 'white',
-          closeButton: 'white',
-        },
-        background: colorTable['indigo-400'],
-      }
     },
   }
 }
