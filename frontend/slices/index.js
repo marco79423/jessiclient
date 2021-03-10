@@ -168,6 +168,15 @@ export const clearMessages = createAsyncThunk(
   }
 )
 
+
+export const initialize = createAsyncThunk(
+  'initialize',
+  async (_, {dispatch}) => {
+
+    dispatch(changeProjectState(LoadingState.Loaded))
+  }
+)
+
 export const exportProject = createAsyncThunk(
   'action/exportProject',
   (_, {getState}) => {

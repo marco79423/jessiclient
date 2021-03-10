@@ -1,10 +1,10 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {makeStyles} from '@material-ui/core/styles'
 import {Grid, Slide} from '@material-ui/core'
 
-import {getSelectedMessageID} from '../slices'
+import {getSelectedMessageID, initialize} from '../slices'
 import ListPanel from '../components/modules/ListPanel'
 import ControlPanel from '../components/modules/ControlPanel'
 import DetailPanel from '../components/modules/DetailPanel'
@@ -31,6 +31,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Index() {
   const classes = useStyles()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(initialize())
+  }, [])
 
   const messageID = useSelector(getSelectedMessageID)
   const detailOpen = messageID !== null
