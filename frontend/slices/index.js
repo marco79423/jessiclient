@@ -341,10 +341,10 @@ const projectSlice = createSlice({
 
     // 連線資訊
     connection: {
-      url: 'wss://echo.websocket.org',
+      // url: 'wss://echo.websocket.org',
       // url: 'ws://sbk-mock.p-marco.192.168.192.1.xip.io/player-api/ws',
       // url: 'ws://sbk-mock.p-marco.svc.cluster.local:7000/player-api/ws',
-      // url: 'ws://10.200.6.101:18700/player-api/ws?token=905ae792-34f3-4424-8776-70a00b88c761',
+      url: 'ws://10.200.6.101:18700/player-api/ws?token=d6b71fef-6a9e-4630-af0d-076b26cc1436',
     },
 
     // 請求
