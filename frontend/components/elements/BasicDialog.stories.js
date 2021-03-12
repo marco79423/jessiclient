@@ -10,6 +10,9 @@ export default {
   title: 'elements/BasicDialog',
   component: BasicDialog,
   argTypes: {},
+  decorators: [
+    story => <ThemeProvider theme={muiTheme}>{story()}</ThemeProvider>,
+  ],
 }
 
 const muiTheme = createMuiTheme({
@@ -24,18 +27,12 @@ const muiTheme = createMuiTheme({
   },
 })
 
-const Template = ({size, title, open, onClose, actions}) => (
-  <ThemeProvider theme={muiTheme}>
-    <BasicDialog size={size}
-                 title={title}
-                 open={open}
-                 onClose={onClose}
-                 actions={actions}>
-      <TextField label="最大訊息數"
-                 margin="dense"
-                 value={100}/>
-    </BasicDialog>
-  </ThemeProvider>
+const Template = (args) => (
+  <BasicDialog {...args}>
+    <TextField label="最大訊息數"
+               margin="dense"
+               value={100}/>
+  </BasicDialog>
 )
 
 export const Default = Template.bind({})
