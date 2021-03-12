@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import {useDispatch} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
 import {AppBar as MuiAppBar, Avatar, Grid, IconButton, Toolbar, Tooltip, Typography} from '@material-ui/core'
 import ArchiveIcon from '@material-ui/icons/Archive'
@@ -7,7 +8,6 @@ import SettingsIcon from '@material-ui/icons/Settings'
 import ShareIcon from '@material-ui/icons/Share'
 
 import SettingsPanel from './SettingsPanel'
-import {useDispatch} from 'react-redux'
 import {exportProject, importProject} from '../../slices'
 
 

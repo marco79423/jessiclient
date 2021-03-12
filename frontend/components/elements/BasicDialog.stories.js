@@ -6,15 +6,6 @@ import BasicDialog from './BasicDialog'
 import {Button, TextField} from '@material-ui/core'
 
 
-export default {
-  title: 'elements/BasicDialog',
-  component: BasicDialog,
-  argTypes: {},
-  decorators: [
-    story => <ThemeProvider theme={muiTheme}>{story()}</ThemeProvider>,
-  ],
-}
-
 const muiTheme = createMuiTheme({
   project: theme,
   palette: {
@@ -26,6 +17,16 @@ const muiTheme = createMuiTheme({
     },
   },
 })
+
+export default {
+  title: 'elements/BasicDialog',
+  component: BasicDialog,
+  argTypes: {},
+  decorators: [
+    story => <ThemeProvider theme={muiTheme}>{story()}</ThemeProvider>,
+  ],
+}
+
 
 const Template = (args) => (
   <BasicDialog {...args}>

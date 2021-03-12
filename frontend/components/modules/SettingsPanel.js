@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import {makeStyles} from '@material-ui/core/styles'
-import {Button, TextField} from '@material-ui/core'
-import {changeSettingMaxMessageCount, getSettingMaxMessageCount} from '../../slices'
 import {useDispatch, useSelector} from 'react-redux'
+import {TextField} from '@material-ui/core'
+import {changeSettingMaxMessageCount, getSettingMaxMessageCount} from '../../slices'
+
+import Button from '../elements/Button'
 import BasicDialog from '../elements/BasicDialog'
 
 const useStyles = makeStyles((theme) => ({
@@ -38,8 +40,8 @@ export default function SettingsPanel({open, onClose}) {
                  onClose={onClose}
                  actions={
                    <>
-                     <Button variant="contained" onClick={onClose}>取消</Button>
-                     <Button variant="contained" color="primary" onClick={confirm}>修改</Button>
+                     <Button onClick={onClose}>取消</Button>
+                     <Button primary onClick={confirm}>修改</Button>
                    </>
                  }
     >

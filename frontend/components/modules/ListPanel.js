@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
-import {Button, Grid, IconButton, InputBase, List, ListItem, ListItemText, Paper, Typography} from '@material-ui/core'
+import {Button as MuiButton, Grid, IconButton, InputBase, List, ListItem, ListItemText, Paper, Typography} from '@material-ui/core'
 import ClearIcon from '@material-ui/icons/Clear'
 
 import {LoadingState, MessageSource} from '../../constants'
@@ -14,6 +14,7 @@ import {
   getSearchInput,
   setSelectedMessageID
 } from '../../slices'
+import Button from '../elements/Button'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -92,7 +93,7 @@ function SearchInput() {
         ) : null}
       </Grid>
       <Grid item>
-        <Button onClick={onSearchButtonClicked}>搜尋</Button>
+        <MuiButton onClick={onSearchButtonClicked}>搜尋</MuiButton>
       </Grid>
     </Grid>
   )
@@ -157,7 +158,7 @@ export default function ListPanel() {
           <SearchInput/>
         </Grid>
         <Grid item>
-          <Button className={classes.clearButton} variant="contained" onClick={onClearAllButtonClick}>
+          <Button className={classes.clearButton} onClick={onClearAllButtonClick}>
             清空訊息
           </Button>
         </Grid>

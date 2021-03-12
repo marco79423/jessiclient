@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
-import {Button, Grid, Link, Paper, Tab, Tabs, TextField, Typography} from '@material-ui/core'
+import {Grid, Link, Paper, Tab, Tabs, TextField, Typography} from '@material-ui/core'
 import {TabContext, TabPanel} from '@material-ui/lab'
 
 import {ConnectionState} from '../../constants'
@@ -20,6 +20,7 @@ import {
   sendRequestText,
   setAppliedFavoriteRequestID
 } from '../../slices'
+import Button from '../elements/Button'
 import ConnectionPanel from './ConnectionPanel'
 import FavoriteRequestsPanel from './FavoriteRequestsPanel'
 import generateRandomString from '../../utils/generateRandomString'
@@ -147,11 +148,7 @@ function BasicTabPanel() {
     <TabPanel value="basic">
       <Grid container direction="row-reverse">
         <Grid item>
-          <Button
-            variant="contained"
-            onClick={showFavoriteRequestsPanel}>
-            展開常用列表
-          </Button>
+          <Button onClick={showFavoriteRequestsPanel}>展開常用列表</Button>
           <FavoriteRequestsPanel open={favoriteRequestsPanelOpen} onClose={hideFavoriteRequestsPanel}/>
         </Grid>
       </Grid>
@@ -170,20 +167,10 @@ function BasicTabPanel() {
 
       <Grid style={{marginTop: 8}} container justify="space-between">
         <Grid item>
-          <Button
-            variant="contained"
-            onClick={onAppliedFavoriteRequestButtonClicked}>
-            {appliedFavoriteRequest ? '取消常用' : '設為常用'}
-          </Button>
+          <Button onClick={onAppliedFavoriteRequestButtonClicked}>{appliedFavoriteRequest ? '取消常用' : '設為常用'}</Button>
         </Grid>
         <Grid item>
-          <Button
-            variant="contained"
-            color="primary"
-            disabled={!isConnected}
-            onClick={onSendButtonClicked}>
-            送出
-          </Button>
+          <Button primary disabled={!isConnected} onClick={onSendButtonClicked}>送出</Button>
         </Grid>
       </Grid>
     </TabPanel>
@@ -191,7 +178,6 @@ function BasicTabPanel() {
 }
 
 function ScheduleTabPanel() {
-  const classes = useStyles()
   const dispatch = useDispatch()
 
   const connectionState = useSelector(getConnectionState)
@@ -258,12 +244,7 @@ function ScheduleTabPanel() {
     <TabPanel value="schedule">
       <Grid container direction="row-reverse">
         <Grid item>
-          <Button
-            variant="contained"
-            disabled={scheduleEnabled}
-            onClick={showFavoriteRequestsPanel}>
-            展開常用列表
-          </Button>
+          <Button disabled={scheduleEnabled} onClick={showFavoriteRequestsPanel}>展開常用列表</Button>
           <FavoriteRequestsPanel open={favoriteRequestsPanelOpen} onClose={hideFavoriteRequestsPanel}/>
         </Grid>
       </Grid>
@@ -282,10 +263,7 @@ function ScheduleTabPanel() {
       />
       <Grid style={{marginTop: 8}} container alignItems="center" justify="space-between">
         <Grid item>
-          <Button
-            variant="contained"
-            disabled={scheduleEnabled}
-            onClick={onAppliedFavoriteRequestButtonClicked}>
+          <Button disabled={scheduleEnabled} onClick={onAppliedFavoriteRequestButtonClicked}>
             {appliedFavoriteRequest ? '取消常用' : '設為常用'}
           </Button>
         </Grid>
@@ -303,11 +281,7 @@ function ScheduleTabPanel() {
               </Grid>
             </Grid>
             <Grid item>
-              <Button
-                variant="contained"
-                color="primary"
-                disabled={!isConnected}
-                onClick={onEnableButtonClicked}>
+              <Button primary disabled={!isConnected} onClick={onEnableButtonClicked}>
                 {scheduleEnabled ? '關閉' : '啟用'}
               </Button>
             </Grid>

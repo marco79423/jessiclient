@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
+import {useTranslation} from 'next-i18next'
 import classNames from 'classnames'
 import {makeStyles} from '@material-ui/core/styles'
 import {Button, Grid, InputBase, Paper, Tooltip} from '@material-ui/core'
 
 import {ConnectionState} from '../../constants'
 import {changeConnectionUrl, connect, disconnect, getConnectionState, getConnectionUrl} from '../../slices'
-import {useTranslation} from 'next-i18next'
 
 const useStyles = makeStyles((theme) => ({
   root: {
