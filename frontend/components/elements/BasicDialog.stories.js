@@ -42,8 +42,8 @@ Default.args = {
   open: true,
 }
 
-export const DefaultWithActions = Template.bind({})
-DefaultWithActions.args = {
+export const WithActions = Template.bind({})
+WithActions.args = {
   title: '設定',
   open: true,
   actions: (
@@ -53,11 +53,3 @@ DefaultWithActions.args = {
     </>
   )
 }
-
-export const Large = Template.bind({})
-Large.args = {
-  title: '設定',
-  open: true,
-  size: 'large'
-}
-
