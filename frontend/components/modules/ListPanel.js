@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
-import {Button as MuiButton, Grid, IconButton, InputBase, List, ListItem, ListItemText, Paper, Typography} from '@material-ui/core'
-import ClearIcon from '@material-ui/icons/Clear'
+import {Grid, List, ListItem, ListItemText, Typography} from '@material-ui/core'
 
 import {LoadingState, MessageSource} from '../../constants'
 import {
@@ -15,6 +14,7 @@ import {
   setSelectedMessageID
 } from '../../slices'
 import Button from '../elements/Button'
+import SearchField from '../elements/SearchField'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -24,14 +24,8 @@ const useStyles = makeStyles((theme) => ({
   controlBar: {
     background: theme.project.page.main.listPanel.controlBar.background,
     height: 64,
-  },
-  searchInput: {
-    marginLeft: theme.spacing(2),
-    paddingLeft: theme.spacing(1),
-    width: 300,
-  },
-  clearButton: {
-    marginRight: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
   },
   dataSection: {
     padding: 0,
@@ -57,53 +51,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function SearchInput() {
+export default function ListPanel() {
   const classes = useStyles()
   const dispatch = useDispatch()
+  const projectState = useSelector(getProjectState)
+  const messages = useSelector(getMessages)
   const searchInput = useSelector(getSearchInput)
 
-  const [value, setValue] = useState('')
-
-  useEffect(() => {
-    setValue(searchInput)
-  }, [searchInput])
-
-  const onValueChange = (e) => {
-    setValue(e.target.value)
-  }
-
-  const onSearchButtonClicked = () => {
+  const onSearchButtonClicked = (value) => {
     dispatch(changeSearchInput(value))
   }
 
   const onClearButtonClicked = () => {
     dispatch(changeSearchInput(''))
   }
-
-  return (
-    <Grid className={classes.searchInput} container alignItems="center" component={Paper}>
-      <Grid item xs>
-        <InputBase fullWidth placeholder="搜尋訊息" value={value} onChange={onValueChange}/>
-      </Grid>
-      <Grid item>
-        {searchInput ? (
-          <IconButton size="small" onClick={onClearButtonClicked}>
-            <ClearIcon/>
-          </IconButton>
-        ) : null}
-      </Grid>
-      <Grid item>
-        <MuiButton onClick={onSearchButtonClicked}>搜尋</MuiButton>
-      </Grid>
-    </Grid>
-  )
-}
-
-export default function ListPanel() {
-  const classes = useStyles()
-  const dispatch = useDispatch()
-  const projectState = useSelector(getProjectState)
-  const messages = useSelector(getMessages)
 
   const onClearAllButtonClick = () => {
     dispatch(clearMessages())
@@ -155,7 +116,12 @@ export default function ListPanel() {
       <Grid className={classes.controlBar} container justify="space-between" alignItems="center"
             elevation={1} square>
         <Grid item>
-          <SearchInput/>
+          <SearchField
+            placeholder='搜尋訊息'
+            searchText={searchInput}
+            onSearch={onSearchButtonClicked}
+            onClear={onClearButtonClicked}
+          />
         </Grid>
         <Grid item>
           <Button className={classes.clearButton} onClick={onClearAllButtonClick}>
