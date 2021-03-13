@@ -5,12 +5,13 @@ import {Chip, Grid, List, ListItem, ListItemText, Typography} from '@material-ui
 
 import {LoadingState, MessageSource} from '../../constants'
 import {
-  changeSearchInput,
+  addSearchFilter,
   clearMessages,
   clearSelectedMessageID,
   getMessages,
   getProjectState,
-  getSearchInput,
+  getSearchFilters,
+  removeSearchFilter,
   setSelectedMessageID
 } from '../../slices'
 import Button from '../elements/Button'
@@ -56,14 +57,14 @@ export default function ListPanel() {
   const dispatch = useDispatch()
   const projectState = useSelector(getProjectState)
   const messages = useSelector(getMessages)
-  const searchInput = useSelector(getSearchInput)
+  const searchFilters = useSelector(getSearchFilters)
 
   const onSearchButtonClicked = (value) => {
-    dispatch(changeSearchInput(value))
+    dispatch(addSearchFilter(value))
   }
 
-  const onClearButtonClicked = () => {
-    dispatch(changeSearchInput(''))
+  const onClearButtonClicked = (id) => {
+    dispatch(removeSearchFilter(id))
   }
 
   const onClearAllButtonClick = () => {
@@ -120,16 +121,17 @@ export default function ListPanel() {
             <Grid item>
               <SearchField
                 placeholder='搜尋訊息'
-                searchText={searchInput}
                 onSearch={onSearchButtonClicked}
               />
             </Grid>
-            <Grid item>
-              {searchInput ? (<Chip
-                label={searchInput}
-                onDelete={onClearButtonClicked}
-              />) : null}
-            </Grid>
+            {searchFilters.map(searchFilter => (
+              <Grid key={searchFilter.id} item>
+                <Chip
+                  label={searchFilter.text}
+                  onDelete={() => onClearButtonClicked(searchFilter.id)}
+                />
+              </Grid>
+            ))}
           </Grid>
         </Grid>
         <Grid item>

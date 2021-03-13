@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {makeStyles} from '@material-ui/core/styles'
-import {Button as MuiButton, Grid, IconButton, InputBase, Paper} from '@material-ui/core'
-import ClearIcon from '@material-ui/icons/Clear'
+import {Button as MuiButton, Grid, InputBase, Paper} from '@material-ui/core'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -11,29 +10,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function SearchField({placeholder, searchText, onSearch}) {
+export default function SearchField({placeholder, defaultValue, onSearch}) {
   const classes = useStyles()
-  const [localSearchText, setLocalSearchText] = useState('')
+  const [value, setValue] = useState('')
 
   useEffect(() => {
-    setLocalSearchText(searchText)
-  }, [searchText])
+    if (defaultValue) {
+      setValue(defaultValue)
+    }
+  }, [defaultValue])
 
-  const onLocalSearchTextChange = (e) => {
-    setLocalSearchText(e.target.value)
+  const onValueChange = (e) => {
+    setValue(e.target.value)
   }
 
-  const onSearchButtonClicked = () => {
-    onSearch(localSearchText)
+  const onButtonClicked = () => {
+    onSearch(value)
   }
 
   return (
     <Grid className={classes.root} container alignItems="center" component={Paper}>
       <Grid item xs>
-        <InputBase fullWidth placeholder={placeholder} value={localSearchText} onChange={onLocalSearchTextChange}/>
+        <InputBase fullWidth placeholder={placeholder} value={value} onChange={onValueChange}/>
       </Grid>
       <Grid item>
-        <MuiButton onClick={onSearchButtonClicked}>搜尋</MuiButton>
+        <MuiButton onClick={onButtonClicked}>搜尋</MuiButton>
       </Grid>
     </Grid>
   )
