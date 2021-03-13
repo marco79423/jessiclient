@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
   },
   connectionPanel: {
-    marginTop: theme.spacing(6),
+    marginTop: theme.spacing(3),
   },
   requestPanel: {
     marginTop: theme.spacing(4),
