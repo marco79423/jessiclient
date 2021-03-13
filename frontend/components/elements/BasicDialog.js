@@ -5,19 +5,19 @@ import CloseIcon from '@material-ui/icons/Close'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    background: theme.project.basic.dialog.background,
+    background: theme.project.elements.basicDialog.background,
     borderRadius: theme.spacing(1),
   },
   header: {
-    background: theme.project.basic.dialog.header.background,
-    color: theme.project.basic.dialog.header.textColor,
+    background: theme.project.elements.basicDialog.header.background,
+    color: theme.project.elements.basicDialog.header.textColor,
     fontSize: '1.2rem',
     fontWeight: 600,
     padding: theme.spacing(0.5),
     paddingLeft: theme.spacing(2),
   },
   closeButton: {
-    color: theme.project.basic.dialog.header.closeButton,
+    color: theme.project.elements.basicDialog.header.closeButton,
   },
   content: {
     marginTop: theme.spacing(1),

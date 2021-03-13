@@ -5,7 +5,7 @@ import {IconButton as MuiIconButton, Tooltip} from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    color: theme.project.basic.iconButton.color,
+    color: theme.project.elements.iconButton.color,
   },
   icon: {
     fontSize: '2rem',

@@ -41,8 +41,8 @@ export const colorTable = {
 
 const theme = createMuiTheme({
   project: {
-    basic: {
-      dialog: {
+    elements: {
+      basicDialog: {
         header: {
           background: colorTable['indigo-800'],
           textColor: 'white',
