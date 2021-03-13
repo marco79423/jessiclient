@@ -1,7 +1,7 @@
 import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
-import {Grid, List, ListItem, ListItemText, Typography} from '@material-ui/core'
+import {Chip, Grid, List, ListItem, ListItemText, Typography} from '@material-ui/core'
 
 import {LoadingState, MessageSource} from '../../constants'
 import {
@@ -116,12 +116,21 @@ export default function ListPanel() {
       <Grid className={classes.controlBar} container justify="space-between" alignItems="center"
             elevation={1} square>
         <Grid item>
-          <SearchField
-            placeholder='搜尋訊息'
-            searchText={searchInput}
-            onSearch={onSearchButtonClicked}
-            onClear={onClearButtonClicked}
-          />
+          <Grid container alignItems="baseline" spacing={1}>
+            <Grid item>
+              <SearchField
+                placeholder='搜尋訊息'
+                searchText={searchInput}
+                onSearch={onSearchButtonClicked}
+              />
+            </Grid>
+            <Grid item>
+              {searchInput ? (<Chip
+                label={searchInput}
+                onDelete={onClearButtonClicked}
+              />) : null}
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item>
           <Button className={classes.clearButton} onClick={onClearAllButtonClick}>

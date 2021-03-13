@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function SearchField({placeholder, searchText, onSearch, onClear}) {
+export default function SearchField({placeholder, searchText, onSearch}) {
   const classes = useStyles()
   const [localSearchText, setLocalSearchText] = useState('')
 
@@ -27,21 +27,10 @@ export default function SearchField({placeholder, searchText, onSearch, onClear}
     onSearch(localSearchText)
   }
 
-  const onClearButtonClicked = () => {
-    onClear()
-  }
-
   return (
     <Grid className={classes.root} container alignItems="center" component={Paper}>
       <Grid item xs>
         <InputBase fullWidth placeholder={placeholder} value={localSearchText} onChange={onLocalSearchTextChange}/>
-      </Grid>
-      <Grid item>
-        {searchText ? (
-          <IconButton size="small" onClick={onClearButtonClicked}>
-            <ClearIcon/>
-          </IconButton>
-        ) : null}
       </Grid>
       <Grid item>
         <MuiButton onClick={onSearchButtonClicked}>搜尋</MuiButton>
