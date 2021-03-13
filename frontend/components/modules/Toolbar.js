@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {makeStyles} from '@material-ui/core/styles'
-import {Grid, IconButton, TextField, Toolbar as MuiToolbar, Tooltip} from '@material-ui/core'
+import {Grid, TextField, Toolbar as MuiToolbar} from '@material-ui/core'
 import ArchiveIcon from '@material-ui/icons/Archive'
 import UnarchiveIcon from '@material-ui/icons/Unarchive'
 import SettingsIcon from '@material-ui/icons/Settings'
@@ -10,19 +9,10 @@ import ShareIcon from '@material-ui/icons/Share'
 import {changeSettingMaxMessageCount, exportProject, getSettingMaxMessageCount, importProject} from '../../slices'
 import BasicDialog from '../elements/BasicDialog'
 import Button from '../elements/Button'
+import IconButton from '../elements/IconButton'
 
-
-const useStyles = makeStyles((theme) => ({
-  settingsButton: {
-    color: theme.project.page.header.settingsButton,
-  },
-  icon: {
-    fontSize: '2rem',
-  }
-}))
 
 export default function Toolbar() {
-  const classes = useStyles()
   const dispatch = useDispatch()
   const [settingsPanelOpen, setSettingsPanel] = useState(false)
   const [exportPanelOpen, setExportPanel] = useState(false)
@@ -52,25 +42,10 @@ export default function Toolbar() {
       <Grid container justify="space-between" alignItems="center">
         <Grid item>
           <MuiToolbar>
-            <Tooltip title="分享">
-              <IconButton style={{visibility: 'hidden'}} className={classes.settingsButton}
-                          onClick={showSettingsPanel}>
-                <ShareIcon className={classes.icon}/>
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="匯出專案">
-              <IconButton className={classes.settingsButton} onClick={showExportPanel}>
-                <ArchiveIcon className={classes.icon}/>
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="匯入專案">
-              <IconButton className={classes.settingsButton} onClick={onImportClicked}>
-                <UnarchiveIcon className={classes.icon}/>
-              </IconButton>
-            </Tooltip>
-            <IconButton className={classes.settingsButton} onClick={showSettingsPanel}>
-              <SettingsIcon className={classes.icon}/>
-            </IconButton>
+            <IconButton style={{visibility: 'hidden'}} description={'分享'} icon={ShareIcon} onClick={showSettingsPanel}/>
+            <IconButton description={'匯出專案'} icon={ArchiveIcon} onClick={showExportPanel}/>
+            <IconButton description={'匯入專案'} icon={UnarchiveIcon} onClick={onImportClicked}/>
+            <IconButton description={'匯入專案'} icon={SettingsIcon} onClick={showSettingsPanel}/>
           </MuiToolbar>
         </Grid>
       </Grid>

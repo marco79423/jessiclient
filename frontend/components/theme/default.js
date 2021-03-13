@@ -53,6 +53,10 @@ const theme = {
         closeButton: 'white',
       },
       background: colorTable['indigo-100'],
+    },
+
+    iconButton: {
+      color: colorTable['grey-50'],
     }
   },
   page: {
@@ -61,7 +65,6 @@ const theme = {
       background: colorTable['indigo-800'],
       titleColor: colorTable['grey-50'],
       subtitleColor: colorTable['grey-50'],
-      settingsButton: colorTable['grey-50'],
     },
     main: {
       background: colorTable['grey-200'],
