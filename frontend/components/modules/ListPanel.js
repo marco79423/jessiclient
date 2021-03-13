@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
 import {Chip, Grid, List, ListItem, ListItemText, Typography} from '@material-ui/core'
@@ -16,6 +16,7 @@ import {
 } from '../../slices'
 import Button from '../elements/Button'
 import SearchField from '../elements/SearchField'
+import BasicDialog from '../elements/BasicDialog'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -58,6 +59,7 @@ export default function ListPanel() {
   const projectState = useSelector(getProjectState)
   const messages = useSelector(getMessages)
   const searchFilters = useSelector(getSearchFilters)
+  const [clearAllDialogOn, setClearAllDialog] = useState(false)
 
   const onSearchButtonClicked = (value) => {
     dispatch(addSearchFilter(value))
@@ -67,8 +69,12 @@ export default function ListPanel() {
     dispatch(removeSearchFilter(id))
   }
 
-  const onClearAllButtonClick = () => {
-    dispatch(clearMessages())
+  const showClearAllDialog = () => {
+    setClearAllDialog(true)
+  }
+
+  const hideClearAllDialog = () => {
+    setClearAllDialog(false)
   }
 
   const handleSelected = (message) => {
@@ -135,9 +141,10 @@ export default function ListPanel() {
           </Grid>
         </Grid>
         <Grid item>
-          <Button className={classes.clearButton} onClick={onClearAllButtonClick}>
+          <Button className={classes.clearButton} onClick={showClearAllDialog}>
             清空訊息
           </Button>
+          <ClearAllDialog open={clearAllDialogOn} onClose={hideClearAllDialog}/>
         </Grid>
       </Grid>
       <List className={classes.dataSection}>
@@ -162,5 +169,29 @@ export default function ListPanel() {
         ))}
       </List>
     </div>
+  )
+}
+
+
+function ClearAllDialog({open, onClose}) {
+  const dispatch = useDispatch()
+
+  const confirm = () => {
+    dispatch(clearMessages())
+    onClose()
+  }
+
+  return (
+    <BasicDialog title={'確定刪除嗎？'}
+                 open={open}
+                 onClose={onClose}
+                 actions={
+                   <>
+                     <Button onClick={onClose}>取消</Button>
+                     <Button primary onClick={confirm}>刪除</Button>
+                   </>
+                 }>
+      <Typography>刪除的訊息將不再能恢復</Typography>
+    </BasicDialog>
   )
 }
