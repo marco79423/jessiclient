@@ -31,10 +31,5 @@ const Template = (args) => <Button {...args}>按鈕</Button>
 export const Default = Template.bind({})
 Default.args = {
   primary: false,
-}
-
-export const Large = Template.bind({})
-Large.args = {
-  large: true,
-  primary: false,
+  disabled: false,
 }
