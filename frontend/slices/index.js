@@ -188,9 +188,13 @@ export const initialize = createAsyncThunk(
 
 export const exportProject = createAsyncThunk(
   'action/exportProject',
-  (_, {getState}) => {
+  ({name, includeMessages}, {getState}) => {
     const projectData = getProjectData(getState())
-    jsDownload(JSON.stringify(projectData), `${new Date().toISOString()}.json`)
+    if(!includeMessages) {
+        projectData.message = messageAdapter.getInitialState()
+    }
+
+    jsDownload(JSON.stringify(projectData), `${name}.json`)
   }
 )
 

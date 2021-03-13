@@ -1,14 +1,15 @@
-import React, {useState} from 'react'
-import {useDispatch} from 'react-redux'
+import React, {useEffect, useState} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
-import {AppBar as MuiAppBar, Avatar, Grid, IconButton, Toolbar, Tooltip, Typography} from '@material-ui/core'
+import {AppBar as MuiAppBar, Avatar, Grid, IconButton, TextField, Toolbar, Tooltip, Typography} from '@material-ui/core'
 import ArchiveIcon from '@material-ui/icons/Archive'
 import UnarchiveIcon from '@material-ui/icons/Unarchive'
 import SettingsIcon from '@material-ui/icons/Settings'
 import ShareIcon from '@material-ui/icons/Share'
 
-import SettingsPanel from './SettingsPanel'
-import {exportProject, importProject} from '../../slices'
+import {changeSettingMaxMessageCount, exportProject, getSettingMaxMessageCount, importProject} from '../../slices'
+import BasicDialog from '../elements/BasicDialog'
+import Button from '../elements/Button'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -100,5 +101,43 @@ export default function AppBar() {
 
       <SettingsPanel open={settingsPanelOpen} onClose={hideSettingsPanel}/>
     </>
+  )
+}
+
+function SettingsPanel({open, onClose}) {
+  const dispatch = useDispatch()
+  const [value, setValue] = useState(null)
+  const maxMessageCount = useSelector(getSettingMaxMessageCount)
+
+  useEffect(() => {
+    setValue(maxMessageCount)
+  }, [maxMessageCount])
+
+  const confirm = () => {
+    dispatch(changeSettingMaxMessageCount(value))
+    onClose()
+  }
+
+  const onValueChange = (e) => {
+    setValue(e.target.value)
+  }
+
+  return (
+    <BasicDialog title={'設定'}
+                 open={open}
+                 onClose={onClose}
+                 actions={
+                   <>
+                     <Button onClick={onClose}>取消</Button>
+                     <Button primary onClick={confirm}>修改</Button>
+                   </>
+                 }
+    >
+
+      <TextField label="最大訊息數"
+                 onChange={onValueChange}
+                 margin="dense"
+                 value={value}/>
+    </BasicDialog>
   )
 }
