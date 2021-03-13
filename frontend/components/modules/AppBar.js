@@ -42,13 +42,18 @@ export default function AppBar() {
   const classes = useStyles()
   const dispatch = useDispatch()
   const [settingsPanelOpen, setSettingsPanel] = useState(false)
-
-  const onExportClicked = () => {
-    dispatch(exportProject())
-  }
+  const [exportPanelOpen, setExportPanel] = useState(false)
 
   const onImportClicked = () => {
     dispatch(importProject())
+  }
+
+  const showExportPanel = () => {
+    setExportPanel(true)
+  }
+
+  const hideExportPanel = () => {
+    setExportPanel(false)
   }
 
   const showSettingsPanel = () => {
@@ -82,7 +87,7 @@ export default function AppBar() {
                 </IconButton>
               </Tooltip>
               <Tooltip title="匯出專案">
-                <IconButton className={classes.settingsButton} onClick={onExportClicked}>
+                <IconButton className={classes.settingsButton} onClick={showExportPanel}>
                   <ArchiveIcon className={classes.icon}/>
                 </IconButton>
               </Tooltip>
@@ -99,10 +104,48 @@ export default function AppBar() {
         </Toolbar>
       </MuiAppBar>
 
+      <ExportPanel open={exportPanelOpen} onClose={hideExportPanel}/>
       <SettingsPanel open={settingsPanelOpen} onClose={hideSettingsPanel}/>
     </>
   )
 }
+
+
+function ExportPanel({open, onClose}) {
+  const dispatch = useDispatch()
+  const [name, setName] = useState(null)
+
+  const confirm = () => {
+    dispatch(exportProject({
+      name: name,
+    }))
+    onClose()
+  }
+
+  const onNameValueChange = (e) => {
+    setName(e.target.value)
+  }
+
+  return (
+    <BasicDialog title={'匯出專案'}
+                 open={open}
+                 onClose={onClose}
+                 actions={
+                   <>
+                     <Button onClick={onClose}>取消</Button>
+                     <Button primary onClick={confirm}>匯出</Button>
+                   </>
+                 }
+    >
+
+      <TextField label="檔案名稱"
+                 onChange={onNameValueChange}
+                 margin="dense"
+                 value={name}/>
+    </BasicDialog>
+  )
+}
+
 
 function SettingsPanel({open, onClose}) {
   const dispatch = useDispatch()
