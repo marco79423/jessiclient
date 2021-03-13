@@ -1,3 +1,5 @@
+import {createMuiTheme} from '@material-ui/core/styles'
+
 export const colorTable = {
   'deep-purple-50': '#EDE7F6',
   'deep-purple-100': '#D1C4E9',
@@ -37,68 +39,71 @@ export const colorTable = {
   'grey-900': '#212121'
 }
 
-const basicTheme = {
-  primary: colorTable['indigo-600'],
-  secondary: colorTable['deep-purple-600']
-}
+const theme = createMuiTheme({
+  project: {
+    basic: {
+      dialog: {
+        header: {
+          background: colorTable['indigo-800'],
+          textColor: 'white',
+          closeButton: 'white',
+        },
+        background: colorTable['indigo-100'],
+      },
 
-const theme = {
-  basic: {
-    ...basicTheme,
-
-    dialog: {
+      iconButton: {
+        color: colorTable['grey-50'],
+      }
+    },
+    page: {
+      background: colorTable['grey-700'],
       header: {
         background: colorTable['indigo-800'],
-        textColor: 'white',
-        closeButton: 'white',
+        titleColor: colorTable['grey-50'],
+        subtitleColor: colorTable['grey-50'],
       },
-      background: colorTable['indigo-100'],
-    },
-
-    iconButton: {
-      color: colorTable['grey-50'],
+      main: {
+        background: colorTable['grey-200'],
+        controlPanel: {
+          background: colorTable['indigo-400'],
+          connectionPanel: {
+            background: 'white',
+            connectButtonTextColor: colorTable['indigo-600'],
+          },
+          requestPanel: {
+            tab: colorTable['indigo-100'],
+          },
+          copyright: {
+            textColor: colorTable['grey-200'],
+          }
+        },
+        listPanel: {
+          background: colorTable['grey-200'],
+          controlBar: {
+            background: colorTable['indigo-400'],
+            clearButton: 'white',
+          },
+          message: {
+            background: 'white',
+          }
+        },
+        detailPanel: {
+          controlBar: {
+            background: colorTable['indigo-400'],
+            tab: colorTable['indigo-200'],
+          },
+        },
+      },
     }
   },
-  page: {
-    background: colorTable['grey-700'],
-    header: {
-      background: colorTable['indigo-800'],
-      titleColor: colorTable['grey-50'],
-      subtitleColor: colorTable['grey-50'],
+  palette: {
+    primary: {
+      main: colorTable['indigo-600'],
     },
-    main: {
-      background: colorTable['grey-200'],
-      controlPanel: {
-        background: colorTable['indigo-400'],
-        connectionPanel: {
-          background: 'white',
-          connectButtonTextColor: colorTable['indigo-600'],
-        },
-        requestPanel: {
-          tab: colorTable['indigo-100'],
-        },
-        copyright: {
-          textColor: colorTable['grey-200'],
-        }
-      },
-      listPanel: {
-        background: colorTable['grey-200'],
-        controlBar: {
-          background: colorTable['indigo-400'],
-          clearButton: 'white',
-        },
-        message: {
-          background: 'white',
-        }
-      },
-      detailPanel: {
-        controlBar: {
-          background: colorTable['indigo-400'],
-          tab: colorTable['indigo-200'],
-        },
-      },
+    secondary: {
+      main: colorTable['deep-purple-600'],
     },
-  }
-}
+  },
+})
 
 export default theme
