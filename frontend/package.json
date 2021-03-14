@@ -14,6 +14,7 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@reduxjs/toolkit": "^1.5.0",
+    "axios": "^0.21.1",
     "classnames": "^2.2.6",
     "file-dialog": "0.0.8",
     "js-file-download": "^0.4.12",

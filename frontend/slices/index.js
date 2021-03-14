@@ -6,10 +6,11 @@ import {
   createSlice
 } from '@reduxjs/toolkit'
 import jsDownload from 'js-file-download'
+import axios from 'axios'
+import fileDialog from 'file-dialog'
 
 import {ConnectionState, LoadingState, MessageSource} from '../constants'
 import generateRandomString from '../utils/generateRandomString'
-import fileDialog from 'file-dialog'
 
 
 // Actions
@@ -80,6 +81,19 @@ export const changeScheduleEnabledStatus = createAsyncThunk(
   }
 )
 
+export const changeShareLink = createAsyncThunk(
+  'current/changeShareLink',
+  async (shareLink) => {
+    return shareLink
+  }
+)
+
+export const clearShareLink = createAsyncThunk(
+  'current/clearShareLink',
+  async () => {
+
+  }
+)
 
 export const setProjectData = createAsyncThunk(
   'project/setProjectData',
@@ -181,6 +195,18 @@ export const clearMessages = createAsyncThunk(
 export const initialize = createAsyncThunk(
   'initialize',
   async (_, {dispatch}) => {
+    dispatch(changeProjectState(LoadingState.Loading))
+
+    const projectCode = new URLSearchParams(window.location.search).get('projectCode')
+    if (projectCode) {
+      try {
+        const resp = await axios.get(`/api/flash-projects/${projectCode}`)
+        const projectData = resp.data.data
+        dispatch(setProjectData(projectData))
+      } catch (err) {
+        // 什麼也不做
+      }
+    }
 
     dispatch(changeProjectState(LoadingState.Loaded))
   }
@@ -298,6 +324,17 @@ export const disableSchedule = createAsyncThunk(
   }
 )
 
+export const generateShareLink = createAsyncThunk(
+  'action/generateShareLink',
+  async ({messageIncluded}, {dispatch, getState}) => {
+    const projectData = messageIncluded ? getProjectData(getState()) : getProjectDataWithoutMessages(getState())
+    const resp = await axios.post('/api/flash-projects', projectData)
+
+    const shareLink = `${window.location.origin}?projectCode=${resp.data.data.projectCode}`
+    dispatch(changeShareLink(shareLink))
+  }
+)
+
 // Slice
 const searchFilterAdapter = createEntityAdapter()
 
@@ -310,6 +347,7 @@ const currentSlice = createSlice({
     appliedFavoriteRequestID: null,
     searchFilter: searchFilterAdapter.getInitialState(),
     scheduleEnabled: false,
+    shareLink: null,
   },
   extraReducers: {
     [changeProjectState.fulfilled]: (state, action) => {
@@ -338,6 +376,12 @@ const currentSlice = createSlice({
     },
     [changeScheduleEnabledStatus.fulfilled]: (state, action) => {
       state.scheduleEnabled = action.payload
+    },
+    [changeShareLink.fulfilled]: (state, action) => {
+      state.shareLink = action.payload
+    },
+    [clearShareLink.fulfilled]: (state) => {
+      state.shareLink = null
     },
   }
 })
@@ -425,8 +469,16 @@ export const getSelectedMessageID = state => state.current.selectedMessageID
 export const getAppliedFavoriteRequestID = state => state.current.appliedFavoriteRequestID
 export const getSearchFilters = state => searchFilterSelectors.selectAll(state)
 export const getScheduleEnabledStatus = state => state.current.scheduleEnabled
+export const getShareLink = state => state.current.shareLink
 
 export const getProjectData = state => state.project
+export const getProjectDataWithoutMessages = createDraftSafeSelector(
+  getProjectData,
+  projectData => ({
+    ...projectData,
+    message: messageAdapter.getInitialState(),
+  })
+)
 export const getSettingMaxMessageCount = state => state.project.setting.maxMessageCount
 
 export const getConnectionUrl = state => state.project.connection.url
