@@ -214,8 +214,8 @@ export const initialize = createAsyncThunk(
 
 export const exportProject = createAsyncThunk(
   'action/exportProject',
-  ({name}, {getState}) => {
-    const projectData = getProjectData(getState())
+  ({name, messageIncluded}, {getState}) => {
+    const projectData = messageIncluded ? getProjectData(getState()) : getProjectDataWithoutMessages(getState())
     jsDownload(JSON.stringify(projectData), `${name}.json`)
   }
 )
@@ -399,6 +399,9 @@ const projectSlice = createSlice({
     // 連線資訊
     connection: {
       url: 'wss://echo.websocket.org',
+      // url: 'ws://sbk-mock.p-marco.192.168.192.1.xip.io/player-api/ws',
+      // url: 'ws://sbk-mock.p-marco.svc.cluster.local:7000/player-api/ws',
+      // url: 'ws://10.200.6.101:18700/player-api/ws?token=d6b71fef-6a9e-4630-af0d-076b26cc1436',
     },
 
     // 請求

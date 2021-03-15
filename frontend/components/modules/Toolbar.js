@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {Button as MuiButton, Grid, InputBase, Paper, TextField, Toolbar as MuiToolbar} from '@material-ui/core'
+import {Button as MuiButton, Grid, InputBase, Paper, Toolbar as MuiToolbar} from '@material-ui/core'
 import ArchiveIcon from '@material-ui/icons/Archive'
 import UnarchiveIcon from '@material-ui/icons/Unarchive'
 import SettingsIcon from '@material-ui/icons/Settings'
@@ -20,6 +20,7 @@ import Button from '../elements/Button'
 import IconButton from '../elements/IconButton'
 import {makeStyles} from '@material-ui/core/styles'
 import Switch from '../elements/Switch'
+import TextField from '../elements/TextField'
 
 const useStyles = makeStyles((theme) => ({
   shareLink: {
@@ -136,7 +137,7 @@ function SharePanel({open, onClose}) {
           </Grid>
         </Grid>
         <Grid item>
-          <Switch checked={messageIncluded} setChecked={setIncludeMessages} label={'包含歷史訊息'}/>
+          <Switch checked={messageIncluded} setChecked={setIncludeMessages} label={'是否包含歷史訊息'}/>
         </Grid>
       </Grid>
     </BasicDialog>
@@ -147,15 +148,16 @@ function ExportPanel({open, onClose}) {
   const dispatch = useDispatch()
   const [name, setName] = useState(null)
 
-  const confirm = () => {
-    dispatch(exportProject({
-      name: name,
-    }))
-    onClose()
-  }
+  const [messageIncluded, setIncludeMessages] = useState(true)
 
-  const onNameValueChange = (e) => {
-    setName(e.target.value)
+  const onExportButtonClicked = () => {
+    dispatch(exportProject({
+      name,
+      messageIncluded,
+    }))
+
+    setName(null)
+    onClose()
   }
 
   return (
@@ -165,15 +167,18 @@ function ExportPanel({open, onClose}) {
                  actions={
                    <>
                      <Button onClick={onClose}>取消</Button>
-                     <Button primary onClick={confirm}>匯出</Button>
+                     <Button primary onClick={onExportButtonClicked}>匯出</Button>
                    </>
                  }
     >
-
-      <TextField label="檔案名稱"
-                 onChange={onNameValueChange}
-                 margin="dense"
-                 value={name}/>
+      <Grid container direction="column" spacing={1}>
+        <Grid item>
+          <TextField placeholder={'檔案名稱'} value={name} onChange={setName}/>
+        </Grid>
+        <Grid item>
+          <Switch checked={messageIncluded} setChecked={setIncludeMessages} label={'是否包含歷史訊息'}/>
+        </Grid>
+      </Grid>
     </BasicDialog>
   )
 }
