@@ -1,7 +1,7 @@
 import React from 'react'
 import {ThemeProvider} from '@material-ui/core/styles'
 
-import theme, {colorTable} from '../components/theme/default'
+import theme from '../components/theme/default'
 
 export const decorators = [
   story => <ThemeProvider theme={theme}>{story()}</ThemeProvider>,
@@ -12,7 +12,7 @@ export const parameters = {
   backgrounds: {
     default: 'default',
     values: [
-      {name: 'default', value: theme.project.page.background},
+      {name: 'default', value: theme.project.elements.basicDialog.background},
       {name: 'header', value: theme.project.page.header.background},
     ],
   },

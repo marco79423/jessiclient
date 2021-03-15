@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   actionSection: {
     padding: theme.spacing(2),
+    paddingTop: 0,
   }
 }))
 

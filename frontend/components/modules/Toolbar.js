@@ -1,15 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {
-  Button as MuiButton,
-  FormControlLabel,
-  Grid,
-  InputBase,
-  Paper,
-  Switch,
-  TextField,
-  Toolbar as MuiToolbar
-} from '@material-ui/core'
+import {Button as MuiButton, Grid, InputBase, Paper, TextField, Toolbar as MuiToolbar} from '@material-ui/core'
 import ArchiveIcon from '@material-ui/icons/Archive'
 import UnarchiveIcon from '@material-ui/icons/Unarchive'
 import SettingsIcon from '@material-ui/icons/Settings'
@@ -28,6 +19,7 @@ import BasicDialog from '../elements/BasicDialog'
 import Button from '../elements/Button'
 import IconButton from '../elements/IconButton'
 import {makeStyles} from '@material-ui/core/styles'
+import Switch from '../elements/Switch'
 
 const useStyles = makeStyles((theme) => ({
   shareLink: {
@@ -92,14 +84,10 @@ export default function Toolbar() {
 
 
 function SharePanel({open, onClose}) {
-  const dispatch = useDispatch()
   const classes = useStyles()
+  const dispatch = useDispatch()
   const shareLink = useSelector(getShareLink)
   const [messageIncluded, setIncludeMessages] = useState(true)
-
-  const onMessageIncludedChange = (e) => {
-    setIncludeMessages(e.target.checked)
-  }
 
   const onCopyLinkButtonClicked = async () => {
     await navigator.clipboard.writeText(shareLink)
@@ -133,24 +121,24 @@ function SharePanel({open, onClose}) {
                  open={open}
                  onClose={onCloseButtonClick}
                  actions={
-                   <>
-                     <Button onClick={onCloseButtonClick}>結束</Button>
-                   </>
+                   <Button onClick={onCloseButtonClick}>結束</Button>
                  }
     >
-      <Grid className={classes.shareLink} container alignItems="center" component={Paper}>
-        <Grid item xs>
-          <InputBase fullWidth disabled={shareLink === null} readOnly value={shareLink}/>
+      <Grid container direction="column" spacing={1}>
+        <Grid item>
+          <Grid className={classes.shareLink} container alignItems="center" component={Paper}>
+            <Grid item xs>
+              <InputBase fullWidth disabled={shareLink === null} readOnly value={shareLink}/>
+            </Grid>
+            <Grid item>
+              {generateButton()}
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item>
-          {generateButton()}
+          <Switch checked={messageIncluded} setChecked={setIncludeMessages} label={'包含歷史訊息'}/>
         </Grid>
       </Grid>
-      <FormControlLabel
-        style={{marginTop: 8}}
-        control={<Switch checked={messageIncluded} onChange={onMessageIncludedChange}/>}
-        label="包含歷史訊息"
-      />
     </BasicDialog>
   )
 }

@@ -50,9 +50,11 @@ const theme = createMuiTheme({
         },
         background: colorTable['indigo-100'],
       },
-
       iconButton: {
         color: colorTable['grey-50'],
+      },
+      switch: {
+        color: colorTable['indigo-800'],
       }
     },
     page: {
