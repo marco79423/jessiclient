@@ -1,17 +1,9 @@
 import React, {useEffect, useState} from 'react'
-import {makeStyles} from '@material-ui/core/styles'
-import {Button as MuiButton, Grid, InputBase, Paper} from '@material-ui/core'
+import TextField from './TextField'
+import Button from './Button'
 
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    paddingLeft: theme.spacing(1),
-    width: 300,
-  },
-}))
 
 export default function SearchField({placeholder, defaultValue, onSearch}) {
-  const classes = useStyles()
   const [value, setValue] = useState('')
 
   useEffect(() => {
@@ -20,8 +12,8 @@ export default function SearchField({placeholder, defaultValue, onSearch}) {
     }
   }, [defaultValue])
 
-  const onValueChange = (e) => {
-    setValue(e.target.value)
+  const onValueChange = (value) => {
+    setValue(value)
   }
 
   const onButtonClicked = () => {
@@ -29,13 +21,13 @@ export default function SearchField({placeholder, defaultValue, onSearch}) {
   }
 
   return (
-    <Grid className={classes.root} container alignItems="center" component={Paper}>
-      <Grid item xs>
-        <InputBase fullWidth placeholder={placeholder} value={value} onChange={onValueChange}/>
-      </Grid>
-      <Grid item>
-        <MuiButton onClick={onButtonClicked}>搜尋</MuiButton>
-      </Grid>
-    </Grid>
+    <TextField
+      placeholder={placeholder}
+      value={value}
+      onChange={onValueChange}
+      action={
+        <Button link onClick={onButtonClicked}>搜尋</Button>
+      }
+    />
   )
 }

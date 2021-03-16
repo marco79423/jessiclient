@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {Button as MuiButton, Grid, InputBase, Paper, Toolbar as MuiToolbar} from '@material-ui/core'
+import {makeStyles} from '@material-ui/core/styles'
+import {Button as MuiButton, Grid, Toolbar as MuiToolbar} from '@material-ui/core'
 import ArchiveIcon from '@material-ui/icons/Archive'
 import UnarchiveIcon from '@material-ui/icons/Unarchive'
 import ShareIcon from '@material-ui/icons/Share'
@@ -9,16 +10,8 @@ import {clearShareLink, exportProject, generateShareLink, getShareLink, importPr
 import BasicDialog from '../elements/BasicDialog'
 import Button from '../elements/Button'
 import IconButton from '../elements/IconButton'
-import {makeStyles} from '@material-ui/core/styles'
 import Switch from '../elements/Switch'
 import TextField from '../elements/TextField'
-
-const useStyles = makeStyles((theme) => ({
-  shareLink: {
-    paddingLeft: theme.spacing(1),
-    width: 300,
-  },
-}))
 
 export default function Toolbar() {
   const dispatch = useDispatch()
@@ -65,7 +58,6 @@ export default function Toolbar() {
 
 
 function SharePanel({open, onClose}) {
-  const classes = useStyles()
   const dispatch = useDispatch()
   const shareLink = useSelector(getShareLink)
   const [messageIncluded, setIncludeMessages] = useState(true)
@@ -107,14 +99,11 @@ function SharePanel({open, onClose}) {
     >
       <Grid container direction="column" spacing={1}>
         <Grid item>
-          <Grid className={classes.shareLink} container alignItems="center" component={Paper}>
-            <Grid item xs>
-              <InputBase fullWidth disabled={shareLink === null} readOnly value={shareLink}/>
-            </Grid>
-            <Grid item>
-              {generateButton()}
-            </Grid>
-          </Grid>
+          <TextField
+            disabled={shareLink === null}
+            readOnly
+            value={shareLink}
+            action={generateButton()}/>
         </Grid>
         <Grid item>
           <Switch checked={messageIncluded} setChecked={setIncludeMessages} label={'是否包含歷史訊息'}/>

@@ -1,5 +1,6 @@
 import React from 'react'
 import TextField from './TextField'
+import Button from './Button'
 
 
 export default {
@@ -15,4 +16,11 @@ Default.args = {
   placeholder: '搜尋訊息',
   value: '',
   disabled: false,
+  readOnly: false,
+}
+
+export const WithAction = Template.bind({})
+WithAction.args = {
+  ...Default.args,
+  action: <Button link>產生連結</Button>
 }
