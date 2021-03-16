@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function TextField({placeholder, value, onChange}) {
+export default function TextField({placeholder, value, onChange, disabled}) {
   const classes = useStyles()
 
   const onValueChange = (e) => {
@@ -20,7 +20,7 @@ export default function TextField({placeholder, value, onChange}) {
   return (
     <Grid className={classes.root} container alignItems="center" component={Paper}>
       <Grid item xs>
-        <InputBase fullWidth placeholder={placeholder} value={value} onChange={onValueChange}/>
+        <InputBase fullWidth disabled={disabled} placeholder={placeholder} value={value} onChange={onValueChange}/>
       </Grid>
     </Grid>
   )

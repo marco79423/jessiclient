@@ -1,17 +1,18 @@
 import React from 'react'
-import SearchField from './SearchField'
+import TextField from './TextField'
 
 
 export default {
-  title: 'elements/SearchField',
-  component: SearchField,
+  title: 'elements/TextField',
+  component: TextField,
 }
 
 
-const Template = (args) => <SearchField {...args} />
+const Template = (args) => <TextField {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
   placeholder: '搜尋訊息',
-  defaultValue: '',
+  value: '',
+  disabled: false,
 }
