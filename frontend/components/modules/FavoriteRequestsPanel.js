@@ -1,10 +1,17 @@
 import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
-import {Button, Grid, Paper, Typography} from '@material-ui/core'
+import {Grid, Paper, Typography} from '@material-ui/core'
 
-import {changeRequestText, getFavoriteRequests, removeFavoriteRequest, setAppliedFavoriteRequestID} from '../../slices'
+import {
+  changeRequestText,
+  getFavoriteRequests,
+  removeFavoriteRequest,
+  sendRequestText,
+  setAppliedFavoriteRequestID
+} from '../../slices'
 import BasicDialog from '../elements/BasicDialog'
+import Button from '../elements/Button'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,6 +44,10 @@ function FavoriteRequestItem({favoriteRequest}) {
     dispatch(removeFavoriteRequest(favoriteRequest.id))
   }
 
+  const onSendButtonClicked = () => {
+    dispatch(sendRequestText(favoriteRequest.text))
+  }
+
   return (
     <Grid className={classes.item} container component={Paper} direction="column" justify="space-between">
       <Grid item>
@@ -45,8 +56,13 @@ function FavoriteRequestItem({favoriteRequest}) {
                     component="p">{favoriteRequest.text}</Typography>
       </Grid>
       <Grid container item>
-        <Grid item><Button onClick={onAppliedButtonClicked}>套用</Button></Grid>
-        <Grid item><Button onClick={onRemoveButtonClicked}>刪除</Button></Grid>
+        <Grid container item xs spacing={1}>
+          <Grid item><Button primary onClick={onAppliedButtonClicked}>套用</Button></Grid>
+          <Grid item><Button onClick={onRemoveButtonClicked}>刪除</Button></Grid>
+        </Grid>
+        <Grid item>
+          <Grid item><Button primary onClick={onSendButtonClicked}>直接送出</Button></Grid>
+        </Grid>
       </Grid>
     </Grid>
   )
