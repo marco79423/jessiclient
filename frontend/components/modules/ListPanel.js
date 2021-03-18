@@ -31,8 +31,14 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
   },
-  messageSource: {
-    marginLeft: theme.spacing(1),
+  messageTitle: {
+    color: ({fromClient}) => fromClient ? theme.project.page.main.listPanel.message.client.textColor : theme.project.page.main.listPanel.message.server.textColor,
+    fontSize: '1rem',
+  },
+  messageContent: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    color: ({fromClient}) => fromClient ? theme.project.page.main.listPanel.message.client.textColor : theme.project.page.main.listPanel.message.server.textColor,
   },
 }))
 
@@ -151,11 +157,27 @@ function ClearAllDialog({open, onClose}) {
 }
 
 function MessageList() {
-  const classes = useStyles()
-  const dispatch = useDispatch()
   const messages = useSelector(getMessages)
 
-  const handleSelected = (message) => {
+  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+
+  return (
+    <List height={vh - 64 - 64}>
+      {messages.map(message => (
+        <Message message={message}/>
+      ))}
+    </List>
+  )
+}
+
+
+function Message({message}) {
+  const fromClient = message.source === MessageSource.Client
+
+  const classes = useStyles({fromClient})
+  const dispatch = useDispatch()
+
+  const onSelected = () => {
     if (message.selected) {
       dispatch(clearSelectedMessageID())
     } else {
@@ -163,31 +185,22 @@ function MessageList() {
     }
   }
 
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-
   const MessageTitle = ({message}) => {
     const time = new Date(message.time).toLocaleString()
-    const source = message.source === MessageSource.Server ? '服務端' : '客戶端'
+    const source = fromClient ? '客戶端' : '服務端'
 
     return (
-      <span>{time}<Typography className={classes.messageSource} color="textSecondary" variant="body2"
-                              display="inline">[{source}]</Typography></span>
+      <span className={classes.messageTitle}>{time} [{source}]</span>
     )
   }
 
   return (
-    <List height={vh - 64 - 64}>
-      {messages.map(message => (
-        <ListItem
-          key={message.id}
-          selected={message.selected}
-          title={
-            <MessageTitle message={message}/>
-          }
-          onClick={() => handleSelected(message)}>
-          {message.text}
-        </ListItem>
-      ))}
-    </List>
+    <ListItem
+      key={message.id}
+      selected={message.selected}
+      title={<MessageTitle message={message}/>}
+      onClick={onSelected}>
+      <span className={classes.messageContent}>{message.text}</span>
+    </ListItem>
   )
 }

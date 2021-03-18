@@ -1,21 +1,15 @@
 import React from 'react'
 import {makeStyles} from '@material-ui/core/styles'
-import {ListItem as MuiListItem, ListItemText, Typography} from '@material-ui/core'
+import {Grid, ListItem as MuiListItem, ListItemText, Typography} from '@material-ui/core'
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
     background: theme.project.elements.listItem.background,
+    height: 80,
     '&:not(:first-child)': {
-      marginTop: 1
+      marginTop: 1,
     }
-  },
-  content: {
-    marginTop: theme.spacing(1),
-    height: 40,
-
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
   },
 }))
 
@@ -24,14 +18,14 @@ export default function ListItem({key, selected, onClick, title, children}) {
 
   return (
     <MuiListItem className={classes.root} key={key} selected={selected} onClick={onClick}>
-      <ListItemText
-        primary={title}
-        secondary={
-          <Typography className={classes.content} variant="body2" color="textPrimary">
-            {children}
-          </Typography>
-        }
-      />
+      <Grid container direction="column" spacing={1}>
+        <Grid item>
+          {title}
+        </Grid>
+        <Grid item>
+          {children}
+        </Grid>
+      </Grid>
     </MuiListItem>
   )
 }
