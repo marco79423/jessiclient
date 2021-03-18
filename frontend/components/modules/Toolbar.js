@@ -60,7 +60,7 @@ export default function Toolbar() {
 function SharePanel({open, onClose}) {
   const dispatch = useDispatch()
   const shareLink = useSelector(getShareLink)
-  const [messageIncluded, setIncludeMessages] = useState(true)
+  const [messageIncluded, setIncludeMessages] = useState(false)
 
   const onCopyLinkButtonClicked = async () => {
     await navigator.clipboard.writeText(shareLink)
@@ -106,7 +106,7 @@ function SharePanel({open, onClose}) {
             action={generateButton()}/>
         </Grid>
         <Grid item>
-          <Switch checked={messageIncluded} setChecked={setIncludeMessages} label={'是否包含歷史訊息'}/>
+          <Switch checked={messageIncluded} setChecked={setIncludeMessages} label={'保留實際請求和回傳訊息'}/>
         </Grid>
       </Grid>
     </BasicDialog>
@@ -117,7 +117,7 @@ function ExportPanel({open, onClose}) {
   const dispatch = useDispatch()
   const [name, setName] = useState(null)
 
-  const [messageIncluded, setIncludeMessages] = useState(true)
+  const [messageIncluded, setIncludeMessages] = useState(false)
 
   const onExportButtonClicked = () => {
     dispatch(exportProject({
@@ -144,7 +144,7 @@ function ExportPanel({open, onClose}) {
           <TextField placeholder={'檔案名稱'} value={name} onChange={setName}/>
         </Grid>
         <Grid item>
-          <Switch checked={messageIncluded} setChecked={setIncludeMessages} label={'是否包含歷史訊息'}/>
+          <Switch checked={messageIncluded} setChecked={setIncludeMessages} label={'保留實際請求和回傳訊息'}/>
         </Grid>
       </Grid>
     </BasicDialog>
