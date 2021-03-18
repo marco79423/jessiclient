@@ -152,6 +152,7 @@ function ClearAllDialog({open, onClose}) {
 
 function MessageList() {
   const classes = useStyles()
+  const dispatch = useDispatch()
   const messages = useSelector(getMessages)
 
   const handleSelected = (message) => {

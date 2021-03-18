@@ -55,6 +55,9 @@ const theme = createMuiTheme({
       },
       switch: {
         color: colorTable['indigo-800'],
+      },
+      listItem: {
+        background: colorTable['grey-50'],
       }
     },
     page: {
@@ -83,11 +86,7 @@ const theme = createMuiTheme({
           background: colorTable['grey-200'],
           controlBar: {
             background: colorTable['indigo-400'],
-            clearButton: 'white',
           },
-          message: {
-            background: 'white',
-          }
         },
         detailPanel: {
           controlBar: {

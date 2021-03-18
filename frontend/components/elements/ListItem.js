@@ -5,7 +5,7 @@ import {ListItem as MuiListItem, ListItemText, Typography} from '@material-ui/co
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    background: theme.project.page.main.listPanel.message.background,
+    background: theme.project.elements.listItem.background,
     '&:not(:first-child)': {
       marginTop: 1
     }
