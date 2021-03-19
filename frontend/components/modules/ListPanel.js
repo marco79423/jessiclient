@@ -1,15 +1,14 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
 import {Chip, Grid, Typography} from '@material-ui/core'
 
-import {LoadingState, MessageSource} from '../../constants'
+import {MessageSource} from '../../constants'
 import {
   addSearchFilter,
   clearMessages,
   clearSelectedMessageID,
   getMessages,
-  getProjectState,
   getSearchFilters,
   removeSearchFilter,
   setSelectedMessageID
@@ -44,32 +43,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ListPanel() {
   const classes = useStyles()
-
-  const projectState = useSelector(getProjectState)
-
-  if (projectState === LoadingState.Idle) {
-    return (
-      <div className={classes.root}>
-      </div>
-    )
-  }
-
-  if (projectState === LoadingState.Loading) {
-    return (
-      <div className={classes.root}>
-        讀取中…
-      </div>
-    )
-  }
-
-  if (projectState === LoadingState.Failed) {
-    return (
-      <div className={classes.root}>
-        讀取失敗
-      </div>
-    )
-  }
-
   return (
     <div className={classes.root}>
       <ControlBar/>
@@ -102,8 +75,7 @@ function ControlBar() {
   }
 
   return (
-    <Grid className={classes.controlBar} container justify="space-between" alignItems="center"
-          elevation={1} square>
+    <Grid className={classes.controlBar} container justify="space-between" alignItems="center">
       <Grid item>
         <Grid container alignItems="baseline" spacing={1}>
           <Grid item>
@@ -158,11 +130,17 @@ function ClearAllDialog({open, onClose}) {
 
 function MessageList() {
   const messages = useSelector(getMessages)
+  const [height, setHeight] = useState(0)
 
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+      setHeight(vh - 64 - 64)
+    }
+  }, [typeof document])
 
   return (
-    <List height={vh - 64 - 64}>
+    <List height={height}>
       {messages.map(message => (
         <Message message={message}/>
       ))}

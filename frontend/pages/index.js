@@ -2,9 +2,11 @@ import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {makeStyles} from '@material-ui/core/styles'
-import {AppBar as MuiAppBar, Avatar, Grid, Slide, Typography} from '@material-ui/core'
+import {AppBar as MuiAppBar, Avatar, Backdrop, Grid, Slide, Typography} from '@material-ui/core'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
-import {getSelectedMessageID, initialize} from '../slices'
+import {LoadingState} from '../constants'
+import {getProjectState, getSelectedMessageID, initialize} from '../slices'
 import ListPanel from '../components/modules/ListPanel'
 import ControlPanel from '../components/modules/ControlPanel'
 import DetailPanel from '../components/modules/DetailPanel'
@@ -49,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Index() {
   const classes = useStyles()
   const dispatch = useDispatch()
+  const projectState = useSelector(getProjectState)
 
   useEffect(() => {
     dispatch(initialize())
@@ -59,6 +62,10 @@ export default function Index() {
 
   return (
     <>
+      <Backdrop style={{zIndex: 100}} open={projectState === LoadingState.Loading}>
+        <CircularProgress color="inherit"/>
+      </Backdrop>
+
       <MuiAppBar className={classes.abbBar} position="relative" elevation={1}>
         <Grid container justify="space-between" alignItems="center">
           <Grid item>
