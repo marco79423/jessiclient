@@ -11,7 +11,16 @@ import fileDialog from 'file-dialog'
 
 import {ConnectionState, LoadingState, MessageSource} from '../constants'
 import generateRandomString from '../utils/generateRandomString'
+import {Validator} from 'jsonschema'
 
+
+export async function validateProjectData(projectData) {
+  const resp = await axios.get('/api/schema/project.json')
+  const schema = resp.data
+
+  const validator = new Validator()
+  return validator.validate(projectData, schema)
+}
 
 // Actions
 export const changeProjectState = createAsyncThunk(
@@ -98,6 +107,10 @@ export const clearShareLink = createAsyncThunk(
 export const setProjectData = createAsyncThunk(
   'project/setProjectData',
   async (projectData) => {
+    const result = await validateProjectData(projectData)
+    if (!result.valid) {
+      throw new Error(result.toString())
+    }
     return projectData
   }
 )
@@ -192,31 +205,28 @@ export const clearMessages = createAsyncThunk(
 )
 
 
+async function loadProjectData() {
+  const projectCode = new URLSearchParams(window.location.search).get('projectCode')
+  if (projectCode) {
+    const resp = await axios.get(`/api/sharing/projects/${projectCode}`)
+    return resp.data.data
+  }
+
+  const rawProjectData = localStorage.getItem('projectData')
+  return JSON.parse(rawProjectData)
+}
+
 export const initialize = createAsyncThunk(
   'initialize',
   async (_, {dispatch}) => {
-    dispatch(changeProjectState(LoadingState.Loading))
+    await dispatch(changeProjectState(LoadingState.Loading))
 
-    const projectCode = new URLSearchParams(window.location.search).get('projectCode')
-    if (projectCode) {
-      try {
-        const resp = await axios.get(`/api/sharing/projects/${projectCode}`)
-        const projectData = resp.data.data
-        dispatch(setProjectData(projectData))
-      } catch (err) {
-        // 什麼也不做
-      }
+    const projectData = await loadProjectData()
+    if (projectData) {
+      await dispatch(setProjectData(projectData))
     }
 
-    if(!projectCode) {
-        const localCache = localStorage.getItem('projectData')
-        if(localCache) {
-            const projectData = JSON.parse(localCache)
-            dispatch(setProjectData(projectData))
-        }
-    }
-
-    dispatch(changeProjectState(LoadingState.Loaded))
+    await dispatch(changeProjectState(LoadingState.Loaded))
   }
 )
 

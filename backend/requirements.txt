@@ -5,5 +5,8 @@ omegaconf==2.0.6
 fastapi==0.63.0
 uvicorn[standard]==0.13.4
 
+# schema
+pydantic==1.8.1
+
 # cache
 redis==3.5.3

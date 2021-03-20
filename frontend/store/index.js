@@ -7,7 +7,6 @@ const projectAutoSaver = store => next => action => {
         return next(action)
     } finally {
         const state = store.getState()
-
         if (getProjectState(state) === LoadingState.Loaded) {
             const projectData = getProjectData(state)
             localStorage.setItem('projectData', JSON.stringify(projectData))

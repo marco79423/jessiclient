@@ -6,6 +6,8 @@ import redis
 import uvicorn
 from omegaconf import OmegaConf
 
+from schema import project
+
 app = fastapi.FastAPI()
 conf = OmegaConf.load('./config.yml')
 
@@ -47,6 +49,11 @@ async def get_flash_project(project_code: str, redis_client=fastapi.Depends(get_
     return {
         'data': project,
     }
+
+
+@app.get('/api/schema/project.json')
+async def get_project_schema():
+    return project.ProjectDataModel.schema()
 
 
 if __name__ == '__main__':
