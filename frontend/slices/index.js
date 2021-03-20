@@ -208,6 +208,14 @@ export const initialize = createAsyncThunk(
       }
     }
 
+    if(!projectCode) {
+        const localCache = localStorage.getItem('projectData')
+        if(localCache) {
+            const projectData = JSON.parse(localCache)
+            dispatch(setProjectData(projectData))
+        }
+    }
+
     dispatch(changeProjectState(LoadingState.Loaded))
   }
 )
