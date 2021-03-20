@@ -200,7 +200,7 @@ export const initialize = createAsyncThunk(
     const projectCode = new URLSearchParams(window.location.search).get('projectCode')
     if (projectCode) {
       try {
-        const resp = await axios.get(`/api/flash-projects/${projectCode}`)
+        const resp = await axios.get(`/api/sharing/projects/${projectCode}`)
         const projectData = resp.data.data
         dispatch(setProjectData(projectData))
       } catch (err) {
@@ -336,7 +336,7 @@ export const generateShareLink = createAsyncThunk(
   'action/generateShareLink',
   async ({messageIncluded}, {dispatch, getState}) => {
     const projectData = messageIncluded ? getProjectData(getState()) : getProjectDataWithoutMessages(getState())
-    const resp = await axios.post('/api/flash-projects', projectData)
+    const resp = await axios.post('/api/sharing/projects', projectData)
 
     const shareLink = `${window.location.origin}?projectCode=${resp.data.data.projectCode}`
     dispatch(changeShareLink(shareLink))
