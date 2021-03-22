@@ -1,15 +1,15 @@
 import React from 'react'
 
-import Switch from './Switch'
+import Checkbox from './Checkbox'
 
 
 export default {
-  title: 'elements/Switch',
-  component: Switch,
+  title: 'elements/Checkbox',
+  component: Checkbox,
 }
 
 
-const Template = (args) => <Switch {...args} />
+const Template = (args) => <Checkbox {...args} />
 
 export const Default = Template.bind({})
 Default.args = {

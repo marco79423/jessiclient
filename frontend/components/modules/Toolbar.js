@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {makeStyles} from '@material-ui/core/styles'
 import {Button as MuiButton, Grid, Toolbar as MuiToolbar} from '@material-ui/core'
 import ArchiveIcon from '@material-ui/icons/Archive'
 import UnarchiveIcon from '@material-ui/icons/Unarchive'
@@ -10,7 +9,7 @@ import {clearShareLink, exportProject, generateShareLink, getShareLink, importPr
 import BasicDialog from '../elements/BasicDialog'
 import Button from '../elements/Button'
 import IconButton from '../elements/IconButton'
-import Switch from '../elements/Switch'
+import Checkbox from '../elements/Checkbox'
 import TextField from '../elements/TextField'
 
 export default function Toolbar() {
@@ -106,7 +105,7 @@ function SharePanel({open, onClose}) {
             action={generateButton()}/>
         </Grid>
         <Grid item>
-          <Switch checked={messageIncluded} setChecked={setIncludeMessages} label={'保留實際請求和回傳訊息'}/>
+          <Checkbox checked={messageIncluded} setChecked={setIncludeMessages} label={'保留實際請求和回傳訊息'}/>
         </Grid>
       </Grid>
     </BasicDialog>
@@ -144,7 +143,7 @@ function ExportPanel({open, onClose}) {
           <TextField placeholder={'檔案名稱'} value={name} onChange={setName}/>
         </Grid>
         <Grid item>
-          <Switch checked={messageIncluded} setChecked={setIncludeMessages} label={'保留實際請求和回傳訊息'}/>
+          <Checkbox checked={messageIncluded} setChecked={setIncludeMessages} label={'保留實際請求和回傳訊息'}/>
         </Grid>
       </Grid>
     </BasicDialog>

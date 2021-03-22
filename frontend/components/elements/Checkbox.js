@@ -1,6 +1,6 @@
 import React from 'react'
 import {makeStyles} from '@material-ui/core/styles'
-import {Grid, Switch as MuiSwitch, Typography} from '@material-ui/core'
+import {Checkbox as MuiCheckbox, Grid, Switch as MuiSwitch, Typography} from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-export default function Switch({checked, setChecked, label}) {
+export default function Checkbox({checked, setChecked, label}) {
   const classes = useStyles()
 
   const onCheckedChange = (e) => {
@@ -20,7 +20,7 @@ export default function Switch({checked, setChecked, label}) {
   return (
     <Grid container alignItems="center">
       <Grid item>
-        <MuiSwitch color="primary" classes={{colorPrimary: classes.colorPrimary}} checked={checked} onChange={onCheckedChange}/>
+        <MuiCheckbox color="primary" classes={{colorPrimary: classes.colorPrimary}} checked={checked} onChange={onCheckedChange}/>
       </Grid>
       <Grid item>
         <Typography>{label}</Typography>
