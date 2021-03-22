@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {Button as MuiButton, Grid, Toolbar as MuiToolbar} from '@material-ui/core'
+import {Button as MuiButton, Grid, Toolbar as MuiToolbar, Typography} from '@material-ui/core'
 import ArchiveIcon from '@material-ui/icons/Archive'
 import UnarchiveIcon from '@material-ui/icons/Unarchive'
 import ShareIcon from '@material-ui/icons/Share'
@@ -97,6 +97,9 @@ function SharePanel({open, onClose}) {
                  }
     >
       <Grid container direction="column" spacing={1}>
+        <Grid item>
+          <Typography style={{fontSize: '0.8rem'}}>產生的連結將保留 7 天</Typography>
+        </Grid>
         <Grid item>
           <TextField
             disabled={shareLink === null}
