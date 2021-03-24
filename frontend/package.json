@@ -17,6 +17,7 @@
     "axios": "^0.21.1",
     "classnames": "^2.2.6",
     "file-dialog": "0.0.8",
+    "ga-4-react": "^0.1.281",
     "js-file-download": "^0.4.12",
     "jsonschema": "^1.4.0",
     "next": "10.0.6",

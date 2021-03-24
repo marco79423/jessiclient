@@ -2,11 +2,11 @@ import Head from 'next/head'
 import {Provider} from 'react-redux'
 import {CssBaseline} from '@material-ui/core'
 import {ThemeProvider} from '@material-ui/core/styles'
+import {GA4R} from 'ga-4-react'
 
 import store from '../store'
 import {appWithTranslation} from 'next-i18next'
 import theme from '../components/theme/default'
-
 
 function App({Component, pageProps}) {
   return (
@@ -29,7 +29,9 @@ function App({Component, pageProps}) {
 
       <ThemeProvider theme={theme}>
         <Provider store={store}>
-          <Component {...pageProps} />
+          <GA4R code='G-TQZV496TYL'>
+            <Component {...pageProps} />
+          </GA4R>
         </Provider>
       </ThemeProvider>
     </>
