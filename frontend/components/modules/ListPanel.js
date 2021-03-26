@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
+import {useGA4React} from 'ga-4-react'
 import {makeStyles} from '@material-ui/core/styles'
 import {Chip, Grid, Typography} from '@material-ui/core'
 
@@ -54,12 +55,14 @@ export default function ListPanel() {
 
 function ControlBar() {
   const classes = useStyles()
+  const ga4React = useGA4React()
   const dispatch = useDispatch()
   const searchFilters = useSelector(getSearchFilters)
   const [clearAllDialogOn, setClearAllDialog] = useState(false)
 
   const onSearchButtonClicked = (value) => {
     dispatch(addSearchFilter(value))
+    ga4React.gtag('event', 'search', {value})
   }
 
   const onClearButtonClicked = (id) => {
@@ -95,7 +98,7 @@ function ControlBar() {
         </Grid>
       </Grid>
       <Grid item>
-        <Button className={classes.clearButton} onClick={showClearAllDialog}>
+        <Button onClick={showClearAllDialog}>
           清空訊息
         </Button>
         <ClearAllDialog open={clearAllDialogOn} onClose={hideClearAllDialog}/>
@@ -107,10 +110,12 @@ function ControlBar() {
 
 function ClearAllDialog({open, onClose}) {
   const dispatch = useDispatch()
+  const ga4React = useGA4React()
 
   const clearAllMessages = () => {
     dispatch(clearMessages())
     onClose()
+    ga4React.gtag('event', 'clear_messages')
   }
 
   return (
@@ -150,6 +155,8 @@ function MessageList() {
 
 
 function Message({message}) {
+  const ga4React = useGA4React()
+
   const fromClient = message.source === MessageSource.Client
 
   const classes = useStyles({fromClient})
@@ -160,6 +167,7 @@ function Message({message}) {
       dispatch(clearSelectedMessageID())
     } else {
       dispatch(setSelectedMessageID(message.id))
+      ga4React.gtag('event', 'select_message')
     }
   }
 

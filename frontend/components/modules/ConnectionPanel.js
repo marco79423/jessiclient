@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useTranslation} from 'next-i18next'
+import {useGA4React} from 'ga-4-react'
 import classNames from 'classnames'
 import {makeStyles} from '@material-ui/core/styles'
 import {Button, Grid, InputBase, Paper, Tooltip} from '@material-ui/core'
@@ -28,6 +29,7 @@ export default function ConnectionPanel({className}) {
   const classes = useStyles()
   const dispatch = useDispatch()
   const {t} = useTranslation('common')
+  const ga4React = useGA4React()
 
   const [url, setUrl] = useState('')
 
@@ -46,6 +48,7 @@ export default function ConnectionPanel({className}) {
     if (connectionState === ConnectionState.Idle) {
       await dispatch(changeConnectionUrl(url))
       await dispatch(connect())
+      ga4React.gtag('event', 'connect', {url})
     } else if (connectionState === ConnectionState.Connected) {
       await dispatch(disconnect())
     }
@@ -55,7 +58,8 @@ export default function ConnectionPanel({className}) {
     switch (connectionState) {
       case ConnectionState.Idle:
         return (
-          <Button className={classes.connectButton} size="large" aria-label="connect" onClick={onConnectButtonClicked}>{t('connect')}</Button>
+          <Button className={classes.connectButton} size="large" aria-label="connect"
+                  onClick={onConnectButtonClicked}>{t('connect')}</Button>
         )
       case ConnectionState.Connecting:
         return (
@@ -63,7 +67,8 @@ export default function ConnectionPanel({className}) {
         )
       case ConnectionState.Connected:
         return (
-          <Button className={classes.connectButton} size="large" aria-label="connected" onClick={onConnectButtonClicked}>關閉連線</Button>
+          <Button className={classes.connectButton} size="large" aria-label="connected"
+                  onClick={onConnectButtonClicked}>關閉連線</Button>
         )
       case ConnectionState.Closing:
         return (

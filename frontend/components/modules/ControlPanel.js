@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
+import {useGA4React} from 'ga-4-react'
 import {makeStyles} from '@material-ui/core/styles'
 import {Grid, Link, Paper, Tab, Tabs, TextField, Typography} from '@material-ui/core'
 import {TabContext, TabPanel} from '@material-ui/lab'
@@ -22,8 +23,9 @@ import {
 } from '../../slices'
 import Button from '../elements/Button'
 import ConnectionPanel from './ConnectionPanel'
-import FavoriteRequestsPanel from './FavoriteRequestsPanel'
 import generateRandomString from '../../utils/generateRandomString'
+import FavoriteRequestsPanel from './FavoriteRequestsPanel'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,11 +62,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ControlPanel() {
   const classes = useStyles()
-
+  const ga4React = useGA4React()
   const [tabValue, setTabValue] = useState('basic')
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue)
+    ga4React.gtag('event', 'change_tag', {value: newValue})
   }
 
   return (
@@ -100,7 +103,7 @@ export default function ControlPanel() {
 
 function BasicTabPanel() {
   const dispatch = useDispatch()
-
+  const ga4React = useGA4React()
   const connectionState = useSelector(getConnectionState)
   const requestText = useSelector(getRequestText)
   const appliedFavoriteRequest = useSelector(getAppliedFavoriteRequest)
@@ -128,15 +131,18 @@ function BasicTabPanel() {
       }
       dispatch(addFavoriteRequest(favoriteRequest))
       dispatch(setAppliedFavoriteRequestID(favoriteRequest.id))
+      ga4React.gtag('event', 'add_favorite_message')
     }
   }
 
   const onSendButtonClicked = () => {
     dispatch(sendRequestText(value))
+    ga4React.gtag('event', 'send_message')
   }
 
   const showFavoriteRequestsPanel = () => {
     setFavoriteRequestsPanel(true)
+    ga4React.gtag('event', 'show_favorite_requests_panel')
   }
 
   const hideFavoriteRequestsPanel = () => {
@@ -179,7 +185,7 @@ function BasicTabPanel() {
 
 function ScheduleTabPanel() {
   const dispatch = useDispatch()
-
+  const ga4React = useGA4React()
   const connectionState = useSelector(getConnectionState)
   const requestText = useSelector(getScheduleRequestText)
   const appliedFavoriteRequest = useSelector(getAppliedFavoriteRequest)
@@ -227,11 +233,13 @@ function ScheduleTabPanel() {
       dispatch(disableSchedule())
     } else {
       dispatch(enableSchedule({requestText: localRequestText, timeInterval: localTimeInterval}))
+      ga4React.gtag('event', 'enable_scheduler')
     }
   }
 
   const showFavoriteRequestsPanel = () => {
     setFavoriteRequestsPanel(true)
+    ga4React.gtag('event', 'show_favorite_requests_panel')
   }
 
   const hideFavoriteRequestsPanel = () => {

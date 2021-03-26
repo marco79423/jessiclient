@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
+import {useGA4React} from 'ga-4-react'
 import {Button as MuiButton, Grid, Toolbar as MuiToolbar, Typography} from '@material-ui/core'
 import ArchiveIcon from '@material-ui/icons/Archive'
 import UnarchiveIcon from '@material-ui/icons/Unarchive'
@@ -14,11 +15,13 @@ import TextField from '../elements/TextField'
 
 export default function Toolbar() {
   const dispatch = useDispatch()
+  const ga4React = useGA4React()
   const [sharePanelOpen, setSharePanel] = useState(false)
   const [exportPanelOpen, setExportPanel] = useState(false)
 
   const onImportClicked = () => {
     dispatch(importProject())
+    ga4React.gtag('event', 'import_project')
   }
 
   const showSharePanel = () => {
@@ -58,17 +61,20 @@ export default function Toolbar() {
 
 function SharePanel({open, onClose}) {
   const dispatch = useDispatch()
+  const ga4React = useGA4React()
   const shareLink = useSelector(getShareLink)
   const [messageIncluded, setIncludeMessages] = useState(false)
 
   const onCopyLinkButtonClicked = async () => {
     await navigator.clipboard.writeText(shareLink)
+    ga4React.gtag('event', 'copy_share_link')
   }
 
   const onGenerateLinkButtonClicked = () => {
     dispatch(generateShareLink({
       messageIncluded,
     }))
+    ga4React.gtag('event', 'generate_share_link', {messageIncluded})
   }
 
   const onCloseButtonClick = () => {
@@ -117,6 +123,7 @@ function SharePanel({open, onClose}) {
 
 function ExportPanel({open, onClose}) {
   const dispatch = useDispatch()
+  const ga4React = useGA4React()
   const [name, setName] = useState(null)
 
   const [messageIncluded, setIncludeMessages] = useState(false)
@@ -129,6 +136,7 @@ function ExportPanel({open, onClose}) {
 
     setName(null)
     onClose()
+    ga4React.gtag('event', 'export_project', {messageIncluded})
   }
 
   return (
