@@ -6,7 +6,7 @@ import {GA4R} from 'ga-4-react'
 
 import store from '../store'
 import {appWithTranslation} from 'next-i18next'
-import theme from '../components/theme/default'
+import theme from '../components/themes/defaultTheme'
 
 function App({Component, pageProps}) {
   return (
