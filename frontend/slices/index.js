@@ -6,21 +6,12 @@ import {
   createSlice
 } from '@reduxjs/toolkit'
 import jsDownload from 'js-file-download'
-import axios from 'axios'
 import fileDialog from 'file-dialog'
 
 import {ConnectionState, LoadingState, MessageSource} from '../constants'
 import generateRandomString from '../utils/generateRandomString'
-import {Validator} from 'jsonschema'
+import {saveProjectDataToSharingServer} from '../features/project'
 
-
-export async function validateProjectData(projectData) {
-  const resp = await axios.get('/api/schema/project.json')
-  const schema = resp.data
-
-  const validator = new Validator()
-  return validator.validate(projectData, schema)
-}
 
 // Actions
 export const changeProjectState = createAsyncThunk(
@@ -107,10 +98,6 @@ export const clearShareLink = createAsyncThunk(
 export const setProjectData = createAsyncThunk(
   'project/setProjectData',
   async (projectData) => {
-    const result = await validateProjectData(projectData)
-    if (!result.valid) {
-      throw new Error(result.toString())
-    }
     return projectData
   }
 )
@@ -139,7 +126,7 @@ export const changeRequestText = createAsyncThunk(
 export const changeScheduleTimeInterval = createAsyncThunk(
   'project/schedule/changeScheduleTimeInterval',
   async (period) => {
-    return period
+    return +period
   }
 )
 
@@ -205,31 +192,6 @@ export const clearMessages = createAsyncThunk(
 )
 
 
-async function loadProjectData() {
-  const projectCode = new URLSearchParams(window.location.search).get('projectCode')
-  if (projectCode) {
-    const resp = await axios.get(`/api/sharing/projects/${projectCode}`)
-    return resp.data.data
-  }
-
-  const rawProjectData = localStorage.getItem('projectData')
-  return JSON.parse(rawProjectData)
-}
-
-export const initialize = createAsyncThunk(
-  'initialize',
-  async (_, {dispatch}) => {
-    await dispatch(changeProjectState(LoadingState.Loading))
-
-    const projectData = await loadProjectData()
-    if (projectData) {
-      await dispatch(setProjectData(projectData))
-    }
-
-    await dispatch(changeProjectState(LoadingState.Loaded))
-  }
-)
-
 export const exportProject = createAsyncThunk(
   'action/exportProject',
   ({name, messageIncluded}, {getState}) => {
@@ -240,7 +202,7 @@ export const exportProject = createAsyncThunk(
 
 export const importProject = createAsyncThunk(
   'action/importProject',
-  async (_, {getState, dispatch}) => {
+  async (_, {dispatch}) => {
     const files = await fileDialog({accept: '.json'})
     const selectedFile = files[0]
 
@@ -286,7 +248,7 @@ export const connect = createAsyncThunk(
 
 export const disconnect = createAsyncThunk(
   'action/disconnect',
-  async (_, {dispatch, getState}) => {
+  async (_, {dispatch}) => {
     if (scheduleHandler) {
       dispatch(disableSchedule())
     }
@@ -346,9 +308,9 @@ export const generateShareLink = createAsyncThunk(
   'action/generateShareLink',
   async ({messageIncluded}, {dispatch, getState}) => {
     const projectData = messageIncluded ? getProjectData(getState()) : getProjectDataWithoutMessages(getState())
-    const resp = await axios.post('/api/sharing/projects', projectData)
+    const projectCode = await saveProjectDataToSharingServer(projectData)
 
-    const shareLink = `${window.location.origin}?projectCode=${resp.data.data.projectCode}`
+    const shareLink = `${window.location.origin}?projectCode=${projectCode}`
     dispatch(changeShareLink(shareLink))
   }
 )

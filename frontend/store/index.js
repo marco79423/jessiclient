@@ -2,15 +2,16 @@ import {configureStore} from '@reduxjs/toolkit'
 
 import {LoadingState} from '../constants'
 import reducer, {getProjectData, getProjectState} from '../slices'
+import {saveProjectDataToLocalStorage} from '../features/project'
 
-const projectAutoSaver = store => next => action => {
+const projectAutoSaver = store => next => async action => {
   try {
     return next(action)
   } finally {
     const state = store.getState()
     if (getProjectState(state) === LoadingState.Loaded) {
       const projectData = getProjectData(state)
-      localStorage.setItem('projectData', JSON.stringify(projectData))
+      await saveProjectDataToLocalStorage(projectData)
     }
   }
 }
