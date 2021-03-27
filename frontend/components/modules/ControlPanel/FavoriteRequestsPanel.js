@@ -9,9 +9,9 @@ import {
   removeFavoriteRequest,
   sendRequestText,
   setAppliedFavoriteRequestID
-} from '../../slices'
-import BasicDialog from '../elements/BasicDialog'
-import Button from '../elements/Button'
+} from '../../../slices'
+import BasicDialog from '../../elements/BasicDialog'
+import Button from '../../elements/Button'
 
 const useStyles = makeStyles((theme) => ({
   root: {

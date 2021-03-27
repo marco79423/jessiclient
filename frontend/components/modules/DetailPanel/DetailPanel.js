@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import {makeStyles} from '@material-ui/core/styles'
 import {InputBase, Paper, Tab, Tabs, Toolbar} from '@material-ui/core'
 
-import {getMessage} from '../../slices'
+import {getMessage} from '../../../slices'
 import ReactJson from 'react-json-view'
 import {TabContext, TabPanel} from '@material-ui/lab'
 
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function RequestPanel({className}) {
+export default function DetailPanel({className}) {
   const classes = useStyles()
   const [tabValue, setTabValue] = useState('plain-text')
   const [jsonData, setJsonData] = useState(null)

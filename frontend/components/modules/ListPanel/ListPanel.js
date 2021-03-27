@@ -4,7 +4,7 @@ import {useGA4React} from 'ga-4-react'
 import {makeStyles} from '@material-ui/core/styles'
 import {Chip, Grid, Typography} from '@material-ui/core'
 
-import {MessageSource} from '../../constants'
+import {MessageSource} from '../../../constants'
 import {
   addSearchFilter,
   clearMessages,
@@ -13,12 +13,12 @@ import {
   getSearchFilters,
   removeSearchFilter,
   setSelectedMessageID
-} from '../../slices'
-import Button from '../elements/Button'
-import SearchField from '../elements/SearchField'
-import BasicDialog from '../elements/BasicDialog'
-import List from '../elements/List'
-import ListItem from '../elements/ListItem'
+} from '../../../slices'
+import Button from '../../elements/Button'
+import SearchField from '../../elements/SearchField'
+import BasicDialog from '../../elements/BasicDialog'
+import List from '../../elements/List'
+import ListItem from '../../elements/ListItem'
 
 
 const useStyles = makeStyles((theme) => ({

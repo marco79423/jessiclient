@@ -5,7 +5,7 @@ import {makeStyles} from '@material-ui/core/styles'
 import {Grid, Link, Paper, Tab, Tabs, TextField, Typography} from '@material-ui/core'
 import {TabContext, TabPanel} from '@material-ui/lab'
 
-import {ConnectionState} from '../../constants'
+import {ConnectionState} from '../../../constants'
 import {
   addFavoriteRequest,
   changeScheduleTimeInterval,
@@ -20,10 +20,10 @@ import {
   getScheduleTimeInterval,
   sendRequestText,
   setAppliedFavoriteRequestID
-} from '../../slices'
-import Button from '../elements/Button'
+} from '../../../slices'
+import Button from '../../elements/Button'
 import ConnectionPanel from './ConnectionPanel'
-import generateRandomString from '../../utils/generateRandomString'
+import generateRandomString from '../../../utils/generateRandomString'
 import FavoriteRequestsPanel from './FavoriteRequestsPanel'
 
 
