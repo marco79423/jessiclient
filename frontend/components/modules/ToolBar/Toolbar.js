@@ -6,10 +6,11 @@ import ArchiveIcon from '@material-ui/icons/Archive'
 import UnarchiveIcon from '@material-ui/icons/Unarchive'
 import ShareIcon from '@material-ui/icons/Share'
 
-import {importProject} from '../../../slices'
+import {setProjectData} from '../../../slices'
 import IconButton from '../../elements/IconButton'
 import SharePanel from './SharePanel'
 import ExportPanel from './ExportPanel'
+import {loadProjectDataFromFile} from '../../../features/project'
 
 export default function Toolbar() {
   const dispatch = useDispatch()
@@ -17,8 +18,9 @@ export default function Toolbar() {
   const [sharePanelOpen, setSharePanel] = useState(false)
   const [exportPanelOpen, setExportPanel] = useState(false)
 
-  const onImportClicked = () => {
-    dispatch(importProject())
+  const onImportClicked = async () => {
+    const projectData = await loadProjectDataFromFile()
+    dispatch(setProjectData(projectData))
     ga4React.gtag('event', 'import_project')
   }
 
@@ -55,5 +57,4 @@ export default function Toolbar() {
     </>
   )
 }
-
 

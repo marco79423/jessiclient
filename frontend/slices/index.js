@@ -6,7 +6,6 @@ import {
   createSlice
 } from '@reduxjs/toolkit'
 import jsDownload from 'js-file-download'
-import fileDialog from 'file-dialog'
 
 import {ConnectionState, LoadingState, MessageSource} from '../constants'
 import generateRandomString from '../utils/generateRandomString'
@@ -199,23 +198,6 @@ export const exportProject = createAsyncThunk(
     jsDownload(JSON.stringify(projectData), `${name}.json`)
   }
 )
-
-export const importProject = createAsyncThunk(
-  'action/importProject',
-  async (_, {dispatch}) => {
-    const files = await fileDialog({accept: '.json'})
-    const selectedFile = files[0]
-
-    const fileReader = new FileReader()
-    fileReader.onload = () => {
-      const data = fileReader.result
-      const projectData = JSON.parse(data)
-      dispatch(setProjectData(projectData))
-    }
-    fileReader.readAsText(selectedFile, 'UTF-8')
-  }
-)
-
 
 let wsClient = null
 let scheduleHandler = null
