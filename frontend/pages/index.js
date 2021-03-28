@@ -1,5 +1,6 @@
 import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
+import useAsyncEffect from 'use-async-effect'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 
 import {LoadingState} from '../constants'
@@ -10,7 +11,6 @@ import DetailPanel from '../components/modules/DetailPanel'
 import Toolbar from '../components/modules/Toolbar'
 import DefaultLayout from '../components/layouts/DefaultLayout'
 import {loadProjectDataFromLocalStorage, loadProjectDataFromSharingServer} from '../features/project'
-import useAsyncEffect from 'use-async-effect'
 
 export const getStaticProps = async ({locale}) => ({
   props: {
