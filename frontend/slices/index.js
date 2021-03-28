@@ -8,8 +8,6 @@ import {
 
 import {ConnectionState, LoadingState, MessageSource} from '../constants'
 import generateRandomString from '../utils/generateRandomString'
-import {saveProjectDataToSharingServer} from '../features/project'
-import {downloadJsonData} from '../utils/jsDownloader'
 
 
 // Actions
@@ -274,17 +272,6 @@ export const disableSchedule = createAsyncThunk(
       scheduleHandler = null
       dispatch(changeScheduleEnabledStatus(false))
     }
-  }
-)
-
-export const generateShareLink = createAsyncThunk(
-  'action/generateShareLink',
-  async ({messageIncluded}, {dispatch, getState}) => {
-    const projectData = messageIncluded ? getProjectData(getState()) : getProjectDataWithoutMessages(getState())
-    const projectCode = await saveProjectDataToSharingServer(projectData)
-
-    const shareLink = `${window.location.origin}?projectCode=${projectCode}`
-    dispatch(changeShareLink(shareLink))
   }
 )
 

@@ -1,8 +1,16 @@
+import React, {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useGA4React} from 'ga-4-react'
-import {clearShareLink, generateShareLink, getShareLink} from '../../../slices'
-import React, {useState} from 'react'
 import {Button as MuiButton, Grid, Typography} from '@material-ui/core'
+
+import {
+  changeShareLink,
+  clearShareLink,
+  getProjectData,
+  getProjectDataWithoutMessages,
+  getShareLink
+} from '../../../slices'
+import {saveProjectDataToSharingServer} from '../../../features/project'
 import BasicDialog from '../../elements/BasicDialog'
 import Button from '../../elements/Button'
 import TextField from '../../elements/TextField'
@@ -11,6 +19,8 @@ import Checkbox from '../../elements/Checkbox'
 export default function SharePanel({open, onClose}) {
   const dispatch = useDispatch()
   const ga4React = useGA4React()
+  const projectData = useSelector(getProjectData)
+  const projectDataWithoutMessages = useSelector(getProjectDataWithoutMessages)
   const shareLink = useSelector(getShareLink)
   const [messageIncluded, setIncludeMessages] = useState(false)
 
@@ -19,10 +29,10 @@ export default function SharePanel({open, onClose}) {
     ga4React.gtag('event', 'copy_share_link')
   }
 
-  const onGenerateLinkButtonClicked = () => {
-    dispatch(generateShareLink({
-      messageIncluded,
-    }))
+  const onGenerateLinkButtonClicked = async () => {
+    const projectCode = await saveProjectDataToSharingServer(messageIncluded ? projectData : projectDataWithoutMessages)
+    const shareLink = `${window.location.origin}?projectCode=${projectCode}`
+    dispatch(changeShareLink(shareLink))
     ga4React.gtag('event', 'generate_share_link', {messageIncluded})
   }
 
