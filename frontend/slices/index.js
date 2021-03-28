@@ -5,11 +5,11 @@ import {
   createEntityAdapter,
   createSlice
 } from '@reduxjs/toolkit'
-import jsDownload from 'js-file-download'
 
 import {ConnectionState, LoadingState, MessageSource} from '../constants'
 import generateRandomString from '../utils/generateRandomString'
 import {saveProjectDataToSharingServer} from '../features/project'
+import {downloadJsonData} from '../utils/jsDownloader'
 
 
 // Actions
@@ -195,7 +195,7 @@ export const exportProject = createAsyncThunk(
   'action/exportProject',
   ({name, messageIncluded}, {getState}) => {
     const projectData = messageIncluded ? getProjectData(getState()) : getProjectDataWithoutMessages(getState())
-    jsDownload(JSON.stringify(projectData), `${name}.json`)
+    downloadJsonData(name, projectData)
   }
 )
 
