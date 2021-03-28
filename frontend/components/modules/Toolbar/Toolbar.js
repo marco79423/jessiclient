@@ -7,10 +7,10 @@ import UnarchiveIcon from '@material-ui/icons/Unarchive'
 import ShareIcon from '@material-ui/icons/Share'
 
 import {setProjectData} from '../../../slices'
+import {loadProjectDataFromFile} from '../../../features/project'
 import IconButton from '../../elements/IconButton'
 import SharePanel from './SharePanel'
 import ExportPanel from './ExportPanel'
-import {loadProjectDataFromFile} from '../../../features/project'
 
 export default function Toolbar() {
   const dispatch = useDispatch()
