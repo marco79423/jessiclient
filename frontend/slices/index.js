@@ -190,15 +190,6 @@ export const clearMessages = createAsyncThunk(
   }
 )
 
-
-export const exportProject = createAsyncThunk(
-  'action/exportProject',
-  ({name, messageIncluded}, {getState}) => {
-    const projectData = messageIncluded ? getProjectData(getState()) : getProjectDataWithoutMessages(getState())
-    downloadJsonData(name, projectData)
-  }
-)
-
 let wsClient = null
 let scheduleHandler = null
 

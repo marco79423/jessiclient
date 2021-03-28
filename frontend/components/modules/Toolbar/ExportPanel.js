@@ -1,30 +1,29 @@
 import React, {useState} from 'react'
-import {useDispatch} from 'react-redux'
+import {useSelector} from 'react-redux'
 import {useGA4React} from 'ga-4-react'
 import {Grid} from '@material-ui/core'
 
-import {exportProject} from '../../../slices'
+import {getProjectData, getProjectDataWithoutMessages} from '../../../slices'
+import {downloadJsonData} from '../../../utils/jsDownloader'
 import BasicDialog from '../../elements/BasicDialog'
 import Button from '../../elements/Button'
 import TextField from '../../elements/TextField'
 import Checkbox from '../../elements/Checkbox'
 
 export default function ExportPanel({open, onClose}) {
-  const dispatch = useDispatch()
   const ga4React = useGA4React()
-  const [name, setName] = useState(null)
+  const projectData = useSelector(getProjectData)
+  const projectDataWithoutMessages = useSelector(getProjectDataWithoutMessages)
 
+  const [name, setName] = useState(null)
   const [messageIncluded, setIncludeMessages] = useState(false)
 
   const onExportButtonClicked = () => {
-    dispatch(exportProject({
-      name,
-      messageIncluded,
-    }))
-
+    downloadJsonData(name, messageIncluded ? projectData : projectDataWithoutMessages)
     setName(null)
-    onClose()
     ga4React.gtag('event', 'export_project', {messageIncluded})
+
+    onClose()
   }
 
   return (
