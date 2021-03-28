@@ -32,13 +32,6 @@ export const setSelectedMessageID = createAsyncThunk(
   }
 )
 
-
-export const clearSelectedMessageID = createAsyncThunk(
-  'current/clearSelectedMessageID',
-  async () => {
-  }
-)
-
 export const setAppliedFavoriteRequestID = createAsyncThunk(
   'current/setAppliedFavoriteRequestID',
   async (appliedFavoriteRequestID) => {
@@ -50,24 +43,6 @@ export const clearAppliedFavoriteRequestID = createAsyncThunk(
   'current/clearAppliedFavoriteRequestID',
   async () => {
 
-  }
-)
-
-
-export const addSearchFilter = createAsyncThunk(
-  'current/addSearchFilter',
-  async (text) => {
-    return {
-      id: generateRandomString(),
-      text: text,
-    }
-  }
-)
-
-export const removeSearchFilter = createAsyncThunk(
-  'current/removeSearchFilter',
-  async (searchFilterID) => {
-    return searchFilterID
   }
 )
 
@@ -184,7 +159,6 @@ export const removeFirstMessage = createAsyncThunk(
 export const clearMessages = createAsyncThunk(
   'project/message/clearMessages',
   async (_, {dispatch}) => {
-    await dispatch(clearSelectedMessageID())
   }
 )
 
@@ -266,7 +240,7 @@ export const enableSchedule = createAsyncThunk(
 
 export const disableSchedule = createAsyncThunk(
   'action/disableSchedule',
-  async (_, {dispatch, getState}) => {
+  async (_, {dispatch}) => {
     if (scheduleHandler) {
       clearInterval(scheduleHandler)
       scheduleHandler = null
@@ -276,8 +250,6 @@ export const disableSchedule = createAsyncThunk(
 )
 
 // Slice
-const searchFilterAdapter = createEntityAdapter()
-
 const currentSlice = createSlice({
   name: 'current',
   initialState: {
@@ -285,7 +257,6 @@ const currentSlice = createSlice({
     connectionState: ConnectionState.Idle, // idle, connecting, connected, closed
     selectedMessageID: null,
     appliedFavoriteRequestID: null,
-    searchFilter: searchFilterAdapter.getInitialState(),
     scheduleEnabled: false,
     shareLink: null,
   },
@@ -299,20 +270,11 @@ const currentSlice = createSlice({
     [setSelectedMessageID.fulfilled]: (state, action) => {
       state.selectedMessageID = action.payload
     },
-    [clearSelectedMessageID.fulfilled]: (state) => {
-      state.selectedMessageID = null
-    },
     [setAppliedFavoriteRequestID.fulfilled]: (state, action) => {
       state.appliedFavoriteRequestID = action.payload
     },
     [clearAppliedFavoriteRequestID.fulfilled]: (state) => {
       state.appliedFavoriteRequestID = null
-    },
-    [addSearchFilter.fulfilled]: (state, action) => {
-      searchFilterAdapter.addOne(state.searchFilter, action.payload)
-    },
-    [removeSearchFilter.fulfilled]: (state, action) => {
-      searchFilterAdapter.removeOne(state.searchFilter, action.payload)
     },
     [changeScheduleEnabledStatus.fulfilled]: (state, action) => {
       state.scheduleEnabled = action.payload
@@ -405,12 +367,10 @@ const projectSlice = createSlice({
 
 
 // Selectors
-const searchFilterSelectors = searchFilterAdapter.getSelectors(state => state.current.searchFilter)
 export const getProjectState = state => state.current.projectState
 export const getConnectionState = state => state.current.connectionState
 export const getSelectedMessageID = state => state.current.selectedMessageID
 export const getAppliedFavoriteRequestID = state => state.current.appliedFavoriteRequestID
-export const getSearchFilters = state => searchFilterSelectors.selectAll(state)
 export const getScheduleEnabledStatus = state => state.current.scheduleEnabled
 export const getShareLink = state => state.current.shareLink
 
@@ -443,19 +403,7 @@ export const getAppliedFavoriteRequest = createDraftSafeSelector(
 
 const messageSelectors = messageAdapter.getSelectors(state => state.project.message)
 export const getMessageCount = state => messageSelectors.selectTotal(state)
-export const getMessages = createDraftSafeSelector(
-  [
-    getSelectedMessageID,
-    getSearchFilters,
-    state => messageSelectors.selectAll(state),
-  ],
-  (selectedID, searchFilters, messages) => messages
-    .filter(message => searchFilters.map(searchFilter => message.text.includes(searchFilter.text)).reduce((a, b) => a && b, true))
-    .map(message => ({
-      ...message,
-      selected: message.id === selectedID,
-    })),
-)
+export const getMessages = state => messageSelectors.selectAll(state)
 export const getMessage = createDraftSafeSelector(
   [
     getSelectedMessageID,

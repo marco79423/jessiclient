@@ -1,7 +1,5 @@
 import {useGA4React} from 'ga-4-react'
 import {MessageSource} from '../../../constants'
-import {useDispatch, useSelector} from 'react-redux'
-import {clearSelectedMessageID, getMessages, setSelectedMessageID} from '../../../slices'
 import React, {useEffect, useState} from 'react'
 
 import List from '../../elements/List'
@@ -22,8 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-export default function MessageList() {
-  const messages = useSelector(getMessages)
+export default function MessageList({messages, selectedMessageID, setSelectedMessageID}) {
   const [height, setHeight] = useState(0)
 
   useEffect(() => {
@@ -36,24 +33,25 @@ export default function MessageList() {
   return (
     <List height={height}>
       {messages.map(message => (
-        <Message message={message}/>
+        <Message message={message}
+                 selectedMessageID={selectedMessageID}
+                 setSelectedMessageID={setSelectedMessageID}/>
       ))}
     </List>
   )
 }
 
-function Message({message}) {
+function Message({message, selectedMessageID, setSelectedMessageID}) {
   const fromClient = message.source === MessageSource.Client
   const classes = useStyles({fromClient})
-  const dispatch = useDispatch()
   const ga4React = useGA4React()
-
+  const selected = message.id === selectedMessageID
 
   const onSelected = () => {
-    if (message.selected) {
-      dispatch(clearSelectedMessageID())
+    if (selected) {
+      setSelectedMessageID(null)
     } else {
-      dispatch(setSelectedMessageID(message.id))
+      setSelectedMessageID(message.id)
       ga4React.gtag('event', 'select_message')
     }
   }
@@ -70,7 +68,7 @@ function Message({message}) {
   return (
     <ListItem
       key={message.id}
-      selected={message.selected}
+      selected={selected}
       title={<MessageTitle message={message}/>}
       onClick={onSelected}>
       <span className={classes.messageContent}>{message.text}</span>

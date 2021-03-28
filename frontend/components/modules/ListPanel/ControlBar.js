@@ -1,12 +1,11 @@
 import {useGA4React} from 'ga-4-react'
-import {useDispatch, useSelector} from 'react-redux'
-import {addSearchFilter, getSearchFilters, removeSearchFilter} from '../../../slices'
 import React, {useState} from 'react'
-import {Chip, Grid} from '@material-ui/core'
+import {makeStyles} from '@material-ui/core/styles'
+import {Chip, Grid, Typography} from '@material-ui/core'
+
 import SearchField from '../../elements/SearchField'
 import Button from '../../elements/Button'
-import ClearAllDialog from './ClearAllDialog'
-import {makeStyles} from '@material-ui/core/styles'
+import BasicDialog from '../../elements/BasicDialog'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -19,20 +18,18 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-export default function ControlBar() {
+export default function ControlBar({searchFilters, setSearchFilters, clearAllMessages}) {
   const classes = useStyles()
   const ga4React = useGA4React()
-  const dispatch = useDispatch()
-  const searchFilters = useSelector(getSearchFilters)
   const [clearAllDialogOn, setClearAllDialog] = useState(false)
 
   const onSearchButtonClicked = (value) => {
-    dispatch(addSearchFilter(value))
+    setSearchFilters([...searchFilters, value])
     ga4React.gtag('event', 'search', {value})
   }
 
-  const onClearButtonClicked = (id) => {
-    dispatch(removeSearchFilter(id))
+  const onClearButtonClicked = (targetSearchFilter) => {
+    setSearchFilters(searchFilters.filter(searchFilter => searchFilter !== targetSearchFilter))
   }
 
   const showClearAllDialog = () => {
@@ -54,10 +51,10 @@ export default function ControlBar() {
             />
           </Grid>
           {searchFilters.map(searchFilter => (
-            <Grid key={searchFilter.id} item>
+            <Grid key={searchFilter} item>
               <Chip
-                label={searchFilter.text}
-                onDelete={() => onClearButtonClicked(searchFilter.id)}
+                label={searchFilter}
+                onDelete={() => onClearButtonClicked(searchFilter)}
               />
             </Grid>
           ))}
@@ -67,8 +64,32 @@ export default function ControlBar() {
         <Button onClick={showClearAllDialog}>
           清空訊息
         </Button>
-        <ClearAllDialog open={clearAllDialogOn} onClose={hideClearAllDialog}/>
+        <ClearAllDialog open={clearAllDialogOn} onClose={hideClearAllDialog} confirm={clearAllMessages}/>
       </Grid>
     </Grid>
+  )
+}
+
+function ClearAllDialog({open, onClose, confirm}) {
+  const ga4React = useGA4React()
+
+  const clearAllMessages = () => {
+    confirm()
+    onClose()
+    ga4React.gtag('event', 'clear_messages')
+  }
+
+  return (
+    <BasicDialog title={'確定刪除嗎？'}
+                 open={open}
+                 onClose={onClose}
+                 actions={
+                   <>
+                     <Button onClick={onClose}>取消</Button>
+                     <Button primary onClick={clearAllMessages}>刪除</Button>
+                   </>
+                 }>
+      <Typography>刪除的訊息將不再能恢復</Typography>
+    </BasicDialog>
   )
 }
