@@ -8,6 +8,7 @@ import {
 
 import {ConnectionState, LoadingState, MessageSource} from '../constants'
 import generateRandomString from '../utils/generateRandomString'
+import wsClient from '../features/wsClient'
 
 
 // Actions
@@ -162,49 +163,7 @@ export const clearMessages = createAsyncThunk(
   }
 )
 
-let wsClient = null
 let scheduleHandler = null
-
-export const connect = createAsyncThunk(
-  'action/connect',
-  async (_, {dispatch, getState}) => {
-    dispatch(changeConnectionState(ConnectionState.Connecting))
-
-    const connectionUrl = getConnectionUrl(getState())
-    wsClient = new WebSocket(connectionUrl)
-
-    wsClient.onopen = () => {
-      dispatch(changeConnectionState(ConnectionState.Connected))
-    }
-
-    wsClient.onmessage = evt => {
-      dispatch(appendMessage({source: MessageSource.Server, message: evt.data}))
-    }
-
-    wsClient.onerror = () => {
-      dispatch(changeConnectionState(ConnectionState.Idle))
-    }
-
-    wsClient.onclose = () => {
-      dispatch(disconnect())
-    }
-  }
-)
-
-export const disconnect = createAsyncThunk(
-  'action/disconnect',
-  async (_, {dispatch}) => {
-    if (scheduleHandler) {
-      dispatch(disableSchedule())
-    }
-
-    if (wsClient) {
-      wsClient.close()
-      wsClient = null
-      dispatch(changeConnectionState(ConnectionState.Idle))
-    }
-  }
-)
 
 export const sendRequestText = createAsyncThunk(
   'action/sendRequestText',

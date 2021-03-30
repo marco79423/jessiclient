@@ -7,7 +7,8 @@ import {makeStyles} from '@material-ui/core/styles'
 import {Button, Grid, InputBase, Paper, Tooltip} from '@material-ui/core'
 
 import {ConnectionState} from '../../../constants'
-import {changeConnectionUrl, connect, disconnect, getConnectionState, getConnectionUrl} from '../../../slices'
+import {changeConnectionUrl, getConnectionState, getConnectionUrl} from '../../../slices'
+import wsClient from '../../../features/wsClient'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,10 +48,10 @@ export default function ConnectionPanel({className}) {
   const onConnectButtonClicked = async () => {
     if (connectionState === ConnectionState.Idle) {
       await dispatch(changeConnectionUrl(url))
-      await dispatch(connect())
+      wsClient.connect(url)
       ga4React.gtag('event', 'connect', {url})
     } else if (connectionState === ConnectionState.Connected) {
-      await dispatch(disconnect())
+      wsClient.close()
     }
   }
 

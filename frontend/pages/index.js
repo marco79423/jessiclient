@@ -3,14 +3,23 @@ import {useDispatch, useSelector} from 'react-redux'
 import useAsyncEffect from 'use-async-effect'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 
-import {LoadingState} from '../constants'
-import {changeProjectState, getProjectState, getSelectedMessageID, setProjectData} from '../slices'
+import {LoadingState, MessageSource} from '../constants'
+import {
+  appendMessage,
+  changeConnectionState,
+  changeProjectState,
+  disableSchedule,
+  getProjectState,
+  getSelectedMessageID,
+  setProjectData
+} from '../slices'
+import {loadProjectDataFromLocalStorage, loadProjectDataFromSharingServer} from '../features/project'
+import wsClient from '../features/wsClient'
 import ListPanel from '../components/modules/ListPanel'
 import ControlPanel from '../components/modules/ControlPanel'
 import DetailPanel from '../components/modules/DetailPanel'
 import Toolbar from '../components/modules/Toolbar'
 import DefaultLayout from '../components/layouts/DefaultLayout'
-import {loadProjectDataFromLocalStorage, loadProjectDataFromSharingServer} from '../features/project'
 
 export const getStaticProps = async ({locale}) => ({
   props: {
@@ -41,6 +50,13 @@ function initialize() {
 
   useAsyncEffect(async () => {
     await dispatch(changeProjectState(LoadingState.Loading))
+
+    wsClient.setOnConnectionChange(connectionState => dispatch(changeConnectionState(connectionState)))
+    wsClient.setOnError(error => console.log(error))
+    wsClient.setOnNewMessage(message => dispatch(appendMessage({source: MessageSource.Server, message})))
+    wsClient.setOnClose(() => {
+      dispatch(disableSchedule())
+    })
 
     const projectData = await loadProjectData()
     if (projectData) {
