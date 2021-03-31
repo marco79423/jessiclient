@@ -4,14 +4,16 @@ import {makeStyles} from '@material-ui/core/styles'
 import {Grid, Paper, Typography} from '@material-ui/core'
 
 import {
+  appendMessage,
   changeRequestText,
   getFavoriteRequests,
   removeFavoriteRequest,
-  sendRequestText,
   setAppliedFavoriteRequestID
 } from '../../../slices'
 import BasicDialog from '../../elements/BasicDialog'
 import Button from '../../elements/Button'
+import wsClient from '../../../features/wsClient'
+import {MessageSource} from '../../../constants'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,7 +47,9 @@ function FavoriteRequestItem({favoriteRequest}) {
   }
 
   const onSendButtonClicked = () => {
-    dispatch(sendRequestText(favoriteRequest.text))
+    dispatch(changeRequestText(favoriteRequest.text))
+    wsClient.send(requestText)
+    dispatch(appendMessage({source: MessageSource.Client, message: favoriteRequest.text}))
   }
 
   return (

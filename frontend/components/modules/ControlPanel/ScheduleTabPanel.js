@@ -2,10 +2,11 @@ import {useDispatch, useSelector} from 'react-redux'
 import {useGA4React} from 'ga-4-react'
 import {
   addFavoriteRequest,
+  appendMessage,
+  changeScheduleEnabledStatus,
+  changeScheduleRequestText,
   changeScheduleTimeInterval,
   clearAppliedFavoriteRequestID,
-  disableSchedule,
-  enableSchedule,
   getAppliedFavoriteRequest,
   getConnectionState,
   getScheduleEnabledStatus,
@@ -15,11 +16,13 @@ import {
 } from '../../../slices'
 import React, {useEffect, useState} from 'react'
 import generateRandomString from '../../../utils/generateRandomString'
-import {ConnectionState} from '../../../constants'
+import {ConnectionState, MessageSource} from '../../../constants'
 import {TabPanel} from '@material-ui/lab'
 import {Grid, TextField, Typography} from '@material-ui/core'
 import Button from '../../elements/Button'
 import FavoriteRequestsPanel from './FavoriteRequestsPanel'
+import scheduler from '../../../features/scheduler'
+import wsClient from '../../../features/wsClient'
 
 export default function ScheduleTabPanel() {
   const dispatch = useDispatch()
@@ -68,10 +71,18 @@ export default function ScheduleTabPanel() {
 
   const onEnableButtonClicked = () => {
     if (scheduleEnabled) {
-      dispatch(disableSchedule())
+      scheduler.disable()
+      dispatch(changeScheduleEnabledStatus(false))
     } else {
-      dispatch(enableSchedule({requestText: localRequestText, timeInterval: localTimeInterval}))
-      ga4React.gtag('event', 'enable_scheduler')
+      dispatch(changeScheduleRequestText(localRequestText))
+      dispatch(changeScheduleTimeInterval(localTimeInterval))
+
+      scheduler.setOnEvent(() => {
+        wsClient.send(localRequestText)
+        dispatch(appendMessage({source: MessageSource.Client, message: localRequestText}))
+      })
+      scheduler.enable(localTimeInterval)
+      dispatch(changeScheduleEnabledStatus(true))
     }
   }
 

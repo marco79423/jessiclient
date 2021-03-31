@@ -8,13 +8,14 @@ import {
   appendMessage,
   changeConnectionState,
   changeProjectState,
-  disableSchedule,
+  changeScheduleEnabledStatus,
   getProjectState,
   getSelectedMessageID,
   setProjectData
 } from '../slices'
 import {loadProjectDataFromLocalStorage, loadProjectDataFromSharingServer} from '../features/project'
 import wsClient from '../features/wsClient'
+import scheduler from '../features/scheduler'
 import ListPanel from '../components/modules/ListPanel'
 import ControlPanel from '../components/modules/ControlPanel'
 import DetailPanel from '../components/modules/DetailPanel'
@@ -55,7 +56,8 @@ function initialize() {
     wsClient.setOnError(error => console.log(error))
     wsClient.setOnNewMessage(message => dispatch(appendMessage({source: MessageSource.Server, message})))
     wsClient.setOnClose(() => {
-      dispatch(disableSchedule())
+      scheduler.disable()
+      dispatch(changeScheduleEnabledStatus(false))
     })
 
     const projectData = await loadProjectData()

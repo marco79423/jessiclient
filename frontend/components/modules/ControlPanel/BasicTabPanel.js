@@ -6,17 +6,19 @@ import {TabPanel} from '@material-ui/lab'
 
 import {
   addFavoriteRequest,
+  appendMessage,
+  changeRequestText,
   clearAppliedFavoriteRequestID,
   getAppliedFavoriteRequest,
   getConnectionState,
   getRequestText,
-  sendRequestText,
   setAppliedFavoriteRequestID
 } from '../../../slices'
 import generateRandomString from '../../../utils/generateRandomString'
-import {ConnectionState} from '../../../constants'
+import {ConnectionState, MessageSource} from '../../../constants'
 import Button from '../../elements/Button'
 import FavoriteRequestsPanel from './FavoriteRequestsPanel'
+import wsClient from '../../../features/wsClient'
 
 export default function BasicTabPanel() {
   const dispatch = useDispatch()
@@ -53,7 +55,9 @@ export default function BasicTabPanel() {
   }
 
   const onSendButtonClicked = () => {
-    dispatch(sendRequestText(value))
+    dispatch(changeRequestText(value))
+    wsClient.send(value)
+    dispatch(appendMessage({source: MessageSource.Client, message: value}))
     ga4React.gtag('event', 'send_message')
   }
 

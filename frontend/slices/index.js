@@ -6,9 +6,8 @@ import {
   createSlice
 } from '@reduxjs/toolkit'
 
-import {ConnectionState, LoadingState, MessageSource} from '../constants'
+import {ConnectionState, LoadingState} from '../constants'
 import generateRandomString from '../utils/generateRandomString'
-import wsClient from '../features/wsClient'
 
 
 // Actions
@@ -160,51 +159,6 @@ export const removeFirstMessage = createAsyncThunk(
 export const clearMessages = createAsyncThunk(
   'project/message/clearMessages',
   async (_, {dispatch}) => {
-  }
-)
-
-let scheduleHandler = null
-
-export const sendRequestText = createAsyncThunk(
-  'action/sendRequestText',
-  async (requestText, {dispatch, getState}) => {
-    const connectionState = getConnectionState(getState())
-    if (connectionState !== ConnectionState.Connected) {
-      return
-    }
-
-    dispatch(changeRequestText(requestText))
-
-    wsClient.send(requestText)
-    dispatch(appendMessage({source: MessageSource.Client, message: requestText}))
-  }
-)
-
-export const enableSchedule = createAsyncThunk(
-  'action/enableSchedule',
-  async ({requestText, timeInterval}, {dispatch}) => {
-    if (!scheduleHandler) {
-      dispatch(changeScheduleRequestText(requestText))
-      dispatch(changeScheduleTimeInterval(timeInterval))
-
-      scheduleHandler = setInterval(() => {
-        wsClient.send(requestText)
-        dispatch(appendMessage({source: MessageSource.Client, message: requestText}))
-      }, timeInterval * 1000)
-
-      dispatch(changeScheduleEnabledStatus(true))
-    }
-  }
-)
-
-export const disableSchedule = createAsyncThunk(
-  'action/disableSchedule',
-  async (_, {dispatch}) => {
-    if (scheduleHandler) {
-      clearInterval(scheduleHandler)
-      scheduleHandler = null
-      dispatch(changeScheduleEnabledStatus(false))
-    }
   }
 )
 
