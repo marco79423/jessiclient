@@ -1,91 +1,31 @@
-import {createAsyncThunk, createEntityAdapter, createSlice} from '@reduxjs/toolkit'
-import generateRandomString from '../utils/generateRandomString'
+import {createAction, createEntityAdapter, createSlice} from '@reduxjs/toolkit'
 
 
 // Actions
-export const setProjectData = createAsyncThunk(
-  'project/setProjectData',
-  async (projectData) => {
-    return projectData
-  }
-)
+export const setProjectData = createAction('project/setProjectData')
 
-export const changeSettingMaxMessageCount = createAsyncThunk(
-  'project/setting/changeSettingMaxMessageCount',
-  async (maxMessageCount) => {
-    return maxMessageCount
-  }
-)
+export const changeSettingMaxMessageCount = createAction('project/setting/changeSettingMaxMessageCount')
 
-export const changeConnectionUrl = createAsyncThunk(
-  'project/connection/changeConnectionUrl',
-  async (url) => {
-    return url
-  }
-)
+export const changeConnectionUrl = createAction('project/connection/changeConnectionUrl')
 
-export const changeRequestText = createAsyncThunk(
-  'project/request/changeRequestText',
-  async (requestText) => {
-    return requestText
-  }
-)
+export const changeRequestText = createAction('project/request/changeRequestText')
 
-export const changeScheduleTimeInterval = createAsyncThunk(
-  'project/schedule/changeScheduleTimeInterval',
-  async (period) => {
-    return +period
-  }
-)
+export const changeScheduleTimeInterval = createAction('project/schedule/changeScheduleTimeInterval', period => +period)
 
-export const changeScheduleRequestText = createAsyncThunk(
-  'project/schedule/changeScheduleRequestText',
-  async (requestText) => {
-    return requestText
-  }
-)
+export const changeScheduleRequestText = createAction('project/schedule/changeScheduleRequestText')
 
 
-export const addFavoriteRequest = createAsyncThunk(
-  'project/request/addFavoriteRequest',
-  async (favoriteRequest) => {
-    return favoriteRequest
-  }
-)
+export const addFavoriteRequest = createAction('project/request/addFavoriteRequest')
 
-export const removeFavoriteRequest = createAsyncThunk(
-  'project/request/removeFavoriteRequest',
-  async (id) => {
-    return id
-  }
-)
+export const removeFavoriteRequest = createAction('project/request/removeFavoriteRequest')
 
-export const clearFavoriteRequests = createAsyncThunk(
-  'project/request/clearFavoriteRequests',
-  async () => {
+export const clearFavoriteRequests = createAction('project/request/clearFavoriteRequests')
 
-  }
-)
+export const appendMessage = createAction('project/message/appendMessage')
 
-export const appendMessage = createAsyncThunk(
-  'project/message/appendMessage',
-  async (message) => {
-    return message
-  }
-)
+export const removeFirstMessage = createAction( 'project/message/removeFirstMessage')
 
-export const removeFirstMessage = createAsyncThunk(
-  'project/message/removeFirstMessage',
-  async () => {
-
-  }
-)
-
-export const clearMessages = createAsyncThunk(
-  'project/message/clearMessages',
-  async (_, {dispatch}) => {
-  }
-)
+export const clearMessages = createAction(  'project/message/clearMessages')
 
 // Slice
 export const messageAdapter = createEntityAdapter()
@@ -123,40 +63,40 @@ const projectSlice = createSlice({
     message: messageAdapter.getInitialState(),
   },
   extraReducers: {
-    [setProjectData.fulfilled]: (state, action) => {
+    [setProjectData]: (state, action) => {
       return action.payload
     },
-    [changeSettingMaxMessageCount.fulfilled]: (state, action) => {
+    [changeSettingMaxMessageCount]: (state, action) => {
       state.setting.maxMessageCount = action.payload
     },
-    [changeConnectionUrl.fulfilled]: (state, action) => {
+    [changeConnectionUrl]: (state, action) => {
       state.connection.url = action.payload
     },
-    [changeRequestText.fulfilled]: (state, action) => {
+    [changeRequestText]: (state, action) => {
       state.request.text = action.payload
     },
-    [changeScheduleTimeInterval.fulfilled]: (state, action) => {
+    [changeScheduleTimeInterval]: (state, action) => {
       state.schedule.timeInterval = action.payload
     },
-    [changeScheduleRequestText().fulfilled]: (state, action) => {
+    [changeScheduleRequestText]: (state, action) => {
       state.schedule.request.text = action.payload
     },
-    [addFavoriteRequest.fulfilled]: (state, action) => {
+    [addFavoriteRequest]: (state, action) => {
       favoriteRequestAdapter.addOne(state.favoriteRequest, action.payload)
     },
-    [removeFavoriteRequest.fulfilled]: (state, action) => {
+    [removeFavoriteRequest]: (state, action) => {
       favoriteRequestAdapter.removeOne(state.favoriteRequest, action.payload)
     },
-    [clearFavoriteRequests.fulfilled]: (state) => {
+    [clearFavoriteRequests]: (state) => {
       favoriteRequestAdapter.removeAll(state.favoriteRequest)
     },
-    [removeFirstMessage.fulfilled]: (state) => {
+    [removeFirstMessage]: (state) => {
       messageAdapter.removeOne(state.message, state.message.ids[0])
     },
-    [appendMessage.fulfilled]: (state, action) => {
+    [appendMessage]: (state, action) => {
       messageAdapter.addOne(state.message, action.payload)
     },
-    [clearMessages.fulfilled]: (state) => {
+    [clearMessages]: (state) => {
       messageAdapter.removeAll(state.message)
     },
   },

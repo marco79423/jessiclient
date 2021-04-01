@@ -1,64 +1,24 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
+import {createAction, createSlice} from '@reduxjs/toolkit'
 
 import {ConnectionState, LoadingState} from '../constants'
 
 
 // Actions
-export const changeProjectState = createAsyncThunk(
-  'current/changeProjectState',
-  async (projectState) => {
-    return projectState
-  }
-)
+export const changeProjectState = createAction('current/changeProjectState')
 
-export const changeConnectionState = createAsyncThunk(
-  'current/changeConnectionState',
-  async (connectionState) => {
-    return connectionState
-  }
-)
+export const changeConnectionState = createAction('current/changeConnectionState')
 
-export const setSelectedMessageID = createAsyncThunk(
-  'current/setSelectedMessageID',
-  async (messageID) => {
-    return messageID
-  }
-)
+export const setSelectedMessageID = createAction('current/setSelectedMessageID')
 
-export const setAppliedFavoriteRequestID = createAsyncThunk(
-  'current/setAppliedFavoriteRequestID',
-  async (appliedFavoriteRequestID) => {
-    return appliedFavoriteRequestID
-  }
-)
+export const setAppliedFavoriteRequestID = createAction('current/setAppliedFavoriteRequestID')
 
-export const clearAppliedFavoriteRequestID = createAsyncThunk(
-  'current/clearAppliedFavoriteRequestID',
-  async () => {
+export const clearAppliedFavoriteRequestID = createAction('current/clearAppliedFavoriteRequestID')
 
-  }
-)
+export const changeScheduleEnabledStatus = createAction('current/changeScheduleEnabledStatus')
 
-export const changeScheduleEnabledStatus = createAsyncThunk(
-  'current/changeScheduleEnabledStatus',
-  async (enabled) => {
-    return enabled
-  }
-)
+export const changeShareLink = createAction('current/changeShareLink')
 
-export const changeShareLink = createAsyncThunk(
-  'current/changeShareLink',
-  async (shareLink) => {
-    return shareLink
-  }
-)
-
-export const clearShareLink = createAsyncThunk(
-  'current/clearShareLink',
-  async () => {
-
-  }
-)
+export const clearShareLink = createAction('current/clearShareLink')
 
 // Slice
 const currentSlice = createSlice({
@@ -72,28 +32,28 @@ const currentSlice = createSlice({
     shareLink: null,
   },
   extraReducers: {
-    [changeProjectState.fulfilled]: (state, action) => {
+    [changeProjectState]: (state, action) => {
       state.projectState = action.payload
     },
-    [changeConnectionState.fulfilled]: (state, action) => {
+    [changeConnectionState]: (state, action) => {
       state.connectionState = action.payload
     },
-    [setSelectedMessageID.fulfilled]: (state, action) => {
+    [setSelectedMessageID]: (state, action) => {
       state.selectedMessageID = action.payload
     },
-    [setAppliedFavoriteRequestID.fulfilled]: (state, action) => {
+    [setAppliedFavoriteRequestID]: (state, action) => {
       state.appliedFavoriteRequestID = action.payload
     },
-    [clearAppliedFavoriteRequestID.fulfilled]: (state) => {
+    [clearAppliedFavoriteRequestID]: (state) => {
       state.appliedFavoriteRequestID = null
     },
-    [changeScheduleEnabledStatus.fulfilled]: (state, action) => {
+    [changeScheduleEnabledStatus]: (state, action) => {
       state.scheduleEnabled = action.payload
     },
-    [changeShareLink.fulfilled]: (state, action) => {
+    [changeShareLink]: (state, action) => {
       state.shareLink = action.payload
     },
-    [clearShareLink.fulfilled]: (state) => {
+    [clearShareLink]: (state) => {
       state.shareLink = null
     },
   }
