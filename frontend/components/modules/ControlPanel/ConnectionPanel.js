@@ -7,8 +7,9 @@ import {makeStyles} from '@material-ui/core/styles'
 import {Button, Grid, InputBase, Paper, Tooltip} from '@material-ui/core'
 
 import {ConnectionState} from '../../../constants'
-import {changeConnectionUrl, getConnectionState, getConnectionUrl} from '../../../slices'
 import wsClient from '../../../features/wsClient'
+import {getConnectionState, getConnectionUrl} from '../../../selectors'
+import {changeConnectionUrl} from '../../../slices/project'
 
 const useStyles = makeStyles((theme) => ({
   root: {

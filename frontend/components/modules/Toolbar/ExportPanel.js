@@ -3,12 +3,12 @@ import {useSelector} from 'react-redux'
 import {useGA4React} from 'ga-4-react'
 import {Grid} from '@material-ui/core'
 
-import {getProjectData, getProjectDataWithoutMessages} from '../../../slices'
 import {downloadJsonData} from '../../../utils/jsDownloader'
 import BasicDialog from '../../elements/BasicDialog'
 import Button from '../../elements/Button'
 import TextField from '../../elements/TextField'
 import Checkbox from '../../elements/Checkbox'
+import {getProjectData, getProjectDataWithoutMessages} from '../../../selectors'
 
 export default function ExportPanel({open, onClose}) {
   const ga4React = useGA4React()

@@ -3,18 +3,13 @@ import {useDispatch, useSelector} from 'react-redux'
 import {useGA4React} from 'ga-4-react'
 import {Button as MuiButton, Grid, Typography} from '@material-ui/core'
 
-import {
-  changeShareLink,
-  clearShareLink,
-  getProjectData,
-  getProjectDataWithoutMessages,
-  getShareLink
-} from '../../../slices'
 import {saveProjectDataToSharingServer} from '../../../features/project'
 import BasicDialog from '../../elements/BasicDialog'
 import Button from '../../elements/Button'
 import TextField from '../../elements/TextField'
 import Checkbox from '../../elements/Checkbox'
+import {getProjectData, getProjectDataWithoutMessages, getShareLink} from '../../../selectors'
+import {changeShareLink, clearShareLink} from '../../../slices/current'
 
 export default function SharePanel({open, onClose}) {
   const dispatch = useDispatch()

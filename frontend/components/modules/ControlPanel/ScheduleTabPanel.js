@@ -1,20 +1,7 @@
+import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useGA4React} from 'ga-4-react'
-import {
-  addFavoriteRequest,
-  appendMessage,
-  changeScheduleEnabledStatus,
-  changeScheduleRequestText,
-  changeScheduleTimeInterval,
-  clearAppliedFavoriteRequestID,
-  getAppliedFavoriteRequest,
-  getConnectionState,
-  getScheduleEnabledStatus,
-  getScheduleRequestText,
-  getScheduleTimeInterval,
-  setAppliedFavoriteRequestID
-} from '../../../slices'
-import React, {useEffect, useState} from 'react'
+
 import generateRandomString from '../../../utils/generateRandomString'
 import {ConnectionState, MessageSource} from '../../../constants'
 import {TabPanel} from '@material-ui/lab'
@@ -23,6 +10,25 @@ import Button from '../../elements/Button'
 import FavoriteRequestsPanel from './FavoriteRequestsPanel'
 import scheduler from '../../../features/scheduler'
 import wsClient from '../../../features/wsClient'
+import {
+  getAppliedFavoriteRequest,
+  getConnectionState, getMessageCount,
+  getScheduleEnabledStatus,
+  getScheduleRequestText,
+  getScheduleTimeInterval, getSettingMaxMessageCount
+} from '../../../selectors'
+import {
+  changeScheduleEnabledStatus,
+  clearAppliedFavoriteRequestID,
+  setAppliedFavoriteRequestID
+} from '../../../slices/current'
+import {
+  addFavoriteRequest,
+  appendMessage,
+  changeScheduleRequestText,
+  changeScheduleTimeInterval,
+  removeFirstMessage
+} from '../../../slices/project'
 
 export default function ScheduleTabPanel() {
   const dispatch = useDispatch()
@@ -32,6 +38,8 @@ export default function ScheduleTabPanel() {
   const appliedFavoriteRequest = useSelector(getAppliedFavoriteRequest)
   const scheduleEnabled = useSelector(getScheduleEnabledStatus)
   const timeInterval = useSelector(getScheduleTimeInterval)
+const maxMessageCount = useSelector(getSettingMaxMessageCount)
+  const messageCount = useSelector(getMessageCount)
 
   const [favoriteRequestsPanelOpen, setFavoriteRequestsPanel] = useState(false)
 
@@ -77,9 +85,19 @@ export default function ScheduleTabPanel() {
       dispatch(changeScheduleRequestText(localRequestText))
       dispatch(changeScheduleTimeInterval(localTimeInterval))
 
-      scheduler.setOnEvent(() => {
+      scheduler.setOnEvent(async () => {
         wsClient.send(localRequestText)
-        dispatch(appendMessage({source: MessageSource.Client, message: localRequestText}))
+
+        if (messageCount >= maxMessageCount) {
+          await dispatch(removeFirstMessage())
+        }
+
+        await dispatch(appendMessage({
+          id: generateRandomString(),
+          time: new Date().toISOString(),
+          source: MessageSource.Client,
+          text: localRequestText,
+        }))
       })
       scheduler.enable(localTimeInterval)
       dispatch(changeScheduleEnabledStatus(true))

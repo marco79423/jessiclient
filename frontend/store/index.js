@@ -1,7 +1,9 @@
-import {configureStore} from '@reduxjs/toolkit'
+import {combineReducers, configureStore} from '@reduxjs/toolkit'
 
 import {LoadingState} from '../constants'
-import reducer, {getProjectData, getProjectState} from '../slices'
+import currentSlice from '../slices/current'
+import projectSlice from '../slices/project'
+import {getProjectData, getProjectState} from '../selectors'
 import {saveProjectDataToLocalStorage} from '../features/project'
 
 const projectAutoSaver = store => next => async action => {
@@ -18,7 +20,10 @@ const projectAutoSaver = store => next => async action => {
 
 
 const store = configureStore({
-  reducer: reducer,
+  reducer: combineReducers({
+    current: currentSlice.reducer,
+    project: projectSlice.reducer,
+  }),
   devTools: process.env.NODE_ENV !== 'production',
   middleware: (getDefaultMiddleware) => [
     projectAutoSaver,

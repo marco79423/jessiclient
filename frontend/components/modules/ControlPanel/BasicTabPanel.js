@@ -4,21 +4,19 @@ import {useGA4React} from 'ga-4-react'
 import {Grid, TextField} from '@material-ui/core'
 import {TabPanel} from '@material-ui/lab'
 
-import {
-  addFavoriteRequest,
-  appendMessage,
-  changeRequestText,
-  clearAppliedFavoriteRequestID,
-  getAppliedFavoriteRequest,
-  getConnectionState,
-  getRequestText,
-  setAppliedFavoriteRequestID
-} from '../../../slices'
 import generateRandomString from '../../../utils/generateRandomString'
 import {ConnectionState, MessageSource} from '../../../constants'
 import Button from '../../elements/Button'
 import FavoriteRequestsPanel from './FavoriteRequestsPanel'
 import wsClient from '../../../features/wsClient'
+import {
+  getAppliedFavoriteRequest,
+  getConnectionState, getMessageCount,
+  getRequestText,
+  getSettingMaxMessageCount
+} from '../../../selectors'
+import {addFavoriteRequest, appendMessage, changeRequestText, removeFirstMessage} from '../../../slices/project'
+import {clearAppliedFavoriteRequestID, setAppliedFavoriteRequestID} from '../../../slices/current'
 
 export default function BasicTabPanel() {
   const dispatch = useDispatch()
@@ -26,7 +24,8 @@ export default function BasicTabPanel() {
   const connectionState = useSelector(getConnectionState)
   const requestText = useSelector(getRequestText)
   const appliedFavoriteRequest = useSelector(getAppliedFavoriteRequest)
-
+  const maxMessageCount = useSelector(getSettingMaxMessageCount)
+  const messageCount = useSelector(getMessageCount)
   const [value, setValue] = useState('')
   const [favoriteRequestsPanelOpen, setFavoriteRequestsPanel] = useState(false)
 
@@ -54,10 +53,21 @@ export default function BasicTabPanel() {
     }
   }
 
-  const onSendButtonClicked = () => {
+  const onSendButtonClicked = async () => {
     dispatch(changeRequestText(value))
     wsClient.send(value)
-    dispatch(appendMessage({source: MessageSource.Client, message: value}))
+
+    if (messageCount >= maxMessageCount) {
+      await dispatch(removeFirstMessage())
+    }
+
+    await dispatch(appendMessage({
+      id: generateRandomString(),
+      time: new Date().toISOString(),
+      source: MessageSource.Client,
+      text: value,
+    }))
+
     ga4React.gtag('event', 'send_message')
   }
 

@@ -3,17 +3,14 @@ import {useDispatch, useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
 import {Grid, Paper, Typography} from '@material-ui/core'
 
-import {
-  appendMessage,
-  changeRequestText,
-  getFavoriteRequests,
-  removeFavoriteRequest,
-  setAppliedFavoriteRequestID
-} from '../../../slices'
 import BasicDialog from '../../elements/BasicDialog'
 import Button from '../../elements/Button'
 import wsClient from '../../../features/wsClient'
 import {MessageSource} from '../../../constants'
+import {setAppliedFavoriteRequestID} from '../../../slices/current'
+import {appendMessage, changeRequestText, removeFavoriteRequest, removeFirstMessage} from '../../../slices/project'
+import {getFavoriteRequests, getMessageCount, getSettingMaxMessageCount} from '../../../selectors'
+import generateRandomString from '../../../utils/generateRandomString'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,6 +33,8 @@ const useStyles = makeStyles((theme) => ({
 function FavoriteRequestItem({favoriteRequest}) {
   const classes = useStyles()
   const dispatch = useDispatch()
+  const maxMessageCount = useSelector(getSettingMaxMessageCount)
+  const messageCount = useSelector(getMessageCount)
 
   const onAppliedButtonClicked = () => {
     dispatch(setAppliedFavoriteRequestID(favoriteRequest.id))
@@ -46,10 +45,20 @@ function FavoriteRequestItem({favoriteRequest}) {
     dispatch(removeFavoriteRequest(favoriteRequest.id))
   }
 
-  const onSendButtonClicked = () => {
+  const onSendButtonClicked = async () => {
     dispatch(changeRequestText(favoriteRequest.text))
     wsClient.send(requestText)
-    dispatch(appendMessage({source: MessageSource.Client, message: favoriteRequest.text}))
+
+    if (messageCount >= maxMessageCount) {
+      await dispatch(removeFirstMessage())
+    }
+
+    await dispatch(appendMessage({
+      id: generateRandomString(),
+      time: new Date().toISOString(),
+      source: MessageSource.Client,
+      text: favoriteRequest.text,
+    }))
   }
 
   return (

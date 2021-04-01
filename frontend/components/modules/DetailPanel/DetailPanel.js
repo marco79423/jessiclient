@@ -3,10 +3,10 @@ import {useSelector} from 'react-redux'
 import classNames from 'classnames'
 import {makeStyles} from '@material-ui/core/styles'
 import {InputBase, Paper, Tab, Tabs, Toolbar} from '@material-ui/core'
-
-import {getMessage} from '../../../slices'
-import ReactJson from 'react-json-view'
 import {TabContext, TabPanel} from '@material-ui/lab'
+import ReactJson from 'react-json-view'
+
+import {getMessage} from '../../../selectors'
 
 
 const useStyles = makeStyles((theme) => ({

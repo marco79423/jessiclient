@@ -4,15 +4,6 @@ import useAsyncEffect from 'use-async-effect'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 
 import {LoadingState, MessageSource} from '../constants'
-import {
-  appendMessage,
-  changeConnectionState,
-  changeProjectState,
-  changeScheduleEnabledStatus,
-  getProjectState,
-  getSelectedMessageID,
-  setProjectData
-} from '../slices'
 import {loadProjectDataFromLocalStorage, loadProjectDataFromSharingServer} from '../features/project'
 import wsClient from '../features/wsClient'
 import scheduler from '../features/scheduler'
@@ -21,6 +12,10 @@ import ControlPanel from '../components/modules/ControlPanel'
 import DetailPanel from '../components/modules/DetailPanel'
 import Toolbar from '../components/modules/Toolbar'
 import DefaultLayout from '../components/layouts/DefaultLayout'
+import {changeConnectionState, changeProjectState, changeScheduleEnabledStatus} from '../slices/current'
+import {getMessageCount, getProjectState, getSelectedMessageID, getSettingMaxMessageCount} from '../selectors'
+import {appendMessage, removeFirstMessage, setProjectData} from '../slices/project'
+import generateRandomString from '../utils/generateRandomString'
 
 export const getStaticProps = async ({locale}) => ({
   props: {
@@ -46,6 +41,8 @@ export default function Index() {
 function initialize() {
   const dispatch = useDispatch()
   const projectState = useSelector(getProjectState)
+  const maxMessageCount = useSelector(getSettingMaxMessageCount)
+  const messageCount = useSelector(getMessageCount)
 
   const loading = projectState === LoadingState.Loading
 
@@ -54,7 +51,18 @@ function initialize() {
 
     wsClient.setOnConnectionChange(connectionState => dispatch(changeConnectionState(connectionState)))
     wsClient.setOnError(error => console.log(error))
-    wsClient.setOnNewMessage(message => dispatch(appendMessage({source: MessageSource.Server, message})))
+    wsClient.setOnNewMessage(async message => {
+      if (messageCount >= maxMessageCount) {
+        await dispatch(removeFirstMessage())
+      }
+
+      await dispatch(appendMessage({
+        id: generateRandomString(),
+        time: new Date().toISOString(),
+        source: MessageSource.Server,
+        text: message,
+      }))
+    })
     wsClient.setOnClose(() => {
       scheduler.disable()
       dispatch(changeScheduleEnabledStatus(false))
@@ -64,6 +72,7 @@ function initialize() {
     if (projectData) {
       await dispatch(setProjectData(projectData))
     }
+
     await dispatch(changeProjectState(LoadingState.Loaded))
   }, [])
 

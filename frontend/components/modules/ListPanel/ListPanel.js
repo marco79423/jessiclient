@@ -4,9 +4,9 @@ import {makeStyles} from '@material-ui/core/styles'
 
 import ControlBar from './ControlBar'
 import MessageList from './MessageList'
-import * as slices from '../../../slices'
-import {getMessages, getSelectedMessageID} from '../../../slices'
-
+import {getMessages, getSelectedMessageID} from '../../../selectors'
+import * as projectActions from '../../../slices/project'
+import * as currentActions from '../../../slices/current'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,12 +29,12 @@ export default function ListPanel() {
   }, [messages, searchFilters])
 
   const setSelectedMessageID = (id) => {
-    dispatch(slices.setSelectedMessageID(id))
+    dispatch(currentActions.setSelectedMessageID(id))
   }
 
   const clearAllMessages = () => {
-    dispatch(slices.clearMessages())
-    dispatch(slices.setSelectedMessageID(null))
+    dispatch(projectActions.clearMessages())
+    dispatch(currentActions.setSelectedMessageID(null))
     setSearchFilters([])
   }
 
