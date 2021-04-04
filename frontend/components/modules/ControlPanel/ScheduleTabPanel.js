@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useGA4React} from 'ga-4-react'
+import {useTranslation} from 'next-i18next'
 
 import generateRandomString from '../../../utils/generateRandomString'
 import {ConnectionState} from '../../../constants'
@@ -25,6 +26,7 @@ import {addFavoriteRequest, changeScheduleRequestText, changeScheduleTimeInterva
 export default function ScheduleTabPanel({appController}) {
   const dispatch = useDispatch()
   const ga4React = useGA4React()
+  const {t} = useTranslation('common')
   const connectionState = useSelector(getConnectionState)
   const requestText = useSelector(getScheduleRequestText)
   const appliedFavoriteRequest = useSelector(getAppliedFavoriteRequest)
@@ -109,7 +111,7 @@ export default function ScheduleTabPanel({appController}) {
         multiline
         rows={16}
         fullWidth
-        label="請求內容"
+        label={t('請求內容')}
         autoFocus
         disabled={scheduleEnabled}
         value={localRequestText}
@@ -136,7 +138,7 @@ export default function ScheduleTabPanel({appController}) {
             </Grid>
             <Grid item>
               <Button primary disabled={!isConnected} onClick={onEnableButtonClicked}>
-                {scheduleEnabled ? '關閉' : '啟用'}
+                {scheduleEnabled ? t('停用') : t('啟用')}
               </Button>
             </Grid>
           </Grid>

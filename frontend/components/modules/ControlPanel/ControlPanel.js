@@ -8,6 +8,7 @@ import ConnectionPanel from './ConnectionPanel'
 import BasicTabPanel from './BasicTabPanel'
 import ScheduleTabPanel from './ScheduleTabPanel'
 import Copyright from './Copyright'
+import {useTranslation} from 'next-i18next'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ControlPanel({appController}) {
   const classes = useStyles()
   const ga4React = useGA4React()
+  const {t} = useTranslation('common')
   const [tabValue, setTabValue] = useState('basic')
 
   const handleTabChange = (event, newValue) => {
@@ -62,8 +64,8 @@ export default function ControlPanel({appController}) {
         <ConnectionPanel appController={appController}/>
         <div className={classes.requestPanel}>
           <Tabs indicatorColor="secondary" value={tabValue} onChange={handleTabChange}>
-            <Tab className={classes.tab} label="基本" value="basic"/>
-            <Tab className={classes.tab} label="排程" value="schedule"/>
+            <Tab className={classes.tab} label={t('基本')} value="basic"/>
+            <Tab className={classes.tab} label={t('排程')} value="schedule"/>
           </Tabs>
           <Paper className={classes.tabPanel}>
             <TabContext value={tabValue}>

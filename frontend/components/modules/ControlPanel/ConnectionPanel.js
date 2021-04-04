@@ -56,7 +56,7 @@ export default function ConnectionPanel({appController}) {
       case ConnectionState.Idle:
         return (
           <Button className={classes.connectButton} size="large" aria-label="connect"
-                  onClick={onConnectButtonClicked}>{t('connect')}</Button>
+                  onClick={onConnectButtonClicked}>{t('建立連線')}</Button>
         )
       case ConnectionState.Connecting:
         return (
@@ -65,7 +65,7 @@ export default function ConnectionPanel({appController}) {
       case ConnectionState.Connected:
         return (
           <Button className={classes.connectButton} size="large" aria-label="connected"
-                  onClick={onConnectButtonClicked}>關閉連線</Button>
+                  onClick={onConnectButtonClicked}>{t('關閉連線')}</Button>
         )
       case ConnectionState.Closing:
         return (

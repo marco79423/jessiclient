@@ -6,6 +6,7 @@ import {Chip, Grid, Typography} from '@material-ui/core'
 import SearchField from '../../elements/SearchField'
 import Button from '../../elements/Button'
 import BasicDialog from '../../elements/BasicDialog'
+import {useTranslation} from 'next-i18next'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -20,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ControlBar({searchFilters, setSearchFilters, clearAllMessages}) {
   const classes = useStyles()
+   const {t} = useTranslation('common')
   const ga4React = useGA4React()
   const [clearAllDialogOn, setClearAllDialog] = useState(false)
 
@@ -46,8 +48,9 @@ export default function ControlBar({searchFilters, setSearchFilters, clearAllMes
         <Grid container alignItems="baseline" spacing={1}>
           <Grid item>
             <SearchField
-              placeholder='搜尋訊息'
+              placeholder={t('搜尋訊息')}
               onSearch={onSearchButtonClicked}
+              buttonLabel={t('搜尋')}
             />
           </Grid>
           {searchFilters.map(searchFilter => (
@@ -62,7 +65,7 @@ export default function ControlBar({searchFilters, setSearchFilters, clearAllMes
       </Grid>
       <Grid item>
         <Button onClick={showClearAllDialog}>
-          清空訊息
+          {t('清空訊息')}
         </Button>
         <ClearAllDialog open={clearAllDialogOn} onClose={hideClearAllDialog} confirm={clearAllMessages}/>
       </Grid>

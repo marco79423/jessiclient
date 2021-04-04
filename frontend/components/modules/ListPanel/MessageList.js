@@ -1,11 +1,11 @@
-import {useGA4React} from 'ga-4-react'
-import {MessageSource} from '../../../constants'
 import React, {useEffect, useState} from 'react'
-
-import List from '../../elements/List'
-import ListItem from '../../elements/ListItem'
+import {useGA4React} from 'ga-4-react'
+import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
 
+import {MessageSource} from '../../../constants'
+import List from '../../elements/List'
+import ListItem from '../../elements/ListItem'
 
 const useStyles = makeStyles((theme) => ({
   messageTitle: {
@@ -42,6 +42,7 @@ export default function MessageList({messages, selectedMessageID, setSelectedMes
 }
 
 function Message({message, selectedMessageID, setSelectedMessageID}) {
+  const {t} = useTranslation('common')
   const fromClient = message.source === MessageSource.Client
   const classes = useStyles({fromClient})
   const ga4React = useGA4React()
@@ -58,7 +59,7 @@ function Message({message, selectedMessageID, setSelectedMessageID}) {
 
   const MessageTitle = ({message}) => {
     const time = new Date(message.time).toLocaleString()
-    const source = fromClient ? '客戶端' : '服務端'
+    const source = fromClient ? t('客戶端') : t('服務端')
 
     return (
       <span className={classes.messageTitle}>{time} [{source}]</span>

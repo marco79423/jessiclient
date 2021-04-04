@@ -11,10 +11,12 @@ import FavoriteRequestsPanel from './FavoriteRequestsPanel'
 import {getAppliedFavoriteRequest, getConnectionState, getRequestText} from '../../../selectors'
 import {addFavoriteRequest, changeRequestText} from '../../../slices/project'
 import {clearAppliedFavoriteRequestID, setAppliedFavoriteRequestID} from '../../../slices/current'
+import {useTranslation} from 'next-i18next'
 
 export default function BasicTabPanel({appController}) {
   const dispatch = useDispatch()
   const ga4React = useGA4React()
+  const {t} = useTranslation('common')
   const connectionState = useSelector(getConnectionState)
   const requestText = useSelector(getRequestText)
   const appliedFavoriteRequest = useSelector(getAppliedFavoriteRequest)
@@ -84,7 +86,7 @@ export default function BasicTabPanel({appController}) {
         multiline
         rows={16}
         fullWidth
-        label="請求內容"
+        label={t('請求內容')}
         autoFocus
         value={value}
         onChange={onRequestTextInputChange}
@@ -95,7 +97,7 @@ export default function BasicTabPanel({appController}) {
           <Button onClick={onAppliedFavoriteRequestButtonClicked}>{appliedFavoriteRequest ? '取消常用' : '設為常用'}</Button>
         </Grid>
         <Grid item>
-          <Button primary disabled={!isConnected} onClick={onSendButtonClicked}>送出</Button>
+          <Button primary disabled={!isConnected} onClick={onSendButtonClicked}>{t('送出')}</Button>
         </Grid>
       </Grid>
     </TabPanel>

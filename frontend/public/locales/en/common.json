@@ -1,3 +1,21 @@
 {
-  "connect": "Connect"
+  "建立連線": "Connect",
+  "關閉連線": "Close",
+
+  "基本": "Basic",
+  "排程": "Schedule",
+
+  "搜尋訊息": "",
+  "搜尋": "Search",
+  "清空訊息": "Clear All",
+
+  "請求內容": "Request Body",
+
+  "送出": "Send",
+
+  "啟用": "Enable",
+  "停用": "Disable",
+
+  "服務端": "Server",
+  "客戶端": "Client"
 }
