@@ -1,27 +1,21 @@
 import React, {useState} from 'react'
-import {useDispatch} from 'react-redux'
-import {useGA4React} from 'ga-4-react'
 import {Grid, Toolbar as MuiToolbar} from '@material-ui/core'
 import ArchiveIcon from '@material-ui/icons/Archive'
 import UnarchiveIcon from '@material-ui/icons/Unarchive'
 import ShareIcon from '@material-ui/icons/Share'
-
-import {loadProjectDataFromFile} from '../../../features/project'
 import IconButton from '../../elements/IconButton'
 import SharePanel from './SharePanel'
 import ExportPanel from './ExportPanel'
-import {setProjectData} from '../../../slices/project'
+import {useTranslation} from 'next-i18next'
+import PropTypes from 'prop-types'
 
 export default function Toolbar({appController}) {
-  const dispatch = useDispatch()
-  const ga4React = useGA4React()
+  const {t} = useTranslation('Toolbar')
   const [sharePanelOpen, setSharePanel] = useState(false)
   const [exportPanelOpen, setExportPanel] = useState(false)
 
   const onImportClicked = async () => {
-    const projectData = await loadProjectDataFromFile()
-    dispatch(setProjectData(projectData))
-    ga4React.gtag('event', 'import_project')
+    await appController.importProject()
   }
 
   const showSharePanel = () => {
@@ -45,9 +39,9 @@ export default function Toolbar({appController}) {
       <Grid container justify="space-between" alignItems="center">
         <Grid item>
           <MuiToolbar>
-            <IconButton description={'分享'} icon={ShareIcon} onClick={showSharePanel}/>
-            <IconButton description={'匯出專案'} icon={ArchiveIcon} onClick={showExportPanel}/>
-            <IconButton description={'匯入專案'} icon={UnarchiveIcon} onClick={onImportClicked}/>
+            <IconButton description={t('分享專案')} icon={ShareIcon} onClick={showSharePanel}/>
+            <IconButton description={t('匯出專案')} icon={ArchiveIcon} onClick={showExportPanel}/>
+            <IconButton description={t('匯入專案')} icon={UnarchiveIcon} onClick={onImportClicked}/>
           </MuiToolbar>
         </Grid>
       </Grid>
@@ -58,3 +52,6 @@ export default function Toolbar({appController}) {
   )
 }
 
+Toolbar.propTypes = {
+  appController: PropTypes.object.isRequired,
+}

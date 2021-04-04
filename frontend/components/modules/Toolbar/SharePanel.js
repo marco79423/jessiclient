@@ -11,6 +11,7 @@ import TextField from '../../elements/TextField'
 import Checkbox from '../../elements/Checkbox'
 import LinkButton from '../../elements/LinkButton'
 import {makeStyles} from '@material-ui/core/styles'
+import PropTypes from 'prop-types'
 
 const useStyles = makeStyles((theme) => ({
   tip: {
@@ -79,4 +80,10 @@ export default function SharePanel({appController, open, onClose}) {
       </Grid>
     </BasicDialog>
   )
+}
+
+SharePanel.propTypes = {
+  appController: PropTypes.object.isRequired,
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
 }

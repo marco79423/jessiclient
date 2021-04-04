@@ -16,6 +16,7 @@ import generateRandomString from '../../utils/generateRandomString'
 import scheduler from '../../features/scheduler'
 import Alert from '../elements/Alert'
 import {
+  loadProjectDataFromFile,
   loadProjectDataFromLocalStorage,
   loadProjectDataFromSharingServer,
   saveProjectDataToSharingServer
@@ -116,6 +117,12 @@ export default function AppController({children}) {
     ga4React.gtag('event', 'export_project', {messageIncluded})
   }
 
+  const importProject = async () => {
+    const projectData = await loadProjectDataFromFile()
+    dispatch(setProjectData(projectData))
+    ga4React.gtag('event', 'import_project')
+  }
+
   const generateShareLink = async ({messageIncluded}) => {
     const projectCode = await saveProjectDataToSharingServer(messageIncluded ? projectData : projectDataWithoutMessages)
     const shareLink = `${window.location.origin}?projectCode=${projectCode}`
@@ -138,6 +145,8 @@ export default function AppController({children}) {
     disableScheduler,
 
     exportProject,
+    importProject,
+
     generateShareLink,
 
     throwError,
