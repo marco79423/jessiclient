@@ -1,7 +1,7 @@
 import React from 'react'
-import BasicDialog from './BasicDialog'
 import {Button, TextField} from '@material-ui/core'
 
+import BasicDialog from './BasicDialog'
 
 export default {
   title: 'elements/BasicDialog',
@@ -11,9 +11,11 @@ export default {
 
 const Template = (args) => (
   <BasicDialog {...args}>
-    <TextField label="最大訊息數"
-               margin="dense"
-               value={100}/>
+    <TextField
+      label="最大訊息數"
+      margin="dense"
+      value={100}
+    />
   </BasicDialog>
 )
 

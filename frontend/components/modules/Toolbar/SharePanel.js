@@ -64,7 +64,7 @@ export default function SharePanel({open, onClose}) {
           <TextField
             disabled={shareLink === null}
             readOnly
-            value={shareLink}
+            value={shareLink + ''}
             action={generateButton()}/>
         </Grid>
         <Grid item>

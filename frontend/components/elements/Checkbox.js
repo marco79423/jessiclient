@@ -1,9 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {makeStyles} from '@material-ui/core/styles'
-import {Checkbox as MuiCheckbox, Grid, Switch as MuiSwitch, Typography} from '@material-ui/core'
+import {Checkbox as MuiCheckbox, Grid, Typography} from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
   colorPrimary: {
     color: theme.project.elements.switch.color,
   }
@@ -13,18 +13,29 @@ const useStyles = makeStyles((theme) => ({
 export default function Checkbox({checked, setChecked, label}) {
   const classes = useStyles()
 
-  const onCheckedChange = (e) => {
+  const onChange = (e) => {
     setChecked(e.target.checked)
   }
 
   return (
     <Grid container alignItems="center">
       <Grid item>
-        <MuiCheckbox color="primary" classes={{colorPrimary: classes.colorPrimary}} checked={checked} onChange={onCheckedChange}/>
+        <MuiCheckbox
+          color="primary"
+          classes={{colorPrimary: classes.colorPrimary}}
+          checked={checked}
+          onChange={onChange}
+        />
       </Grid>
       <Grid item>
         <Typography>{label}</Typography>
       </Grid>
     </Grid>
   )
+}
+
+Checkbox.propTypes = {
+  checked: PropTypes.bool.isRequired,
+  setChecked: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
 }

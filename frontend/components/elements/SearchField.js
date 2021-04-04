@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react'
+import PropTypes from 'prop-types'
+
 import TextField from './TextField'
-import Button from './Button'
+import LinkButton from './LinkButton'
 
 
 export default function SearchField({placeholder, defaultValue, onSearch, buttonLabel = '搜尋'}) {
@@ -26,8 +28,15 @@ export default function SearchField({placeholder, defaultValue, onSearch, button
       value={value}
       onChange={onValueChange}
       action={
-        <Button link onClick={onButtonClicked}>{buttonLabel}</Button>
+        <LinkButton onClick={onButtonClicked}>{buttonLabel}</LinkButton>
       }
     />
   )
+}
+
+SearchField.propTypes = {
+  placeholder: PropTypes.string,
+  defaultValue: PropTypes.string,
+  onSearch: PropTypes.func,
+  buttonLabel: PropTypes.string,
 }

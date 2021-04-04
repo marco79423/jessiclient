@@ -13,5 +13,4 @@ const Template = (args) => <SearchField {...args} />
 export const Default = Template.bind({})
 Default.args = {
   placeholder: '搜尋訊息',
-  defaultValue: '',
 }

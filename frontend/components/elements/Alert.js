@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {Snackbar} from '@material-ui/core'
 import {Alert as MuiAlert} from '@material-ui/lab'
 
@@ -17,4 +18,10 @@ export default function Alert({message, open, onClose}) {
       </MuiAlert>
     </Snackbar>
   )
+}
+
+Alert.propTypes = {
+  message: PropTypes.string.isRequired,
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
 }

@@ -1,6 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {makeStyles} from '@material-ui/core/styles'
-import {Grid, ListItem as MuiListItem, ListItemText, Typography} from '@material-ui/core'
+import {Grid, ListItem as MuiListItem} from '@material-ui/core'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -28,4 +29,12 @@ export default function ListItem({key, selected, onClick, title, children}) {
       </Grid>
     </MuiListItem>
   )
+}
+
+ListItem.propTypes = {
+  key: PropTypes.string,
+  selected: PropTypes.bool,
+  onClick: PropTypes.func,
+  title: PropTypes.string,
+  children: PropTypes.node,
 }

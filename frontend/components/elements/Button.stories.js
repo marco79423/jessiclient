@@ -1,6 +1,6 @@
 import React from 'react'
-import Button from './Button'
 
+import Button from './Button'
 
 export default {
   title: 'elements/Button',
@@ -14,5 +14,4 @@ export const Default = Template.bind({})
 Default.args = {
   primary: false,
   disabled: false,
-  link: false,
 }

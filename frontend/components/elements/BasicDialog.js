@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {makeStyles} from '@material-ui/core/styles'
 import {Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton} from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
@@ -33,6 +34,7 @@ export default function BasicDialog({children, title, open, onClose, actions}) {
   return (
     <Dialog classes={{paper: classes.root}} scroll="body" maxWidth="md" open={open} onClose={onClose}>
       <Grid container direction="column">
+        {/*Title*/}
         <Grid item>
           <DialogTitle disableTypography className={classes.header}>
             <Grid container alignItems="center" justify="space-between">
@@ -45,11 +47,15 @@ export default function BasicDialog({children, title, open, onClose, actions}) {
             </Grid>
           </DialogTitle>
         </Grid>
+
+        {/*Content*/}
         <Grid item xs>
           <DialogContent className={classes.content}>
             {children}
           </DialogContent>
         </Grid>
+
+        {/*Actions*/}
         <Grid item>
           <DialogActions className={classes.actionSection}>
             {actions}
@@ -58,4 +64,12 @@ export default function BasicDialog({children, title, open, onClose, actions}) {
       </Grid>
     </Dialog>
   )
+}
+
+BasicDialog.propTypes = {
+  children: PropTypes.node.isRequired,
+  title: PropTypes.string.isRequired,
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  actions: PropTypes.node,
 }

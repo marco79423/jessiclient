@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {makeStyles} from '@material-ui/core/styles'
 import {Grid, InputBase, Paper} from '@material-ui/core'
 
@@ -33,4 +34,13 @@ export default function TextField({placeholder, value, onChange, disabled, readO
       ) : null}
     </Grid>
   )
+}
+
+TextField.propTypes = {
+  placeholder: PropTypes.string,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+  disabled: PropTypes.bool,
+  readOnly: PropTypes.bool,
+  action: PropTypes.node,
 }
