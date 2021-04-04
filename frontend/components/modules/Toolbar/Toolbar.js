@@ -52,7 +52,7 @@ export default function Toolbar({appController}) {
         </Grid>
       </Grid>
 
-      <SharePanel open={sharePanelOpen} onClose={hideSharePanel}/>
+      <SharePanel appController={appController} open={sharePanelOpen} onClose={hideSharePanel}/>
       <ExportPanel appController={appController} open={exportPanelOpen} onClose={hideExportPanel}/>
     </>
   )

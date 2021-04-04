@@ -7,5 +7,11 @@
 
   "檔案名稱": "filename",
 
-  "分享專案": "Share Project"
+  "分享專案": "Share Project",
+  "產生連結": "Generate",
+  "複製連結": "Copy",
+  "結束": "Close",
+  "產生的連結將保留 7 天": "Share link will be retained for 7 days",
+
+  "產生分享連結失敗": "Failed to generate share link"
 }

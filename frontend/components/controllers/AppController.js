@@ -15,7 +15,11 @@ import {appendMessage, removeFirstMessage, setProjectData} from '../../slices/pr
 import generateRandomString from '../../utils/generateRandomString'
 import scheduler from '../../features/scheduler'
 import Alert from '../elements/Alert'
-import {loadProjectDataFromLocalStorage, loadProjectDataFromSharingServer} from '../../features/project'
+import {
+  loadProjectDataFromLocalStorage,
+  loadProjectDataFromSharingServer,
+  saveProjectDataToSharingServer
+} from '../../features/project'
 import {downloadJsonData} from '../../utils/jsDownloader'
 
 export default function AppController({children}) {
@@ -112,6 +116,13 @@ export default function AppController({children}) {
     ga4React.gtag('event', 'export_project', {messageIncluded})
   }
 
+  const generateShareLink = async ({messageIncluded}) => {
+    const projectCode = await saveProjectDataToSharingServer(messageIncluded ? projectData : projectDataWithoutMessages)
+    const shareLink = `${window.location.origin}?projectCode=${projectCode}`
+    ga4React.gtag('event', 'generate_share_link', {messageIncluded})
+    return shareLink
+  }
+
   const throwError = (message) => {
     setErrorMessage(message)
     showErrorAlert()
@@ -127,6 +138,7 @@ export default function AppController({children}) {
     disableScheduler,
 
     exportProject,
+    generateShareLink,
 
     throwError,
   }

@@ -29,7 +29,7 @@ const currentSlice = createSlice({
     selectedMessageID: null,
     appliedFavoriteRequestID: null,
     scheduleEnabled: false,
-    shareLink: null,
+    shareLink: '',
   },
   extraReducers: {
     [changeProjectState]: (state, action) => {
@@ -54,7 +54,7 @@ const currentSlice = createSlice({
       state.shareLink = action.payload
     },
     [clearShareLink]: (state) => {
-      state.shareLink = null
+      state.shareLink = ''
     },
   }
 })
