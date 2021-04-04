@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useGA4React} from 'ga-4-react'
+import {useTranslation} from 'next-i18next'
 import {Button as MuiButton, Grid, Typography} from '@material-ui/core'
 
 import {saveProjectDataToSharingServer} from '../../../features/project'
@@ -13,6 +14,7 @@ import {changeShareLink, clearShareLink} from '../../../slices/current'
 
 export default function SharePanel({open, onClose}) {
   const dispatch = useDispatch()
+  const {t} = useTranslation('Toolbar')
   const ga4React = useGA4React()
   const projectData = useSelector(getProjectData)
   const projectDataWithoutMessages = useSelector(getProjectDataWithoutMessages)
@@ -49,12 +51,13 @@ export default function SharePanel({open, onClose}) {
   }
 
   return (
-    <BasicDialog title={'分享專案'}
-                 open={open}
-                 onClose={onCloseButtonClick}
-                 actions={
-                   <Button onClick={onCloseButtonClick}>結束</Button>
-                 }
+    <BasicDialog
+      title={t('分享專案')}
+      open={open}
+      onClose={onCloseButtonClick}
+      actions={
+        <Button onClick={onCloseButtonClick}>結束</Button>
+      }
     >
       <Grid container direction="column" spacing={1}>
         <Grid item>

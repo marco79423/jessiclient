@@ -1,6 +1,11 @@
 import {useDispatch, useSelector} from 'react-redux'
 import {useGA4React} from 'ga-4-react'
-import {getMessageCount, getSettingMaxMessageCount} from '../../selectors'
+import {
+  getMessageCount,
+  getProjectData,
+  getProjectDataWithoutMessages,
+  getSettingMaxMessageCount
+} from '../../selectors'
 import React, {useState} from 'react'
 import useAsyncEffect from 'use-async-effect'
 import {changeConnectionState, changeProjectState, changeScheduleEnabledStatus} from '../../slices/current'
@@ -11,6 +16,7 @@ import generateRandomString from '../../utils/generateRandomString'
 import scheduler from '../../features/scheduler'
 import Alert from '../elements/Alert'
 import {loadProjectDataFromLocalStorage, loadProjectDataFromSharingServer} from '../../features/project'
+import {downloadJsonData} from '../../utils/jsDownloader'
 
 export default function AppController({children}) {
   const dispatch = useDispatch()
@@ -22,6 +28,8 @@ export default function AppController({children}) {
   const [errorAlertOpen, setErrorAlert] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
 
+  const projectData = useSelector(getProjectData)
+  const projectDataWithoutMessages = useSelector(getProjectDataWithoutMessages)
 
   const showErrorAlert = () => {
     setErrorAlert(true)
@@ -99,6 +107,11 @@ export default function AppController({children}) {
     scheduler.disable()
   }
 
+  const exportProject = ({filename, messageIncluded}) => {
+    downloadJsonData(filename, messageIncluded ? projectData : projectDataWithoutMessages)
+    ga4React.gtag('event', 'export_project', {messageIncluded})
+  }
+
   const throwError = (message) => {
     setErrorMessage(message)
     showErrorAlert()
@@ -107,10 +120,15 @@ export default function AppController({children}) {
   const appController = {
     connect,
     disconnect,
+
     sendMessage,
-    throwError,
+
     enableScheduler,
-    disableScheduler
+    disableScheduler,
+
+    exportProject,
+
+    throwError,
   }
 
   return (

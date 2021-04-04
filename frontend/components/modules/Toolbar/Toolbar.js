@@ -12,7 +12,7 @@ import SharePanel from './SharePanel'
 import ExportPanel from './ExportPanel'
 import {setProjectData} from '../../../slices/project'
 
-export default function Toolbar() {
+export default function Toolbar({appController}) {
   const dispatch = useDispatch()
   const ga4React = useGA4React()
   const [sharePanelOpen, setSharePanel] = useState(false)
@@ -53,7 +53,7 @@ export default function Toolbar() {
       </Grid>
 
       <SharePanel open={sharePanelOpen} onClose={hideSharePanel}/>
-      <ExportPanel open={exportPanelOpen} onClose={hideExportPanel}/>
+      <ExportPanel appController={appController} open={exportPanelOpen} onClose={hideExportPanel}/>
     </>
   )
 }
