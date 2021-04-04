@@ -27,7 +27,7 @@ export default function ExportPanel({appController, open, onClose}) {
       actions={
         <>
           <Button onClick={onClose}>{t('取消')}</Button>
-          <Button primary onClick={onExportButtonClicked}>{t('匯出')}</Button>
+          <Button primary disabled={!filename} onClick={onExportButtonClicked}>{t('匯出')}</Button>
         </>
       }
     >
