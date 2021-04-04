@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-export default function ControlPanel() {
+export default function ControlPanel({appController}) {
   const classes = useStyles()
   const ga4React = useGA4React()
   const [tabValue, setTabValue] = useState('basic')
@@ -59,7 +59,7 @@ export default function ControlPanel() {
           elevation={1}
           square>
       <Grid className={classes.connectionPanel} item>
-        <ConnectionPanel/>
+        <ConnectionPanel appController={appController}/>
         <div className={classes.requestPanel}>
           <Tabs indicatorColor="secondary" value={tabValue} onChange={handleTabChange}>
             <Tab className={classes.tab} label="基本" value="basic"/>
@@ -67,8 +67,8 @@ export default function ControlPanel() {
           </Tabs>
           <Paper className={classes.tabPanel}>
             <TabContext value={tabValue}>
-              <BasicTabPanel/>
-              <ScheduleTabPanel/>
+              <BasicTabPanel appController={appController}/>
+              <ScheduleTabPanel appController={appController}/>
             </TabContext>
           </Paper>
         </div>

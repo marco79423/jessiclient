@@ -10,7 +10,7 @@ export const changeConnectionUrl = createAction('project/connection/changeConnec
 
 export const changeRequestText = createAction('project/request/changeRequestText')
 
-export const changeScheduleTimeInterval = createAction('project/schedule/changeScheduleTimeInterval', period => +period)
+export const changeScheduleTimeInterval = createAction('project/schedule/changeScheduleTimeInterval')
 
 export const changeScheduleRequestText = createAction('project/schedule/changeScheduleRequestText')
 

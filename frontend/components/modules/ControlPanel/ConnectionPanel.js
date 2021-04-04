@@ -1,13 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useTranslation} from 'next-i18next'
-import {useGA4React} from 'ga-4-react'
-import classNames from 'classnames'
 import {makeStyles} from '@material-ui/core/styles'
 import {Button, Grid, InputBase, Paper, Tooltip} from '@material-ui/core'
 
 import {ConnectionState} from '../../../constants'
-import wsClient from '../../../features/wsClient'
 import {getConnectionState, getConnectionUrl} from '../../../selectors'
 import {changeConnectionUrl} from '../../../slices/project'
 
@@ -27,11 +24,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function ConnectionPanel({className}) {
+export default function ConnectionPanel({appController}) {
   const classes = useStyles()
   const dispatch = useDispatch()
   const {t} = useTranslation('common')
-  const ga4React = useGA4React()
 
   const [url, setUrl] = useState('')
 
@@ -49,10 +45,9 @@ export default function ConnectionPanel({className}) {
   const onConnectButtonClicked = async () => {
     if (connectionState === ConnectionState.Idle) {
       await dispatch(changeConnectionUrl(url))
-      wsClient.connect(url)
-      ga4React.gtag('event', 'connect', {url})
+      await appController.connect(url)
     } else if (connectionState === ConnectionState.Connected) {
-      wsClient.close()
+      await appController.disconnect()
     }
   }
 
@@ -80,7 +75,7 @@ export default function ConnectionPanel({className}) {
   }
 
   return (
-    <Grid container component={Paper} className={classNames(classes.root, className)} justify="space-between">
+    <Grid container component={Paper} className={classes.root} justify="space-between">
       <Grid item xs>
         <Tooltip title={url} arrow placement="top-end">
           <InputBase

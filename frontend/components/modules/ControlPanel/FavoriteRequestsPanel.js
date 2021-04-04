@@ -5,12 +5,9 @@ import {Grid, Paper, Typography} from '@material-ui/core'
 
 import BasicDialog from '../../elements/BasicDialog'
 import Button from '../../elements/Button'
-import wsClient from '../../../features/wsClient'
-import {MessageSource} from '../../../constants'
 import {setAppliedFavoriteRequestID} from '../../../slices/current'
-import {appendMessage, changeRequestText, removeFavoriteRequest, removeFirstMessage} from '../../../slices/project'
-import {getFavoriteRequests, getMessageCount, getSettingMaxMessageCount} from '../../../selectors'
-import generateRandomString from '../../../utils/generateRandomString'
+import {changeRequestText, removeFavoriteRequest} from '../../../slices/project'
+import {getFavoriteRequests} from '../../../selectors'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,12 +26,27 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+export default function FavoriteRequestsPanel({appController, open, onClose}) {
+  const classes = useStyles()
+  const favoriteRequests = useSelector(getFavoriteRequests)
 
-function FavoriteRequestItem({favoriteRequest}) {
+  return (
+    <BasicDialog classname={classes.root} size="large" title={'常用請求列表'} open={open} onClose={onClose}>
+      <Grid container spacing={2} justify="center">
+        {favoriteRequests.map(favoriteRequest => (
+          <Grid key={favoriteRequest.id} className={classes.message} item>
+            <FavoriteRequestItem appController={appController} favoriteRequest={favoriteRequest}/>
+          </Grid>
+        ))}
+      </Grid>
+    </BasicDialog>
+  )
+}
+
+
+function FavoriteRequestItem({appController, favoriteRequest}) {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const maxMessageCount = useSelector(getSettingMaxMessageCount)
-  const messageCount = useSelector(getMessageCount)
 
   const onAppliedButtonClicked = () => {
     dispatch(setAppliedFavoriteRequestID(favoriteRequest.id))
@@ -47,18 +59,12 @@ function FavoriteRequestItem({favoriteRequest}) {
 
   const onSendButtonClicked = async () => {
     dispatch(changeRequestText(favoriteRequest.text))
-    wsClient.send(requestText)
-
-    if (messageCount >= maxMessageCount) {
-      await dispatch(removeFirstMessage())
+    try {
+      await appController.sendMessage(favoriteRequest.text)
+    } catch (e) {
+      console.log(e)
+      appController.throwError('訊息傳送失敗')
     }
-
-    await dispatch(appendMessage({
-      id: generateRandomString(),
-      time: new Date().toISOString(),
-      source: MessageSource.Client,
-      text: favoriteRequest.text,
-    }))
   }
 
   return (
@@ -81,19 +87,3 @@ function FavoriteRequestItem({favoriteRequest}) {
   )
 }
 
-export default function FavoriteRequestsPanel({open, onClose}) {
-  const classes = useStyles()
-  const favoriteRequests = useSelector(getFavoriteRequests)
-
-  return (
-    <BasicDialog classname={classes.root} size="large" title={'常用請求列表'} open={open} onClose={onClose}>
-      <Grid container spacing={2} justify="center">
-        {favoriteRequests.map(favoriteRequest => (
-          <Grid key={favoriteRequest.id} className={classes.message} item>
-            <FavoriteRequestItem favoriteRequest={favoriteRequest}/>
-          </Grid>
-        ))}
-      </Grid>
-    </BasicDialog>
-  )
-}

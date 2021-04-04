@@ -5,27 +5,19 @@ import {Grid, TextField} from '@material-ui/core'
 import {TabPanel} from '@material-ui/lab'
 
 import generateRandomString from '../../../utils/generateRandomString'
-import {ConnectionState, MessageSource} from '../../../constants'
+import {ConnectionState} from '../../../constants'
 import Button from '../../elements/Button'
 import FavoriteRequestsPanel from './FavoriteRequestsPanel'
-import wsClient from '../../../features/wsClient'
-import {
-  getAppliedFavoriteRequest,
-  getConnectionState, getMessageCount,
-  getRequestText,
-  getSettingMaxMessageCount
-} from '../../../selectors'
-import {addFavoriteRequest, appendMessage, changeRequestText, removeFirstMessage} from '../../../slices/project'
+import {getAppliedFavoriteRequest, getConnectionState, getRequestText} from '../../../selectors'
+import {addFavoriteRequest, changeRequestText} from '../../../slices/project'
 import {clearAppliedFavoriteRequestID, setAppliedFavoriteRequestID} from '../../../slices/current'
 
-export default function BasicTabPanel() {
+export default function BasicTabPanel({appController}) {
   const dispatch = useDispatch()
   const ga4React = useGA4React()
   const connectionState = useSelector(getConnectionState)
   const requestText = useSelector(getRequestText)
   const appliedFavoriteRequest = useSelector(getAppliedFavoriteRequest)
-  const maxMessageCount = useSelector(getSettingMaxMessageCount)
-  const messageCount = useSelector(getMessageCount)
   const [value, setValue] = useState('')
   const [favoriteRequestsPanelOpen, setFavoriteRequestsPanel] = useState(false)
 
@@ -55,20 +47,12 @@ export default function BasicTabPanel() {
 
   const onSendButtonClicked = async () => {
     dispatch(changeRequestText(value))
-    wsClient.send(value)
-
-    if (messageCount >= maxMessageCount) {
-      await dispatch(removeFirstMessage())
+    try {
+      await appController.sendMessage(value)
+    } catch (e) {
+      console.log(e)
+      appController.throwError('訊息傳送失敗')
     }
-
-    await dispatch(appendMessage({
-      id: generateRandomString(),
-      time: new Date().toISOString(),
-      source: MessageSource.Client,
-      text: value,
-    }))
-
-    ga4React.gtag('event', 'send_message')
   }
 
   const showFavoriteRequestsPanel = () => {
@@ -86,7 +70,11 @@ export default function BasicTabPanel() {
       <Grid container direction="row-reverse">
         <Grid item>
           <Button onClick={showFavoriteRequestsPanel}>展開常用列表</Button>
-          <FavoriteRequestsPanel open={favoriteRequestsPanelOpen} onClose={hideFavoriteRequestsPanel}/>
+          <FavoriteRequestsPanel
+            appController={appController}
+            open={favoriteRequestsPanelOpen}
+            onClose={hideFavoriteRequestsPanel}
+          />
         </Grid>
       </Grid>
       <TextField

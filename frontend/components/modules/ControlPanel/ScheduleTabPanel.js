@@ -3,34 +3,26 @@ import {useDispatch, useSelector} from 'react-redux'
 import {useGA4React} from 'ga-4-react'
 
 import generateRandomString from '../../../utils/generateRandomString'
-import {ConnectionState, MessageSource} from '../../../constants'
+import {ConnectionState} from '../../../constants'
 import {TabPanel} from '@material-ui/lab'
 import {Grid, TextField, Typography} from '@material-ui/core'
 import Button from '../../elements/Button'
 import FavoriteRequestsPanel from './FavoriteRequestsPanel'
-import scheduler from '../../../features/scheduler'
-import wsClient from '../../../features/wsClient'
 import {
   getAppliedFavoriteRequest,
-  getConnectionState, getMessageCount,
+  getConnectionState,
   getScheduleEnabledStatus,
   getScheduleRequestText,
-  getScheduleTimeInterval, getSettingMaxMessageCount
+  getScheduleTimeInterval
 } from '../../../selectors'
 import {
   changeScheduleEnabledStatus,
   clearAppliedFavoriteRequestID,
   setAppliedFavoriteRequestID
 } from '../../../slices/current'
-import {
-  addFavoriteRequest,
-  appendMessage,
-  changeScheduleRequestText,
-  changeScheduleTimeInterval,
-  removeFirstMessage
-} from '../../../slices/project'
+import {addFavoriteRequest, changeScheduleRequestText, changeScheduleTimeInterval} from '../../../slices/project'
 
-export default function ScheduleTabPanel() {
+export default function ScheduleTabPanel({appController}) {
   const dispatch = useDispatch()
   const ga4React = useGA4React()
   const connectionState = useSelector(getConnectionState)
@@ -38,8 +30,6 @@ export default function ScheduleTabPanel() {
   const appliedFavoriteRequest = useSelector(getAppliedFavoriteRequest)
   const scheduleEnabled = useSelector(getScheduleEnabledStatus)
   const timeInterval = useSelector(getScheduleTimeInterval)
-const maxMessageCount = useSelector(getSettingMaxMessageCount)
-  const messageCount = useSelector(getMessageCount)
 
   const [favoriteRequestsPanelOpen, setFavoriteRequestsPanel] = useState(false)
 
@@ -77,29 +67,14 @@ const maxMessageCount = useSelector(getSettingMaxMessageCount)
     }
   }
 
-  const onEnableButtonClicked = () => {
+  const onEnableButtonClicked = async () => {
     if (scheduleEnabled) {
-      scheduler.disable()
-      dispatch(changeScheduleEnabledStatus(false))
+      await appController.disableScheduler()
+      await dispatch(changeScheduleEnabledStatus(false))
     } else {
-      dispatch(changeScheduleRequestText(localRequestText))
-      dispatch(changeScheduleTimeInterval(localTimeInterval))
-
-      scheduler.setOnEvent(async () => {
-        wsClient.send(localRequestText)
-
-        if (messageCount >= maxMessageCount) {
-          await dispatch(removeFirstMessage())
-        }
-
-        await dispatch(appendMessage({
-          id: generateRandomString(),
-          time: new Date().toISOString(),
-          source: MessageSource.Client,
-          text: localRequestText,
-        }))
-      })
-      scheduler.enable(localTimeInterval)
+      await dispatch(changeScheduleRequestText(localRequestText))
+      await dispatch(changeScheduleTimeInterval(+localTimeInterval))
+      await appController.enableScheduler(localRequestText, +localTimeInterval)
       dispatch(changeScheduleEnabledStatus(true))
     }
   }
@@ -120,7 +95,11 @@ const maxMessageCount = useSelector(getSettingMaxMessageCount)
       <Grid container direction="row-reverse">
         <Grid item>
           <Button disabled={scheduleEnabled} onClick={showFavoriteRequestsPanel}>展開常用列表</Button>
-          <FavoriteRequestsPanel open={favoriteRequestsPanelOpen} onClose={hideFavoriteRequestsPanel}/>
+          <FavoriteRequestsPanel
+            appController={appController}
+            open={favoriteRequestsPanelOpen}
+            onClose={hideFavoriteRequestsPanel}
+          />
         </Grid>
       </Grid>
       <TextField
