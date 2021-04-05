@@ -5,10 +5,20 @@
   "連線中…": "Connecting ...",
   "關閉中…": "Closing ...",
 
+  "基本": "Basic",
+  "排程": "Schedule",
+
+  "請求內容": "Request Body",
+  "送出": "Send",
+
+  "展開常用列表": "Show Favorites",
   "常用請求列表": "Favorite Requests",
   "套用": "Apply",
   "刪除": "Delete",
   "儲存": "Save",
   "直接送出": "Send directly",
+  "啟用": "Enable",
+  "停用": "Disable",
+
   "訊息傳送失敗": "Failed to send the request"
 }

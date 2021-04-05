@@ -25,7 +25,7 @@ export default function BasicTabPanel({appController}) {
   const classes = useStyles()
   const dispatch = useDispatch()
   const ga4React = useGA4React()
-  const {t} = useTranslation('common')
+  const {t} = useTranslation('ControlPanel')
   const connectionState = useSelector(getConnectionState)
   const requestText = useSelector(getRequestText)
   const appliedFavoriteRequest = useSelector(getAppliedFavoriteRequest)
@@ -62,7 +62,7 @@ export default function BasicTabPanel({appController}) {
       await appController.sendMessage(localRequestBody)
     } catch (e) {
       console.log(e)
-      appController.throwError('訊息傳送失敗')
+      appController.throwError(t('訊息傳送失敗'))
     }
   }
 
@@ -80,7 +80,7 @@ export default function BasicTabPanel({appController}) {
     <TabPanel value="basic">
       <Grid container direction="row-reverse">
         <Grid item>
-          <Button onClick={showFavoriteRequestsPanel}>展開常用列表</Button>
+          <Button onClick={showFavoriteRequestsPanel}>{t('展開常用列表')}</Button>
           <FavoriteRequestsPanel
             appController={appController}
             open={favoriteRequestsPanelOpen}
