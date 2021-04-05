@@ -96,7 +96,7 @@ export default function BasicTabPanel({appController}) {
       />
       <Grid style={{marginTop: 8}} container justify="space-between">
         <Grid item>
-          <Button onClick={onAppliedFavoriteRequestButtonClicked}>{appliedFavoriteRequest ? '取消常用' : '設為常用'}</Button>
+          <Button onClick={onAppliedFavoriteRequestButtonClicked}>{appliedFavoriteRequest ? t('取消常用') : t('設為常用')}</Button>
         </Grid>
         <Grid item>
           <Button primary disabled={!isConnected} onClick={onSendButtonClicked}>{t('送出')}</Button>

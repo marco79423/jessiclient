@@ -35,7 +35,7 @@ export default function ScheduleTabPanel({appController}) {
   const classes = useStyles()
   const dispatch = useDispatch()
   const ga4React = useGA4React()
-  const {t} = useTranslation('common')
+  const {t} = useTranslation('ControlPanel')
   const connectionState = useSelector(getConnectionState)
   const requestText = useSelector(getScheduleRequestText)
   const appliedFavoriteRequest = useSelector(getAppliedFavoriteRequest)
@@ -103,7 +103,7 @@ export default function ScheduleTabPanel({appController}) {
     <TabPanel value="schedule">
       <Grid container direction="row-reverse">
         <Grid item>
-          <Button disabled={scheduleEnabled} onClick={showFavoriteRequestsPanel}>展開常用列表</Button>
+          <Button disabled={scheduleEnabled} onClick={showFavoriteRequestsPanel}>{t('展開常用列表')}</Button>
           <FavoriteRequestsPanel
             appController={appController}
             open={favoriteRequestsPanelOpen}
@@ -120,7 +120,7 @@ export default function ScheduleTabPanel({appController}) {
       <Grid style={{marginTop: 8}} container alignItems="center" justify="space-between">
         <Grid item>
           <Button disabled={scheduleEnabled} onClick={onAppliedFavoriteRequestButtonClicked}>
-            {appliedFavoriteRequest ? '取消常用' : '設為常用'}
+            {appliedFavoriteRequest ? t('取消常用') : t('設為常用')}
           </Button>
         </Grid>
         <Grid item>
@@ -133,7 +133,7 @@ export default function ScheduleTabPanel({appController}) {
                                       disabled={scheduleEnabled}
                                       onChange={onScheduleTimeIntervalChange}
                                       value={localTimeInterval}/></Grid>
-                <Grid item><Typography>秒傳送一次</Typography></Grid>
+                <Grid item><Typography>{t('秒傳送一次')}</Typography></Grid>
               </Grid>
             </Grid>
             <Grid item>

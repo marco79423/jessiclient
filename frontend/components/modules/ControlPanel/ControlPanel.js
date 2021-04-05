@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ControlPanel({appController}) {
   const classes = useStyles()
   const ga4React = useGA4React()
-  const {t} = useTranslation('common')
+  const {t} = useTranslation('ControlPanel')
   const [tabValue, setTabValue] = useState('basic')
 
   const handleTabChange = (event, newValue) => {
