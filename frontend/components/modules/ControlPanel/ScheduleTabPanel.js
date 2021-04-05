@@ -6,7 +6,7 @@ import {useTranslation} from 'next-i18next'
 import generateRandomString from '../../../utils/generateRandomString'
 import {ConnectionState} from '../../../constants'
 import {TabPanel} from '@material-ui/lab'
-import {Grid, TextField, Typography} from '@material-ui/core'
+import {Grid, makeStyles, TextField, Typography} from '@material-ui/core'
 import Button from '../../elements/Button'
 import FavoriteRequestsPanel from './FavoriteRequestsPanel'
 import {
@@ -22,8 +22,17 @@ import {
   setAppliedFavoriteRequestID
 } from '../../../slices/current'
 import {addFavoriteRequest, changeScheduleRequestText, changeScheduleTimeInterval} from '../../../slices/project'
+import TextArea from '../../elements/TextArea'
+
+const useStyles = makeStyles((theme) => ({
+  requestBody: {
+    marginTop: theme.spacing(3),
+  },
+}))
+
 
 export default function ScheduleTabPanel({appController}) {
+  const classes = useStyles()
   const dispatch = useDispatch()
   const ga4React = useGA4React()
   const {t} = useTranslation('common')
@@ -32,22 +41,20 @@ export default function ScheduleTabPanel({appController}) {
   const appliedFavoriteRequest = useSelector(getAppliedFavoriteRequest)
   const scheduleEnabled = useSelector(getScheduleEnabledStatus)
   const timeInterval = useSelector(getScheduleTimeInterval)
-
   const [favoriteRequestsPanelOpen, setFavoriteRequestsPanel] = useState(false)
-
-  const [localRequestText, setLocalRequestText] = useState('')
+  const [localRequestBody, setLocalRequestBody] = useState('')
   const [localTimeInterval, setLocalTimeInterval] = useState(3)
 
   useEffect(() => {
-    setLocalRequestText(requestText)
+    setLocalRequestBody(requestText)
   }, [requestText])
 
   useEffect(() => {
     setLocalTimeInterval(timeInterval)
   }, [timeInterval])
 
-  const onRequestTextInputChange = (e) => {
-    setLocalRequestText(e.target.value)
+  const onRequestTextInputChange = (value) => {
+    setLocalRequestBody(value)
     dispatch(clearAppliedFavoriteRequestID())
   }
 
@@ -62,7 +69,7 @@ export default function ScheduleTabPanel({appController}) {
       const favoriteRequest = {
         id: generateRandomString(),
         name: new Date().toLocaleString(),
-        text: localRequestText,
+        text: localRequestBody,
       }
       dispatch(addFavoriteRequest(favoriteRequest))
       dispatch(setAppliedFavoriteRequestID(favoriteRequest.id))
@@ -74,9 +81,9 @@ export default function ScheduleTabPanel({appController}) {
       await appController.disableScheduler()
       await dispatch(changeScheduleEnabledStatus(false))
     } else {
-      await dispatch(changeScheduleRequestText(localRequestText))
+      await dispatch(changeScheduleRequestText(localRequestBody))
       await dispatch(changeScheduleTimeInterval(+localTimeInterval))
-      await appController.enableScheduler(localRequestText, +localTimeInterval)
+      await appController.enableScheduler(localRequestBody, +localTimeInterval)
       dispatch(changeScheduleEnabledStatus(true))
     }
   }
@@ -104,17 +111,10 @@ export default function ScheduleTabPanel({appController}) {
           />
         </Grid>
       </Grid>
-      <TextField
-        style={{marginTop: 24}}
-        variant="outlined"
-        margin="normal"
-        multiline
-        rows={16}
-        fullWidth
+      <TextArea
+        className={classes.requestBody}
         label={t('請求內容')}
-        autoFocus
-        disabled={scheduleEnabled}
-        value={localRequestText}
+        value={localRequestBody}
         onChange={onRequestTextInputChange}
       />
       <Grid style={{marginTop: 8}} container alignItems="center" justify="space-between">

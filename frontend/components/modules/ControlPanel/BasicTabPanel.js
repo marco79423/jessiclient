@@ -1,34 +1,43 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useGA4React} from 'ga-4-react'
-import {Grid, TextField} from '@material-ui/core'
+import {useTranslation} from 'next-i18next'
+import {Grid, makeStyles} from '@material-ui/core'
 import {TabPanel} from '@material-ui/lab'
 
 import generateRandomString from '../../../utils/generateRandomString'
 import {ConnectionState} from '../../../constants'
-import Button from '../../elements/Button'
-import FavoriteRequestsPanel from './FavoriteRequestsPanel'
 import {getAppliedFavoriteRequest, getConnectionState, getRequestText} from '../../../selectors'
 import {addFavoriteRequest, changeRequestText} from '../../../slices/project'
 import {clearAppliedFavoriteRequestID, setAppliedFavoriteRequestID} from '../../../slices/current'
-import {useTranslation} from 'next-i18next'
+import Button from '../../elements/Button'
+import TextArea from '../../elements/TextArea'
+import FavoriteRequestsPanel from './FavoriteRequestsPanel'
+
+const useStyles = makeStyles((theme) => ({
+  requestBody: {
+    marginTop: theme.spacing(3),
+  },
+}))
+
 
 export default function BasicTabPanel({appController}) {
+  const classes = useStyles()
   const dispatch = useDispatch()
   const ga4React = useGA4React()
   const {t} = useTranslation('common')
   const connectionState = useSelector(getConnectionState)
   const requestText = useSelector(getRequestText)
   const appliedFavoriteRequest = useSelector(getAppliedFavoriteRequest)
-  const [value, setValue] = useState('')
+  const [localRequestBody, setLocalRequestBody] = useState('')
   const [favoriteRequestsPanelOpen, setFavoriteRequestsPanel] = useState(false)
 
   useEffect(() => {
-    setValue(requestText)
+    setLocalRequestBody(requestText)
   }, [requestText])
 
-  const onRequestTextInputChange = (e) => {
-    setValue(e.target.value)
+  const onRequestTextInputChange = (value) => {
+    setLocalRequestBody(value)
     dispatch(clearAppliedFavoriteRequestID())
   }
 
@@ -39,7 +48,7 @@ export default function BasicTabPanel({appController}) {
       const favoriteRequest = {
         id: generateRandomString(),
         name: new Date().toLocaleString(),
-        text: value,
+        text: localRequestBody,
       }
       dispatch(addFavoriteRequest(favoriteRequest))
       dispatch(setAppliedFavoriteRequestID(favoriteRequest.id))
@@ -48,9 +57,9 @@ export default function BasicTabPanel({appController}) {
   }
 
   const onSendButtonClicked = async () => {
-    dispatch(changeRequestText(value))
+    dispatch(changeRequestText(localRequestBody))
     try {
-      await appController.sendMessage(value)
+      await appController.sendMessage(localRequestBody)
     } catch (e) {
       console.log(e)
       appController.throwError('訊息傳送失敗')
@@ -79,19 +88,12 @@ export default function BasicTabPanel({appController}) {
           />
         </Grid>
       </Grid>
-      <TextField
-        style={{marginTop: 24}}
-        variant="outlined"
-        margin="normal"
-        multiline
-        rows={16}
-        fullWidth
+      <TextArea
+        className={classes.requestBody}
         label={t('請求內容')}
-        autoFocus
-        value={value}
+        value={localRequestBody}
         onChange={onRequestTextInputChange}
       />
-
       <Grid style={{marginTop: 8}} container justify="space-between">
         <Grid item>
           <Button onClick={onAppliedFavoriteRequestButtonClicked}>{appliedFavoriteRequest ? '取消常用' : '設為常用'}</Button>
