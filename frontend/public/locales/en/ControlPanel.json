@@ -6,6 +6,9 @@
   "關閉中…": "Closing ...",
 
   "常用請求列表": "Favorite Requests",
-
+  "套用": "Apply",
+  "刪除": "Delete",
+  "儲存": "Save",
+  "直接送出": "Send directly",
   "訊息傳送失敗": "Failed to send the request"
 }
