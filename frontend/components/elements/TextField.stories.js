@@ -14,9 +14,6 @@ const Template = (args) => <TextField {...args} />
 export const Default = Template.bind({})
 Default.args = {
   placeholder: '搜尋訊息',
-  value: '',
-  disabled: false,
-  readOnly: false,
 }
 
 export const WithAction = Template.bind({})

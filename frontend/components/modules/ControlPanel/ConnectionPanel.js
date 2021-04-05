@@ -1,96 +1,97 @@
 import React, {useEffect, useState} from 'react'
+import PropTypes from 'prop-types'
 import {useDispatch, useSelector} from 'react-redux'
 import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
-import {Button, Grid, InputBase, Paper, Tooltip} from '@material-ui/core'
 
 import {ConnectionState} from '../../../constants'
 import {getConnectionState, getConnectionUrl} from '../../../selectors'
 import {changeConnectionUrl} from '../../../slices/project'
+import LinkButton from '../../elements/LinkButton'
+import TextField from '../../elements/TextField'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    background: theme.project.page.main.controlPanel.connectionPanel.background,
     margin: '0 auto',
-    padding: theme.spacing(2),
-    maxWidth: 500,
   },
-  connectionUrlInput: {
-    fontSize: '1.3rem',
-    width: '100%',
-  },
-  connectButton: {
-    color: theme.project.page.main.controlPanel.connectionPanel.connectButtonTextColor,
-  }
 }))
 
 export default function ConnectionPanel({appController}) {
   const classes = useStyles()
-  const dispatch = useDispatch()
-  const {t} = useTranslation('common')
-
-  const [url, setUrl] = useState('')
-
-  const connectionUrl = useSelector(getConnectionUrl)
+  const {t} = useTranslation('ControlPanel')
   const connectionState = useSelector(getConnectionState)
+  const connectionUrl = useSelector(getConnectionUrl)
+  const [url, setUrl] = useState('')
 
   useEffect(() => {
     setUrl(connectionUrl)
   }, [connectionUrl])
 
-  const onConnectionUrlInputChange = (e) => {
-    setUrl(e.target.value)
+  const onChange = (value) => {
+    setUrl(value)
   }
 
-  const onConnectButtonClicked = async () => {
-    if (connectionState === ConnectionState.Idle) {
-      await dispatch(changeConnectionUrl(url))
-      await appController.connect(url)
-    } else if (connectionState === ConnectionState.Connected) {
-      await appController.disconnect()
-    }
-  }
+  return (
+    <TextField
+      className={classes.root}
+      large
+      placeholder={t('欲連線的網址')}
+      value={url}
+      onChange={onChange}
+      disabled={connectionState !== ConnectionState.Idle}
+      action={
+        <ConnectButton url={url} appController={appController}/>
+      }
+    />
+  )
+}
 
-  const renderButton = () => {
+ConnectionPanel.propTypes = {
+  appController: PropTypes.object.isRequired,
+}
+
+
+function ConnectButton({url, appController}) {
+  const dispatch = useDispatch()
+  const {t} = useTranslation('ControlPanel')
+  const connectionState = useSelector(getConnectionState)
+  const [buttonLabel, setButtonLabel] = useState('')
+
+  useEffect(() => {
     switch (connectionState) {
       case ConnectionState.Idle:
-        return (
-          <Button className={classes.connectButton} size="large" aria-label="connect"
-                  onClick={onConnectButtonClicked}>{t('建立連線')}</Button>
-        )
+        setButtonLabel(t('建立連線'))
+        return
       case ConnectionState.Connecting:
-        return (
-          <Button className={classes.connectButton} size="large" aria-label="connecting" disabled>連線中…</Button>
-        )
+        setButtonLabel(t('連線中…'))
+        return
       case ConnectionState.Connected:
-        return (
-          <Button className={classes.connectButton} size="large" aria-label="connected"
-                  onClick={onConnectButtonClicked}>{t('關閉連線')}</Button>
-        )
+        setButtonLabel(t('關閉連線'))
+        return
       case ConnectionState.Closing:
-        return (
-          <Button className={classes.connectButton} aria-label="closing" disabled>關閉中…</Button>
-        )
+        setButtonLabel(t('關閉中…'))
+        return
+    }
+  }, [connectionState])
+
+  const onButtonClicked = async () => {
+    switch (connectionState) {
+      case ConnectionState.Idle:
+        await dispatch(changeConnectionUrl(url))
+        await appController.connect(url)
+        return
+      case ConnectionState.Connected:
+        await appController.disconnect()
+        return
     }
   }
 
   return (
-    <Grid container component={Paper} className={classes.root} justify="space-between">
-      <Grid item xs>
-        <Tooltip title={url} arrow placement="top-end">
-          <InputBase
-            className={classes.connectionUrlInput}
-            placeholder="欲連線的網址"
-            inputProps={{'aria-label': 'ws://欲連線的網址'}}
-            value={url}
-            disabled={connectionState !== ConnectionState.Idle}
-            onChange={onConnectionUrlInputChange}
-          />
-        </Tooltip>
-      </Grid>
-      <Grid item>
-        {renderButton()}
-      </Grid>
-    </Grid>
+    <LinkButton
+      primary
+      large
+      disabled={connectionState === ConnectionState.Connecting || connectionState === ConnectionState.Closing}
+      onClick={onButtonClicked}
+    >{buttonLabel}</LinkButton>
   )
 }

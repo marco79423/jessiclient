@@ -73,10 +73,6 @@ const theme = createMuiTheme({
         background: colorTable['grey-200'],
         controlPanel: {
           background: colorTable['indigo-400'],
-          connectionPanel: {
-            background: 'white',
-            connectButtonTextColor: colorTable['indigo-600'],
-          },
           requestPanel: {
             tab: colorTable['indigo-100'],
           },
