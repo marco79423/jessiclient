@@ -21,6 +21,8 @@ export const removeFavoriteRequest = createAction('project/request/removeFavorit
 
 export const clearFavoriteRequests = createAction('project/request/clearFavoriteRequests')
 
+export const updateFavoriteRequest = createAction('project/request/updateFavoriteRequest')
+
 export const appendMessage = createAction('project/message/appendMessage')
 
 export const removeFirstMessage = createAction( 'project/message/removeFirstMessage')
@@ -89,6 +91,9 @@ const projectSlice = createSlice({
     },
     [clearFavoriteRequests]: (state) => {
       favoriteRequestAdapter.removeAll(state.favoriteRequest)
+    },
+    [updateFavoriteRequest]: (state, action) => {
+      favoriteRequestAdapter.updateOne(state.favoriteRequest, action.payload)
     },
     [removeFirstMessage]: (state) => {
       messageAdapter.removeOne(state.message, state.message.ids[0])

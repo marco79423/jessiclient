@@ -3,5 +3,9 @@
   "建立連線": "Connect",
   "關閉連線": "Close",
   "連線中…": "Connecting ...",
-  "關閉中…": "Closing ..."
+  "關閉中…": "Closing ...",
+
+  "常用請求列表": "Favorite Requests",
+
+  "訊息傳送失敗": "Failed to send the request"
 }
