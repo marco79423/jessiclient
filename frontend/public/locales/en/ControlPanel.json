@@ -20,7 +20,9 @@
   "設為常用": "Set as favorite",
   "取消常用": "Delete from favorites",
 
-  "秒傳送一次": "秒傳送一次",
+  "每": "send request every",
+  "秒傳送一次": "seconds",
+
   "啟用": "Enable",
   "停用": "Disable",
 

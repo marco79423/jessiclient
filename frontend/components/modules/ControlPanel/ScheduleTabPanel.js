@@ -6,7 +6,7 @@ import {useTranslation} from 'next-i18next'
 import generateRandomString from '../../../utils/generateRandomString'
 import {ConnectionState} from '../../../constants'
 import {TabPanel} from '@material-ui/lab'
-import {Grid, makeStyles, TextField, Typography} from '@material-ui/core'
+import {Grid, makeStyles, TextField} from '@material-ui/core'
 import Button from '../../elements/Button'
 import FavoriteRequestsPanel from './FavoriteRequestsPanel'
 import {
@@ -126,15 +126,12 @@ export default function ScheduleTabPanel({appController}) {
         <Grid item>
           <Grid container alignItems="center" spacing={3}>
             <Grid item>
-              <Grid container alignItems="center" spacing={1}>
-                <Grid item><TextField style={{width: 50}}
-                                      type="number"
-                                      size="small"
-                                      disabled={scheduleEnabled}
-                                      onChange={onScheduleTimeIntervalChange}
-                                      value={localTimeInterval}/></Grid>
-                <Grid item><Typography>{t('秒傳送一次')}</Typography></Grid>
-              </Grid>
+              {t('每')} <TextField style={{width: 50}}
+                                  type="number"
+                                  size="small"
+                                  disabled={scheduleEnabled}
+                                  onChange={onScheduleTimeIntervalChange}
+                                  value={localTimeInterval}/> {t('秒傳送一次')}
             </Grid>
             <Grid item>
               <Button primary disabled={!isConnected} onClick={onEnableButtonClicked}>
