@@ -6,7 +6,7 @@ import TextField from './TextField'
 import LinkButton from './LinkButton'
 
 
-export default function EditableText({className, value, setValue, buttonLabel = '儲存'}) {
+export default function EditableText({className, value, setValue, allowEmpty, buttonLabel = '儲存'}) {
   const [editMode, setEditMode] = useState(false)
   const [localValue, setLocalValue] = useState(value)
 
@@ -37,8 +37,7 @@ export default function EditableText({className, value, setValue, buttonLabel = 
         className={className}
         value={localValue}
         onChange={onChange}
-        action={<LinkButton onClick={onSaveButtonClick}
-        >{buttonLabel}</LinkButton>}
+        action={<LinkButton disabled={!allowEmpty && localValue === ''} onClick={onSaveButtonClick}>{buttonLabel}</LinkButton>}
       />
     )
   }
@@ -52,5 +51,6 @@ EditableText.propTypes = {
   className: PropTypes.string,
   value: PropTypes.string.isRequired,
   setValue: PropTypes.func.isRequired,
+  allowEmpty: PropTypes.bool,
   buttonLabel: PropTypes.string,
 }

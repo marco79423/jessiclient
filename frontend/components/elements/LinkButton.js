@@ -10,13 +10,14 @@ const useStyles = makeStyles((theme) => ({
   }),
 }))
 
-export default function LinkButton({large, primary, children, onClick}) {
+export default function LinkButton({large, primary, disabled, children, onClick}) {
   const classes = useStyles({large})
 
   return (
     <MuiButton
       className={classes.root}
       color={primary ? 'primary' : 'default'}
+      disabled={disabled}
       onClick={onClick}>
       {children}
     </MuiButton>
@@ -24,6 +25,9 @@ export default function LinkButton({large, primary, children, onClick}) {
 }
 
 LinkButton.propTypes = {
+  large: PropTypes.bool,
+  primary: PropTypes.bool,
+  disabled: PropTypes.bool,
   children: PropTypes.node.isRequired,
   onClick: PropTypes.func.isRequired,
 }
