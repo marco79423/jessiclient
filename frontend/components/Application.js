@@ -4,10 +4,10 @@ import {useSelector} from 'react-redux'
 import {LoadingState} from '../constants'
 import {getProjectState, getSelectedMessageID} from '../selectors'
 import DefaultLayout from './layouts/DefaultLayout'
-import Toolbar from './modules/Toolbar'
-import ControlPanel from './modules/ControlPanel'
-import ListPanel from './modules/ListPanel'
-import DetailPanel from './modules/DetailPanel'
+import Toolbar from './containers/Toolbar'
+import ControlPanel from './containers/ControlPanel'
+import ListPanel from './containers/ListPanel'
+import DetailPanel from './containers/DetailPanel'
 
 export default function Application({appController}) {
   const projectState = useSelector(getProjectState)
