@@ -9,13 +9,13 @@ import TextField from '../../elements/TextField'
 import Checkbox from '../../elements/Checkbox'
 
 
-export default function ExportPanel({appController, open, onClose}) {
+export default function ExportPanel({open, onClose, exportProject}) {
   const {t} = useTranslation('Toolbar')
   const [filename, setFilename] = useState('')
   const [messageIncluded, setIncludeMessages] = useState(false)
 
   const onExportButtonClicked = async () => {
-    await appController.exportProject({filename, messageIncluded})
+    await exportProject({filename, messageIncluded})
     onClose()
   }
 
@@ -44,7 +44,7 @@ export default function ExportPanel({appController, open, onClose}) {
 }
 
 ExportPanel.propTypes = {
-  appController: PropTypes.object.isRequired,
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  exportProject: PropTypes.func.isRequired,
 }

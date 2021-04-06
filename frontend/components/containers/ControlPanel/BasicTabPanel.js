@@ -12,7 +12,7 @@ import {addFavoriteRequest, changeRequestText} from '../../../slices/project'
 import {clearAppliedFavoriteRequestID, setAppliedFavoriteRequestID} from '../../../slices/current'
 import Button from '../../elements/Button'
 import TextArea from '../../elements/TextArea'
-import FavoriteRequestsPanel from './FavoriteRequestsPanel'
+import FavoriteRequestDialogContainer from './FavoriteRequestDialogContainer'
 
 const useStyles = makeStyles((theme) => ({
   requestBody: {
@@ -81,7 +81,7 @@ export default function BasicTabPanel({appController}) {
       <Grid container direction="row-reverse">
         <Grid item>
           <Button onClick={showFavoriteRequestsPanel}>{t('展開常用列表')}</Button>
-          <FavoriteRequestsPanel
+          <FavoriteRequestDialogContainer
             appController={appController}
             open={favoriteRequestsPanelOpen}
             onClose={hideFavoriteRequestsPanel}

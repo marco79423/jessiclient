@@ -8,7 +8,7 @@ import {ConnectionState} from '../../../constants'
 import {TabPanel} from '@material-ui/lab'
 import {Grid, makeStyles, TextField} from '@material-ui/core'
 import Button from '../../elements/Button'
-import FavoriteRequestsPanel from './FavoriteRequestsPanel'
+import FavoriteRequestDialogContainer from './FavoriteRequestDialogContainer'
 import {
   getAppliedFavoriteRequest,
   getConnectionState,
@@ -104,7 +104,7 @@ export default function ScheduleTabPanel({appController}) {
       <Grid container direction="row-reverse">
         <Grid item>
           <Button disabled={scheduleEnabled} onClick={showFavoriteRequestsPanel}>{t('展開常用列表')}</Button>
-          <FavoriteRequestsPanel
+          <FavoriteRequestDialogContainer
             appController={appController}
             open={favoriteRequestsPanelOpen}
             onClose={hideFavoriteRequestsPanel}

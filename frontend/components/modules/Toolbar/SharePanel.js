@@ -1,10 +1,7 @@
 import React, {useState} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
 import {useTranslation} from 'next-i18next'
 import {Grid, Typography} from '@material-ui/core'
 
-import {changeShareLink, clearShareLink} from '../../../slices/current'
-import {getShareLink} from '../../../selectors'
 import BasicDialog from '../../elements/BasicDialog'
 import Button from '../../elements/Button'
 import TextField from '../../elements/TextField'
@@ -19,10 +16,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function SharePanel({appController, open, onClose}) {
+export default function SharePanel({open, onClose, shareLink, generateShareLink}) {
   const classes = useStyles()
-  const dispatch = useDispatch()
-  const shareLink = useSelector(getShareLink)
   const {t} = useTranslation('Toolbar')
   const [messageIncluded, setIncludeMessages] = useState(false)
 
@@ -31,17 +26,10 @@ export default function SharePanel({appController, open, onClose}) {
   }
 
   const onGenerateLinkButtonClicked = async () => {
-    try {
-      const shareLink = await appController.generateShareLink({messageIncluded})
-      await dispatch(changeShareLink(shareLink))
-    } catch (e) {
-      console.log(e)
-      appController.throwError(t('產生分享連結失敗'))
-    }
+    await generateShareLink({messageIncluded})
   }
 
   const onCloseButtonClick = () => {
-    dispatch(clearShareLink())
     onClose()
   }
 
@@ -83,7 +71,8 @@ export default function SharePanel({appController, open, onClose}) {
 }
 
 SharePanel.propTypes = {
-  appController: PropTypes.object.isRequired,
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  shareLink: PropTypes.string.isRequired,
+  generateShareLink: PropTypes.func.isRequired,
 }

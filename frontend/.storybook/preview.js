@@ -22,4 +22,13 @@ export const parameters = {
       {name: 'header', value: theme.project.page.header.background},
     ],
   },
+  options: {
+    storySort: {
+      order: [
+        'containers',
+        'modules',
+        'elements'
+      ]
+    }
+  }
 }

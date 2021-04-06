@@ -4,10 +4,10 @@ import {makeStyles} from '@material-ui/core/styles'
 import {Grid, Paper, Tab, Tabs} from '@material-ui/core'
 import {TabContext} from '@material-ui/lab'
 
-import ConnectionPanel from './ConnectionPanel'
+import ConnectionPanelContainer from './ConnectionPanelContainer'
 import BasicTabPanel from './BasicTabPanel'
 import ScheduleTabPanel from './ScheduleTabPanel'
-import Copyright from './Copyright'
+import Copyright from '../../modules/ControlPanel/Copyright'
 import {useTranslation} from 'next-i18next'
 
 
@@ -61,7 +61,7 @@ export default function ControlPanel({appController}) {
           elevation={1}
           square>
       <Grid className={classes.connectionPanel} item>
-        <ConnectionPanel appController={appController}/>
+        <ConnectionPanelContainer appController={appController}/>
         <div className={classes.requestPanel}>
           <Tabs indicatorColor="secondary" value={tabValue} onChange={handleTabChange}>
             <Tab className={classes.tab} label={t('基本')} value="basic"/>
