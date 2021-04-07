@@ -5,8 +5,7 @@ import {useTranslation} from 'next-i18next'
 
 import generateRandomString from '../../../utils/generateRandomString'
 import {ConnectionState} from '../../../constants'
-import {TabPanel} from '@material-ui/lab'
-import {Grid, makeStyles, TextField} from '@material-ui/core'
+import {Grid, makeStyles, Paper, TextField} from '@material-ui/core'
 import Button from '../../elements/Button'
 import FavoriteRequestDialogContainer from './FavoriteRequestDialogContainer'
 import {
@@ -25,6 +24,10 @@ import {addFavoriteRequest, changeScheduleRequestText, changeScheduleTimeInterva
 import TextArea from '../../elements/TextArea'
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    borderTopLeftRadius: 0,
+    padding: theme.spacing(3)
+  },
   requestBody: {
     marginTop: theme.spacing(3),
   },
@@ -100,7 +103,7 @@ export default function ScheduleTabPanel({appController}) {
   const isConnected = connectionState === ConnectionState.Connected
 
   return (
-    <TabPanel value="schedule">
+    <Paper className={classes.root}>
       <Grid container direction="row-reverse">
         <Grid item>
           <Button disabled={scheduleEnabled} onClick={showFavoriteRequestsPanel}>{t('展開常用列表')}</Button>
@@ -141,6 +144,6 @@ export default function ScheduleTabPanel({appController}) {
           </Grid>
         </Grid>
       </Grid>
-    </TabPanel>
+    </Paper>
   )
 }

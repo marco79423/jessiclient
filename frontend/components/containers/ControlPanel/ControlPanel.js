@@ -2,10 +2,10 @@ import React, {useState} from 'react'
 import {useGA4React} from 'ga-4-react'
 import {makeStyles} from '@material-ui/core/styles'
 import {Grid, Paper, Tab, Tabs} from '@material-ui/core'
-import {TabContext} from '@material-ui/lab'
+import {TabContext, TabPanel} from '@material-ui/lab'
 
 import ConnectionPanelContainer from './ConnectionPanelContainer'
-import BasicTabPanel from './BasicTabPanel'
+import BasicTabPanelContainer from './BasicTabPanelContainer'
 import ScheduleTabPanel from './ScheduleTabPanel'
 import Copyright from '../../modules/ControlPanel/Copyright'
 import {useTranslation} from 'next-i18next'
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   tabPanel: {
-    borderTopLeftRadius: 0,
+    padding: 0,
   },
 }))
 
@@ -67,12 +67,14 @@ export default function ControlPanel({appController}) {
             <Tab className={classes.tab} label={t('基本')} value="basic"/>
             <Tab className={classes.tab} label={t('排程')} value="schedule"/>
           </Tabs>
-          <Paper className={classes.tabPanel}>
-            <TabContext value={tabValue}>
-              <BasicTabPanel appController={appController}/>
+          <TabContext value={tabValue}>
+            <TabPanel className={classes.tabPanel} value="basic">
+              <BasicTabPanelContainer appController={appController}/>
+            </TabPanel>
+            <TabPanel className={classes.tabPanel} value="schedule">
               <ScheduleTabPanel appController={appController}/>
-            </TabContext>
-          </Paper>
+            </TabPanel>
+          </TabContext>
         </div>
       </Grid>
       <Grid item>
