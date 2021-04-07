@@ -63,6 +63,7 @@ export default function ScheduleRequestPanel({
               <Grid container alignItems="center" spacing={1}>
                 <Grid item>{t('每')}</Grid>
                 <Grid item><TextField className={classes.secondInput}
+                                      inputProps={{min: 0, style: { textAlign: 'center' }}}
                                       type="number"
                                       size="small"
                                       disabled={scheduleEnabled}
