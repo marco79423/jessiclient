@@ -9,10 +9,10 @@ import {getAppliedFavoriteRequest, getConnectionState, getRequestBody} from '../
 import {addFavoriteRequest, changeRequestText} from '../../../slices/project'
 import {clearAppliedFavoriteRequestID, setAppliedFavoriteRequestID} from '../../../slices/current'
 import FavoriteRequestDialogContainer from './FavoriteRequestDialogContainer'
-import BasicTabPanel from '../../modules/ControlPanel/BasicTabPanel'
+import BasicRequestPanel from '../../modules/ControlPanel/BasicRequestPanel'
 
 
-export default function BasicTabPanelContainer({appController}) {
+export default function BasicRequestPanelContainer({appController}) {
   const dispatch = useDispatch()
   const ga4React = useGA4React()
   const {t} = useTranslation('ControlPanel')
@@ -56,7 +56,7 @@ export default function BasicTabPanelContainer({appController}) {
     }
   }
 
-  const showFavoriteRequestsPanel = () => {
+  const showFavoriteRequestDialog = () => {
     setFavoriteRequestDialog(true)
     ga4React.gtag('event', 'show_favorite_requests_panel')
   }
@@ -67,13 +67,13 @@ export default function BasicTabPanelContainer({appController}) {
 
   return (
     <>
-      <BasicTabPanel
+      <BasicRequestPanel
         isConnected={connectionState === ConnectionState.Connected}
         requestBody={localRequestBody}
         isFavoriteRequest={!!appliedFavoriteRequest}
         onRequestBodyChange={onRequestBodyChange}
-        onShowFavoriteRequestsClick={showFavoriteRequestsPanel}
-        onAppliedFavoriteRequestButtonClick={onAppliedFavoriteRequestButtonClick}
+        onShowFavoriteRequestsClick={showFavoriteRequestDialog}
+        onAppliedFavoriteRequestClick={onAppliedFavoriteRequestButtonClick}
         onSendButtonClick={onSendButtonClick}
       />
 

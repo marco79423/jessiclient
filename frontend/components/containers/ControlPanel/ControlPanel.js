@@ -5,8 +5,8 @@ import {Grid, Paper, Tab, Tabs} from '@material-ui/core'
 import {TabContext, TabPanel} from '@material-ui/lab'
 
 import ConnectionPanelContainer from './ConnectionPanelContainer'
-import BasicTabPanelContainer from './BasicTabPanelContainer'
-import ScheduleTabPanel from './ScheduleTabPanel'
+import BasicRequestPanelContainer from './BasicRequestPanelContainer'
+import ScheduleRequestPanelContainer from './ScheduleRequestPanelContainer'
 import Copyright from '../../modules/ControlPanel/Copyright'
 import {useTranslation} from 'next-i18next'
 
@@ -69,10 +69,10 @@ export default function ControlPanel({appController}) {
           </Tabs>
           <TabContext value={tabValue}>
             <TabPanel className={classes.tabPanel} value="basic">
-              <BasicTabPanelContainer appController={appController}/>
+              <BasicRequestPanelContainer appController={appController}/>
             </TabPanel>
             <TabPanel className={classes.tabPanel} value="schedule">
-              <ScheduleTabPanel appController={appController}/>
+              <ScheduleRequestPanelContainer appController={appController}/>
             </TabPanel>
           </TabContext>
         </div>

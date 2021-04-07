@@ -20,13 +20,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function BasicTabPanel({
+export default function BasicRequestPanel({
                                         isConnected,
                                         requestBody,
                                         isFavoriteRequest,
                                         onRequestBodyChange,
                                         onShowFavoriteRequestsClick,
-                                        onAppliedFavoriteRequestButtonClick,
+                                        onAppliedFavoriteRequestClick,
                                         onSendButtonClick
                                       }) {
   const classes = useStyles()
@@ -45,9 +45,9 @@ export default function BasicTabPanel({
         value={requestBody}
         onChange={onRequestBodyChange}
       />
-      <Grid style={{marginTop: 8}} container justify="space-between">
+      <Grid className={classes.bottomActions} container justify="space-between">
         <Grid item>
-          <Button onClick={onAppliedFavoriteRequestButtonClick}>{isFavoriteRequest ? t('取消常用') : t('設為常用')}</Button>
+          <Button onClick={onAppliedFavoriteRequestClick}>{isFavoriteRequest ? t('取消常用') : t('設為常用')}</Button>
         </Grid>
         <Grid item>
           <Button primary disabled={!isConnected} onClick={onSendButtonClick}>{t('送出')}</Button>
@@ -57,7 +57,7 @@ export default function BasicTabPanel({
   )
 }
 
-BasicTabPanel.propTypes = {
+BasicRequestPanel.propTypes = {
   isConnected: PropTypes.bool.isRequired,
   requestBody: PropTypes.string.isRequired,
   isFavoriteRequest: PropTypes.bool.isRequired,
