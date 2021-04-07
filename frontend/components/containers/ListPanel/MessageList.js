@@ -72,7 +72,7 @@ function Message({message, selectedMessageID, setSelectedMessageID}) {
       selected={selected}
       title={<MessageTitle message={message}/>}
       onClick={onSelected}>
-      <span className={classes.messageContent}>{message.text}</span>
+      <span className={classes.messageContent}>{message.body}</span>
     </ListItem>
   )
 }

@@ -44,7 +44,7 @@ export default function DetailPanel({className}) {
 
   useEffect(() => {
     try {
-      setJsonData(JSON.parse(message.text))
+      setJsonData(JSON.parse(message.body))
       setTabValue('json')
     } catch (_) {
       setJsonData(null)
@@ -75,7 +75,7 @@ export default function DetailPanel({className}) {
               readOnly
               fullWidth
               multiline
-              value={message.text}
+              value={message.body}
             />
           </TabPanel>
           <TabPanel value="json">

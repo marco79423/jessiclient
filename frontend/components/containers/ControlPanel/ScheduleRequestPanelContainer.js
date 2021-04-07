@@ -7,9 +7,8 @@ import {ConnectionState} from '../../../constants'
 import FavoriteRequestDialogContainer from './FavoriteRequestDialogContainer'
 import {
   getAppliedFavoriteRequest,
-  getConnectionState,
+  getConnectionState, getRequestBody,
   getScheduleEnabledStatus,
-  getScheduleRequestText,
   getScheduleTimeInterval
 } from '../../../selectors'
 import {
@@ -17,7 +16,7 @@ import {
   clearAppliedFavoriteRequestID,
   setAppliedFavoriteRequestID
 } from '../../../slices/current'
-import {addFavoriteRequest, changeScheduleRequestText, changeScheduleTimeInterval} from '../../../slices/project'
+import {addFavoriteRequest, changeRequestBody, changeScheduleTimeInterval} from '../../../slices/project'
 import ScheduleRequestPanel from '../../modules/ControlPanel/ScheduleRequestPanel'
 
 
@@ -25,7 +24,7 @@ export default function ScheduleRequestPanelContainer({appController}) {
   const dispatch = useDispatch()
   const ga4React = useGA4React()
   const connectionState = useSelector(getConnectionState)
-  const requestBody = useSelector(getScheduleRequestText)
+  const requestBody = useSelector(getRequestBody)
   const appliedFavoriteRequest = useSelector(getAppliedFavoriteRequest)
   const scheduleEnabled = useSelector(getScheduleEnabledStatus)
   const timeInterval = useSelector(getScheduleTimeInterval)
@@ -57,7 +56,7 @@ export default function ScheduleRequestPanelContainer({appController}) {
       const favoriteRequest = {
         id: generateRandomString(),
         name: new Date().toLocaleString(),
-        text: localRequestBody,
+        body: localRequestBody,
       }
       dispatch(addFavoriteRequest(favoriteRequest))
       dispatch(setAppliedFavoriteRequestID(favoriteRequest.id))
@@ -69,7 +68,7 @@ export default function ScheduleRequestPanelContainer({appController}) {
       await appController.disableScheduler()
       await dispatch(changeScheduleEnabledStatus(false))
     } else {
-      await dispatch(changeScheduleRequestText(localRequestBody))
+      await dispatch(changeRequestBody(localRequestBody))
       await dispatch(changeScheduleTimeInterval(+localScheduleTimeInterval))
       await appController.enableScheduler(localRequestBody, +localScheduleTimeInterval)
       dispatch(changeScheduleEnabledStatus(true))

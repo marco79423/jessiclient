@@ -42,7 +42,7 @@ FavoriteRequestDialog.propTypes = {
   favoriteRequests: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
     onRemove: PropTypes.func.isRequired,
     onApply: PropTypes.func.isRequired,
     onSend: PropTypes.func.isRequired,
@@ -58,8 +58,8 @@ function FavoriteRequestItem({connectionState, favoriteRequest, onRemove, onAppl
     onUpdate({id: favoriteRequest.id, changes: {name}})
   }
 
-  const updateText = (text) => {
-    onUpdate({id: favoriteRequest.id, changes: {text}})
+  const updateBody = (body) => {
+    onUpdate({id: favoriteRequest.id, changes: {body}})
   }
 
   const onApplyButtonClicked = () => {
@@ -79,8 +79,8 @@ function FavoriteRequestItem({connectionState, favoriteRequest, onRemove, onAppl
       <EditableCard
         title={favoriteRequest.name}
         setTitle={updateName}
-        content={favoriteRequest.text}
-        setContent={updateText}
+        content={favoriteRequest.body}
+        setContent={updateBody}
         saveButtonLabel={t('儲存')}
         actions={(
           <>

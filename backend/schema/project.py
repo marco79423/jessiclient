@@ -27,7 +27,7 @@ class ProjectConnectionDataModel(pydantic.BaseModel):
 
 
 class ProjectRequestDataModel(pydantic.BaseModel):
-    text: str
+    body: str
 
     class Config:
         alias_generator = to_camel
@@ -48,7 +48,7 @@ class ProjectScheduleDataModel(pydantic.BaseModel):
 class FavoriteRequestDataModel(pydantic.BaseModel):
     id: str
     name: pydantic.constr(min_length=1)
-    text: pydantic.constr(min_length=1)
+    body: pydantic.constr(min_length=1)
 
     class Config:
         alias_generator = to_camel
@@ -70,7 +70,7 @@ class MessageDataModel(pydantic.BaseModel):
     id: pydantic.constr(min_length=1)
     time: dt.datetime
     source: pydantic.constr(regex=r'(server|client)')
-    text: pydantic.constr(min_length=1)
+    body: pydantic.constr(min_length=1)
 
     class Config:
         alias_generator = to_camel

@@ -5,7 +5,6 @@ import {Grid, makeStyles, Paper} from '@material-ui/core'
 
 import Button from '../../elements/Button'
 import TextArea from '../../elements/TextArea'
-import ConnectionPanel from './ConnectionPanel'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,14 +20,14 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function BasicRequestPanel({
-                                        isConnected,
-                                        requestBody,
-                                        isFavoriteRequest,
-                                        onRequestBodyChange,
-                                        onShowFavoriteRequestsClick,
-                                        onAppliedFavoriteRequestClick,
-                                        onSendButtonClick
-                                      }) {
+                                            isConnected,
+                                            requestBody,
+                                            isFavoriteRequest,
+                                            onRequestBodyChange,
+                                            onShowFavoriteRequestsClick,
+                                            onAppliedFavoriteRequestClick,
+                                            onSendButtonClick
+                                          }) {
   const classes = useStyles()
   const {t} = useTranslation('ControlPanel')
 

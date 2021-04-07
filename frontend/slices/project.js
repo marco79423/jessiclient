@@ -8,12 +8,9 @@ export const changeSettingMaxMessageCount = createAction('project/setting/change
 
 export const changeConnectionUrl = createAction('project/connection/changeConnectionUrl')
 
-export const changeRequestText = createAction('project/request/changeRequestText')
+export const changeRequestBody = createAction('project/request/changeRequestBody')
 
 export const changeScheduleTimeInterval = createAction('project/schedule/changeScheduleTimeInterval')
-
-export const changeScheduleRequestText = createAction('project/schedule/changeScheduleRequestText')
-
 
 export const addFavoriteRequest = createAction('project/request/addFavoriteRequest')
 
@@ -47,15 +44,12 @@ const projectSlice = createSlice({
 
     // 請求
     request: {
-      text: '',
+      body: '',
     },
 
     // 排程
     schedule: {
       timeInterval: 3,
-      request: {
-        text: '',
-      }
     },
 
     // 常用訊息
@@ -74,14 +68,11 @@ const projectSlice = createSlice({
     [changeConnectionUrl]: (state, action) => {
       state.connection.url = action.payload
     },
-    [changeRequestText]: (state, action) => {
-      state.request.text = action.payload
+    [changeRequestBody]: (state, action) => {
+      state.request.body = action.payload
     },
     [changeScheduleTimeInterval]: (state, action) => {
       state.schedule.timeInterval = action.payload
-    },
-    [changeScheduleRequestText]: (state, action) => {
-      state.schedule.request.text = action.payload
     },
     [addFavoriteRequest]: (state, action) => {
       favoriteRequestAdapter.addOne(state.favoriteRequest, action.payload)

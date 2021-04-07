@@ -6,7 +6,7 @@ import {useTranslation} from 'next-i18next'
 import generateRandomString from '../../../utils/generateRandomString'
 import {ConnectionState} from '../../../constants'
 import {getAppliedFavoriteRequest, getConnectionState, getRequestBody} from '../../../selectors'
-import {addFavoriteRequest, changeRequestText} from '../../../slices/project'
+import {addFavoriteRequest, changeRequestBody} from '../../../slices/project'
 import {clearAppliedFavoriteRequestID, setAppliedFavoriteRequestID} from '../../../slices/current'
 import FavoriteRequestDialogContainer from './FavoriteRequestDialogContainer'
 import BasicRequestPanel from '../../modules/ControlPanel/BasicRequestPanel'
@@ -38,7 +38,7 @@ export default function BasicRequestPanelContainer({appController}) {
       const favoriteRequest = {
         id: generateRandomString(),
         name: new Date().toLocaleString(),
-        text: localRequestBody,
+        body: localRequestBody,
       }
       dispatch(addFavoriteRequest(favoriteRequest))
       dispatch(setAppliedFavoriteRequestID(favoriteRequest.id))
@@ -47,7 +47,7 @@ export default function BasicRequestPanelContainer({appController}) {
   }
 
   const onSendButtonClick = async () => {
-    dispatch(changeRequestText(localRequestBody))
+    dispatch(changeRequestBody(localRequestBody))
     try {
       await appController.sendMessage(localRequestBody)
     } catch (e) {

@@ -21,10 +21,9 @@ export const getSettingMaxMessageCount = state => state.project.setting.maxMessa
 
 export const getConnectionUrl = state => state.project.connection.url
 
-export const getRequestBody = state => state.project.request.text
+export const getRequestBody = state => state.project.request.body
 
 export const getScheduleTimeInterval = state => state.project.schedule.timeInterval
-export const getScheduleRequestText = state => state.project.schedule.request.text
 
 const favoriteRequestSelectors = favoriteRequestAdapter.getSelectors(state => state.project.favoriteRequest)
 export const getFavoriteRequests = state => favoriteRequestSelectors.selectAll(state)

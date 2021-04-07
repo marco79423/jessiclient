@@ -24,7 +24,7 @@ export default function ListPanel() {
 
   useEffect(() => {
     setFilteredMessages(
-      messages.filter(message => searchFilters.map(searchFilter => message.text.includes(searchFilter)).reduce((a, b) => a && b, true))
+      messages.filter(message => searchFilters.map(searchFilter => message.body.includes(searchFilter)).reduce((a, b) => a && b, true))
     )
   }, [messages, searchFilters])
 

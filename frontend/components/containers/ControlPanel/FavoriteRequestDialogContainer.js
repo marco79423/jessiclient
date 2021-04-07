@@ -2,7 +2,7 @@ import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 
 import {setAppliedFavoriteRequestID} from '../../../slices/current'
-import {changeRequestText, removeFavoriteRequest, updateFavoriteRequest} from '../../../slices/project'
+import {changeRequestBody, removeFavoriteRequest, updateFavoriteRequest} from '../../../slices/project'
 import {getConnectionState, getFavoriteRequests} from '../../../selectors'
 import FavoriteRequestDialog from '../../modules/ControlPanel/FavoriteRequestDialog'
 import {useTranslation} from 'next-i18next'
@@ -19,12 +19,12 @@ export default function FavoriteRequestDialogContainer({appController, open, onC
 
   const onApply = (favoriteRequest) => {
     dispatch(setAppliedFavoriteRequestID(favoriteRequest.id))
-    dispatch(changeRequestText(favoriteRequest.text))
+    dispatch(changeRequestBody(favoriteRequest.body))
   }
 
   const onSend = async (favoriteRequest) => {
     try {
-      await appController.sendMessage(favoriteRequest.text)
+      await appController.sendMessage(favoriteRequest.body)
     } catch (e) {
       console.log(e)
       appController.throwError(t('訊息傳送失敗'))

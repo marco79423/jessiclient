@@ -59,7 +59,7 @@ export default function AppController({children}) {
         id: generateRandomString(),
         time: new Date().toISOString(),
         source: MessageSource.Server,
-        text: message,
+        body: message,
       }))
     })
     wsClient.setOnClose(() => {
@@ -95,7 +95,7 @@ export default function AppController({children}) {
       id: generateRandomString(),
       time: new Date().toISOString(),
       source: MessageSource.Client,
-      text: message,
+      body: message,
     }))
 
     ga4React.gtag('event', 'send_message')
