@@ -1,11 +1,12 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {useTranslation} from 'next-i18next'
-import {Grid, makeStyles, Paper, TextField} from '@material-ui/core'
+import {Grid, makeStyles, Paper} from '@material-ui/core'
 
 import Button from '../../elements/Button'
 import TextArea from '../../elements/TextArea'
-import PropTypes from 'prop-types'
-import BasicRequestPanel from './BasicRequestPanel'
+import NumberField from '../../elements/NumberField'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,9 +19,6 @@ const useStyles = makeStyles((theme) => ({
   bottomActions: {
     marginTop: theme.spacing(3),
   },
-  secondInput: {
-    width: 50,
-  }
 }))
 
 export default function ScheduleRequestPanel({
@@ -37,6 +35,8 @@ export default function ScheduleRequestPanel({
                                              }) {
   const classes = useStyles()
   const {t} = useTranslation('ControlPanel')
+
+  const validTimeInterval = +scheduleTimeInterval > 0
 
   return (
     <Paper className={classes.root}>
@@ -62,18 +62,14 @@ export default function ScheduleRequestPanel({
             <Grid item>
               <Grid container alignItems="center" spacing={1}>
                 <Grid item>{t('每')}</Grid>
-                <Grid item><TextField className={classes.secondInput}
-                                      inputProps={{min: 0, style: { textAlign: 'center' }}}
-                                      type="number"
-                                      size="small"
-                                      disabled={scheduleEnabled}
-                                      onChange={onScheduleTimeIntervalChange}
-                                      value={scheduleTimeInterval}/> </Grid>
+                <Grid item><NumberField type="number" disabled={scheduleEnabled} error={!validTimeInterval}
+                                        onChange={onScheduleTimeIntervalChange}
+                                        value={scheduleTimeInterval}/></Grid>
                 <Grid item>{t('秒傳送一次')}</Grid>
               </Grid>
             </Grid>
             <Grid item>
-              <Button primary disabled={!isConnected} onClick={onEnableButtonClick}>
+              <Button primary disabled={!isConnected || !validTimeInterval} onClick={onEnableButtonClick}>
                 {scheduleEnabled ? t('停用') : t('啟用')}
               </Button>
             </Grid>
