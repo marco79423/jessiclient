@@ -10,14 +10,15 @@ const useStyles = makeStyles((theme) => ({
     padding: large ? theme.spacing(2) : undefined,
     width: large ? 500 : 300,
   }),
-  input: ({large}) => ({
+  input: ({large, error}) => ({
     fontSize: large ? '1.3rem' : '1rem',
     width: '100%',
+    color: error ? theme.project.elements.textField.errorTextColor : undefined
   }),
 }))
 
-export default function TextField({className, large, placeholder, value, onChange, disabled, readOnly, action}) {
-  const classes = useStyles({large})
+export default function TextField({className, large, placeholder, value, onChange, disabled, readOnly, error, action}) {
+  const classes = useStyles({large, error})
 
   const onValueChange = (e) => {
     onChange(e.target.value)
@@ -53,5 +54,6 @@ TextField.propTypes = {
   onChange: PropTypes.func,
   disabled: PropTypes.bool,
   readOnly: PropTypes.bool,
+  error: PropTypes.bool,
   action: PropTypes.node,
 }

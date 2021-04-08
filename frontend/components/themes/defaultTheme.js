@@ -31,6 +31,21 @@ export const colorTable = {
   'indigo-A400': '#3D5AFE',
   'indigo-A700': '#304FFE',
 
+  'red-50': '#FFEBEE',
+  'red-100': '#FFCDD2',
+  'red-200': '#EF9A9A',
+  'red-300': '#E57373',
+  'red-400': '#EF5350',
+  'red-500': '#F44336',
+  'red-600': '#E53935',
+  'red-700': '#D32F2F',
+  'red-800': '#C62828',
+  'red-900': '#B71C1C',
+  'red-A100': '#FF8A80',
+  'red-A200': '#FF5252',
+  'red-A400': '#FF1744',
+  'red-A700': '#D50000',
+
   'grey-50': '#FAFAFA',
   'grey-200': '#EEEEEE',
   'grey-300': '#E0E0E0',
@@ -38,7 +53,7 @@ export const colorTable = {
   'grey-500': '#9E9E9E',
   'grey-600': '#757575',
   'grey-700': '#616161',
-  'grey-900': '#212121'
+  'grey-900': '#212121',
 }
 
 const theme = createMuiTheme({
@@ -60,6 +75,10 @@ const theme = createMuiTheme({
       },
       listItem: {
         background: colorTable['grey-50'],
+      },
+
+      textField: {
+        errorTextColor: colorTable['red-A400']
       }
     },
     page: {

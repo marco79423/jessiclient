@@ -55,6 +55,8 @@ export default function ConnectionPanel({state, url, connect, disconnect}) {
     }
   }
 
+  const validWebsocketUrl = localUrl.length > 0 && (localUrl.startsWith('ws://') || localUrl.startsWith('wss://'))
+
   return (
     <TextField
       className={classes.root}
@@ -63,11 +65,12 @@ export default function ConnectionPanel({state, url, connect, disconnect}) {
       value={localUrl}
       onChange={onChange}
       disabled={state !== ConnectionState.Idle}
+      error={!validWebsocketUrl}
       action={
         <LinkButton
           primary
           large
-          disabled={state === ConnectionState.Connecting || state === ConnectionState.Closing}
+          disabled={(state === ConnectionState.Connecting || state === ConnectionState.Closing) || !validWebsocketUrl}
           onClick={onButtonClicked}
         >{buttonLabel}</LinkButton>
       }
