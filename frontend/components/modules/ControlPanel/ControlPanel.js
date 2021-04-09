@@ -2,9 +2,9 @@ import React from 'react'
 import {makeStyles} from '@material-ui/core/styles'
 import {Grid, Paper} from '@material-ui/core'
 
-import ConnectionPanelContainer from './ConnectionPanelContainer'
 import Copyright from '../../modules/ControlPanel/Copyright'
-import RequestPanelContainer from './RequestPanelContainer'
+import PropTypes from 'prop-types'
+import ConnectionPanel from './ConnectionPanel'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -23,8 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-
-export default function ControlPanel({appController}) {
+export default function ControlPanel({connectionPanel, requestPanel}) {
   const classes = useStyles()
 
   return (
@@ -38,10 +37,10 @@ export default function ControlPanel({appController}) {
       <Grid item>
         <Grid container direction="column">
           <Grid className={classes.connectionPanel} item>
-            <ConnectionPanelContainer appController={appController}/>
+            {connectionPanel}
           </Grid>
           <Grid className={classes.requestPanel} item>
-            <RequestPanelContainer appController={appController}/>
+            {requestPanel}
           </Grid>
         </Grid>
       </Grid>
@@ -50,4 +49,9 @@ export default function ControlPanel({appController}) {
       </Grid>
     </Grid>
   )
+}
+
+ConnectionPanel.propTypes = {
+  connectionPanel: PropTypes.node.isRequired,
+  requestPanel: PropTypes.node.isRequired,
 }
