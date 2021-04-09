@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react'
+import {useGA4React} from 'ga-4-react'
 import {useDispatch, useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
 
-import ControlBar from './ControlBar'
-import MessageList from './MessageList'
 import {getMessages, getSelectedMessageID} from '../../../selectors'
 import * as projectActions from '../../../slices/project'
 import * as currentActions from '../../../slices/current'
-import {useGA4React} from 'ga-4-react'
+import ControlBar from '../../modules/ListPanel/ControlBar'
+import MessageList from './MessageList'
 
 const useStyles = makeStyles((theme) => ({
   root: {

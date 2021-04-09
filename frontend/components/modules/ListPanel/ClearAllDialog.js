@@ -23,7 +23,7 @@ export default function ClearAllDialog({open, onClose, clearAllMessages}) {
       actions={
         <>
           <Button onClick={onClose}>{t('取消')}</Button>
-          <Button primary onClick={onClearAllButtonClick}>{t('清空')}</Button>
+          <Button primary onClick={onClearAllButtonClick}>{t('清空訊息')}</Button>
         </>
       }
     >

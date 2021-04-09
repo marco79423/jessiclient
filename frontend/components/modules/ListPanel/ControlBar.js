@@ -1,12 +1,10 @@
 import React, {useState} from 'react'
-import {useGA4React} from 'ga-4-react'
 import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
-import {Chip, Grid, Typography} from '@material-ui/core'
+import {Chip, Grid} from '@material-ui/core'
 
 import SearchField from '../../elements/SearchField'
 import Button from '../../elements/Button'
-import BasicDialog from '../../elements/BasicDialog'
 import ClearAllDialog from '../../modules/ListPanel/ClearAllDialog'
 
 
@@ -22,16 +20,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ControlBar({searchFilters, setSearchFilters, clearAllMessages}) {
   const classes = useStyles()
-   const {t} = useTranslation('common')
-  const ga4React = useGA4React()
+  const {t} = useTranslation('ListPanel')
   const [clearAllDialogOn, setClearAllDialog] = useState(false)
 
-  const onSearchButtonClicked = (value) => {
-    setSearchFilters([...searchFilters, value])
-    ga4React.gtag('event', 'search', {value})
+  const onSearchButtonClick = (searchFilter) => {
+    setSearchFilters([...searchFilters, searchFilter])
   }
 
-  const onClearButtonClicked = (targetSearchFilter) => {
+  const onClearButtonClick = (targetSearchFilter) => {
     setSearchFilters(searchFilters.filter(searchFilter => searchFilter !== targetSearchFilter))
   }
 
@@ -50,7 +46,7 @@ export default function ControlBar({searchFilters, setSearchFilters, clearAllMes
           <Grid item>
             <SearchField
               placeholder={t('搜尋訊息')}
-              onSearch={onSearchButtonClicked}
+              onSearch={onSearchButtonClick}
               buttonLabel={t('搜尋')}
             />
           </Grid>
@@ -58,7 +54,7 @@ export default function ControlBar({searchFilters, setSearchFilters, clearAllMes
             <Grid key={searchFilter} item>
               <Chip
                 label={searchFilter}
-                onDelete={() => onClearButtonClicked(searchFilter)}
+                onDelete={() => onClearButtonClick(searchFilter)}
               />
             </Grid>
           ))}
@@ -72,7 +68,7 @@ export default function ControlBar({searchFilters, setSearchFilters, clearAllMes
         <ClearAllDialog
           open={clearAllDialogOn}
           onClose={hideClearAllDialog}
-          confirm={clearAllMessages}
+          clearAllMessages={clearAllMessages}
         />
       </Grid>
     </Grid>
