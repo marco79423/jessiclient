@@ -1,12 +1,13 @@
-import {useGA4React} from 'ga-4-react'
 import React, {useState} from 'react'
+import {useGA4React} from 'ga-4-react'
+import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
 import {Chip, Grid, Typography} from '@material-ui/core'
 
 import SearchField from '../../elements/SearchField'
 import Button from '../../elements/Button'
 import BasicDialog from '../../elements/BasicDialog'
-import {useTranslation} from 'next-i18next'
+import ClearAllDialog from '../../modules/ListPanel/ClearAllDialog'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -67,32 +68,13 @@ export default function ControlBar({searchFilters, setSearchFilters, clearAllMes
         <Button onClick={showClearAllDialog}>
           {t('清空訊息')}
         </Button>
-        <ClearAllDialog open={clearAllDialogOn} onClose={hideClearAllDialog} confirm={clearAllMessages}/>
+
+        <ClearAllDialog
+          open={clearAllDialogOn}
+          onClose={hideClearAllDialog}
+          confirm={clearAllMessages}
+        />
       </Grid>
     </Grid>
-  )
-}
-
-function ClearAllDialog({open, onClose, confirm}) {
-  const ga4React = useGA4React()
-
-  const clearAllMessages = () => {
-    confirm()
-    onClose()
-    ga4React.gtag('event', 'clear_messages')
-  }
-
-  return (
-    <BasicDialog title={'確定刪除嗎？'}
-                 open={open}
-                 onClose={onClose}
-                 actions={
-                   <>
-                     <Button onClick={onClose}>取消</Button>
-                     <Button primary onClick={clearAllMessages}>刪除</Button>
-                   </>
-                 }>
-      <Typography>刪除的訊息將不再能恢復</Typography>
-    </BasicDialog>
   )
 }

@@ -7,6 +7,7 @@ import MessageList from './MessageList'
 import {getMessages, getSelectedMessageID} from '../../../selectors'
 import * as projectActions from '../../../slices/project'
 import * as currentActions from '../../../slices/current'
+import {useGA4React} from 'ga-4-react'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ListPanel() {
   const classes = useStyles()
+  const ga4React = useGA4React()
   const dispatch = useDispatch()
   const messages = useSelector(getMessages)
   const selectedMessageID = useSelector(getSelectedMessageID)
@@ -36,6 +38,7 @@ export default function ListPanel() {
     dispatch(projectActions.clearMessages())
     dispatch(currentActions.setSelectedMessageID(null))
     setSearchFilters([])
+    ga4React.gtag('event', 'clear_messages')
   }
 
   return (
