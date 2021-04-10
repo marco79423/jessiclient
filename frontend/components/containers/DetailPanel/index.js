@@ -1,3 +1,3 @@
-import DetailPanel from './DetailPanel'
+import DetailPanelContainer from './DetailPanelContainer'
 
-export default DetailPanel
+export default DetailPanelContainer

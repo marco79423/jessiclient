@@ -7,7 +7,7 @@ import DefaultLayout from './layouts/DefaultLayout'
 import ToolbarContainer from './containers/ToolbarContainer'
 import ControlPanelContainer from './containers/ControlPanelContainer'
 import ListPanelContainer from './containers/ListPanelContainer'
-import DetailPanel from './containers/DetailPanel'
+import DetailPanelContainer from './containers/DetailPanel'
 
 export default function Application({appController}) {
   const projectState = useSelector(getProjectState)
@@ -20,7 +20,7 @@ export default function Application({appController}) {
       toolbar={<ToolbarContainer appController={appController}/>}
       controlPanel={<ControlPanelContainer appController={appController}/>}
       listPanel={<ListPanelContainer appController={appController}/>}
-      detailPanel={<DetailPanel appController={appController}/>}
+      detailPanel={<DetailPanelContainer appController={appController}/>}
     />
   )
 }

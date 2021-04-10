@@ -1,12 +1,9 @@
 import React, {useEffect, useState} from 'react'
-import {useSelector} from 'react-redux'
-import classNames from 'classnames'
 import {makeStyles} from '@material-ui/core/styles'
 import {InputBase, Paper, Tab, Tabs, Toolbar} from '@material-ui/core'
 import {TabContext, TabPanel} from '@material-ui/lab'
 import ReactJson from 'react-json-view'
-
-import {getMessage} from '../../../selectors'
+import {useTranslation} from 'next-i18next'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,61 +32,61 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function DetailPanel({className}) {
-  const classes = useStyles()
-  const [tabValue, setTabValue] = useState('plain-text')
-  const [jsonData, setJsonData] = useState(null)
+const PanelTab = Object.freeze({
+  PlainText: 'plain-text',
+  JSON: 'json',
+})
 
-  const message = useSelector(getMessage)
+export default function DetailPanel({message}) {
+  const classes = useStyles()
+  const {t} = useTranslation('DetailPanel')
+  const [tabValue, setTabValue] = useState(PanelTab.PlainText)
+
+  const [messageJsonData, setMessageJsonData] = useState(null)
+  const [messageText, setMessageText] = useState('')
 
   useEffect(() => {
     try {
-      setJsonData(JSON.parse(message.body))
-      setTabValue('json')
+      setMessageJsonData(JSON.parse(message.body))
+      setTabValue(PanelTab.JSON)
     } catch (_) {
-      setJsonData(null)
-      setTabValue('plain-text')
+      setMessageJsonData(null)
+      setTabValue(PanelTab.PlainText)
     }
   }, [message])
 
-
-  if (!message) {
-    return (
-      <div className={classNames(classes.root, className)}>
-      </div>
-    )
-  }
+  useEffect(() => {
+    if (message) {
+      setMessageText(message.body)
+    }
+  }, [message])
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue)
   }
 
   return (
-    <div className={classNames(classes.root, className)}>
-
+    <div className={classes.root}>
       <Paper className={classes.dataSection} square>
         <TabContext value={tabValue}>
-          <TabPanel value="plain-text">
+          <TabPanel value={PanelTab.PlainText}>
             <InputBase
               autoFocus
               readOnly
               fullWidth
               multiline
-              value={message.body}
+              value={messageText}
             />
           </TabPanel>
-          <TabPanel value="json">
-            <ReactJson
-              src={jsonData}
-              indentWidth={2}
-            />
+          <TabPanel value={PanelTab.JSON}>
+            <ReactJson src={messageJsonData} indentWidth={2}/>
           </TabPanel>
         </TabContext>
       </Paper>
       <Toolbar className={classes.controlBar}>
         <Tabs value={tabValue} onChange={handleTabChange}>
-          <Tab className={classes.tab} label="純文字" value="plain-text"/>
-          <Tab className={classes.tab} label="JSON" value="json" disabled={jsonData === null}/>
+          <Tab className={classes.tab} label={t('純文字')} value={PanelTab.PlainText}/>
+          <Tab className={classes.tab} label={t('JSON')} value={PanelTab.JSON} disabled={messageJsonData === null}/>
         </Tabs>
       </Toolbar>
     </div>
