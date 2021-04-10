@@ -5,29 +5,31 @@ import {Tab, Tabs} from '@material-ui/core'
 import {TabContext, TabPanel} from '@material-ui/lab'
 import {useTranslation} from 'next-i18next'
 import {useDispatch, useSelector} from 'react-redux'
+
 import {
-  getAppliedFavoriteRequest,
   getConnectionState,
+  getFavoriteRequests,
   getRequestBody,
   getScheduleEnabledStatus,
   getScheduleTimeInterval
 } from '../../../selectors'
-import {
-  changeScheduleEnabledStatus,
-  clearAppliedFavoriteRequestID,
-  setAppliedFavoriteRequestID
-} from '../../../slices/current'
+import {changeScheduleEnabledStatus,} from '../../../slices/current'
 import generateRandomString from '../../../utils/generateRandomString'
-import {addFavoriteRequest, changeRequestBody, changeScheduleTimeInterval} from '../../../slices/project'
+import {
+  addFavoriteRequest,
+  changeRequestBody,
+  changeScheduleTimeInterval,
+  removeFavoriteRequest,
+  updateFavoriteRequest
+} from '../../../slices/project'
 import {ConnectionState} from '../../../constants'
 import ScheduleRequestPanel from '../../modules/ControlPanel/ScheduleRequestPanel'
 import BasicRequestPanel from '../../modules/ControlPanel/BasicRequestPanel'
-import FavoriteRequestDialogContainer from './FavoriteRequestDialogContainer'
+import FavoriteRequestDialog from '../../modules/ControlPanel/FavoriteRequestDialog'
 
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-  },
+  root: {},
   tab: {
     background: theme.project.page.main.controlPanel.requestPanel.tab,
     fontSize: '1rem',
@@ -51,10 +53,11 @@ export default function RequestPanelContainer({appController}) {
   const {t} = useTranslation('ControlPanel')
   const connectionState = useSelector(getConnectionState)
   const requestBody = useSelector(getRequestBody)
-  const appliedFavoriteRequest = useSelector(getAppliedFavoriteRequest)
   const scheduleEnabled = useSelector(getScheduleEnabledStatus)
   const timeInterval = useSelector(getScheduleTimeInterval)
+  const favoriteRequests = useSelector(getFavoriteRequests)
   const [tabValue, setTabValue] = useState('basic')
+  const [favoriteRequestID, setFavoriteRequestID] = useState(null)
   const [favoriteRequestDialogOpen, setFavoriteRequestDialog] = useState(false)
   const [localRequestBody, setLocalRequestBody] = useState('')
   const [localScheduleTimeInterval, setLocalTimeInterval] = useState(3)
@@ -74,29 +77,14 @@ export default function RequestPanelContainer({appController}) {
 
   const onRequestBodyChange = (value) => {
     setLocalRequestBody(value)
-    dispatch(clearAppliedFavoriteRequestID())
+    setFavoriteRequestID(null)
   }
 
   const onScheduleTimeIntervalChange = (e) => {
     dispatch(changeScheduleTimeInterval(e.target.value))
   }
 
-  const onAppliedFavoriteRequestButtonClick = () => {
-    if (appliedFavoriteRequest) {
-      dispatch(clearAppliedFavoriteRequestID(appliedFavoriteRequest.id))
-    } else {
-      const favoriteRequest = {
-        id: generateRandomString(),
-        name: new Date().toLocaleString(),
-        body: localRequestBody,
-      }
-      dispatch(addFavoriteRequest(favoriteRequest))
-      dispatch(setAppliedFavoriteRequestID(favoriteRequest.id))
-      ga4React.gtag('event', 'add_favorite_message')
-    }
-  }
-
-  const onSendButtonClick = async () => {
+  const onSendMessage = async () => {
     dispatch(changeRequestBody(localRequestBody))
     try {
       await appController.sendMessage(localRequestBody)
@@ -104,6 +92,22 @@ export default function RequestPanelContainer({appController}) {
       console.log(e)
       appController.throwError(t('訊息傳送失敗'))
     }
+  }
+
+  const onFavoriteRequestSet = () => {
+    const favoriteRequest = {
+      id: generateRandomString(),
+      name: new Date().toLocaleString(),
+      body: localRequestBody,
+    }
+    dispatch(addFavoriteRequest(favoriteRequest))
+    setFavoriteRequestID(favoriteRequest.id)
+    ga4React.gtag('event', 'add_favorite_message')
+  }
+
+  const onFavoriteRequestUnset = () => {
+    dispatch(removeFavoriteRequest(favoriteRequestID))
+    setFavoriteRequestID(null)
   }
 
   const onEnableButtonClicked = async () => {
@@ -127,6 +131,22 @@ export default function RequestPanelContainer({appController}) {
     setFavoriteRequestDialog(false)
   }
 
+  const onRemoveFavoriteRequest = (id) => {
+    if (id === favoriteRequestID) {
+      setFavoriteRequestID(null)
+    }
+    dispatch(removeFavoriteRequest(id))
+  }
+
+  const onApplyFavoriteRequest = (favoriteRequest) => {
+    setFavoriteRequestID(favoriteRequest.id)
+    dispatch(changeRequestBody(favoriteRequest.body))
+  }
+
+  const onUpdateFavoriteRequest = async ({id, changes}) => {
+    dispatch(updateFavoriteRequest({id, changes}))
+  }
+
   return (
     <div className={classes.root}>
       <Tabs indicatorColor="secondary" value={tabValue} onChange={handleTabChange}>
@@ -138,34 +158,42 @@ export default function RequestPanelContainer({appController}) {
           <BasicRequestPanel
             isConnected={connectionState === ConnectionState.Connected}
             requestBody={localRequestBody}
-            isFavoriteRequest={!!appliedFavoriteRequest}
+            favoriteRequestID={favoriteRequestID}
             onRequestBodyChange={onRequestBodyChange}
             onShowFavoriteRequestsClick={showFavoriteRequestDialog}
-            onAppliedFavoriteRequestClick={onAppliedFavoriteRequestButtonClick}
-            onSendButtonClick={onSendButtonClick}
+            onFavoriteRequestSet={onFavoriteRequestSet}
+            onFavoriteRequestUnset={onFavoriteRequestUnset}
+            onSendButtonClick={onSendMessage}
           />
         </TabPanel>
         <TabPanel className={classes.tabPanel} value="schedule">
           <ScheduleRequestPanel
             isConnected={connectionState === ConnectionState.Connected}
             scheduleTimeInterval={localScheduleTimeInterval}
-            isFavoriteRequest={!!appliedFavoriteRequest}
+            favoriteRequestID={favoriteRequestID}
             scheduleEnabled={scheduleEnabled}
             requestBody={localRequestBody}
             onRequestBodyChange={onRequestBodyChange}
             onScheduleTimeIntervalChange={onScheduleTimeIntervalChange}
             onShowFavoriteRequestsClick={showFavoriteRequestDialog}
-            onAppliedFavoriteRequestClick={onAppliedFavoriteRequestButtonClick}
+            onFavoriteRequestSet={onFavoriteRequestSet}
+            onFavoriteRequestUnset={onFavoriteRequestUnset}
             onEnableButtonClick={onEnableButtonClicked}
           />
         </TabPanel>
       </TabContext>
 
-      <FavoriteRequestDialogContainer
-        appController={appController}
+      <FavoriteRequestDialog
         open={favoriteRequestDialogOpen}
         onClose={hideFavoriteRequestDialog}
+        connectionState={connectionState}
+        favoriteRequests={favoriteRequests}
+        onRemove={onRemoveFavoriteRequest}
+        onApply={onApplyFavoriteRequest}
+        onSend={onSendMessage}
+        onUpdate={onUpdateFavoriteRequest}
       />
+
     </div>
   )
 }

@@ -24,19 +24,28 @@ const useStyles = makeStyles((theme) => ({
 export default function ScheduleRequestPanel({
                                                isConnected,
                                                scheduleTimeInterval,
-                                               isFavoriteRequest,
+                                               favoriteRequestID,
                                                scheduleEnabled,
                                                requestBody,
                                                onRequestBodyChange,
                                                onScheduleTimeIntervalChange,
                                                onShowFavoriteRequestsClick,
-                                               onAppliedFavoriteRequestClick,
+                                               onFavoriteRequestSet,
+                                               onFavoriteRequestUnset,
                                                onEnableButtonClick,
                                              }) {
   const classes = useStyles()
   const {t} = useTranslation('ControlPanel')
 
   const validTimeInterval = +scheduleTimeInterval > 0
+
+  const onSetFavoriteRequestButtonClick = () => {
+    if (favoriteRequestID) {
+      onFavoriteRequestUnset()
+    } else {
+      onFavoriteRequestSet()
+    }
+  }
 
   return (
     <Paper className={classes.root}>
@@ -53,8 +62,8 @@ export default function ScheduleRequestPanel({
       />
       <Grid className={classes.bottomActions} container alignItems="center" justify="space-between">
         <Grid item>
-          <Button disabled={scheduleEnabled} onClick={onAppliedFavoriteRequestClick}>
-            {isFavoriteRequest ? t('取消常用') : t('設為常用')}
+          <Button disabled={scheduleEnabled} onClick={onSetFavoriteRequestButtonClick}>
+            {favoriteRequestID ? t('取消常用') : t('設為常用')}
           </Button>
         </Grid>
         <Grid item>
@@ -84,11 +93,12 @@ ScheduleRequestPanel.propTypes = {
   isConnected: PropTypes.bool.isRequired,
   scheduleTimeInterval: PropTypes.number.isRequired,
   requestBody: PropTypes.string.isRequired,
-  isFavoriteRequest: PropTypes.bool.isRequired,
+  favoriteRequestID: PropTypes.string,
   scheduleEnabled: PropTypes.bool.isRequired,
   onRequestBodyChange: PropTypes.func.isRequired,
   onScheduleTimeIntervalChange: PropTypes.func.isRequired,
   onShowFavoriteRequestsClick: PropTypes.func.isRequired,
-  onAppliedFavoriteRequestButtonClick: PropTypes.func.isRequired,
+  onFavoriteRequestSet: PropTypes.func.isRequired,
+  onFavoriteRequestUnset: PropTypes.func.isRequired,
   onEnableButtonClick: PropTypes.func.isRequired,
 }

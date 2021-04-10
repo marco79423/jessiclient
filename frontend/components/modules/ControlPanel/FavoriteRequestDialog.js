@@ -22,6 +22,7 @@ export default function FavoriteRequestDialog({
       <Grid container spacing={2} justify="center">
         {favoriteRequests.map(favoriteRequest => (
           <FavoriteRequestItem
+            key={favoriteRequest.id}
             connectionState={connectionState}
             favoriteRequest={favoriteRequest}
             onRemove={onRemove}

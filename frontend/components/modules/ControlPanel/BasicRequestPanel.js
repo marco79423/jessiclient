@@ -5,6 +5,8 @@ import {Grid, makeStyles, Paper} from '@material-ui/core'
 
 import Button from '../../elements/Button'
 import TextArea from '../../elements/TextArea'
+import generateRandomString from '../../../utils/generateRandomString'
+import {addFavoriteRequest} from '../../../slices/project'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,14 +24,23 @@ const useStyles = makeStyles((theme) => ({
 export default function BasicRequestPanel({
                                             isConnected,
                                             requestBody,
-                                            isFavoriteRequest,
+                                            favoriteRequestID,
                                             onRequestBodyChange,
                                             onShowFavoriteRequestsClick,
-                                            onAppliedFavoriteRequestClick,
+                                            onFavoriteRequestSet,
+                                            onFavoriteRequestUnset,
                                             onSendButtonClick
                                           }) {
   const classes = useStyles()
   const {t} = useTranslation('ControlPanel')
+
+  const onSetFavoriteRequestButtonClick = () => {
+    if (favoriteRequestID) {
+      onFavoriteRequestUnset()
+    } else {
+      onFavoriteRequestSet()
+    }
+  }
 
   return (
     <Paper className={classes.root}>
@@ -46,7 +57,7 @@ export default function BasicRequestPanel({
       />
       <Grid className={classes.bottomActions} container justify="space-between">
         <Grid item>
-          <Button onClick={onAppliedFavoriteRequestClick}>{isFavoriteRequest ? t('取消常用') : t('設為常用')}</Button>
+          <Button onClick={onSetFavoriteRequestButtonClick}>{favoriteRequestID ? t('取消常用') : t('設為常用')}</Button>
         </Grid>
         <Grid item>
           <Button primary disabled={!isConnected} onClick={onSendButtonClick}>{t('送出')}</Button>
@@ -59,9 +70,10 @@ export default function BasicRequestPanel({
 BasicRequestPanel.propTypes = {
   isConnected: PropTypes.bool.isRequired,
   requestBody: PropTypes.string.isRequired,
-  isFavoriteRequest: PropTypes.bool.isRequired,
+  favoriteRequestID: PropTypes.string,
   onRequestBodyChange: PropTypes.func.isRequired,
   onShowFavoriteRequestsClick: PropTypes.func.isRequired,
-  onAppliedFavoriteRequestButtonClick: PropTypes.func.isRequired,
+  onFavoriteRequestSet: PropTypes.func.isRequired,
+  onFavoriteRequestUnset: PropTypes.func.isRequired,
   onSendButtonClick: PropTypes.func.isRequired,
 }

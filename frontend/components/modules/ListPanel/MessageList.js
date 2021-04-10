@@ -50,7 +50,7 @@ MessageList.propTypes = {
     source: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
   })).isRequired,
-  selectedMessageID: PropTypes.string.isRequired,
+  selectedMessageID: PropTypes.string,
   onSelectedMessageChange: PropTypes.func.isRequired,
 }
 

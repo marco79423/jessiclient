@@ -27,13 +27,6 @@ export const getScheduleTimeInterval = state => state.project.schedule.timeInter
 
 const favoriteRequestSelectors = favoriteRequestAdapter.getSelectors(state => state.project.favoriteRequest)
 export const getFavoriteRequests = state => favoriteRequestSelectors.selectAll(state)
-export const getAppliedFavoriteRequest = createDraftSafeSelector(
-  [
-    getAppliedFavoriteRequestID,
-    state => id => favoriteRequestSelectors.selectById(state, id),
-  ],
-  (appliedFavoriteRequestID, favoriteRequestFunc) => favoriteRequestFunc(appliedFavoriteRequestID),
-)
 
 const messageSelectors = messageAdapter.getSelectors(state => state.project.message)
 export const getMessageCount = state => messageSelectors.selectTotal(state)
