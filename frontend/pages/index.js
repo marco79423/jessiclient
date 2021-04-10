@@ -6,7 +6,13 @@ import AppController from '../components/controllers/AppController'
 
 export const getStaticProps = async ({locale}) => ({
   props: {
-    ...await serverSideTranslations(locale, ['common', 'Toolbar', 'ControlPanel', 'ListPanel']),
+    ...await serverSideTranslations(locale, [
+      'common',
+      'Toolbar',
+      'ControlPanel',
+      'ListPanel',
+      'DetailPanel',
+    ]),
   }
 })
 
