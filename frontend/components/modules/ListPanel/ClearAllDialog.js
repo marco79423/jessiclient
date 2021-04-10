@@ -7,11 +7,11 @@ import BasicDialog from '../../elements/BasicDialog'
 import Button from '../../elements/Button'
 
 
-export default function ClearAllDialog({open, onClose, clearAllMessages}) {
+export default function ClearAllDialog({open, onClose, onClearAll}) {
   const {t} = useTranslation('ListPanel')
 
   const onClearAllButtonClick = () => {
-    clearAllMessages()
+    onClearAll()
     onClose()
   }
 
@@ -35,5 +35,5 @@ export default function ClearAllDialog({open, onClose, clearAllMessages}) {
 ClearAllDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  clearAllMessages: PropTypes.func.isRequired,
+  onClearAll: PropTypes.func.isRequired,
 }

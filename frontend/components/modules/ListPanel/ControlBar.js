@@ -6,6 +6,7 @@ import {Chip, Grid} from '@material-ui/core'
 import SearchField from '../../elements/SearchField'
 import Button from '../../elements/Button'
 import ClearAllDialog from '../../modules/ListPanel/ClearAllDialog'
+import PropTypes from 'prop-types'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -18,17 +19,17 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-export default function ControlBar({searchFilters, setSearchFilters, clearAllMessages}) {
+export default function ControlBar({searchFilters, onSearchFilterChange, onClearAll}) {
   const classes = useStyles()
   const {t} = useTranslation('ListPanel')
   const [clearAllDialogOn, setClearAllDialog] = useState(false)
 
   const onSearchButtonClick = (searchFilter) => {
-    setSearchFilters([...searchFilters, searchFilter])
+    onSearchFilterChange([...searchFilters, searchFilter])
   }
 
   const onClearButtonClick = (targetSearchFilter) => {
-    setSearchFilters(searchFilters.filter(searchFilter => searchFilter !== targetSearchFilter))
+    onSearchFilterChange(searchFilters.filter(searchFilter => searchFilter !== targetSearchFilter))
   }
 
   const showClearAllDialog = () => {
@@ -68,9 +69,15 @@ export default function ControlBar({searchFilters, setSearchFilters, clearAllMes
         <ClearAllDialog
           open={clearAllDialogOn}
           onClose={hideClearAllDialog}
-          clearAllMessages={clearAllMessages}
+          onClearAll={onClearAll}
         />
       </Grid>
     </Grid>
   )
+}
+
+ControlBar.propTypes = {
+  searchFilters: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onSearchFilterChange: PropTypes.func.isRequired,
+  onClearAll: PropTypes.func.isRequired,
 }

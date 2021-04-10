@@ -5,5 +5,8 @@
 
   "確定清空訊息嗎？": "Are you sure?",
   "取消": "Cancel",
-  "清空的訊息將不再能恢復": "Cleared messages is not recoverable"
+  "清空的訊息將不再能恢復": "Cleared messages is not recoverable",
+
+  "服務端": "Server",
+  "客戶端": "Client"
 }

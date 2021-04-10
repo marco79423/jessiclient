@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react'
-import {useGA4React} from 'ga-4-react'
 import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
 
 import {MessageSource} from '../../../constants'
 import List from '../../elements/List'
 import ListItem from '../../elements/ListItem'
+import PropTypes from 'prop-types'
 
 const useStyles = makeStyles((theme) => ({
   messageTitle: {
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-export default function MessageList({messages, selectedMessageID, setSelectedMessageID}) {
+export default function MessageList({messages, selectedMessageID, onSelectedMessageChange}) {
   const [height, setHeight] = useState(0)
 
   useEffect(() => {
@@ -33,27 +33,39 @@ export default function MessageList({messages, selectedMessageID, setSelectedMes
   return (
     <List height={height}>
       {messages.map(message => (
-        <Message message={message}
-                 selectedMessageID={selectedMessageID}
-                 setSelectedMessageID={setSelectedMessageID}/>
+        <Message
+          message={message}
+          selectedMessageID={selectedMessageID}
+          onSelectedMessageChange={onSelectedMessageChange}
+        />
       ))}
     </List>
   )
 }
 
-function Message({message, selectedMessageID, setSelectedMessageID}) {
-  const {t} = useTranslation('common')
+MessageList.propTypes = {
+  messages: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    time: PropTypes.string.isRequired,
+    source: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+  })).isRequired,
+  selectedMessageID: PropTypes.string.isRequired,
+  onSelectedMessageChange: PropTypes.func.isRequired,
+}
+
+
+function Message({message, selectedMessageID, onSelectedMessageChange}) {
+  const {t} = useTranslation('ListPanel')
   const fromClient = message.source === MessageSource.Client
   const classes = useStyles({fromClient})
-  const ga4React = useGA4React()
   const selected = message.id === selectedMessageID
 
   const onSelected = () => {
     if (selected) {
-      setSelectedMessageID(null)
+      onSelectedMessageChange(null)
     } else {
-      setSelectedMessageID(message.id)
-      ga4React.gtag('event', 'select_message')
+      onSelectedMessageChange(message.id)
     }
   }
 

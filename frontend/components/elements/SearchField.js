@@ -28,7 +28,7 @@ export default function SearchField({placeholder, defaultValue, onSearch, button
       value={value}
       onChange={onValueChange}
       action={
-        <LinkButton onClick={onButtonClicked}>{buttonLabel}</LinkButton>
+        <LinkButton disabled={!value} onClick={onButtonClicked}>{buttonLabel}</LinkButton>
       }
     />
   )
