@@ -45,6 +45,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+const PanelTab = Object.freeze({
+  Basic: 'basic',
+  Schedule: 'schedule',
+})
 
 export default function RequestPanelContainer({appController}) {
   const classes = useStyles()
@@ -56,7 +60,7 @@ export default function RequestPanelContainer({appController}) {
   const scheduleEnabled = useSelector(getScheduleEnabledStatus)
   const timeInterval = useSelector(getScheduleTimeInterval)
   const favoriteRequests = useSelector(getFavoriteRequests)
-  const [tabValue, setTabValue] = useState('basic')
+  const [tabValue, setTabValue] = useState(PanelTab.Basic)
   const [favoriteRequestID, setFavoriteRequestID] = useState(null)
   const [favoriteRequestDialogOpen, setFavoriteRequestDialog] = useState(false)
   const [localRequestBody, setLocalRequestBody] = useState('')
@@ -150,11 +154,11 @@ export default function RequestPanelContainer({appController}) {
   return (
     <div className={classes.root}>
       <Tabs indicatorColor="secondary" value={tabValue} onChange={handleTabChange}>
-        <Tab className={classes.tab} label={t('基本')} value="basic"/>
-        <Tab className={classes.tab} label={t('排程')} value="schedule"/>
+        <Tab className={classes.tab} label={t('基本')} value={PanelTab.Basic}/>
+        <Tab className={classes.tab} label={t('排程')} value={PanelTab.Schedule}/>
       </Tabs>
       <TabContext value={tabValue}>
-        <TabPanel className={classes.tabPanel} value="basic">
+        <TabPanel className={classes.tabPanel} value={PanelTab.Basic}>
           <BasicRequestPanel
             isConnected={connectionState === ConnectionState.Connected}
             requestBody={localRequestBody}
@@ -166,7 +170,7 @@ export default function RequestPanelContainer({appController}) {
             onSendButtonClick={onSendMessage}
           />
         </TabPanel>
-        <TabPanel className={classes.tabPanel} value="schedule">
+        <TabPanel className={classes.tabPanel} value={PanelTab.Schedule}>
           <ScheduleRequestPanel
             isConnected={connectionState === ConnectionState.Connected}
             scheduleTimeInterval={localScheduleTimeInterval}
