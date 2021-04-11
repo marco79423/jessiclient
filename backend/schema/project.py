@@ -37,7 +37,6 @@ class ProjectRequestDataModel(pydantic.BaseModel):
 
 class ProjectScheduleDataModel(pydantic.BaseModel):
     time_interval: pydantic.conint(ge=1)
-    request: ProjectRequestDataModel
 
     class Config:
         alias_generator = to_camel
