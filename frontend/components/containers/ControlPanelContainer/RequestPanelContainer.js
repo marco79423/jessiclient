@@ -63,29 +63,23 @@ export default function RequestPanelContainer({appController}) {
   const [tabValue, setTabValue] = useState(PanelTab.Basic)
   const [favoriteRequestID, setFavoriteRequestID] = useState(null)
   const [favoriteRequestDialogOpen, setFavoriteRequestDialog] = useState(false)
-  const [localRequestBody, setLocalRequestBody] = useState('')
-  const [localScheduleTimeInterval, setLocalTimeInterval] = useState(3)
+  const [localRequestBody, setLocalRequestBody] = useState(requestBody)
+  const [localScheduleTimeInterval, setLocalTimeInterval] = useState(timeInterval)
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue)
     ga4React.gtag('event', 'change_tag', {value: newValue})
   }
 
-  useEffect(() => {
-    setLocalRequestBody(requestBody)
-  }, [requestBody])
-
-  useEffect(() => {
-    setLocalTimeInterval(timeInterval)
-  }, [timeInterval])
-
   const onRequestBodyChange = (value) => {
     setLocalRequestBody(value)
+    dispatch(changeRequestBody(localRequestBody))
     setFavoriteRequestID(null)
   }
 
-  const onScheduleTimeIntervalChange = (e) => {
-    dispatch(changeScheduleTimeInterval(e.target.value))
+  const onScheduleTimeIntervalChange = (timeInterval) => {
+    setLocalTimeInterval(+timeInterval)
+    dispatch(changeScheduleTimeInterval(+localScheduleTimeInterval))
   }
 
   const onSendMessage = async () => {
@@ -119,8 +113,6 @@ export default function RequestPanelContainer({appController}) {
       await appController.disableScheduler()
       await dispatch(changeScheduleEnabledStatus(false))
     } else {
-      await dispatch(changeRequestBody(localRequestBody))
-      await dispatch(changeScheduleTimeInterval(+localScheduleTimeInterval))
       await appController.enableScheduler(localRequestBody, +localScheduleTimeInterval)
       dispatch(changeScheduleEnabledStatus(true))
     }
@@ -145,6 +137,7 @@ export default function RequestPanelContainer({appController}) {
   const onApplyFavoriteRequest = (favoriteRequest) => {
     setFavoriteRequestID(favoriteRequest.id)
     dispatch(changeRequestBody(favoriteRequest.body))
+    setLocalRequestBody(favoriteRequest.body)
   }
 
   const onUpdateFavoriteRequest = async ({id, changes}) => {

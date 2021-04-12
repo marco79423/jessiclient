@@ -13,13 +13,17 @@ const useStyles = makeStyles((theme) => ({
 export default function NumberField({className, value, onChange, disabled, error}) {
   const classes = useStyles()
 
+  const onValueChange = (e) => {
+    onChange(e.target.value)
+  }
+
   return (
     <TextField className={`${classes.root} ${className}`}
                inputProps={{min: 0, style: {textAlign: 'center'}}}
                type="number"
                disabled={disabled}
                error={error}
-               onChange={onChange}
+               onChange={onValueChange}
                value={value}/>
   )
 }
