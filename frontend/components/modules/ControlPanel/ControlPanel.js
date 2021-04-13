@@ -1,10 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {makeStyles} from '@material-ui/core/styles'
 import {Grid, Paper} from '@material-ui/core'
 
 import Copyright from '../../modules/ControlPanel/Copyright'
-import PropTypes from 'prop-types'
-import ConnectionPanel from './ConnectionPanel'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -51,7 +50,7 @@ export default function ControlPanel({connectionPanel, requestPanel}) {
   )
 }
 
-ConnectionPanel.propTypes = {
-  connectionPanel: PropTypes.node.isRequired,
-  requestPanel: PropTypes.node.isRequired,
+ControlPanel.propTypes = {
+  connectionPanel: PropTypes.element.isRequired,
+  requestPanel: PropTypes.element.isRequired,
 }

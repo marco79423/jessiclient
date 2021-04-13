@@ -34,6 +34,7 @@ export default function MessageList({messages, selectedMessageID, onSelectedMess
     <List height={height}>
       {messages.map(message => (
         <Message
+          key={message.id}
           message={message}
           selectedMessageID={selectedMessageID}
           onSelectedMessageChange={onSelectedMessageChange}
@@ -80,7 +81,6 @@ function Message({message, selectedMessageID, onSelectedMessageChange}) {
 
   return (
     <ListItem
-      key={message.id}
       selected={selected}
       title={<MessageTitle message={message}/>}
       onClick={onSelected}>

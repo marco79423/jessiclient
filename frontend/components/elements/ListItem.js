@@ -35,6 +35,6 @@ ListItem.propTypes = {
   key: PropTypes.string,
   selected: PropTypes.bool,
   onClick: PropTypes.func,
-  title: PropTypes.string,
+  title: PropTypes.node,
   children: PropTypes.node,
 }

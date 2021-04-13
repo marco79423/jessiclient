@@ -44,11 +44,11 @@ FavoriteRequestDialog.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
-    onRemove: PropTypes.func.isRequired,
-    onApply: PropTypes.func.isRequired,
-    onSend: PropTypes.func.isRequired,
-    onUpdate: PropTypes.func.isRequired,
   })).isRequired,
+  onRemove: PropTypes.func.isRequired,
+  onApply: PropTypes.func.isRequired,
+  onSend: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired,
 }
 
 function FavoriteRequestItem({connectionState, favoriteRequest, onRemove, onApply, onSend, onUpdate}) {
@@ -99,4 +99,17 @@ function FavoriteRequestItem({connectionState, favoriteRequest, onRemove, onAppl
       />
     </Grid>
   )
+}
+
+FavoriteRequestItem.propTypes = {
+  connectionState: PropTypes.string.isRequired,
+  favoriteRequest: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+  }).isRequired,
+  onRemove: PropTypes.func.isRequired,
+  onApply: PropTypes.func.isRequired,
+  onSend: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired,
 }

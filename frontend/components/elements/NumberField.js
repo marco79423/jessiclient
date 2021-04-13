@@ -28,9 +28,9 @@ export default function NumberField({className, value, onChange, disabled, error
   )
 }
 
-TextField.propTypes = {
+NumberField.propTypes = {
   className: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.number,
   onChange: PropTypes.func,
   disabled: PropTypes.bool,
   error: PropTypes.bool,
