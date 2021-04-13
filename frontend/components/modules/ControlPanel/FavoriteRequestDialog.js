@@ -2,16 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {useTranslation} from 'next-i18next'
 import {Grid} from '@material-ui/core'
-
-import {ConnectionState} from '../../../constants'
 import BasicDialog from '../../elements/BasicDialog'
 import Button from '../../elements/Button'
 import EditableCard from '../../elements/EditableCard'
 
 
 export default function FavoriteRequestDialog({
+                                                isConnected,
                                                 open, onClose,
-                                                connectionState, favoriteRequests,
+                                                favoriteRequests,
                                                 onRemove, onApply, onSend, onUpdate
                                               }) {
 
@@ -23,7 +22,7 @@ export default function FavoriteRequestDialog({
         {favoriteRequests.map(favoriteRequest => (
           <FavoriteRequestItem
             key={favoriteRequest.id}
-            connectionState={connectionState}
+            isConnected={isConnected}
             favoriteRequest={favoriteRequest}
             onRemove={onRemove}
             onApply={onApply}
@@ -37,9 +36,9 @@ export default function FavoriteRequestDialog({
 }
 
 FavoriteRequestDialog.propTypes = {
+  isConnected: PropTypes.bool.isRequired,
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  connectionState: PropTypes.string.isRequired,
   favoriteRequests: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -51,9 +50,8 @@ FavoriteRequestDialog.propTypes = {
   onUpdate: PropTypes.func.isRequired,
 }
 
-function FavoriteRequestItem({connectionState, favoriteRequest, onRemove, onApply, onSend, onUpdate}) {
+function FavoriteRequestItem({isConnected, favoriteRequest, onRemove, onApply, onSend, onUpdate}) {
   const {t} = useTranslation('ControlPanel')
-  const isConnected = connectionState === ConnectionState.Connected
 
   const updateName = (name) => {
     onUpdate({id: favoriteRequest.id, changes: {name}})
@@ -102,12 +100,14 @@ function FavoriteRequestItem({connectionState, favoriteRequest, onRemove, onAppl
 }
 
 FavoriteRequestItem.propTypes = {
-  connectionState: PropTypes.string.isRequired,
+  isConnected: PropTypes.bool.isRequired,
+
   favoriteRequest: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
   }).isRequired,
+
   onRemove: PropTypes.func.isRequired,
   onApply: PropTypes.func.isRequired,
   onSend: PropTypes.func.isRequired,

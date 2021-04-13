@@ -1,8 +1,6 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import {useGA4React} from 'ga-4-react'
 import {makeStyles} from '@material-ui/core/styles'
-import {Tab, Tabs} from '@material-ui/core'
-import {TabContext, TabPanel} from '@material-ui/lab'
 import {useTranslation} from 'next-i18next'
 import {useDispatch, useSelector} from 'react-redux'
 
@@ -23,9 +21,8 @@ import {
   updateFavoriteRequest
 } from '../../../slices/project'
 import {ConnectionState} from '../../../constants'
-import ScheduleRequestPanel from '../../modules/ControlPanel/ScheduleRequestPanel'
-import BasicRequestPanel from '../../modules/ControlPanel/BasicRequestPanel'
 import FavoriteRequestDialog from '../../modules/ControlPanel/FavoriteRequestDialog'
+import RequestPanel from '../../modules/ControlPanel/RequestPanel'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -45,13 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const PanelTab = Object.freeze({
-  Basic: 'basic',
-  Schedule: 'schedule',
-})
-
 export default function RequestPanelContainer({appController}) {
-  const classes = useStyles()
   const dispatch = useDispatch()
   const ga4React = useGA4React()
   const {t} = useTranslation('ControlPanel')
@@ -60,16 +51,10 @@ export default function RequestPanelContainer({appController}) {
   const scheduleEnabled = useSelector(getScheduleEnabledStatus)
   const timeInterval = useSelector(getScheduleTimeInterval)
   const favoriteRequests = useSelector(getFavoriteRequests)
-  const [tabValue, setTabValue] = useState(PanelTab.Basic)
   const [favoriteRequestID, setFavoriteRequestID] = useState(null)
   const [favoriteRequestDialogOpen, setFavoriteRequestDialog] = useState(false)
   const [localRequestBody, setLocalRequestBody] = useState(requestBody)
   const [localScheduleTimeInterval, setLocalTimeInterval] = useState(timeInterval)
-
-  const handleTabChange = (event, newValue) => {
-    setTabValue(newValue)
-    ga4React.gtag('event', 'change_tag', {value: newValue})
-  }
 
   const onRequestBodyChange = (value) => {
     setLocalRequestBody(value)
@@ -144,53 +129,42 @@ export default function RequestPanelContainer({appController}) {
     dispatch(updateFavoriteRequest({id, changes}))
   }
 
+  const isConnected = connectionState === ConnectionState.Connected
   return (
-    <div className={classes.root}>
-      <Tabs indicatorColor="secondary" value={tabValue} onChange={handleTabChange}>
-        <Tab className={classes.tab} label={t('基本')} value={PanelTab.Basic}/>
-        <Tab className={classes.tab} label={t('排程')} value={PanelTab.Schedule}/>
-      </Tabs>
-      <TabContext value={tabValue}>
-        <TabPanel className={classes.tabPanel} value={PanelTab.Basic}>
-          <BasicRequestPanel
-            isConnected={connectionState === ConnectionState.Connected}
-            requestBody={localRequestBody}
-            favoriteRequestID={favoriteRequestID}
-            onRequestBodyChange={onRequestBodyChange}
-            onShowFavoriteRequestsClick={showFavoriteRequestDialog}
-            onFavoriteRequestSet={onFavoriteRequestSet}
-            onFavoriteRequestUnset={onFavoriteRequestUnset}
-            onSendButtonClick={onSendMessage}
-          />
-        </TabPanel>
-        <TabPanel className={classes.tabPanel} value={PanelTab.Schedule}>
-          <ScheduleRequestPanel
-            isConnected={connectionState === ConnectionState.Connected}
-            scheduleTimeInterval={localScheduleTimeInterval}
-            favoriteRequestID={favoriteRequestID}
-            scheduleEnabled={scheduleEnabled}
-            requestBody={localRequestBody}
-            onRequestBodyChange={onRequestBodyChange}
-            onScheduleTimeIntervalChange={onScheduleTimeIntervalChange}
-            onShowFavoriteRequestsClick={showFavoriteRequestDialog}
-            onFavoriteRequestSet={onFavoriteRequestSet}
-            onFavoriteRequestUnset={onFavoriteRequestUnset}
-            onEnableButtonClick={onEnableButtonClicked}
-          />
-        </TabPanel>
-      </TabContext>
+    <>
+      <RequestPanel
+        isConnected={isConnected}
+
+        requestBody={localRequestBody}
+        onRequestBodyChange={onRequestBodyChange}
+
+        favoriteRequestID={favoriteRequestID}
+        showFavoriteRequestDialog={showFavoriteRequestDialog}
+        onFavoriteRequestSet={onFavoriteRequestSet}
+        onFavoriteRequestUnset={onFavoriteRequestUnset}
+
+        scheduleTimeInterval={localScheduleTimeInterval}
+        onScheduleTimeIntervalChange={onScheduleTimeIntervalChange}
+
+        onSendMessage={onSendMessage}
+
+        scheduleEnabled={scheduleEnabled}
+        onEnableButtonClicked={onEnableButtonClicked}
+      />
 
       <FavoriteRequestDialog
+        isConnected={isConnected}
+
         open={favoriteRequestDialogOpen}
         onClose={hideFavoriteRequestDialog}
-        connectionState={connectionState}
+
         favoriteRequests={favoriteRequests}
+
         onRemove={onRemoveFavoriteRequest}
         onApply={onApplyFavoriteRequest}
         onSend={onSendMessage}
         onUpdate={onUpdateFavoriteRequest}
       />
-
-    </div>
+    </>
   )
 }
