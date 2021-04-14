@@ -106,10 +106,12 @@ export default function AppController({children}) {
       await sendMessage(message)
     })
     scheduler.enable(timeInterval)
+    await dispatch(changeScheduleEnabledStatus(true))
   }
 
-  const disableScheduler = () => {
+  const disableScheduler = async () => {
     scheduler.disable()
+    await dispatch(changeScheduleEnabledStatus(false))
   }
 
   const exportProject = ({filename, messageIncluded}) => {

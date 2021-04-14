@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import {useGA4React} from 'ga-4-react'
-import {makeStyles} from '@material-ui/core/styles'
 import {useTranslation} from 'next-i18next'
 import {useDispatch, useSelector} from 'react-redux'
 
@@ -11,7 +10,6 @@ import {
   getScheduleEnabledStatus,
   getScheduleTimeInterval
 } from '../../../selectors'
-import {changeScheduleEnabledStatus,} from '../../../slices/current'
 import generateRandomString from '../../../utils/generateRandomString'
 import {
   addFavoriteRequest,
@@ -23,24 +21,6 @@ import {
 import {ConnectionState} from '../../../constants'
 import FavoriteRequestDialog from '../../modules/ControlPanel/FavoriteRequestDialog'
 import RequestPanel from '../../modules/ControlPanel/RequestPanel'
-
-
-const useStyles = makeStyles((theme) => ({
-  root: {},
-  tab: {
-    background: theme.project.page.main.controlPanel.requestPanel.tab,
-    fontSize: '1rem',
-    borderTopLeftRadius: '0.3rem',
-    borderTopRightRadius: '0.3rem',
-
-    '&:not(:first-child)': {
-      marginLeft: '0.2rem'
-    }
-  },
-  tabPanel: {
-    padding: 0,
-  },
-}))
 
 export default function RequestPanelContainer({appController}) {
   const dispatch = useDispatch()
@@ -93,13 +73,11 @@ export default function RequestPanelContainer({appController}) {
     setFavoriteRequestID(null)
   }
 
-  const onEnableButtonClicked = async () => {
+  const onEnableButtonClick = async () => {
     if (scheduleEnabled) {
       await appController.disableScheduler()
-      await dispatch(changeScheduleEnabledStatus(false))
     } else {
       await appController.enableScheduler(localRequestBody, +localScheduleTimeInterval)
-      dispatch(changeScheduleEnabledStatus(true))
     }
   }
 
@@ -130,6 +108,7 @@ export default function RequestPanelContainer({appController}) {
   }
 
   const isConnected = connectionState === ConnectionState.Connected
+
   return (
     <>
       <RequestPanel
@@ -149,7 +128,7 @@ export default function RequestPanelContainer({appController}) {
         onSendMessage={onSendMessage}
 
         scheduleEnabled={scheduleEnabled}
-        onEnableButtonClicked={onEnableButtonClicked}
+        onEnableButtonClick={onEnableButtonClick}
       />
 
       <FavoriteRequestDialog
