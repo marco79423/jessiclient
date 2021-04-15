@@ -4,7 +4,7 @@ import SharePanel from './SharePanel'
 
 
 export default {
-  title: 'modules/Toolbar/SharePanel',
+  title: 'modules/AppBar/SharePanel',
   component: SharePanel,
 }
 

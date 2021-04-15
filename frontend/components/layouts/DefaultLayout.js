@@ -1,27 +1,15 @@
 import React from 'react'
 import {makeStyles} from '@material-ui/core/styles'
-import {AppBar as MuiAppBar, Avatar, Backdrop, Grid, Slide, Typography} from '@material-ui/core'
+import {AppBar as MuiAppBar, Backdrop, Grid, Slide} from '@material-ui/core'
 import CircularProgress from '@material-ui/core/CircularProgress'
+
+import Logo from '../modules/AppBar/Logo'
 
 
 const useStyles = makeStyles((theme) => ({
   root: {},
   appBar: {
     background: theme.project.page.header.background,
-  },
-  brand: {
-    width: 180,
-  },
-  logo: {
-    margin: '3px auto 0',
-    width: 45,
-    height: 45,
-  },
-  title: {
-    color: theme.project.page.header.titleColor,
-  },
-  subtitle: {
-    color: theme.project.page.header.subtitleColor,
   },
   main: {
     background: theme.project.page.main.background,
@@ -70,18 +58,3 @@ export default function DefaultLayout({loading, detailOpen, toolbar, controlPane
   )
 }
 
-function Logo() {
-  const classes = useStyles()
-
-  return (
-    <Grid className={classes.brand} container item alignItems="center">
-      <Grid xs={4} item>
-        <Avatar className={classes.logo} variant="square" src={'/favicon.ico'}/>
-      </Grid>
-      <Grid xs={8} item container>
-        <Typography className={classes.title} component="h1" variant="h5">Jessiclient</Typography>
-        <Typography className={classes.subtitle} component="h2" variant="subtitle2">Websocket Client</Typography>
-      </Grid>
-    </Grid>
-  )
-}

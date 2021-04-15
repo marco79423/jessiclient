@@ -1,9 +1,10 @@
 import React from 'react'
+
 import Toolbar from './Toolbar'
 
 
 export default {
-  title: 'modules/Toolbar/Toolbar',
+  title: 'modules/AppBar/Toolbar',
   component: Toolbar,
   parameters: {
     backgrounds: {default: 'header',},

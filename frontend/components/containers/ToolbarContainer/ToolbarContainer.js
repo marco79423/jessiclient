@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import {useTranslation} from 'next-i18next'
 
-import Toolbar from '../../modules/Toolbar'
+import Toolbar from '../../modules/AppBar'
 import SharePanelContainer from './SharePanelContainer'
 import ExportPanelContainer from './ExportPanelContainer'
 

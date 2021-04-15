@@ -5,7 +5,7 @@ import {useTranslation} from 'next-i18next'
 
 import {changeShareLink, clearShareLink} from '../../../slices/current'
 import {getShareLink} from '../../../selectors'
-import SharePanel from '../../modules/Toolbar/SharePanel'
+import SharePanel from '../../modules/AppBar/SharePanel'
 
 
 export default function SharePanelContainer({appController, open, onClose}) {

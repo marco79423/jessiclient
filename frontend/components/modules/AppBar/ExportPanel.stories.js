@@ -4,7 +4,7 @@ import ExportPanel from './ExportPanel'
 
 
 export default {
-  title: 'modules/Toolbar/ExportPanel',
+  title: 'modules/AppBar/ExportPanel',
   component: ExportPanel,
 }
 
