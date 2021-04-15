@@ -20,33 +20,29 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
   },
+  copyright: {
+    margin: '16px auto'
+  }
 }))
 
 export default function ControlPanel({connectionPanel, requestPanel}) {
   const classes = useStyles()
 
   return (
-    <Grid className={classes.root}
-          container
-          direction="column"
-          justify="space-between"
-          component={Paper}
-          elevation={1}
-          square>
-      <Grid item>
-        <Grid container direction="column">
-          <Grid className={classes.connectionPanel} item>
-            {connectionPanel}
-          </Grid>
-          <Grid className={classes.requestPanel} item>
-            {requestPanel}
-          </Grid>
+    <Paper className={classes.root} elevation={1} square>
+      <Grid container direction="column">
+        <Grid className={classes.connectionPanel} item>
+          {connectionPanel}
+        </Grid>
+        <Grid className={classes.requestPanel} item>
+          {requestPanel}
         </Grid>
       </Grid>
-      <Grid item>
+
+      <div className={classes.copyright}>
         <Copyright/>
-      </Grid>
-    </Grid>
+      </div>
+    </Paper>
   )
 }
 

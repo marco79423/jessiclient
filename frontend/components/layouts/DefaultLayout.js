@@ -12,18 +12,23 @@ const useStyles = makeStyles((theme) => ({
     background: theme.project.page.header.background,
   },
   main: {
+    display: 'flex',
     background: theme.project.page.main.background,
     height: 'calc(100vh - 64px)'
   },
   controlPanel: {
     zIndex: 1,
   },
-  listPanel: {},
-  detailPanel: {},
+  listPanel: {
+    flex: 1,
+  },
+  detailPanel: {
+    flex: 1,
+  },
 }))
 
 export default function DefaultLayout({loading, detailOpen, toolbar, controlPanel, listPanel, detailPanel}) {
-  const classes = useStyles()
+  const classes = useStyles({detailOpen})
 
   return (
     <>
@@ -41,19 +46,19 @@ export default function DefaultLayout({loading, detailOpen, toolbar, controlPane
           </Grid>
         </Grid>
       </MuiAppBar>
-      <Grid className={classes.main} container component="main">
-        <Grid className={classes.controlPanel} item sm={4} xs={12}>
+      <main className={classes.main}>
+        <div className={classes.controlPanel}>
           {controlPanel}
-        </Grid>
-        <Grid className={classes.listPanel} item sm={detailOpen ? 4 : 8} xs={12}>
+        </div>
+        <div className={classes.listPanel}>
           {listPanel}
-        </Grid>
+        </div>
         <Slide direction="left" in={detailOpen} mountOnEnter unmountOnExit>
-          <Grid className={classes.detailPanel} item sm={4} xs={false}>
+          <div className={classes.detailPanel}>
             {detailPanel}
-          </Grid>
+          </div>
         </Slide>
-      </Grid>
+      </main>
     </>
   )
 }
