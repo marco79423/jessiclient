@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
 import {GA4React} from 'ga-4-react'
 import useAsyncEffect from 'use-async-effect'
-import {useDispatch, useSelector} from 'react-redux'
+import {useTranslation} from 'next-i18next'
 
 import {
   getMessageCount,
@@ -27,6 +28,7 @@ import Alert from '../elements/Alert'
 
 export default function AppController({children}) {
   const dispatch = useDispatch()
+  const {t} = useTranslation('common')
 
   const maxMessageCount = useSelector(getSettingMaxMessageCount)
   const messageCount = useSelector(getMessageCount)
@@ -44,36 +46,6 @@ export default function AppController({children}) {
   const hideAlert = () => {
     setErrorAlert(false)
   }
-
-  useAsyncEffect(async () => {
-    await dispatch(changeProjectState(LoadingState.Loading))
-
-    wsClient.setOnConnectionChange(connectionState => dispatch(changeConnectionState(connectionState)))
-    wsClient.setOnError(error => console.log(error))
-    wsClient.setOnNewMessage(async message => {
-      if (messageCount >= maxMessageCount) {
-        await dispatch(removeFirstMessage())
-      }
-
-      await dispatch(appendMessage({
-        id: generateRandomString(),
-        time: new Date().toISOString(),
-        source: MessageSource.Server,
-        body: message,
-      }))
-    })
-    wsClient.setOnClose(() => {
-      scheduler.disable()
-      dispatch(changeScheduleEnabledStatus(false))
-    })
-
-    const projectData = await loadProjectData()
-    if (projectData) {
-      await dispatch(setProjectData(projectData))
-    }
-
-    await dispatch(changeProjectState(LoadingState.Loaded))
-  }, [])
 
   const connect = (url) => {
     wsClient.connect(url)
@@ -136,6 +108,40 @@ export default function AppController({children}) {
     setErrorMessage(message)
     showErrorAlert()
   }
+
+  useAsyncEffect(async () => {
+    await dispatch(changeProjectState(LoadingState.Loading))
+
+    wsClient.setOnConnectionChange(connectionState => dispatch(changeConnectionState(connectionState)))
+    wsClient.setOnError(error => {
+      console.log(error)
+      throwError(t('連線建立失敗'))
+    })
+    wsClient.setOnNewMessage(async message => {
+      if (messageCount >= maxMessageCount) {
+        await dispatch(removeFirstMessage())
+      }
+
+      await dispatch(appendMessage({
+        id: generateRandomString(),
+        time: new Date().toISOString(),
+        source: MessageSource.Server,
+        body: message,
+      }))
+    })
+    wsClient.setOnClose(() => {
+      scheduler.disable()
+      dispatch(changeScheduleEnabledStatus(false))
+    })
+
+    const projectData = await loadProjectData()
+    if (projectData) {
+      await dispatch(setProjectData(projectData))
+    }
+
+    await dispatch(changeProjectState(LoadingState.Loaded))
+  }, [])
+
 
   const appController = {
     track,
