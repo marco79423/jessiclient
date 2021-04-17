@@ -1,20 +1,19 @@
+import React, {useEffect, useState} from 'react'
+import {GA4React} from 'ga-4-react'
+import useAsyncEffect from 'use-async-effect'
 import {useDispatch, useSelector} from 'react-redux'
-import {useGA4React} from 'ga-4-react'
+
 import {
   getMessageCount,
   getProjectData,
   getProjectDataWithoutMessages,
   getSettingMaxMessageCount
 } from '../../selectors'
-import React, {useState} from 'react'
-import useAsyncEffect from 'use-async-effect'
 import {changeConnectionState, changeProjectState, changeScheduleEnabledStatus} from '../../slices/current'
 import {LoadingState, MessageSource} from '../../constants'
 import wsClient from '../../features/wsClient'
 import {appendMessage, removeFirstMessage, setProjectData} from '../../slices/project'
 import generateRandomString from '../../utils/generateRandomString'
-import scheduler from '../../features/scheduler'
-import Alert from '../elements/Alert'
 import {
   loadProjectDataFromFile,
   loadProjectDataFromLocalStorage,
@@ -22,19 +21,21 @@ import {
   saveProjectDataToSharingServer
 } from '../../features/project'
 import {downloadJsonData} from '../../utils/jsDownloader'
+import scheduler from '../../features/scheduler'
+import Alert from '../elements/Alert'
+
 
 export default function AppController({children}) {
   const dispatch = useDispatch()
-  const ga4React = useGA4React()
 
   const maxMessageCount = useSelector(getSettingMaxMessageCount)
   const messageCount = useSelector(getMessageCount)
+  const projectData = useSelector(getProjectData)
+  const projectDataWithoutMessages = useSelector(getProjectDataWithoutMessages)
+  const track = useTrackFunc()
 
   const [errorAlertOpen, setErrorAlert] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
-
-  const projectData = useSelector(getProjectData)
-  const projectDataWithoutMessages = useSelector(getProjectDataWithoutMessages)
 
   const showErrorAlert = () => {
     setErrorAlert(true)
@@ -43,7 +44,6 @@ export default function AppController({children}) {
   const hideAlert = () => {
     setErrorAlert(false)
   }
-
 
   useAsyncEffect(async () => {
     await dispatch(changeProjectState(LoadingState.Loading))
@@ -77,7 +77,7 @@ export default function AppController({children}) {
 
   const connect = (url) => {
     wsClient.connect(url)
-    ga4React.gtag('event', 'connect', {url})
+    track('connect', {url})
   }
 
   const disconnect = () => {
@@ -98,7 +98,7 @@ export default function AppController({children}) {
       body: message,
     }))
 
-    ga4React.gtag('event', 'send_message')
+    track('send_message')
   }
 
   const enableScheduler = async (message, timeInterval) => {
@@ -116,19 +116,19 @@ export default function AppController({children}) {
 
   const exportProject = ({filename, messageIncluded}) => {
     downloadJsonData(filename, messageIncluded ? projectData : projectDataWithoutMessages)
-    ga4React.gtag('event', 'export_project', {messageIncluded})
+    track('export_project', {messageIncluded})
   }
 
   const importProject = async () => {
     const projectData = await loadProjectDataFromFile()
     dispatch(setProjectData(projectData))
-    ga4React.gtag('event', 'import_project')
+    track('import_project')
   }
 
   const generateShareLink = async ({messageIncluded}) => {
     const projectCode = await saveProjectDataToSharingServer(messageIncluded ? projectData : projectDataWithoutMessages)
     const shareLink = `${window.location.origin}?projectCode=${projectCode}`
-    ga4React.gtag('event', 'generate_share_link', {messageIncluded})
+    track('generate_share_link', {messageIncluded})
     return shareLink
   }
 
@@ -138,6 +138,8 @@ export default function AppController({children}) {
   }
 
   const appController = {
+    track,
+
     connect,
     disconnect,
 
@@ -167,6 +169,25 @@ export default function AppController({children}) {
   )
 }
 
+
+function useTrackFunc() {
+  const [gaObj, setGAObj] = useState(null)
+
+  useEffect(() => {
+    const ga4react = new GA4React('G-TQZV496TYL')
+    ga4react.initialize().then((ga4) => {
+      setGAObj(ga4)
+    }, (err) => {
+      console.error(err)
+    })
+  }, [])
+
+  return (key, data) => {
+    if (gaObj) {
+      gaObj.gtag('event', key, data)
+    }
+  }
+}
 
 async function loadProjectData() {
   const projectCode = new URLSearchParams(window.location.search).get('projectCode')

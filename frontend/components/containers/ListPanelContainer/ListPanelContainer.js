@@ -1,5 +1,4 @@
 import React from 'react'
-import {useGA4React} from 'ga-4-react'
 import {useDispatch, useSelector} from 'react-redux'
 
 import * as projectActions from '../../../slices/project'
@@ -8,8 +7,7 @@ import {getMessages, getSelectedMessageID} from '../../../selectors'
 import ListPanel from '../../modules/ListPanel/ListPanel'
 
 
-export default function ListPanelContainer() {
-  const ga4React = useGA4React()
+export default function ListPanelContainer({appController}) {
   const dispatch = useDispatch()
   const messages = useSelector(getMessages)
   const selectedMessageID = useSelector(getSelectedMessageID)
@@ -21,7 +19,7 @@ export default function ListPanelContainer() {
   const clearAllMessages = () => {
     dispatch(projectActions.clearMessages())
     dispatch(currentActions.setSelectedMessageID(null))
-    ga4React.gtag('event', 'clear_messages')
+    appController.track('clear_messages')
   }
 
   return (

@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import {useGA4React} from 'ga-4-react'
 import {useTranslation} from 'next-i18next'
 import {useDispatch, useSelector} from 'react-redux'
 
@@ -24,7 +23,6 @@ import RequestPanel from '../../modules/ControlPanel/RequestPanel'
 
 export default function RequestPanelContainer({appController}) {
   const dispatch = useDispatch()
-  const ga4React = useGA4React()
   const {t} = useTranslation('ControlPanel')
   const connectionState = useSelector(getConnectionState)
   const requestBody = useSelector(getRequestBody)
@@ -65,7 +63,7 @@ export default function RequestPanelContainer({appController}) {
     }
     dispatch(addFavoriteRequest(favoriteRequest))
     setFavoriteRequestID(favoriteRequest.id)
-    ga4React.gtag('event', 'add_favorite_message')
+    appController.track('add_favorite_message')
   }
 
   const onFavoriteRequestUnset = () => {
@@ -83,7 +81,7 @@ export default function RequestPanelContainer({appController}) {
 
   const showFavoriteRequestDialog = () => {
     setFavoriteRequestDialog(true)
-    ga4React.gtag('event', 'show_favorite_requests_panel')
+    appController.track('show_favorite_requests_panel')
   }
 
   const hideFavoriteRequestDialog = () => {
