@@ -174,12 +174,16 @@ function useTrackFunc() {
   const [gaObj, setGAObj] = useState(null)
 
   useEffect(() => {
-    const ga4react = new GA4React('G-TQZV496TYL')
-    ga4react.initialize().then((ga4) => {
-      setGAObj(ga4)
-    }, (err) => {
-      console.error(err)
-    })
+    if (!gaObj) {
+      const ga4react = new GA4React('G-TQZV496TYL')
+      ga4react.initialize()
+        .then((ga4) => {
+          setGAObj(ga4)
+        })
+        .catch(() => {
+          // 什麼都不做
+        })
+    }
   }, [])
 
   return (key, data) => {

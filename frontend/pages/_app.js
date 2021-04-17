@@ -1,5 +1,6 @@
-import Head from 'next/head'
+import {useEffect} from 'react'
 import {Provider} from 'react-redux'
+import Head from 'next/head'
 import {CssBaseline} from '@material-ui/core'
 import {ThemeProvider} from '@material-ui/core/styles'
 import {appWithTranslation} from 'next-i18next'
@@ -8,6 +9,15 @@ import store from '../store'
 import theme from '../components/themes/defaultTheme'
 
 function App({Component, pageProps}) {
+
+  useEffect(() => {
+    // Remove the server-side injected CSS.
+    const jssStyles = document.querySelector('#jss-server-side')
+    if (jssStyles) {
+      jssStyles.parentElement.removeChild(jssStyles)
+    }
+  }, [])
+
   return (
     <>
       <Head>
