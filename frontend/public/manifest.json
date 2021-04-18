@@ -1,0 +1,22 @@
+{
+  "name": "Jessiclient",
+  "short_name": "Jessiclient",
+  "description": "Best websocket client in the world",
+  "icons": [
+    {
+      "src": "logo-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "logo-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#283593",
+  "background_color": "#5C6BC0",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}

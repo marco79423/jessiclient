@@ -1,10 +1,11 @@
 import {useEffect} from 'react'
 import {Provider} from 'react-redux'
+import {appWithTranslation} from 'next-i18next'
 import Head from 'next/head'
 import {CssBaseline} from '@material-ui/core'
 import {ThemeProvider} from '@material-ui/core/styles'
-import {appWithTranslation} from 'next-i18next'
 
+import Manifest from '../public/manifest.json'
 import store from '../store'
 import theme from '../components/themes/defaultTheme'
 
@@ -23,8 +24,32 @@ function App({Component, pageProps}) {
       <Head>
         <title>Jessiclient</title>
 
+        <meta name="application-name" content={Manifest.name}/>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+        <meta name="apple-mobile-web-app-title" content={Manifest.name}/>
+        <meta name="description" content={Manifest.description}/>
+        <meta name="mobile-web-app-capable" content="yes"/>
+        <meta name="theme-color" content={Manifest.theme_color}/>
+
+        <meta name="twitter:card" content="summary"/>
+        <meta name="twitter:url" content="https://jessiclient.marco79423.net"/>
+        <meta name="twitter:title" content={Manifest.name}/>
+        <meta name="twitter:description" content={Manifest.description}/>
+        <meta name="twitter:image" content="https://jessiclient.marco79423.net/logo.jpg"/>
+        <meta name="twitter:creator" content="@marco79423"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content={Manifest.name}/>
+        <meta property="og:description" content={Manifest.description}/>
+        <meta property="og:site_name" content={Manifest.name}/>
+        <meta property="og:url" content="https://jessiclient.marco74923.net"/>
+        <meta property="og:image" content="https://jessiclient.marco79423.net/logo.jpg"/>
+
         <link rel="icon" href="/favicon.ico"/>
         <link rel="shortcut icon" href="/favicon.ico"/>
+        <link rel='apple-touch-icon' sizes='180x180' href='/logo-180x180.png' />
+        <link rel='icon' type='image/png' sizes='192x192' href='/logo-192x192.png' />
+        <link rel='icon' type='image/png' sizes='512x512' href='/logo-512x512.png' />
 
         <link rel="canonical" hrefLang="en" href="https://jessiclient.marco79423.net/"/>
         <link rel="alternate" hrefLang="zh-TW" href="https://jessiclient.marco79423.net/zh-TW/"/>
@@ -32,6 +57,8 @@ function App({Component, pageProps}) {
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+
+        <link rel="manifest" href="/manifest.json"/>
       </Head>
 
       <CssBaseline/>
