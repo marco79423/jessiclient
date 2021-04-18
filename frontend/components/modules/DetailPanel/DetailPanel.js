@@ -46,10 +46,10 @@ export default function DetailPanel({message}) {
   const [messageText, setMessageText] = useState('')
 
   useEffect(() => {
-    try {
+    if (isJSONShowable(message.body)) {
       setMessageJsonData(JSON.parse(message.body))
       setTabValue(PanelTab.JSON)
-    } catch (_) {
+    } else {
       setMessageJsonData(null)
       setTabValue(PanelTab.PlainText)
     }
@@ -91,4 +91,13 @@ export default function DetailPanel({message}) {
       </Toolbar>
     </div>
   )
+}
+
+const isJSONShowable = (value) => {
+  try {
+    const jsonData = JSON.parse(value)
+    return typeof jsonData === 'object' && jsonData !== null
+  } catch {
+    return false
+  }
 }
