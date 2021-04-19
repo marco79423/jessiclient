@@ -8,7 +8,6 @@ import {useTranslation} from 'next-i18next'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    background: theme.project.page.main.detailPanel.controlBar.background,
   },
   controlBar: {
     position: 'fixed',
