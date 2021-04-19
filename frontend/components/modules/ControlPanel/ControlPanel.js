@@ -38,7 +38,6 @@ export default function ControlPanel({connectionPanel, requestPanel}) {
           {requestPanel}
         </Grid>
       </Grid>
-
       <div className={classes.copyright}>
         <Copyright/>
       </div>

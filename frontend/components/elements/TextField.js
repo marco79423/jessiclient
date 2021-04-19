@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
   root: ({large}) => ({
     paddingLeft: large ? theme.spacing(2) : theme.spacing(1),
     padding: large ? theme.spacing(2) : undefined,
-    width: large ? 500 : 300,
+    maxWidth:  500,
   }),
   input: ({large, error}) => ({
     fontSize: large ? '1.3rem' : '1rem',

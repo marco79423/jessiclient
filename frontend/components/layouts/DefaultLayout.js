@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
   controlPanel: {
     zIndex: 1,
+    width: 500,
   },
   listPanel: {
     flex: 1,
@@ -62,4 +63,3 @@ export default function DefaultLayout({loading, detailOpen, toolbar, controlPane
     </>
   )
 }
-
