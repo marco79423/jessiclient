@@ -1,10 +1,10 @@
 import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 
-import * as projectActions from '../../../slices/project'
-import * as currentActions from '../../../slices/current'
-import {getMessages, getSelectedMessageID} from '../../../selectors'
-import ListPanel from '../../modules/ListPanel/ListPanel'
+import * as projectActions from '../../../../slices/project'
+import * as currentActions from '../../../../slices/current'
+import {getMessages, getSelectedMessageID} from '../../../../selectors'
+import ListPanel from '../../../modules/ListPanel/ListPanel'
 
 
 export default function ListPanelContainer({appController}) {

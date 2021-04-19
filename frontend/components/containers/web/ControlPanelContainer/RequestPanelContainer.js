@@ -8,18 +8,18 @@ import {
   getRequestBody,
   getScheduleEnabledStatus,
   getScheduleTimeInterval
-} from '../../../selectors'
-import generateRandomString from '../../../utils/generateRandomString'
+} from '../../../../selectors'
+import generateRandomString from '../../../../utils/generateRandomString'
 import {
   addFavoriteRequest,
   changeRequestBody,
   changeScheduleTimeInterval,
   removeFavoriteRequest,
   updateFavoriteRequest
-} from '../../../slices/project'
-import {ConnectionState} from '../../../constants'
-import FavoriteRequestDialog from '../../modules/ControlPanel/FavoriteRequestDialog'
-import RequestPanel from '../../modules/ControlPanel/RequestPanel'
+} from '../../../../slices/project'
+import {ConnectionState} from '../../../../constants'
+import FavoriteRequestDialog from '../../../modules/ControlPanel/FavoriteRequestDialog'
+import RequestPanel from '../../../modules/ControlPanel/RequestPanel'
 
 export default function RequestPanelContainer({appController}) {
   const dispatch = useDispatch()

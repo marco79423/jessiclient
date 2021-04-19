@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {useDispatch, useSelector} from 'react-redux'
 
-import {changeConnectionUrl} from '../../../slices/project'
-import {getConnectionState, getConnectionUrl} from '../../../selectors'
-import ConnectionPanel from '../../modules/ControlPanel/ConnectionPanel'
+import {changeConnectionUrl} from '../../../../slices/project'
+import {getConnectionState, getConnectionUrl} from '../../../../selectors'
+import ConnectionPanel from '../../../modules/ControlPanel/ConnectionPanel'
 
 
 export default function ConnectionPanelContainer({appController}) {

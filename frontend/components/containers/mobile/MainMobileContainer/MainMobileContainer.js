@@ -1,20 +1,20 @@
 import React from 'react'
 import {useSelector} from 'react-redux'
 
-import {LoadingState} from '../../../constants'
-import {getProjectState, getSelectedMessageID} from '../../../selectors'
-import DefaultLayout from '../../layouts/DefaultLayout'
-import ToolbarContainer from '../ToolbarContainer'
-import ControlPanelContainer from '../ControlPanelContainer'
-import ListPanelContainer from '../ListPanelContainer'
-import DetailPanelContainer from '../DetailPanel'
+import {LoadingState} from '../../../../constants'
+import {getProjectState, getSelectedMessageID} from '../../../../selectors'
+import MobileLayout from '../../../layouts/MobileLayout'
+import ToolbarContainer from '../../web/ToolbarContainer'
+import ControlPanelContainer from '../../web/ControlPanelContainer'
+import ListPanelContainer from '../../web/ListPanelContainer'
+import DetailPanelContainer from '../../web/DetailPanel'
 
-export default function MainContainer({appController}) {
+export default function MainMobileContainer({appController}) {
   const projectState = useSelector(getProjectState)
   const messageID = useSelector(getSelectedMessageID)
 
   return (
-    <DefaultLayout
+    <MobileLayout
       loading={projectState === LoadingState.Loading}
       detailOpen={messageID !== null}
       toolbar={<ToolbarContainer appController={appController}/>}
