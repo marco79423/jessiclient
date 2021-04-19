@@ -12,7 +12,6 @@ import {
 } from '../../selectors'
 import {changeConnectionState, changeProjectState, changeScheduleEnabledStatus} from '../../slices/current'
 import {LoadingState, MessageSource} from '../../constants'
-import wsClient from '../../features/wsClient'
 import {appendMessage, removeFirstMessage, setProjectData} from '../../slices/project'
 import generateRandomString from '../../utils/generateRandomString'
 import {
@@ -22,6 +21,7 @@ import {
   saveProjectDataToSharingServer
 } from '../../features/project'
 import {downloadJsonData} from '../../utils/jsDownloader'
+import WSClient from '../../utils/WSClient'
 import scheduler from '../../features/scheduler'
 import Alert from '../elements/Alert'
 
@@ -38,6 +38,7 @@ export default function AppController({children}) {
 
   const [errorAlertOpen, setErrorAlert] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+  const [wsClient, setWSClient] = useState(null)
 
   const showErrorAlert = () => {
     setErrorAlert(true)
@@ -112,6 +113,7 @@ export default function AppController({children}) {
   useAsyncEffect(async () => {
     await dispatch(changeProjectState(LoadingState.Loading))
 
+    const wsClient = new WSClient()
     wsClient.setOnConnectionChange(connectionState => dispatch(changeConnectionState(connectionState)))
     wsClient.setOnError(error => {
       console.log(error)
@@ -133,6 +135,7 @@ export default function AppController({children}) {
       scheduler.disable()
       dispatch(changeScheduleEnabledStatus(false))
     })
+    setWSClient(wsClient)
 
     const projectData = await loadProjectData()
     if (projectData) {

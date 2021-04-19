@@ -1,6 +1,6 @@
 import {ConnectionState} from '../constants'
 
-class WSClient {
+export default class WSClient {
   constructor() {
     this.wsClient = null
 
@@ -77,5 +77,3 @@ class WSClient {
     this.wsClient.close()
   }
 }
-
-export default new WSClient()
