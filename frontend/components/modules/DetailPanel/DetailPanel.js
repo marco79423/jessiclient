@@ -46,20 +46,20 @@ export default function DetailPanel({message}) {
   const [messageText, setMessageText] = useState('')
 
   useEffect(() => {
-    if (isJSONShowable(message.body)) {
-      setMessageJsonData(JSON.parse(message.body))
+    if (message) {
+      setMessageText(message.body)
+    }
+  }, [message])
+
+  useEffect(() => {
+    if (isJSONShowable(messageText)) {
+      setMessageJsonData(JSON.parse(messageText))
       setTabValue(PanelTab.JSON)
     } else {
       setMessageJsonData(null)
       setTabValue(PanelTab.PlainText)
     }
-  }, [message])
-
-  useEffect(() => {
-    if (message) {
-      setMessageText(message.body)
-    }
-  }, [message])
+  }, [messageText])
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue)
