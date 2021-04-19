@@ -7,17 +7,23 @@ import UnarchiveIcon from '@material-ui/icons/Unarchive'
 import ShareIcon from '@material-ui/icons/Share'
 
 import IconButton from '../../elements/IconButton'
+import useMobileMode from '../../hooks/useMobileMode'
 
 export default function Toolbar({onShareButtonClick, onExportButtonClick, onImportButtonClick}) {
   const {t} = useTranslation('Toolbar')
+  const mobileMode = useMobileMode()
 
   return (
     <Grid container justify="space-between" alignItems="center">
       <Grid item>
         <MuiToolbar>
           <IconButton description={t('分享專案')} icon={ShareIcon} onClick={onShareButtonClick}/>
-          <IconButton description={t('匯出專案')} icon={ArchiveIcon} onClick={onExportButtonClick}/>
-          <IconButton description={t('匯入專案')} icon={UnarchiveIcon} onClick={onImportButtonClick}/>
+          {!mobileMode ? (
+            <>
+              <IconButton description={t('匯出專案')} icon={ArchiveIcon} onClick={onExportButtonClick}/>
+              <IconButton description={t('匯入專案')} icon={UnarchiveIcon} onClick={onImportButtonClick}/>
+            </>
+          ) : null}
         </MuiToolbar>
       </Grid>
     </Grid>
