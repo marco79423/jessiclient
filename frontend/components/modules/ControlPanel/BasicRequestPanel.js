@@ -5,8 +5,6 @@ import {Grid, makeStyles, Paper} from '@material-ui/core'
 
 import Button from '../../elements/Button'
 import TextArea from '../../elements/TextArea'
-import generateRandomString from '../../../utils/generateRandomString'
-import {addFavoriteRequest} from '../../../slices/project'
 
 const useStyles = makeStyles((theme) => ({
   root: {
