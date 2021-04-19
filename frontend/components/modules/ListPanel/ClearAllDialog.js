@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {makeStyles} from '@material-ui/core/styles'
 import {useTranslation} from 'next-i18next'
 import {Typography} from '@material-ui/core'
 
@@ -7,7 +8,18 @@ import BasicDialog from '../../elements/BasicDialog'
 import Button from '../../elements/Button'
 
 
+const useStyles = makeStyles((theme) => ({
+  message: {
+    marginTop: 0,
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+  },
+}))
+
+
 export default function ClearAllDialog({open, onClose, onClearAll}) {
+  const classes = useStyles()
   const {t} = useTranslation('ListPanel')
 
   const onClearAllButtonClick = () => {
@@ -27,7 +39,7 @@ export default function ClearAllDialog({open, onClose, onClearAll}) {
         </>
       }
     >
-      <Typography>{t('清空的訊息將不再能恢復')}</Typography>
+      <Typography className={classes.message}>{t('清空的訊息將不再能恢復')}</Typography>
     </BasicDialog>
   )
 }
