@@ -1,43 +1,41 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {makeStyles} from '@material-ui/core/styles'
-import {Grid, Paper} from '@material-ui/core'
+import {Paper} from '@material-ui/core'
 
 import Copyright from '../../modules/ControlPanel/Copyright'
+import useMobileMode from '../../hooks/useMobileMode'
 
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  root: ({mobileMode}) => ({
     background: theme.project.page.main.controlPanel.background,
-    padding: theme.spacing(2),
+    padding: mobileMode ? theme.spacing(2) : theme.spacing(3),
     height: '100%',
-  },
-  connectionPanel: {
-    marginTop: theme.spacing(3),
-  },
-  requestPanel: {
-    marginTop: theme.spacing(4),
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-  },
+  }),
+  connectionPanel: ({mobileMode}) => ({
+    marginTop: mobileMode ? theme.spacing(0) : theme.spacing(3),
+  }),
+  requestPanel:  ({mobileMode}) => ({
+    marginTop: mobileMode ? theme.spacing(2) : theme.spacing(4),
+  }),
   copyright: {
     margin: '16px auto'
   }
 }))
 
 export default function ControlPanel({connectionPanel, requestPanel}) {
-  const classes = useStyles()
+  const mobileMode = useMobileMode()
+  const classes = useStyles({mobileMode})
 
   return (
     <Paper className={classes.root} elevation={1} square>
-      <Grid container direction="column">
-        <Grid className={classes.connectionPanel} item>
-          {connectionPanel}
-        </Grid>
-        <Grid className={classes.requestPanel} item>
-          {requestPanel}
-        </Grid>
-      </Grid>
+      <div className={classes.connectionPanel}>
+        {connectionPanel}
+      </div>
+      <div className={classes.requestPanel}>
+        {requestPanel}
+      </div>
       <div className={classes.copyright}>
         <Copyright/>
       </div>

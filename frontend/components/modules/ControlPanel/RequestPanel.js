@@ -6,6 +6,7 @@ import {useTranslation} from 'next-i18next'
 import ScheduleRequestPanel from '../../modules/ControlPanel/ScheduleRequestPanel'
 import BasicRequestPanel from '../../modules/ControlPanel/BasicRequestPanel'
 import PropTypes from 'prop-types'
+import useMobileMode from '../../hooks/useMobileMode'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -49,12 +50,31 @@ export default function RequestPanel({
                                        scheduleEnabled,
                                        onEnableButtonClick,
                                      }) {
-  const classes = useStyles()
+  const mobileMode = useMobileMode()
+  const classes = useStyles({mobileMode})
   const {t} = useTranslation('ControlPanel')
   const [tabValue, setTabValue] = useState(PanelTab.Basic)
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue)
+  }
+
+  if (mobileMode) {
+    return (
+      <BasicRequestPanel
+        isConnected={isConnected}
+
+        favoriteRequestID={favoriteRequestID}
+        onShowFavoriteRequestsClick={showFavoriteRequestDialog}
+        onFavoriteRequestSet={onFavoriteRequestSet}
+        onFavoriteRequestUnset={onFavoriteRequestUnset}
+
+        requestBody={requestBody}
+        onRequestBodyChange={onRequestBodyChange}
+
+        onSendButtonClick={onSendMessage}
+      />
+    )
   }
 
   return (
