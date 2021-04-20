@@ -4,10 +4,10 @@ import {useSelector} from 'react-redux'
 import {LoadingState} from '../../../../constants'
 import {getProjectState, getSelectedMessageID} from '../../../../selectors'
 import MobileLayout from '../../../layouts/MobileLayout'
-import ToolbarContainer from '../../web/ToolbarContainer'
-import ControlPanelContainer from '../../web/ControlPanelContainer'
-import ListPanelContainer from '../../web/ListPanelContainer'
-import DetailPanelContainer from '../../web/DetailPanel'
+import ToolbarContainer from '../ToolbarContainer'
+import ControlPanelContainer from '../ControlPanelContainer'
+import ListPanelContainer from '../ListPanelContainer'
+import DetailPanelContainer from '../DetailPanel'
 
 export default function MainMobileContainer({appController}) {
   const projectState = useSelector(getProjectState)
