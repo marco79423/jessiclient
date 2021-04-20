@@ -3,9 +3,9 @@ import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
 import {Chip, Grid} from '@material-ui/core'
 
-import SearchField from '../../elements/SearchField'
-import Button from '../../elements/Button'
-import ClearAllDialog from '../../modules/ListPanel/ClearAllDialog'
+import SearchField from '../../../elements/SearchField'
+import Button from '../../../elements/Button'
+import ClearAllDialog from './ClearAllDialog'
 import PropTypes from 'prop-types'
 
 

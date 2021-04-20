@@ -4,7 +4,7 @@ import RequestPanel from './RequestPanel'
 
 
 export default {
-  title: 'modules/ControlPanel/RequestPanel',
+  title: 'modules/web/ControlPanel/RequestPanel',
   component: RequestPanel,
 }
 

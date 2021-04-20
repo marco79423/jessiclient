@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import {useTranslation} from 'next-i18next'
 import {Grid, makeStyles, Paper} from '@material-ui/core'
 
-import Button from '../../elements/Button'
-import TextArea from '../../elements/TextArea'
+import Button from '../../../elements/Button'
+import TextArea from '../../../elements/TextArea'
 
 const useStyles = makeStyles((theme) => ({
   root: {

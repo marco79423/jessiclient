@@ -3,11 +3,11 @@ import React from 'react'
 import ConnectionPanel from './ConnectionPanel'
 import ControlPanel from './ControlPanel'
 import BasicRequestPanel from './BasicRequestPanel'
-import {ConnectionState} from '../../../constants'
+import {ConnectionState} from '../../../../constants'
 
 
 export default {
-  title: 'modules/ControlPanel/ControlPanel',
+  title: 'modules/web/ControlPanel/ControlPanel',
   component: ControlPanel,
 }
 

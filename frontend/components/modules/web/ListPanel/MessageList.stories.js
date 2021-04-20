@@ -1,12 +1,12 @@
 import React from 'react'
 
-import {MessageSource} from '../../../constants'
-import generateRandomString from '../../../utils/generateRandomString'
+import {MessageSource} from '../../../../constants'
+import generateRandomString from '../../../../utils/generateRandomString'
 import MessageList from './MessageList'
 
 
 export default {
-  title: 'modules/ListPanel/MessageList',
+  title: 'modules/web/ListPanel/MessageList',
   component: MessageList,
 }
 

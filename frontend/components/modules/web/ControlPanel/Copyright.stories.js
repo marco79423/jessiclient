@@ -4,7 +4,7 @@ import Copyright from './Copyright'
 
 
 export default {
-  title: 'modules/ControlPanel/Copyright',
+  title: 'modules/web/ControlPanel/Copyright',
   component: Copyright,
 }
 

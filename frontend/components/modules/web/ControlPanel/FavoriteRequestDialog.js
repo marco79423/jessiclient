@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {useTranslation} from 'next-i18next'
 import {Grid} from '@material-ui/core'
-import BasicDialog from '../../elements/BasicDialog'
-import Button from '../../elements/Button'
-import EditableCard from '../../elements/EditableCard'
+import BasicDialog from '../../../elements/BasicDialog'
+import Button from '../../../elements/Button'
+import EditableCard from '../../../elements/EditableCard'
 
 
 export default function FavoriteRequestDialog({

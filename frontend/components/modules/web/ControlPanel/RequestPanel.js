@@ -3,10 +3,10 @@ import {makeStyles} from '@material-ui/core/styles'
 import {Tab, Tabs} from '@material-ui/core'
 import {TabContext, TabPanel} from '@material-ui/lab'
 import {useTranslation} from 'next-i18next'
-import ScheduleRequestPanel from '../../modules/ControlPanel/ScheduleRequestPanel'
-import BasicRequestPanel from '../../modules/ControlPanel/BasicRequestPanel'
+import ScheduleRequestPanel from './ScheduleRequestPanel'
+import BasicRequestPanel from './BasicRequestPanel'
 import PropTypes from 'prop-types'
-import useMobileMode from '../../hooks/useMobileMode'
+import useMobileMode from '../../../hooks/useMobileMode'
 
 
 const useStyles = makeStyles((theme) => ({

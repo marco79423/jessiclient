@@ -18,8 +18,8 @@ import {
   updateFavoriteRequest
 } from '../../../../slices/project'
 import {ConnectionState} from '../../../../constants'
-import FavoriteRequestDialog from '../../../modules/ControlPanel/FavoriteRequestDialog'
-import RequestPanel from '../../../modules/ControlPanel/RequestPanel'
+import FavoriteRequestDialog from '../../../modules/web/ControlPanel/FavoriteRequestDialog'
+import RequestPanel from '../../../modules/web/ControlPanel/RequestPanel'
 
 export default function RequestPanelContainer({appController}) {
   const dispatch = useDispatch()

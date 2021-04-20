@@ -4,7 +4,7 @@ import Logo from './Logo'
 
 
 export default {
-  title: 'modules/AppBar/Logo',
+  title: 'modules/web/AppBar/Logo',
   component: Logo,
 }
 

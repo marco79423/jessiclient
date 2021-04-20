@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import {useTranslation} from 'next-i18next'
 import {Grid} from '@material-ui/core'
 
-import BasicDialog from '../../elements/BasicDialog'
-import Button from '../../elements/Button'
-import TextField from '../../elements/TextField'
-import Checkbox from '../../elements/Checkbox'
+import BasicDialog from '../../../elements/BasicDialog'
+import Button from '../../../elements/Button'
+import TextField from '../../../elements/TextField'
+import Checkbox from '../../../elements/Checkbox'
 
 
 export default function ExportPanel({open, onClose, exportProject}) {

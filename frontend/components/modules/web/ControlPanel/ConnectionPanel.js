@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
 
-import LinkButton from '../../elements/LinkButton'
-import TextField from '../../elements/TextField'
-import {ConnectionState} from '../../../constants'
+import LinkButton from '../../../elements/LinkButton'
+import TextField from '../../../elements/TextField'
+import {ConnectionState} from '../../../../constants'
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react'
 import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
 
-import {MessageSource} from '../../../constants'
-import List from '../../elements/List'
-import ListItem from '../../elements/ListItem'
+import {MessageSource} from '../../../../constants'
+import List from '../../../elements/List'
+import ListItem from '../../../elements/ListItem'
 import PropTypes from 'prop-types'
 
 const useStyles = makeStyles((theme) => ({

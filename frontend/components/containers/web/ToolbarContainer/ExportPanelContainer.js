@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import ExportPanel from '../../../modules/AppBar/ExportPanel'
+import ExportPanel from '../../../modules/web/AppBar/ExportPanel'
 
 
 export default function ExportPanelContainer({appController, open, onClose}) {

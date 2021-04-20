@@ -3,7 +3,7 @@ import ControlBar from './ControlBar'
 
 
 export default {
-  title: 'modules/ListPanel/ControlBar',
+  title: 'modules/web/ListPanel/ControlBar',
   component: ControlBar,
 }
 

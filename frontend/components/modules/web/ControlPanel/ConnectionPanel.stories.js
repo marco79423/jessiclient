@@ -1,11 +1,11 @@
 import React from 'react'
 
 import ConnectionPanel from './ConnectionPanel'
-import {ConnectionState} from '../../../constants'
+import {ConnectionState} from '../../../../constants'
 
 
 export default {
-  title: 'modules/ControlPanel/ConnectionPanel',
+  title: 'modules/web/ControlPanel/ConnectionPanel',
   component: ConnectionPanel,
   argTypes: {
     state: {

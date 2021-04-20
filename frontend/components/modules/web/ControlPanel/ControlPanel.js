@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import {makeStyles} from '@material-ui/core/styles'
 import {Paper} from '@material-ui/core'
 
-import Copyright from '../../modules/ControlPanel/Copyright'
-import useMobileMode from '../../hooks/useMobileMode'
+import Copyright from './Copyright'
+import useMobileMode from '../../../hooks/useMobileMode'
 
 
 const useStyles = makeStyles((theme) => ({

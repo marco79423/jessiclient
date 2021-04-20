@@ -4,7 +4,7 @@ import ScheduleRequestPanel from './ScheduleRequestPanel'
 
 
 export default {
-  title: 'modules/ControlPanel/ScheduleRequestPanel',
+  title: 'modules/web/ControlPanel/ScheduleRequestPanel',
   component: ScheduleRequestPanel,
 }
 

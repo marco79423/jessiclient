@@ -4,8 +4,8 @@ import {makeStyles} from '@material-ui/core/styles'
 import {useTranslation} from 'next-i18next'
 import {Typography} from '@material-ui/core'
 
-import BasicDialog from '../../elements/BasicDialog'
-import Button from '../../elements/Button'
+import BasicDialog from '../../../elements/BasicDialog'
+import Button from '../../../elements/Button'
 
 
 const useStyles = makeStyles((theme) => ({

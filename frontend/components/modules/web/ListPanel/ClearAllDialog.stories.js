@@ -4,7 +4,7 @@ import ClearAllDialog from './ClearAllDialog'
 
 
 export default {
-  title: 'modules/ListPanel/ClearAllDialog',
+  title: 'modules/web/ListPanel/ClearAllDialog',
   component: ClearAllDialog,
 }
 

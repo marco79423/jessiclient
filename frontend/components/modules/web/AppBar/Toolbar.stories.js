@@ -4,7 +4,7 @@ import Toolbar from './Toolbar'
 
 
 export default {
-  title: 'modules/AppBar/Toolbar',
+  title: 'modules/web/AppBar/Toolbar',
   component: Toolbar,
   parameters: {
     backgrounds: {default: 'header',},
