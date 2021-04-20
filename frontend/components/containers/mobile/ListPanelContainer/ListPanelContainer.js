@@ -7,7 +7,7 @@ import {getMessages, getSelectedMessageID} from '../../../../selectors'
 import ListPanel from '../../../modules/mobile/ListPanel/ListPanel'
 
 
-export default function ListPanelContainer({appController}) {
+export default function ListPanelContainer({setDisplayMode, appController}) {
   const dispatch = useDispatch()
   const messages = useSelector(getMessages)
   const selectedMessageID = useSelector(getSelectedMessageID)
@@ -24,6 +24,7 @@ export default function ListPanelContainer({appController}) {
 
   return (
     <ListPanel
+      setDisplayMode={setDisplayMode}
       messages={messages}
       selectedMessageID={selectedMessageID}
       onSelectedMessageChange={onSelectedMessageChange}

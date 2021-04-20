@@ -3,6 +3,8 @@ import {makeStyles} from '@material-ui/core/styles'
 
 import ControlBar from './ControlBar'
 import MessageList from './MessageList'
+import Button from '../../../elements/Button'
+import {AppMobileDisplayMode} from '../../../../constants'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -11,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function ListPanel({messages, selectedMessageID, onSelectedMessageChange, onClearAllMessages}) {
+export default function ListPanel({setDisplayMode, messages, selectedMessageID, onSelectedMessageChange, onClearAllMessages}) {
   const classes = useStyles()
   const [filteredMessages, setFilteredMessages] = useState(messages)
   const [searchFilters, setSearchFilters] = useState([])
@@ -29,6 +31,11 @@ export default function ListPanel({messages, selectedMessageID, onSelectedMessag
 
   return (
     <div className={classes.root}>
+      <div>
+        <Button onClick={() => setDisplayMode(AppMobileDisplayMode.MainPanel)}>切換</Button>
+        <Button onClick={() => setDisplayMode(AppMobileDisplayMode.DetailPanel)}>切換</Button>
+      </div>
+
       <ControlBar
         searchFilters={searchFilters}
         onSearchFilterChange={setSearchFilters}

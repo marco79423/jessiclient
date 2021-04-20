@@ -1,8 +1,9 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {makeStyles} from '@material-ui/core/styles'
 import {AppBar as MuiAppBar, Backdrop, Drawer, Grid} from '@material-ui/core'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
+import {AppMobileDisplayMode} from '../../constants'
 import Logo from '../modules/web/AppBar/Logo'
 
 
@@ -31,14 +32,13 @@ const useStyles = makeStyles((theme) => ({
 export default function MobileLayout({
                                        appController,
                                        loading,
-                                       listOpen,
-                                       detailOpen,
                                        toolbar: Toolbar,
                                        controlPanel: ControlPanel,
                                        listPanel: ListPanel,
                                        detailPanel: DetailPanel,
                                      }) {
   const classes = useStyles()
+  const [displayMode, setDisplayMode] = useState(AppMobileDisplayMode.MainPanel)
 
   return (
     <>
@@ -58,16 +58,16 @@ export default function MobileLayout({
       </MuiAppBar>
       <main className={classes.main}>
         <div className={classes.controlPanel}>
-          {<ControlPanel appController={appController}/>}
+          {<ControlPanel appController={appController} setDisplayMode={setDisplayMode}/>}
         </div>
-        <Drawer anchor="right" open={listOpen}>
+        <Drawer anchor="right" open={displayMode === AppMobileDisplayMode.ListPanel}>
           <div className={classes.listPanel}>
-            {<ListPanel appController={appController}/>}
+            {<ListPanel appController={appController} setDisplayMode={setDisplayMode}/>}
           </div>
         </Drawer>
-        <Drawer anchor="right" open={detailOpen}>
+        <Drawer anchor="right" open={displayMode === AppMobileDisplayMode.DetailPanel}>
           <div className={classes.detailPanel}>
-            {<DetailPanel appController={appController}/>}
+            {<DetailPanel appController={appController} setDisplayMode={setDisplayMode}/>}
           </div>
         </Drawer>
       </main>

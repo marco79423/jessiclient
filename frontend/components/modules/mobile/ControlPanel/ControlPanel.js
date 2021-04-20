@@ -3,8 +3,10 @@ import PropTypes from 'prop-types'
 import {makeStyles} from '@material-ui/core/styles'
 import {Paper} from '@material-ui/core'
 
+import {AppMobileDisplayMode} from '../../../../constants'
 import Copyright from './Copyright'
 import useMobileMode from '../../../hooks/useMobileMode'
+import Button from '../../../elements/Button'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -16,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   connectionPanel: ({mobileMode}) => ({
     marginTop: mobileMode ? theme.spacing(0) : theme.spacing(3),
   }),
-  requestPanel:  ({mobileMode}) => ({
+  requestPanel: ({mobileMode}) => ({
     marginTop: mobileMode ? theme.spacing(2) : theme.spacing(4),
   }),
   copyright: {
@@ -24,12 +26,15 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function ControlPanel({connectionPanel, requestPanel}) {
+export default function ControlPanel({setDisplayMode, connectionPanel, requestPanel}) {
   const mobileMode = useMobileMode()
   const classes = useStyles({mobileMode})
 
   return (
     <Paper className={classes.root} elevation={1} square>
+      <div>
+        <Button onClick={() => setDisplayMode(AppMobileDisplayMode.ListPanel)}>切換</Button>
+      </div>
       <div className={classes.connectionPanel}>
         {connectionPanel}
       </div>

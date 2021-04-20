@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {useSelector} from 'react-redux'
 
 import {LoadingState} from '../../../../constants'
@@ -11,14 +11,11 @@ import DetailPanelContainer from '../DetailPanel'
 
 export default function MainMobileContainer({appController}) {
   const projectState = useSelector(getProjectState)
-  const messageID = useSelector(getSelectedMessageID)
 
   return (
     <MobileLayout
       appController={appController}
       loading={projectState === LoadingState.Loading}
-      listOpen={true}
-      detailOpen={messageID !== null}
       toolbar={ToolbarContainer}
       controlPanel={ControlPanelContainer}
       listPanel={ListPanelContainer}

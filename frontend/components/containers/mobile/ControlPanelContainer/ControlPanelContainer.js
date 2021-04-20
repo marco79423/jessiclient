@@ -5,9 +5,10 @@ import RequestPanelContainer from './RequestPanelContainer'
 import ControlPanel from '../../../modules/mobile/ControlPanel/ControlPanel'
 
 
-export default function ControlPanelContainer({appController}) {
+export default function ControlPanelContainer({appController, setDisplayMode}) {
   return (
     <ControlPanel
+      setDisplayMode={setDisplayMode}
       connectionPanel={<ConnectionPanelContainer appController={appController}/>}
       requestPanel={<RequestPanelContainer appController={appController}/>}
     />

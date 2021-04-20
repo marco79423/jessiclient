@@ -4,6 +4,8 @@ import {InputBase, Paper, Tab, Tabs, Toolbar} from '@material-ui/core'
 import {TabContext, TabPanel} from '@material-ui/lab'
 import ReactJson from 'react-json-view'
 import {useTranslation} from 'next-i18next'
+import Button from '../../../elements/Button'
+import {AppMobileDisplayMode} from '../../../../constants'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,7 +38,7 @@ const PanelTab = Object.freeze({
   JSON: 'json',
 })
 
-export default function DetailPanel({message}) {
+export default function DetailPanel({message, setDisplayMode}) {
   const classes = useStyles()
   const {t} = useTranslation('DetailPanel')
   const [tabValue, setTabValue] = useState(PanelTab.PlainText)
@@ -66,6 +68,9 @@ export default function DetailPanel({message}) {
 
   return (
     <div className={classes.root}>
+      <div>
+        <Button onClick={() => setDisplayMode(AppMobileDisplayMode.ListPanel)}>切換</Button>
+      </div>
       <Paper className={classes.dataSection} square>
         <TabContext value={tabValue}>
           <TabPanel value={PanelTab.PlainText}>

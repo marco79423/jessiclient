@@ -1,16 +1,25 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 
+import {AppWebDisplayMode} from '../../../../constants'
 import * as projectActions from '../../../../slices/project'
 import * as currentActions from '../../../../slices/current'
 import {getMessages, getSelectedMessageID} from '../../../../selectors'
 import ListPanel from '../../../modules/web/ListPanel/ListPanel'
 
 
-export default function ListPanelContainer({appController}) {
+export default function ListPanelContainer({appController, setDisplayMode}) {
   const dispatch = useDispatch()
   const messages = useSelector(getMessages)
   const selectedMessageID = useSelector(getSelectedMessageID)
+
+  useEffect(() => {
+    if (selectedMessageID) {
+      setDisplayMode(AppWebDisplayMode.DetailPanelOn)
+    } else {
+      setDisplayMode(AppWebDisplayMode.DetailPanelOff)
+    }
+  }, [selectedMessageID])
 
   const onSelectedMessageChange = (id) => {
     dispatch(currentActions.setSelectedMessageID(id))
