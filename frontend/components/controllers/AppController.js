@@ -22,7 +22,7 @@ import {
 } from '../../features/project'
 import {downloadJsonData} from '../../utils/jsDownloader'
 import WSClient from '../../utils/WSClient'
-import scheduler from '../../features/scheduler'
+import Scheduler from '../../utils/Scheduler'
 import Alert from '../elements/Alert'
 
 
@@ -39,6 +39,7 @@ export default function AppController({children}) {
   const [errorAlertOpen, setErrorAlert] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const [wsClient, setWSClient] = useState(null)
+  const [scheduler, setScheduler] = useState(null)
 
   const showErrorAlert = () => {
     setErrorAlert(true)
@@ -75,10 +76,9 @@ export default function AppController({children}) {
   }
 
   const enableScheduler = async (message, timeInterval) => {
-    scheduler.setOnEvent(async () => {
+    scheduler.enable(async () => {
       await sendMessage(message)
-    })
-    scheduler.enable(timeInterval)
+    }, timeInterval)
     await dispatch(changeScheduleEnabledStatus(true))
   }
 
@@ -136,6 +136,9 @@ export default function AppController({children}) {
       dispatch(changeScheduleEnabledStatus(false))
     })
     setWSClient(wsClient)
+
+    const scheduler = new Scheduler()
+    setScheduler(scheduler)
 
     const projectData = await loadProjectData()
     if (projectData) {
