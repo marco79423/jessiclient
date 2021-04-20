@@ -15,12 +15,13 @@ export default function MainWebContainer({appController}) {
 
   return (
     <DefaultLayout
+      appController={appController}
       loading={projectState === LoadingState.Loading}
       detailOpen={messageID !== null}
-      toolbar={<ToolbarContainer appController={appController}/>}
-      controlPanel={<ControlPanelContainer appController={appController}/>}
-      listPanel={<ListPanelContainer appController={appController}/>}
-      detailPanel={<DetailPanelContainer appController={appController}/>}
+      toolbar={ToolbarContainer}
+      controlPanel={ControlPanelContainer}
+      listPanel={ListPanelContainer}
+      detailPanel={DetailPanelContainer}
     />
   )
 }

@@ -15,12 +15,14 @@ export default function MainMobileContainer({appController}) {
 
   return (
     <MobileLayout
+      appController={appController}
       loading={projectState === LoadingState.Loading}
+      listOpen={true}
       detailOpen={messageID !== null}
-      toolbar={<ToolbarContainer appController={appController}/>}
-      controlPanel={<ControlPanelContainer appController={appController}/>}
-      listPanel={<ListPanelContainer appController={appController}/>}
-      detailPanel={<DetailPanelContainer appController={appController}/>}
+      toolbar={ToolbarContainer}
+      controlPanel={ControlPanelContainer}
+      listPanel={ListPanelContainer}
+      detailPanel={DetailPanelContainer}
     />
   )
 }

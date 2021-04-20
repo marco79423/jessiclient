@@ -1,6 +1,6 @@
 import React from 'react'
 import {makeStyles} from '@material-ui/core/styles'
-import {AppBar as MuiAppBar, Backdrop, Grid, Slide} from '@material-ui/core'
+import {AppBar as MuiAppBar, Backdrop, Drawer, Grid} from '@material-ui/core'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
 import Logo from '../modules/web/AppBar/Logo'
@@ -28,8 +28,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function MobileLayout({loading, detailOpen, toolbar, controlPanel, listPanel, detailPanel}) {
-  const classes = useStyles({detailOpen})
+export default function MobileLayout({
+                                       appController,
+                                       loading,
+                                       listOpen,
+                                       detailOpen,
+                                       toolbar: Toolbar,
+                                       controlPanel: ControlPanel,
+                                       listPanel: ListPanel,
+                                       detailPanel: DetailPanel,
+                                     }) {
+  const classes = useStyles()
 
   return (
     <>
@@ -43,22 +52,24 @@ export default function MobileLayout({loading, detailOpen, toolbar, controlPanel
             <Logo/>
           </Grid>
           <Grid item>
-            {toolbar}
+            {<Toolbar appController={appController}/>}
           </Grid>
         </Grid>
       </MuiAppBar>
       <main className={classes.main}>
         <div className={classes.controlPanel}>
-          {controlPanel}
+          {<ControlPanel appController={appController}/>}
         </div>
-        <div className={classes.listPanel}>
-          {listPanel}
-        </div>
-        <Slide direction="left" in={detailOpen} mountOnEnter unmountOnExit>
-          <div className={classes.detailPanel}>
-            {detailPanel}
+        <Drawer anchor="right" open={listOpen}>
+          <div className={classes.listPanel}>
+            {<ListPanel appController={appController}/>}
           </div>
-        </Slide>
+        </Drawer>
+        <Drawer anchor="right" open={detailOpen}>
+          <div className={classes.detailPanel}>
+            {<DetailPanel appController={appController}/>}
+          </div>
+        </Drawer>
       </main>
     </>
   )

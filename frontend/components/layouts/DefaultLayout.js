@@ -28,7 +28,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function DefaultLayout({loading, detailOpen, toolbar, controlPanel, listPanel, detailPanel}) {
+export default function DefaultLayout({
+                                        appController,
+                                        loading,
+                                        detailOpen,
+                                        toolbar: Toolbar,
+                                        controlPanel: ControlPanel,
+                                        listPanel: ListPanel,
+                                        detailPanel: DetailPanel,
+                                      }) {
   const classes = useStyles({detailOpen})
 
   return (
@@ -43,20 +51,20 @@ export default function DefaultLayout({loading, detailOpen, toolbar, controlPane
             <Logo/>
           </Grid>
           <Grid item>
-            {toolbar}
+            {<Toolbar appController={appController}/>}
           </Grid>
         </Grid>
       </MuiAppBar>
       <main className={classes.main}>
         <div className={classes.controlPanel}>
-          {controlPanel}
+          {<ControlPanel appController={appController}/>}
         </div>
         <div className={classes.listPanel}>
-          {listPanel}
+          {<ListPanel appController={appController}/>}
         </div>
         <Slide direction="left" in={detailOpen} mountOnEnter unmountOnExit>
           <div className={classes.detailPanel}>
-            {detailPanel}
+            {<DetailPanel appController={appController}/>}
           </div>
         </Slide>
       </main>
