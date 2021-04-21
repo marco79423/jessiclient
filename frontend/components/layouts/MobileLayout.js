@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
   root: {},
   appBar: {
     background: theme.project.page.header.background,
+    height: 64,
   },
   main: {
     display: 'flex',

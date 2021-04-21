@@ -56,6 +56,7 @@ export default function ScheduleRequestPanel({
       </Grid>
       <TextArea
         className={classes.requestBody}
+        rows={16}
         label={t('請求內容')}
         value={requestBody}
         onChange={onRequestBodyChange}

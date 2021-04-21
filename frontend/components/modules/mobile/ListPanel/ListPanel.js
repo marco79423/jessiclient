@@ -53,8 +53,6 @@ export default function ListPanel({
       </div>
 
       <ControlBar
-        searchFilters={searchFilters}
-        onSearchFilterChange={setSearchFilters}
         onClearAll={onClearAll}
       />
 

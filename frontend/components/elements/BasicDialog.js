@@ -29,10 +29,17 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function BasicDialog({children, title, open, onClose, actions}) {
+export default function BasicDialog({children, fullScreen, title, open, onClose, actions}) {
   const classes = useStyles()
   return (
-    <Dialog classes={{paper: classes.root}} scroll="body" maxWidth="md" open={open} onClose={onClose}>
+    <Dialog
+      classes={{paper: classes.root}}
+      fullScreen={fullScreen}
+      scroll="body"
+      maxWidth="md"
+      open={open}
+      onClose={onClose}
+    >
       <Grid container direction="column">
         {/*Title*/}
         <Grid item>
@@ -68,6 +75,7 @@ export default function BasicDialog({children, title, open, onClose, actions}) {
 
 BasicDialog.propTypes = {
   children: PropTypes.node.isRequired,
+  fullScreen: PropTypes.bool,
   title: PropTypes.string.isRequired,
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,

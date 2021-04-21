@@ -9,13 +9,13 @@ import TextArea from '../../../elements/TextArea'
 const useStyles = makeStyles((theme) => ({
   root: {
     borderTopLeftRadius: 0,
-    padding: theme.spacing(3)
+    padding: theme.spacing(2)
   },
   requestBody: {
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(2),
   },
   bottomActions: {
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(2),
   }
 }))
 
@@ -49,6 +49,7 @@ export default function BasicRequestPanel({
       </Grid>
       <TextArea
         className={classes.requestBody}
+        rows={10}
         label={t('請求內容')}
         value={requestBody}
         onChange={onRequestBodyChange}

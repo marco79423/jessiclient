@@ -19,7 +19,7 @@ import {
 } from '../../../../slices/project'
 import {ConnectionState} from '../../../../constants'
 import FavoriteRequestDialog from '../../../modules/mobile/ControlPanel/FavoriteRequestDialog'
-import RequestPanel from '../../../modules/mobile/ControlPanel/RequestPanel'
+import BasicRequestPanel from '../../../modules/mobile/ControlPanel/BasicRequestPanel'
 
 export default function RequestPanelContainer({appController}) {
   const dispatch = useDispatch()
@@ -27,22 +27,15 @@ export default function RequestPanelContainer({appController}) {
   const connectionState = useSelector(getConnectionState)
   const requestBody = useSelector(getRequestBody)
   const scheduleEnabled = useSelector(getScheduleEnabledStatus)
-  const timeInterval = useSelector(getScheduleTimeInterval)
   const favoriteRequests = useSelector(getFavoriteRequests)
   const [favoriteRequestID, setFavoriteRequestID] = useState(null)
   const [favoriteRequestDialogOpen, setFavoriteRequestDialog] = useState(false)
   const [localRequestBody, setLocalRequestBody] = useState(requestBody)
-  const [localScheduleTimeInterval, setLocalTimeInterval] = useState(timeInterval)
 
   const onRequestBodyChange = (value) => {
     setLocalRequestBody(value)
     dispatch(changeRequestBody(localRequestBody))
     setFavoriteRequestID(null)
-  }
-
-  const onScheduleTimeIntervalChange = (timeInterval) => {
-    setLocalTimeInterval(+timeInterval)
-    dispatch(changeScheduleTimeInterval(+localScheduleTimeInterval))
   }
 
   const onSendMessage = async () => {
@@ -69,14 +62,6 @@ export default function RequestPanelContainer({appController}) {
   const onFavoriteRequestUnset = () => {
     dispatch(removeFavoriteRequest(favoriteRequestID))
     setFavoriteRequestID(null)
-  }
-
-  const onEnableButtonClick = async () => {
-    if (scheduleEnabled) {
-      await appController.disableScheduler()
-    } else {
-      await appController.enableScheduler(localRequestBody, +localScheduleTimeInterval)
-    }
   }
 
   const showFavoriteRequestDialog = () => {
@@ -109,7 +94,7 @@ export default function RequestPanelContainer({appController}) {
 
   return (
     <>
-      <RequestPanel
+      <BasicRequestPanel
         isConnected={isConnected}
 
         requestBody={localRequestBody}
@@ -120,13 +105,7 @@ export default function RequestPanelContainer({appController}) {
         onFavoriteRequestSet={onFavoriteRequestSet}
         onFavoriteRequestUnset={onFavoriteRequestUnset}
 
-        scheduleTimeInterval={localScheduleTimeInterval}
-        onScheduleTimeIntervalChange={onScheduleTimeIntervalChange}
-
         onSendMessage={onSendMessage}
-
-        scheduleEnabled={scheduleEnabled}
-        onEnableButtonClick={onEnableButtonClick}
       />
 
       <FavoriteRequestDialog

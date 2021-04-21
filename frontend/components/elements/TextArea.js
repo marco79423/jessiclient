@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {TextField} from '@material-ui/core'
 
-export default function TextArea({className, label, value, onChange}) {
+export default function TextArea({className, rows, label, value, onChange}) {
   const onValueChange = (e) => {
     onChange(e.target.value)
   }
@@ -13,7 +13,7 @@ export default function TextArea({className, label, value, onChange}) {
       variant="outlined"
       margin="normal"
       multiline
-      rows={16}
+      rows={rows}
       fullWidth
       label={label}
       value={value}
@@ -24,6 +24,7 @@ export default function TextArea({className, label, value, onChange}) {
 
 TextArea.propTypes = {
   className: PropTypes.string,
+  rows: PropTypes.number.isRequired,
   label: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,

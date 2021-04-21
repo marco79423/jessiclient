@@ -19,18 +19,10 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-export default function ControlBar({searchFilters, onSearchFilterChange, onClearAll}) {
+export default function ControlBar({onClearAll}) {
   const classes = useStyles()
   const {t} = useTranslation('ListPanel')
   const [clearAllDialogOn, setClearAllDialog] = useState(false)
-
-  const onSearchButtonClick = (searchFilter) => {
-    onSearchFilterChange([...searchFilters, searchFilter])
-  }
-
-  const onClearButtonClick = (targetSearchFilter) => {
-    onSearchFilterChange(searchFilters.filter(searchFilter => searchFilter !== targetSearchFilter))
-  }
 
   const showClearAllDialog = () => {
     setClearAllDialog(true)
@@ -43,23 +35,6 @@ export default function ControlBar({searchFilters, onSearchFilterChange, onClear
   return (
     <Grid className={classes.root} container justify="space-between" alignItems="center">
       <Grid item>
-        <Grid container alignItems="baseline" spacing={1}>
-          <Grid item>
-            <SearchField
-              placeholder={t('搜尋訊息')}
-              onSearch={onSearchButtonClick}
-              buttonLabel={t('搜尋')}
-            />
-          </Grid>
-          {searchFilters.map(searchFilter => (
-            <Grid key={searchFilter} item>
-              <Chip
-                label={searchFilter}
-                onDelete={() => onClearButtonClick(searchFilter)}
-              />
-            </Grid>
-          ))}
-        </Grid>
       </Grid>
       <Grid item>
         <Button onClick={showClearAllDialog}>
@@ -77,7 +52,5 @@ export default function ControlBar({searchFilters, onSearchFilterChange, onClear
 }
 
 ControlBar.propTypes = {
-  searchFilters: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onSearchFilterChange: PropTypes.func.isRequired,
   onClearAll: PropTypes.func.isRequired,
 }
