@@ -4,12 +4,15 @@ import {InputBase, Paper, Tab, Tabs, Toolbar} from '@material-ui/core'
 import {TabContext, TabPanel} from '@material-ui/lab'
 import ReactJson from 'react-json-view'
 import {useTranslation} from 'next-i18next'
-import Button from '../../../elements/Button'
-import {AppMobileDisplayMode} from '../../../../constants'
+import IconButton from '../../../elements/IconButton'
+import CloseIcon from '@material-ui/icons/Close'
 
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  root: {},
+  appBar: {
+    background: theme.project.page.header.background,
+    height: 64,
   },
   controlBar: {
     position: 'fixed',
@@ -68,8 +71,8 @@ export default function DetailPanel({message, unselected}) {
 
   return (
     <div className={classes.root}>
-      <div>
-        <Button onClick={unselected}>切換</Button>
+      <div className={classes.appBar}>
+        <IconButton description={t('關閉訊息')} icon={CloseIcon} onClick={unselected}/>
       </div>
       <Paper className={classes.dataSection} square>
         <TabContext value={tabValue}>

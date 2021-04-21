@@ -1,20 +1,33 @@
 import React, {useEffect, useState} from 'react'
 import {makeStyles} from '@material-ui/core/styles'
+import CloseIcon from '@material-ui/icons/Close'
 
 import ControlBar from './ControlBar'
 import MessageList from './MessageList'
-import Button from '../../../elements/Button'
 import {AppMobileDisplayMode} from '../../../../constants'
+import IconButton from '../../../elements/IconButton'
+import {useTranslation} from 'next-i18next'
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
     background: theme.project.page.main.listPanel.background,
   },
+  appBar: {
+    background: theme.project.page.header.background,
+    height: 64,
+  },
 }))
 
-export default function ListPanel({setDisplayMode, messages, selectedMessageID, onSelectedMessageChange, onClearAllMessages}) {
+export default function ListPanel({
+                                    setDisplayMode,
+                                    messages,
+                                    selectedMessageID,
+                                    onSelectedMessageChange,
+                                    onClearAllMessages
+                                  }) {
   const classes = useStyles()
+  const {t} = useTranslation('ControlPanel')
   const [filteredMessages, setFilteredMessages] = useState(messages)
   const [searchFilters, setSearchFilters] = useState([])
 
@@ -29,10 +42,14 @@ export default function ListPanel({setDisplayMode, messages, selectedMessageID, 
     setSearchFilters([])
   }
 
+  const backToControlPanel = () => {
+    setDisplayMode(AppMobileDisplayMode.MainPanel)
+  }
+
   return (
     <div className={classes.root}>
-      <div>
-        <Button onClick={() => setDisplayMode(AppMobileDisplayMode.MainPanel)}>切換</Button>
+      <div className={classes.appBar}>
+        <IconButton description={t('關閉訊息列表')} icon={CloseIcon} onClick={backToControlPanel}/>
       </div>
 
       <ControlBar

@@ -1,4 +1,8 @@
 {
+  "展開訊息列表": "show message panel",
+  "關閉訊息列表": "close message panel",
+  "關閉訊息": "close detail",
+
   "欲連線的網址": "Websocket url",
   "建立連線": "Connect",
   "關閉連線": "Close",

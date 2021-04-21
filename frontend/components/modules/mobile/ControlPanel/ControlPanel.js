@@ -5,35 +5,38 @@ import {Paper} from '@material-ui/core'
 
 import {AppMobileDisplayMode} from '../../../../constants'
 import Copyright from './Copyright'
-import useMobileMode from '../../../hooks/useMobileMode'
 import Button from '../../../elements/Button'
+import {useTranslation} from 'next-i18next'
 
 
 const useStyles = makeStyles((theme) => ({
-  root: ({mobileMode}) => ({
+  root: {
     background: theme.project.page.main.controlPanel.background,
-    padding: mobileMode ? theme.spacing(2) : theme.spacing(3),
+    padding: theme.spacing(2),
     height: '100%',
-  }),
-  connectionPanel: ({mobileMode}) => ({
-    marginTop: mobileMode ? theme.spacing(0) : theme.spacing(3),
-  }),
-  requestPanel: ({mobileMode}) => ({
-    marginTop: mobileMode ? theme.spacing(2) : theme.spacing(4),
-  }),
+  },
+  controlBar: {
+    textAlign: 'right',
+  },
+  connectionPanel: {
+    marginTop: theme.spacing(2),
+  },
+  requestPanel: {
+    marginTop: theme.spacing(2),
+  },
   copyright: {
     margin: '16px auto'
   }
 }))
 
 export default function ControlPanel({setDisplayMode, connectionPanel, requestPanel}) {
-  const mobileMode = useMobileMode()
-  const classes = useStyles({mobileMode})
+  const classes = useStyles()
+  const {t} = useTranslation('ControlPanel')
 
   return (
     <Paper className={classes.root} elevation={1} square>
-      <div>
-        <Button onClick={() => setDisplayMode(AppMobileDisplayMode.ListPanel)}>切換</Button>
+      <div className={classes.controlBar}>
+        <Button onClick={() => setDisplayMode(AppMobileDisplayMode.ListPanel)}>{t('展開訊息列表')}</Button>
       </div>
       <div className={classes.connectionPanel}>
         {connectionPanel}
