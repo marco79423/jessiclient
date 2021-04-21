@@ -21,12 +21,11 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 1,
     width: 500,
   },
-  listPanel: {
-    flex: 1,
-  },
-  detailPanel: {
-    flex: 1,
-  },
+  listPanel: {},
+  detailPanel: {},
+  drawerPaper: {
+    width: '100%'
+  }
 }))
 
 export default function MobileLayout({
@@ -60,15 +59,21 @@ export default function MobileLayout({
         <div className={classes.controlPanel}>
           {<ControlPanel appController={appController} setDisplayMode={setDisplayMode}/>}
         </div>
-        <Drawer anchor="right" open={displayMode === AppMobileDisplayMode.ListPanel}>
-          <div className={classes.listPanel}>
-            {<ListPanel appController={appController} setDisplayMode={setDisplayMode}/>}
-          </div>
+        <Drawer
+          className={classes.listPanel}
+          classes={{paper: classes.drawerPaper}}
+          anchor="right"
+          open={displayMode !== AppMobileDisplayMode.MainPanel}
+        >
+          <ListPanel appController={appController} setDisplayMode={setDisplayMode}/>}
         </Drawer>
-        <Drawer anchor="right" open={displayMode === AppMobileDisplayMode.DetailPanel}>
-          <div className={classes.detailPanel}>
-            {<DetailPanel appController={appController} setDisplayMode={setDisplayMode}/>}
-          </div>
+        <Drawer
+          className={classes.detailPanel}
+          classes={{paper: classes.drawerPaper}}
+          anchor="right"
+          open={displayMode === AppMobileDisplayMode.DetailPanel}
+        >
+          {<DetailPanel appController={appController} setDisplayMode={setDisplayMode}/>}
         </Drawer>
       </main>
     </>

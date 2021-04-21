@@ -33,7 +33,6 @@ export default function ListPanel({setDisplayMode, messages, selectedMessageID, 
     <div className={classes.root}>
       <div>
         <Button onClick={() => setDisplayMode(AppMobileDisplayMode.MainPanel)}>切換</Button>
-        <Button onClick={() => setDisplayMode(AppMobileDisplayMode.DetailPanel)}>切換</Button>
       </div>
 
       <ControlBar

@@ -38,7 +38,7 @@ const PanelTab = Object.freeze({
   JSON: 'json',
 })
 
-export default function DetailPanel({message, setDisplayMode}) {
+export default function DetailPanel({message, unselected}) {
   const classes = useStyles()
   const {t} = useTranslation('DetailPanel')
   const [tabValue, setTabValue] = useState(PanelTab.PlainText)
@@ -69,7 +69,7 @@ export default function DetailPanel({message, setDisplayMode}) {
   return (
     <div className={classes.root}>
       <div>
-        <Button onClick={() => setDisplayMode(AppMobileDisplayMode.ListPanel)}>切換</Button>
+        <Button onClick={unselected}>切換</Button>
       </div>
       <Paper className={classes.dataSection} square>
         <TabContext value={tabValue}>
