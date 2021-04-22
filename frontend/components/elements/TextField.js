@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   }),
 }))
 
-export default function TextField({className, large, placeholder, value, onChange, disabled, readOnly, error, action}) {
+export default function TextField({className, large, placeholder, multiline, value, onChange, disabled, readOnly, error, action}) {
   const classes = useStyles({large, error})
 
   const onValueChange = (e) => {
@@ -33,6 +33,7 @@ export default function TextField({className, large, placeholder, value, onChang
           disabled={disabled}
           readOnly={readOnly}
           placeholder={placeholder}
+          multiline={multiline}
           value={value}
           onChange={onValueChange}
         />
@@ -50,6 +51,7 @@ TextField.propTypes = {
   className: PropTypes.string,
   large: PropTypes.bool,
   placeholder: PropTypes.string,
+  multiline: PropTypes.bool,
   value: PropTypes.string,
   onChange: PropTypes.func,
   disabled: PropTypes.bool,

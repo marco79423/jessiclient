@@ -35,6 +35,7 @@ export default function EditableText({className, value, setValue, allowEmpty, bu
     return (
       <TextField
         className={className}
+        multiline
         value={localValue}
         onChange={onChange}
         action={<LinkButton disabled={!allowEmpty && localValue === ''} onClick={onSaveButtonClick}>{buttonLabel}</LinkButton>}

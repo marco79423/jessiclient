@@ -9,7 +9,7 @@ import EditableText from './EditableText'
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(2),
-    width: 400,
+    width: 350,
     minHeight: 200,
   },
   title: {
