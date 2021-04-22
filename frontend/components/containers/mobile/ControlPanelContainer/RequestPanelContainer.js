@@ -2,31 +2,23 @@ import React, {useState} from 'react'
 import {useTranslation} from 'next-i18next'
 import {useDispatch, useSelector} from 'react-redux'
 
-import {
-  getConnectionState,
-  getFavoriteRequests,
-  getRequestBody,
-  getScheduleEnabledStatus,
-  getScheduleTimeInterval
-} from '../../../../selectors'
+import {getConnectionState, getFavoriteRequests, getRequestBody} from '../../../../selectors'
 import generateRandomString from '../../../../utils/generateRandomString'
 import {
   addFavoriteRequest,
   changeRequestBody,
-  changeScheduleTimeInterval,
   removeFavoriteRequest,
   updateFavoriteRequest
 } from '../../../../slices/project'
 import {ConnectionState} from '../../../../constants'
 import FavoriteRequestDialog from '../../../modules/mobile/ControlPanel/FavoriteRequestDialog'
-import BasicRequestPanel from '../../../modules/mobile/ControlPanel/BasicRequestPanel'
+import RequestPanel from '../../../modules/mobile/ControlPanel/RequestPanel'
 
 export default function RequestPanelContainer({appController}) {
   const dispatch = useDispatch()
   const {t} = useTranslation('ControlPanel')
   const connectionState = useSelector(getConnectionState)
   const requestBody = useSelector(getRequestBody)
-  const scheduleEnabled = useSelector(getScheduleEnabledStatus)
   const favoriteRequests = useSelector(getFavoriteRequests)
   const [favoriteRequestID, setFavoriteRequestID] = useState(null)
   const [favoriteRequestDialogOpen, setFavoriteRequestDialog] = useState(false)
@@ -94,7 +86,7 @@ export default function RequestPanelContainer({appController}) {
 
   return (
     <>
-      <BasicRequestPanel
+      <RequestPanel
         isConnected={isConnected}
 
         requestBody={localRequestBody}

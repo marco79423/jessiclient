@@ -33,10 +33,14 @@ export default function ControlPanel({setDisplayMode, connectionPanel, requestPa
   const classes = useStyles()
   const {t} = useTranslation('ControlPanel')
 
+  const showListPanel = () => {
+    setDisplayMode(AppMobileDisplayMode.ListPanel)
+  }
+
   return (
     <Paper className={classes.root} elevation={1} square>
       <div className={classes.controlBar}>
-        <Button onClick={() => setDisplayMode(AppMobileDisplayMode.ListPanel)}>{t('展開訊息列表')}</Button>
+        <Button onClick={showListPanel}>{t('展開訊息列表')}</Button>
       </div>
       <div className={classes.connectionPanel}>
         {connectionPanel}
