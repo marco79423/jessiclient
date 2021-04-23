@@ -59,11 +59,13 @@ export default function SharePanel({open, onClose, shareLink, generateShareLink}
           />
         </Grid>
         <Grid item>
-          <Checkbox
-            checked={messageIncluded}
-            setChecked={setIncludeMessages}
-            label={t('保留實際請求和回傳訊息')}
-          />
+          {!shareLink ? (
+            <Checkbox
+              checked={messageIncluded}
+              setChecked={setIncludeMessages}
+              label={t('保留實際請求和回傳訊息')}
+            />
+          ) : null}
         </Grid>
       </Grid>
     </BasicDialog>
