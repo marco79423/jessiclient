@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {useTranslation} from 'next-i18next'
 import {Grid} from '@material-ui/core'
-import BasicDialog from '../../../elements/BasicDialog'
-import Button from '../../../elements/Button'
-import EditableCard from '../../../elements/EditableCard'
+import BasicDialog from '../../elements/BasicDialog'
+import Button from '../../elements/Button'
+import EditableCard from '../../elements/EditableCard'
 
 
 export default function FavoriteRequestDialog({
@@ -17,7 +17,7 @@ export default function FavoriteRequestDialog({
   const {t} = useTranslation('ControlPanel')
 
   return (
-    <BasicDialog fullScreen title={t('常用請求列表')} open={open} onClose={onClose}>
+    <BasicDialog title={t('常用請求列表')} open={open} onClose={onClose}>
       <Grid container spacing={2} justify="center">
         {favoriteRequests.map(favoriteRequest => (
           <FavoriteRequestItem

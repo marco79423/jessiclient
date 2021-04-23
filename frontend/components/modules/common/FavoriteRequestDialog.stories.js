@@ -4,7 +4,7 @@ import FavoriteRequestDialog from './FavoriteRequestDialog'
 
 
 export default {
-  title: 'modules/web/ControlPanel/FavoriteRequestDialog',
+  title: 'modules/common/FavoriteRequestDialog',
   component: FavoriteRequestDialog,
 }
 

@@ -1,7 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {makeStyles} from '@material-ui/core/styles'
-import {Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton} from '@material-ui/core'
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  IconButton,
+  useMediaQuery,
+  useTheme
+} from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 
 const useStyles = makeStyles((theme) => ({
@@ -29,8 +38,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function BasicDialog({children, fullScreen, title, open, onClose, actions}) {
+export default function BasicDialog({children, title, open, onClose, actions}) {
   const classes = useStyles()
+  const theme = useTheme()
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
+
   return (
     <Dialog
       classes={{paper: classes.root}}
@@ -75,7 +87,6 @@ export default function BasicDialog({children, fullScreen, title, open, onClose,
 
 BasicDialog.propTypes = {
   children: PropTypes.node.isRequired,
-  fullScreen: PropTypes.bool,
   title: PropTypes.string.isRequired,
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,

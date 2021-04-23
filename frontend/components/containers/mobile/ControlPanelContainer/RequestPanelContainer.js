@@ -11,7 +11,7 @@ import {
   updateFavoriteRequest
 } from '../../../../slices/project'
 import {ConnectionState} from '../../../../constants'
-import FavoriteRequestDialog from '../../../modules/mobile/ControlPanel/FavoriteRequestDialog'
+import FavoriteRequestDialog from '../../../modules/common/FavoriteRequestDialog'
 import RequestPanel from '../../../modules/mobile/ControlPanel/RequestPanel'
 
 export default function RequestPanelContainer({appController}) {
