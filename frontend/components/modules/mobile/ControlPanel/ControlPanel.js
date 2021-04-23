@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   copyright: {
-    margin: '16px auto'
+    margin: '16px auto 8px'
   }
 }))
 
