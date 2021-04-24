@@ -1,9 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {makeStyles} from '@material-ui/core/styles'
-import {Paper} from '@material-ui/core'
-
-import Copyright from './Copyright'
+import {Link, Paper, Typography} from '@material-ui/core'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +20,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   copyright: {
-    margin: '16px auto 0'
+    margin: '16px auto 0',
+    color: theme.project.page.main.controlPanel.copyright.textColor,
   }
 }))
 
@@ -38,7 +37,11 @@ export default function ControlPanel({connectionPanel, requestPanel}) {
         {requestPanel}
       </div>
       <div className={classes.copyright}>
-        <Copyright/>
+        <Typography variant="body2" align="center">
+          {'Copyright © '}
+          <Link color="inherit" href="https://eng.marco79423.net/">兩大類</Link>{' '}
+          {new Date().getFullYear()}
+        </Typography>
       </div>
     </Paper>
   )

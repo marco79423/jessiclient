@@ -2,11 +2,11 @@ import React, {useState} from 'react'
 import {useTranslation} from 'next-i18next'
 import {Grid, Typography} from '@material-ui/core'
 
-import BasicDialog from '../../../elements/BasicDialog'
-import Button from '../../../elements/Button'
-import TextField from '../../../elements/TextField'
-import Checkbox from '../../../elements/Checkbox'
-import LinkButton from '../../../elements/LinkButton'
+import BasicDialog from '../../elements/BasicDialog'
+import Button from '../../elements/Button'
+import TextField from '../../elements/TextField'
+import Checkbox from '../../elements/Checkbox'
+import LinkButton from '../../elements/LinkButton'
 import {makeStyles} from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function SharePanel({open, onClose, shareLink, generateShareLink}) {
+export default function ShareDialog({open, onClose, shareLink, generateShareLink}) {
   const classes = useStyles()
   const {t} = useTranslation('Toolbar')
   const [messageIncluded, setIncludeMessages] = useState(false)
@@ -72,7 +72,7 @@ export default function SharePanel({open, onClose, shareLink, generateShareLink}
   )
 }
 
-SharePanel.propTypes = {
+ShareDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   shareLink: PropTypes.string.isRequired,

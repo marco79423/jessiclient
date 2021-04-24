@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import {useDispatch, useSelector} from 'react-redux'
 import {useTranslation} from 'next-i18next'
 
-import {changeShareLink, clearShareLink} from '../../../../slices/current'
-import {getShareLink} from '../../../../selectors'
-import SharePanel from '../../../modules/mobile/AppBar/SharePanel'
+import {changeShareLink, clearShareLink} from '../../../slices/current'
+import {getShareLink} from '../../../selectors'
+import ShareDialog from '../../modules/common/ShareDialog'
 
 
-export default function SharePanelContainer({appController, open, onClose}) {
+export default function ShareDialogContainer({appController, open, onClose}) {
   const dispatch = useDispatch()
   const shareLink = useSelector(getShareLink)
   const {t} = useTranslation('Toolbar')
@@ -29,7 +29,7 @@ export default function SharePanelContainer({appController, open, onClose}) {
   }
 
   return (
-    <SharePanel
+    <ShareDialog
       open={open}
       onClose={wrappedOnClose}
       shareLink={shareLink}
@@ -38,7 +38,7 @@ export default function SharePanelContainer({appController, open, onClose}) {
   )
 }
 
-SharePanelContainer.propTypes = {
+ShareDialogContainer.propTypes = {
   appController: PropTypes.object.isRequired,
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import {useTranslation} from 'next-i18next'
 
 import Toolbar from '../../../modules/web/AppBar'
-import SharePanelContainer from './SharePanelContainer'
-import ExportPanelContainer from './ExportPanelContainer'
+import ShareDialogContainer from '../../common/ShareDialogContainer'
+import ExportDialogContainer from '../../common/ExportDialogContainer'
 
 export default function ToolbarContainer({appController}) {
   const {t} = useTranslation('Toolbar')
@@ -39,8 +39,8 @@ export default function ToolbarContainer({appController}) {
         onImportButtonClick={importProject}
       />
 
-      <SharePanelContainer appController={appController} open={sharePanelOpen} onClose={hideSharePanel}/>
-      <ExportPanelContainer appController={appController} open={exportPanelOpen} onClose={hideExportPanel}/>
+      <ShareDialogContainer appController={appController} open={sharePanelOpen} onClose={hideSharePanel}/>
+      <ExportDialogContainer appController={appController} open={exportPanelOpen} onClose={hideExportPanel}/>
     </>
   )
 }

@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 
 import Toolbar from '../../../modules/mobile/AppBar'
-import SharePanelContainer from './SharePanelContainer'
+import ShareDialogContainer from './ShareDialogContainer'
 
 export default function ToolbarContainer({appController}) {
   const [sharePanelOpen, setSharePanel] = useState(false)
@@ -21,7 +21,7 @@ export default function ToolbarContainer({appController}) {
         onShareButtonClick={showSharePanel}
       />
 
-      <SharePanelContainer appController={appController} open={sharePanelOpen} onClose={hideSharePanel}/>
+      <ShareDialogContainer appController={appController} open={sharePanelOpen} onClose={hideSharePanel}/>
     </>
   )
 }

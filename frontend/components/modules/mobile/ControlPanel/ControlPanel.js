@@ -2,10 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
-import {Paper} from '@material-ui/core'
+import {Link, Paper, Typography} from '@material-ui/core'
 
 import {AppMobileDisplayMode} from '../../../../constants'
-import Copyright from './Copyright'
 import Button from '../../../elements/Button'
 
 
@@ -28,7 +27,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   copyright: {
-    margin: '16px auto 8px'
+    margin: '16px auto 8px',
+    color: theme.project.page.main.controlPanel.copyright.textColor,
   }
 }))
 
@@ -52,7 +52,11 @@ export default function ControlPanel({setDisplayMode, connectionPanel, requestPa
         {requestPanel}
       </div>
       <div className={classes.copyright}>
-        <Copyright/>
+        <Typography variant="body2" align="center">
+          {'Copyright © '}
+          <Link color="inherit" href="https://eng.marco79423.net/">兩大類</Link>{' '}
+          {new Date().getFullYear()}
+        </Typography>
       </div>
     </Paper>
   )
