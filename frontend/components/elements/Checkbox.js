@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 import PropTypes from 'prop-types'
 import {makeStyles} from '@material-ui/core/styles'
 import {Checkbox as MuiCheckbox, Grid, Typography} from '@material-ui/core'
@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-export default function Checkbox({checked, setChecked, label}) {
+export function Checkbox({checked, setChecked, label}) {
   const classes = useStyles()
 
   const onChange = (e) => {
@@ -39,3 +39,5 @@ Checkbox.propTypes = {
   setChecked: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
 }
+
+export default memo(Checkbox)

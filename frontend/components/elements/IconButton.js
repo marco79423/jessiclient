@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 import PropTypes from 'prop-types'
 import {makeStyles} from '@material-ui/core/styles'
 import {IconButton as MuiIconButton, Tooltip} from '@material-ui/core'
@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function IconButton({description, icon: Icon, onClick}) {
+export function IconButton({description, icon: Icon, onClick}) {
   const classes = useStyles()
 
   return (
@@ -30,3 +30,5 @@ IconButton.propTypes = {
   icon: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
 }
+
+export default memo(IconButton)

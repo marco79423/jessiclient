@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 import PropTypes from 'prop-types'
 import {Button as MuiButton} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   }),
 }))
 
-export default function LinkButton({large, primary, disabled, children, onClick}) {
+export function LinkButton({large, primary, disabled, children, onClick}) {
   const classes = useStyles({large})
 
   return (
@@ -31,3 +31,5 @@ LinkButton.propTypes = {
   children: PropTypes.node.isRequired,
   onClick: PropTypes.func.isRequired,
 }
+
+export default memo(LinkButton)

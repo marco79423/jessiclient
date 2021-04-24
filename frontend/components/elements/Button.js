@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function Button({children, className, primary, disabled, onClick}) {
+export function Button({children, className, primary, disabled, onClick}) {
   const classes = useStyles()
 
   return (

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useCallback, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 
 import {AppWebDisplayMode} from '../../../../constants'
@@ -21,9 +21,9 @@ export default function ListPanelContainer({appController, setDisplayMode}) {
     }
   }, [selectedMessageID])
 
-  const onSelectedMessageChange = (id) => {
+  const onSelectedMessageChange = useCallback((id) => {
     dispatch(currentActions.setSelectedMessageID(id))
-  }
+  }, [])
 
   const clearAllMessages = () => {
     dispatch(projectActions.clearMessages())

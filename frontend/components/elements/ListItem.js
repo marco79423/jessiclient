@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 import PropTypes from 'prop-types'
 import {makeStyles} from '@material-ui/core/styles'
 import {Grid, ListItem as MuiListItem} from '@material-ui/core'
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function ListItem({key, selected, onClick, title, children}) {
+export function ListItem({key, selected, onClick, title, children}) {
   const classes = useStyles()
 
   return (
@@ -38,3 +38,5 @@ ListItem.propTypes = {
   title: PropTypes.node,
   children: PropTypes.node,
 }
+
+export default memo(ListItem)

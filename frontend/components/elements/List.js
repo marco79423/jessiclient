@@ -1,7 +1,7 @@
-import React from 'react'
+import React, {memo} from 'react'
+import PropTypes from 'prop-types'
 import {makeStyles} from '@material-ui/core/styles'
 import {List as MuiList} from '@material-ui/core'
-import PropTypes from 'prop-types'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function List({height, children}) {
+export function List({height, children}) {
   const classes = useStyles()
 
   return (
@@ -26,3 +26,5 @@ List.propTypes = {
   children: PropTypes.node.isRequired,
   height: PropTypes.number.isRequired,
 }
+
+export default memo(List)
