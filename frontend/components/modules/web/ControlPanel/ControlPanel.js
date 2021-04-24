@@ -4,29 +4,30 @@ import {makeStyles} from '@material-ui/core/styles'
 import {Paper} from '@material-ui/core'
 
 import Copyright from './Copyright'
-import useMobileMode from '../../../hooks/useMobileMode'
 
 
 const useStyles = makeStyles((theme) => ({
-  root: ({mobileMode}) => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
     background: theme.project.page.main.controlPanel.background,
-    padding: mobileMode ? theme.spacing(2) : theme.spacing(3),
+    padding: theme.spacing(3),
     height: '100%',
-  }),
-  connectionPanel: ({mobileMode}) => ({
-    marginTop: mobileMode ? theme.spacing(0) : theme.spacing(3),
-  }),
-  requestPanel:  ({mobileMode}) => ({
-    marginTop: mobileMode ? theme.spacing(2) : theme.spacing(4),
-  }),
+  },
+  connectionPanel: {
+    marginTop: theme.spacing(3),
+  },
+  requestPanel: {
+    marginTop: theme.spacing(4),
+    flexGrow: 1,
+  },
   copyright: {
-    margin: '16px auto'
+    margin: '16px auto 0'
   }
 }))
 
 export default function ControlPanel({connectionPanel, requestPanel}) {
-  const mobileMode = useMobileMode()
-  const classes = useStyles({mobileMode})
+  const classes = useStyles()
 
   return (
     <Paper className={classes.root} elevation={1} square>

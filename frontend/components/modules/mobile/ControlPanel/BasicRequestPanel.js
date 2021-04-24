@@ -8,11 +8,20 @@ import TextArea from '../../../elements/TextArea'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    borderTopLeftRadius: 0,
+    display: 'flex',
+    flexDirection: 'column',
+    
+    height: '100%',
+    maxHeight: 500,
     padding: theme.spacing(2)
   },
+  controlBar: {
+    textAlign: 'right',
+  },
   requestBody: {
-    marginTop: theme.spacing(2),
+    flexGrow: 1,
+    marginBottom: theme.spacing(2),
+    maxHeight: 400,
   },
   bottomActions: {
     marginTop: theme.spacing(2),
@@ -42,18 +51,16 @@ export default function BasicRequestPanel({
 
   return (
     <Paper className={classes.root}>
-      <Grid container direction="row-reverse">
-        <Grid item>
-          <Button onClick={onShowFavoriteRequestsClick}>{t('展開常用列表')}</Button>
-        </Grid>
-      </Grid>
-      <TextArea
-        className={classes.requestBody}
-        rows={10}
-        label={t('請求內容')}
-        value={requestBody}
-        onChange={onRequestBodyChange}
-      />
+      <div className={classes.controlBar}>
+        <Button onClick={onShowFavoriteRequestsClick}>{t('展開常用列表')}</Button>
+      </div>
+      <div className={classes.requestBody}>
+        <TextArea
+          label={t('請求內容')}
+          value={requestBody}
+          onChange={onRequestBodyChange}
+        />
+      </div>
       <Grid className={classes.bottomActions} container justify="space-between">
         <Grid item>
           <Button onClick={onSetFavoriteRequestButtonClick}>{favoriteRequestID ? t('取消常用') : t('設為常用')}</Button>

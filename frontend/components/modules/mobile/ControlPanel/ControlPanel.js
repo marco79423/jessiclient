@@ -1,16 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
 import {Paper} from '@material-ui/core'
 
 import {AppMobileDisplayMode} from '../../../../constants'
 import Copyright from './Copyright'
 import Button from '../../../elements/Button'
-import {useTranslation} from 'next-i18next'
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    display: 'flex',
+    flexDirection: 'column',
     background: theme.project.page.main.controlPanel.background,
     padding: theme.spacing(2),
     height: '100%',
@@ -23,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
   requestPanel: {
     marginTop: theme.spacing(2),
+    flexGrow: 1,
   },
   copyright: {
     margin: '16px auto 8px'

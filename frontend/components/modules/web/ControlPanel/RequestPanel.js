@@ -10,7 +10,9 @@ import BasicRequestPanel from './BasicRequestPanel'
 
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+    height: '100%',
+  },
   tab: {
     background: theme.project.page.main.controlPanel.requestPanel.tab,
     fontSize: '1rem',
@@ -23,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tabPanel: {
     padding: 0,
+    height: '100%',
   },
 }))
 
