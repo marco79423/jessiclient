@@ -54,7 +54,7 @@ export default function ControlPanel({setDisplayMode, connectionPanel, requestPa
       <div className={classes.copyright}>
         <Typography variant="body2" align="center">
           {'Copyright © '}
-          <Link color="inherit" href="https://eng.marco79423.net/">兩大類</Link>{' '}
+          <Link color="inherit" href="https://marco79423.net/">兩大類</Link>{' '}
           {new Date().getFullYear()}
         </Typography>
       </div>
