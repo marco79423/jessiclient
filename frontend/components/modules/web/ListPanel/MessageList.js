@@ -1,18 +1,18 @@
 import React, {useEffect, useState} from 'react'
-import List from '../../../elements/List'
 import PropTypes from 'prop-types'
-import {Message} from './Message'
+
+import useWindowSize from '../../../hooks/useWindowSize'
+import List from '../../../elements/List'
+import Message from './Message'
 
 
 export default function MessageList({messages, selectedMessageID, onSelectedMessageChange}) {
   const [height, setHeight] = useState(0)
+  const [_, windowHeight] = useWindowSize()
 
   useEffect(() => {
-    if (typeof document !== 'undefined') {
-      const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-      setHeight(vh - 64 - 64)
-    }
-  }, [typeof document])
+    setHeight(windowHeight - 64 - 64)
+  }, [windowHeight])
 
   return (
     <List height={height}>
