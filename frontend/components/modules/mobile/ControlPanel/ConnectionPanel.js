@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
 
+import validateWebsocketUrl from '../../../../utils/validateWebsocketUrl'
+import {ConnectionState} from '../../../../constants'
 import LinkButton from '../../../elements/LinkButton'
 import TextField from '../../../elements/TextField'
-import {ConnectionState} from '../../../../constants'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,7 +56,7 @@ export default function ConnectionPanel({state, url, connect, disconnect}) {
     }
   }
 
-  const validWebsocketUrl = localUrl.length > 0 && (localUrl.startsWith('ws://') || localUrl.startsWith('wss://'))
+  const isValidWSUrl = validateWebsocketUrl(localUrl)
 
   return (
     <TextField
@@ -65,12 +66,12 @@ export default function ConnectionPanel({state, url, connect, disconnect}) {
       value={localUrl}
       onChange={onChange}
       disabled={state !== ConnectionState.Idle}
-      error={!validWebsocketUrl}
+      error={!isValidWSUrl}
       action={
         <LinkButton
           primary
           large
-          disabled={(state === ConnectionState.Connecting || state === ConnectionState.Closing) || !validWebsocketUrl}
+          disabled={(state === ConnectionState.Connecting || state === ConnectionState.Closing) || !isValidWSUrl}
           onClick={onButtonClicked}
         >{buttonLabel}</LinkButton>
       }
