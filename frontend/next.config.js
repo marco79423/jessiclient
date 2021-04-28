@@ -1,8 +1,10 @@
 const withPWA = require('next-pwa')
-
+const withPlugins = require('next-compose-plugins')
 const {i18n} = require('./next-i18next.config')
 
-module.exports = withPWA({
+module.exports = withPlugins([
+  withPWA,
+], {
   serverRuntimeConfig: {
     backendUrl: 'http://localhost:9001',
   },
