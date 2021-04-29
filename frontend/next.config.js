@@ -5,6 +5,9 @@ const {i18n} = require('./next-i18next.config')
 module.exports = withPlugins([
   withPWA,
 ], {
+  future: {
+    webpack5: true,
+  },
   serverRuntimeConfig: {
     backendUrl: 'http://localhost:9001',
   },
