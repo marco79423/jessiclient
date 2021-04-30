@@ -26,7 +26,7 @@ export default function Logo() {
   return (
     <Grid className={classes.root} container item alignItems="center">
       <Grid xs={4} item>
-        <Avatar className={classes.logo} variant="square" src={'/favicon.ico'}/>
+        <Avatar className={classes.logo} variant="square" alt="logo" src={'/favicon.ico'}/>
       </Grid>
       <Grid xs={8} item container>
         <Typography className={classes.title} component="h1" variant="h5">Jessiclient</Typography>
