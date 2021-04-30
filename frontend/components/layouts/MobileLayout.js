@@ -1,10 +1,11 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {makeStyles} from '@material-ui/core/styles'
 import {AppBar as MuiAppBar, Backdrop, Drawer, Grid} from '@material-ui/core'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
 import {AppMobileDisplayMode} from '../../constants'
 import Logo from '../modules/web/AppBar/Logo'
+import useWindowSize from '../hooks/useWindowSize'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -16,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
   main: {
     display: 'flex',
     background: theme.project.page.main.background,
-    height: 'calc(100vh - 64px)'
   },
   controlPanel: {
     zIndex: 1,
@@ -40,6 +40,12 @@ export default function MobileLayout({
   const classes = useStyles()
   const [displayMode, setDisplayMode] = useState(AppMobileDisplayMode.MainPanel)
 
+  const [mainHeight, setMainHeight] = useState(0)
+  const [_, windowHeight] = useWindowSize()
+  useEffect(() => {
+    setMainHeight(windowHeight - 64)
+  }, [windowHeight])
+
   return (
     <>
       <Backdrop style={{zIndex: 100}} open={loading}>
@@ -56,7 +62,7 @@ export default function MobileLayout({
           </Grid>
         </Grid>
       </MuiAppBar>
-      <main className={classes.main}>
+      <main className={classes.main} style={{height: mainHeight}}>
         <div className={classes.controlPanel}>
           {<ControlPanel appController={appController} setDisplayMode={setDisplayMode}/>}
         </div>

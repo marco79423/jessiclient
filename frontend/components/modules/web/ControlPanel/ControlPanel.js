@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   requestPanel: {
     marginTop: theme.spacing(4),
-    flexGrow: 1,
+    flex: 1,
   },
   copyright: {
     margin: '16px auto 0',

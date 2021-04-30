@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'right',
   },
   requestBody: {
-    flexGrow: 1,
+    flex: 1,
     marginBottom: theme.spacing(2),
     maxHeight: 400,
   },
