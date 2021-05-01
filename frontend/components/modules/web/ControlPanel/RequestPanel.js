@@ -2,8 +2,8 @@ import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
-import {Tab, Tabs} from '@material-ui/core'
-import {TabContext, TabPanel} from '@material-ui/lab'
+import {Tab} from '@material-ui/core'
+import {TabContext, TabList, TabPanel} from '@material-ui/lab'
 
 import ScheduleRequestPanel from './ScheduleRequestPanel'
 import BasicRequestPanel from './BasicRequestPanel'
@@ -63,11 +63,12 @@ export default function RequestPanel({
 
   return (
     <div className={classes.root}>
-      <Tabs indicatorColor="secondary" value={tabValue} onChange={handleTabChange}>
-        <Tab className={classes.tab} label={t('基本')} value={PanelTab.Basic}/>
-        <Tab className={classes.tab} label={t('排程')} value={PanelTab.Schedule}/>
-      </Tabs>
       <TabContext value={tabValue}>
+        <TabList indicatorColor="secondary" aria-label={t('請求控制區')} value={tabValue} onChange={handleTabChange}>
+          <Tab className={classes.tab} label={t('基本')} value={PanelTab.Basic}/>
+          <Tab className={classes.tab} label={t('排程')} value={PanelTab.Schedule}/>
+        </TabList>
+
         <TabPanel className={classes.tabPanel} value={PanelTab.Basic}>
           <BasicRequestPanel
             isConnected={isConnected}

@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react'
-import {makeStyles} from '@material-ui/core/styles'
-import {InputBase, Paper, Tab, Tabs, Toolbar} from '@material-ui/core'
-import {TabContext, TabPanel} from '@material-ui/lab'
-import ReactJson from 'react-json-view'
 import {useTranslation} from 'next-i18next'
-import IconButton from '../../../elements/IconButton'
+import {makeStyles} from '@material-ui/core/styles'
+import {InputBase, Paper, Tab, Toolbar} from '@material-ui/core'
+import {TabContext, TabList, TabPanel} from '@material-ui/lab'
+import ReactJson from 'react-json-view'
 import CloseIcon from '@material-ui/icons/Close'
+
+import IconButton from '../../../elements/IconButton'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -74,8 +75,8 @@ export default function DetailPanel({message, unselected}) {
       <div className={classes.appBar}>
         <IconButton description={t('關閉訊息')} icon={CloseIcon} onClick={unselected}/>
       </div>
-      <Paper className={classes.dataSection} square>
-        <TabContext value={tabValue}>
+      <TabContext value={tabValue}>
+        <Paper className={classes.dataSection} square>
           <TabPanel value={PanelTab.PlainText}>
             <InputBase
               autoFocus
@@ -88,14 +89,14 @@ export default function DetailPanel({message, unselected}) {
           <TabPanel value={PanelTab.JSON}>
             <ReactJson src={messageJsonData} indentWidth={2}/>
           </TabPanel>
-        </TabContext>
-      </Paper>
-      <Toolbar className={classes.controlBar}>
-        <Tabs value={tabValue} onChange={handleTabChange}>
-          <Tab className={classes.tab} label={t('純文字')} value={PanelTab.PlainText}/>
-          <Tab className={classes.tab} label={t('JSON')} value={PanelTab.JSON} disabled={messageJsonData === null}/>
-        </Tabs>
-      </Toolbar>
+        </Paper>
+        <Toolbar className={classes.controlBar}>
+          <TabList value={tabValue} onChange={handleTabChange}>
+            <Tab className={classes.tab} label={t('純文字')} value={PanelTab.PlainText}/>
+            <Tab className={classes.tab} label={t('JSON')} value={PanelTab.JSON} disabled={messageJsonData === null}/>
+          </TabList>
+        </Toolbar>
+      </TabContext>
     </div>
   )
 }

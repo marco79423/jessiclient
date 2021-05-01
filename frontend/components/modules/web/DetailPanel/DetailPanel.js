@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from 'react'
-import {makeStyles} from '@material-ui/core/styles'
-import {InputBase, Paper, Tab, Tabs, Toolbar} from '@material-ui/core'
-import {TabContext, TabPanel} from '@material-ui/lab'
-import ReactJson from 'react-json-view'
 import {useTranslation} from 'next-i18next'
+import {makeStyles} from '@material-ui/core/styles'
+import {InputBase, Paper, Tab, Toolbar} from '@material-ui/core'
+import {TabContext, TabList, TabPanel} from '@material-ui/lab'
+import ReactJson from 'react-json-view'
 
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-  },
+  root: {},
   controlBar: {
     position: 'fixed',
     bottom: 0,
@@ -66,8 +65,8 @@ export default function DetailPanel({message}) {
 
   return (
     <div className={classes.root}>
-      <Paper className={classes.dataSection} square>
-        <TabContext value={tabValue}>
+      <TabContext value={tabValue}>
+        <Paper className={classes.dataSection} square>
           <TabPanel value={PanelTab.PlainText}>
             <InputBase
               autoFocus
@@ -80,14 +79,14 @@ export default function DetailPanel({message}) {
           <TabPanel value={PanelTab.JSON}>
             <ReactJson src={messageJsonData} indentWidth={2}/>
           </TabPanel>
-        </TabContext>
-      </Paper>
-      <Toolbar className={classes.controlBar}>
-        <Tabs value={tabValue} onChange={handleTabChange}>
-          <Tab className={classes.tab} label={t('純文字')} value={PanelTab.PlainText}/>
-          <Tab className={classes.tab} label={t('JSON')} value={PanelTab.JSON} disabled={messageJsonData === null}/>
-        </Tabs>
-      </Toolbar>
+        </Paper>
+        <Toolbar className={classes.controlBar}>
+          <TabList value={tabValue} onChange={handleTabChange}>
+            <Tab className={classes.tab} label={t('純文字')} value={PanelTab.PlainText}/>
+            <Tab className={classes.tab} label={t('JSON')} value={PanelTab.JSON} disabled={messageJsonData === null}/>
+          </TabList>
+        </Toolbar>
+      </TabContext>
     </div>
   )
 }
