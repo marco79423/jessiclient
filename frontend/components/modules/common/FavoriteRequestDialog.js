@@ -17,7 +17,7 @@ export default function FavoriteRequestDialog({
   const {t} = useTranslation('ControlPanel')
 
   return (
-    <BasicDialog title={t('常用請求列表')} open={open} onClose={onClose}>
+    <BasicDialog title={t('常用請求列表')} autoFullScreen open={open} onClose={onClose}>
       <Grid container spacing={2} justify="center">
         {favoriteRequests.map(favoriteRequest => (
           <FavoriteRequestItem

@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function BasicDialog({children, title, open, onClose, actions}) {
+export default function BasicDialog({children, autoFullScreen, title, open, onClose, actions}) {
   const classes = useStyles()
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
@@ -46,7 +46,7 @@ export default function BasicDialog({children, title, open, onClose, actions}) {
   return (
     <Dialog
       classes={{paper: classes.root}}
-      fullScreen={fullScreen}
+      fullScreen={autoFullScreen && fullScreen}
       scroll="body"
       maxWidth="md"
       open={open}
@@ -87,6 +87,7 @@ export default function BasicDialog({children, title, open, onClose, actions}) {
 
 BasicDialog.propTypes = {
   children: PropTypes.node.isRequired,
+  autoFullScreen: PropTypes.bool,
   title: PropTypes.string.isRequired,
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
