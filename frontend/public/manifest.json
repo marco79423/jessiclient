@@ -1,7 +1,7 @@
 {
   "name": "Jessiclient",
   "short_name": "Jessiclient",
-  "description": "Best websocket client in the world",
+  "description": "Online Websocket Client",
   "icons": [
     {
       "src": "logo-192x192.png",
