@@ -51,7 +51,7 @@ export default function RequestPanelContainer({appController}) {
       await appController.sendMessage(localRequestBody)
     } catch (e) {
       console.log(e)
-      appController.throwError(t('訊息傳送失敗'))
+      appController.throwError(t('請求傳送失敗'))
     }
   }
 

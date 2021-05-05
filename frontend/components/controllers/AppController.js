@@ -36,17 +36,30 @@ export default function AppController({children}) {
   const projectDataWithoutMessages = useSelector(getProjectDataWithoutMessages)
   const track = useTrackFunc()
 
-  const [errorAlertOpen, setErrorAlert] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
+  const [alert, setAlert] = useState({})
   const [wsClient, setWSClient] = useState(null)
   const [scheduler, setScheduler] = useState(null)
 
-  const showErrorAlert = () => {
-    setErrorAlert(true)
+  const showErrorAlert = (message) => {
+    setAlert({
+      severity: 'error',
+      open: true,
+      message,
+    })
+  }
+
+  const showSuccessAlert = (message) => {
+    setAlert({
+      severity: 'success',
+      open: true,
+      message,
+    })
   }
 
   const hideAlert = () => {
-    setErrorAlert(false)
+    setAlert({
+      open: false,
+    })
   }
 
   const connect = (url) => {
@@ -73,6 +86,7 @@ export default function AppController({children}) {
     }))
 
     track('send_message')
+    showSuccessAlert(t('請求已送出'))
   }
 
   const enableScheduler = async (message, timeInterval) => {
@@ -106,8 +120,7 @@ export default function AppController({children}) {
   }
 
   const throwError = (message) => {
-    setErrorMessage(message)
-    showErrorAlert()
+    showErrorAlert(message)
   }
 
   useAsyncEffect(async () => {
@@ -117,7 +130,7 @@ export default function AppController({children}) {
     wsClient.setOnConnectionChange(connectionState => dispatch(changeConnectionState(connectionState)))
     wsClient.setOnError(error => {
       console.log(error)
-      throwError(t('連線建立失敗'))
+      showErrorAlert(t('連線建立失敗'))
     })
     wsClient.setOnNewMessage(async message => {
       if (messageCount >= maxMessageCount) {
@@ -173,8 +186,9 @@ export default function AppController({children}) {
       {React.cloneElement(children, {appController})}
 
       <Alert
-        open={errorAlertOpen}
-        message={errorMessage}
+        open={alert.open}
+        severity={alert.severity}
+        message={alert.message}
         onClose={hideAlert}
       />
     </>

@@ -31,5 +31,5 @@
   "啟用": "Enable",
   "停用": "Disable",
 
-  "訊息傳送失敗": "Failed to send the request"
+  "請求傳送失敗": "Failed to send the request"
 }

@@ -14,5 +14,6 @@ const Template = (args) => <Alert {...args} />
 export const Default = Template.bind({})
 Default.args = {
   message: '系統異常',
+  severity: 'error',
   open: true,
 }
