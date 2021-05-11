@@ -22,7 +22,7 @@ function App({Component, pageProps}) {
   return (
     <>
       <Head>
-        <title>Jessiclient</title>
+        <title>Jessiclient - {Manifest.description}</title>
 
         <meta name="application-name" content={Manifest.name}/>
         <meta name="apple-mobile-web-app-capable" content="yes"/>
