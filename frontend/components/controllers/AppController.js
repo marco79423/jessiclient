@@ -4,15 +4,10 @@ import {GA4React} from 'ga-4-react'
 import useAsyncEffect from 'use-async-effect'
 import {useTranslation} from 'next-i18next'
 
-import {
-  getMessageCount,
-  getProjectData,
-  getProjectDataWithoutMessages,
-  getSettingMaxMessageCount
-} from '../../selectors'
+import {getProjectData, getProjectDataWithoutMessages} from '../../selectors'
 import {changeConnectionState, changeProjectState, changeScheduleEnabledStatus} from '../../slices/current'
 import {LoadingState, MessageSource} from '../../constants'
-import {appendMessage, removeFirstMessage, setProjectData} from '../../slices/project'
+import {appendMessage, setProjectData} from '../../slices/project'
 import generateRandomString from '../../utils/generateRandomString'
 import {
   loadProjectDataFromFile,
@@ -30,8 +25,6 @@ export default function AppController({children}) {
   const dispatch = useDispatch()
   const {t} = useTranslation('common')
 
-  const maxMessageCount = useSelector(getSettingMaxMessageCount)
-  const messageCount = useSelector(getMessageCount)
   const projectData = useSelector(getProjectData)
   const projectDataWithoutMessages = useSelector(getProjectDataWithoutMessages)
   const track = useTrackFunc()
@@ -73,10 +66,6 @@ export default function AppController({children}) {
 
   const sendMessage = async (message) => {
     wsClient.send(message)
-
-    if (messageCount >= maxMessageCount) {
-      await dispatch(removeFirstMessage())
-    }
 
     await dispatch(appendMessage({
       id: generateRandomString(),
@@ -133,10 +122,6 @@ export default function AppController({children}) {
       showErrorAlert(t('連線建立失敗'))
     })
     wsClient.setOnNewMessage(async message => {
-      if (messageCount >= maxMessageCount) {
-        await dispatch(removeFirstMessage())
-      }
-
       await dispatch(appendMessage({
         id: generateRandomString(),
         time: new Date().toISOString(),

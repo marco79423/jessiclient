@@ -22,9 +22,9 @@ export const updateFavoriteRequest = createAction('project/request/updateFavorit
 
 export const appendMessage = createAction('project/message/appendMessage')
 
-export const removeFirstMessage = createAction( 'project/message/removeFirstMessage')
+export const removeFirstMessage = createAction('project/message/removeFirstMessage')
 
-export const clearMessages = createAction(  'project/message/clearMessages')
+export const clearMessages = createAction('project/message/clearMessages')
 
 // Slice
 export const messageAdapter = createEntityAdapter()
@@ -90,6 +90,10 @@ const projectSlice = createSlice({
       messageAdapter.removeOne(state.message, state.message.ids[0])
     },
     [appendMessage]: (state, action) => {
+      const maxMessageCount = state.setting.maxMessageCount
+      while (state.message.ids.length >= maxMessageCount) {
+        messageAdapter.removeOne(state.message, state.message.ids[0])
+      }
       messageAdapter.addOne(state.message, action.payload)
     },
     [clearMessages]: (state) => {
