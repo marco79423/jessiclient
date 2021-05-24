@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 
-import {getMessage} from '../../../../selectors'
+import {getMessage} from '../../../../redux/selectors'
 import DetailPanel from '../../../modules/mobile/DetailPanel/DetailPanel'
-import {setSelectedMessageID} from '../../../../slices/current'
+import {setSelectedMessageID} from '../../../../redux/current'
 import {AppMobileDisplayMode} from '../../../../constants'
 
 

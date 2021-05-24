@@ -6,7 +6,7 @@ import {CssBaseline} from '@material-ui/core'
 import {ThemeProvider} from '@material-ui/core/styles'
 
 import Manifest from '../public/manifest.json'
-import store from '../store'
+import store from '../redux/store'
 import theme from '../components/themes/defaultTheme'
 
 function App({Component, pageProps}) {

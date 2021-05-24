@@ -2,7 +2,7 @@ import React from 'react'
 import {useSelector} from 'react-redux'
 
 import {LoadingState} from '../../../../constants'
-import {getProjectState} from '../../../../selectors'
+import {getProjectState} from '../../../../redux/selectors'
 import DefaultLayout from '../../../layouts/DefaultLayout'
 import ToolbarContainer from '../ToolbarContainer'
 import ControlPanelContainer from '../ControlPanelContainer'

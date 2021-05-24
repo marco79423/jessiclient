@@ -2,14 +2,14 @@ import React, {useState} from 'react'
 import {useTranslation} from 'next-i18next'
 import {useDispatch, useSelector} from 'react-redux'
 
-import {getConnectionState, getFavoriteRequests, getRequestBody} from '../../../../selectors'
+import {getConnectionState, getFavoriteRequests, getRequestBody} from '../../../../redux/selectors'
 import generateRandomString from '../../../../utils/generateRandomString'
 import {
   addFavoriteRequest,
   changeRequestBody,
   removeFavoriteRequest,
   updateFavoriteRequest
-} from '../../../../slices/project'
+} from '../../../../redux/project'
 import {ConnectionState} from '../../../../constants'
 import FavoriteRequestDialog from '../../../modules/common/FavoriteRequestDialog'
 import RequestPanel from '../../../modules/mobile/ControlPanel/RequestPanel'

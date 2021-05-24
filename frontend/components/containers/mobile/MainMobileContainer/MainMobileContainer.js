@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {useSelector} from 'react-redux'
 
 import {LoadingState} from '../../../../constants'
-import {getProjectState, getSelectedMessageID} from '../../../../selectors'
+import {getProjectState, getSelectedMessageID} from '../../../../redux/selectors'
 import MobileLayout from '../../../layouts/MobileLayout'
 import ToolbarContainer from '../ToolbarContainer'
 import ControlPanelContainer from '../ControlPanelContainer'

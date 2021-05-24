@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import {useDispatch, useSelector} from 'react-redux'
 import {useTranslation} from 'next-i18next'
 
-import {changeShareLink, clearShareLink} from '../../../../slices/current'
-import {getShareLink} from '../../../../selectors'
+import {changeShareLink, clearShareLink} from '../../../../redux/current'
+import {getShareLink} from '../../../../redux/selectors'
 import ShareDialog from '../../../modules/common/ShareDialog'
 
 

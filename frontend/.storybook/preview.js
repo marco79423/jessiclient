@@ -3,7 +3,7 @@ import {ThemeProvider} from '@material-ui/core/styles'
 import {Provider} from 'react-redux'
 
 import theme from '../components/themes/defaultTheme'
-import store from '../store'
+import store from '../redux/store'
 
 export const decorators = [
   story => (

@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {useDispatch, useSelector} from 'react-redux'
 
-import {changeConnectionUrl} from '../../../../slices/project'
-import {getConnectionState, getConnectionUrl} from '../../../../selectors'
+import {changeConnectionUrl} from '../../../../redux/project'
+import {getConnectionState, getConnectionUrl} from '../../../../redux/selectors'
 import ConnectionPanel from '../../../modules/mobile/ControlPanel/ConnectionPanel'
 
 

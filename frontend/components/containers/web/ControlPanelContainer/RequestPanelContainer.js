@@ -8,7 +8,7 @@ import {
   getRequestBody,
   getScheduleEnabledStatus,
   getScheduleTimeInterval
-} from '../../../../selectors'
+} from '../../../../redux/selectors'
 import generateRandomString from '../../../../utils/generateRandomString'
 import {
   addFavoriteRequest,
@@ -16,7 +16,7 @@ import {
   changeScheduleTimeInterval,
   removeFavoriteRequest,
   updateFavoriteRequest
-} from '../../../../slices/project'
+} from '../../../../redux/project'
 import {ConnectionState} from '../../../../constants'
 import FavoriteRequestDialog from '../../../modules/common/FavoriteRequestDialog'
 import RequestPanel from '../../../modules/web/ControlPanel/RequestPanel'

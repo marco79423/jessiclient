@@ -4,10 +4,10 @@ import {GA4React} from 'ga-4-react'
 import useAsyncEffect from 'use-async-effect'
 import {useTranslation} from 'next-i18next'
 
-import {getProjectData, getProjectDataWithoutMessages} from '../../selectors'
-import {changeConnectionState, changeProjectState, changeScheduleEnabledStatus} from '../../slices/current'
+import {getProjectData, getProjectDataWithoutMessages} from '../../redux/selectors'
+import {changeConnectionState, changeProjectState, changeScheduleEnabledStatus} from '../../redux/current'
 import {LoadingState, MessageSource} from '../../constants'
-import {appendMessage, setProjectData} from '../../slices/project'
+import {appendMessage, setProjectData} from '../../redux/project'
 import generateRandomString from '../../utils/generateRandomString'
 import {
   loadProjectDataFromFile,

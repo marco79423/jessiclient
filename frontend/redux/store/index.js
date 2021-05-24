@@ -1,10 +1,10 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit'
 
-import {LoadingState} from '../constants'
-import currentSlice from '../slices/current'
-import projectSlice from '../slices/project'
+import {LoadingState} from '../../constants'
+import currentSlice from '../current'
+import projectSlice from '../project'
 import {getProjectData, getProjectState} from '../selectors'
-import {saveProjectDataToLocalStorage} from '../features/project'
+import {saveProjectDataToLocalStorage} from '../../features/project'
 
 const projectAutoSaver = store => next => async action => {
   try {

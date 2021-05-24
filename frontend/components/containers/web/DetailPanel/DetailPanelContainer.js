@@ -1,7 +1,7 @@
 import React from 'react'
 import {useSelector} from 'react-redux'
 
-import {getMessage} from '../../../../selectors'
+import {getMessage} from '../../../../redux/selectors'
 import DetailPanel from '../../../modules/web/DetailPanel/DetailPanel'
 
 
