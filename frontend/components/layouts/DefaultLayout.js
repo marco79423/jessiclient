@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {makeStyles} from '@material-ui/core/styles'
 import {AppBar as MuiAppBar, Backdrop, Grid, Slide} from '@material-ui/core'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -31,16 +31,15 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function DefaultLayout({
-                                        appController,
+                                        displayMode,
                                         loading,
-                                        toolbar: Toolbar,
-                                        controlPanel: ControlPanel,
-                                        listPanel: ListPanel,
-                                        detailPanel: DetailPanel,
+                                        toolbar,
+                                        controlPanel,
+                                        listPanel,
+                                        detailPanel,
                                       }) {
   const classes = useStyles()
-  const [displayMode, setDisplayMode] = useState(AppWebDisplayMode.DetailPanelOff)
-
+  
   return (
     <>
       <Backdrop style={{zIndex: 100}} open={loading}>
@@ -53,23 +52,23 @@ export default function DefaultLayout({
             <Logo/>
           </Grid>
           <Grid item>
-            {<Toolbar appController={appController}/>}
+            {toolbar}
           </Grid>
         </Grid>
       </MuiAppBar>
-      <main className={classes.main}>
+      <div className={classes.main}>
         <div className={classes.controlPanel}>
-          {<ControlPanel appController={appController}/>}
+          {controlPanel}
         </div>
         <div className={classes.listPanel}>
-          {<ListPanel appController={appController} setDisplayMode={setDisplayMode}/>}
+          {listPanel}
         </div>
         <Slide direction="left" in={displayMode === AppWebDisplayMode.DetailPanelOn} mountOnEnter unmountOnExit>
           <div className={classes.detailPanel}>
-            {<DetailPanel appController={appController}/>}
+            {detailPanel}
           </div>
         </Slide>
-      </main>
+      </div>
     </>
   )
 }

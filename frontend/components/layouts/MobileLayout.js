@@ -30,15 +30,14 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function MobileLayout({
-                                       appController,
+                                       displayMode,
                                        loading,
-                                       toolbar: Toolbar,
-                                       controlPanel: ControlPanel,
-                                       listPanel: ListPanel,
-                                       detailPanel: DetailPanel,
+                                       toolbar,
+                                       controlPanel,
+                                       listPanel,
+                                       detailPanel,
                                      }) {
   const classes = useStyles()
-  const [displayMode, setDisplayMode] = useState(AppMobileDisplayMode.MainPanel)
 
   const [mainHeight, setMainHeight] = useState(0)
   const [_, windowHeight] = useWindowSize()
@@ -58,13 +57,13 @@ export default function MobileLayout({
             <Logo/>
           </Grid>
           <Grid item>
-            {<Toolbar appController={appController}/>}
+            {toolbar}
           </Grid>
         </Grid>
       </MuiAppBar>
-      <main className={classes.main} style={{height: mainHeight}}>
+      <div className={classes.main} style={{height: mainHeight}}>
         <div className={classes.controlPanel}>
-          {<ControlPanel appController={appController} setDisplayMode={setDisplayMode}/>}
+          {controlPanel}
         </div>
         <Drawer
           className={classes.listPanel}
@@ -72,7 +71,7 @@ export default function MobileLayout({
           anchor="right"
           open={displayMode !== AppMobileDisplayMode.MainPanel}
         >
-          <ListPanel appController={appController} setDisplayMode={setDisplayMode}/>}
+          {listPanel}}
         </Drawer>
         <Drawer
           className={classes.detailPanel}
@@ -80,9 +79,9 @@ export default function MobileLayout({
           anchor="right"
           open={displayMode === AppMobileDisplayMode.DetailPanel}
         >
-          {<DetailPanel appController={appController} setDisplayMode={setDisplayMode}/>}
+          {detailPanel}
         </Drawer>
-      </main>
+      </div>
     </>
   )
 }
