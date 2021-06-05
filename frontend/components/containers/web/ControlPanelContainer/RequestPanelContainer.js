@@ -55,18 +55,18 @@ export default function RequestPanelContainer({appController}) {
     }
   }
 
-  const onFavoriteRequestSet = () => {
+  const onFavoriteRequestAdd = ({name, body}) => {
     const favoriteRequest = {
       id: generateRandomString(),
-      name: new Date().toLocaleString(),
-      body: localRequestBody,
+      name: name,
+      body: body,
     }
     dispatch(addFavoriteRequest(favoriteRequest))
     setFavoriteRequestID(favoriteRequest.id)
     appController.track('add_favorite_message')
   }
 
-  const onFavoriteRequestUnset = () => {
+  const onFavoriteRequestRemove = (favoriteRequestID) => {
     dispatch(removeFavoriteRequest(favoriteRequestID))
     setFavoriteRequestID(null)
   }
@@ -79,7 +79,7 @@ export default function RequestPanelContainer({appController}) {
     }
   }
 
-  const showFavoriteRequestDialog = () => {
+  const onFavoriteRequestDialogShow = () => {
     setFavoriteRequestDialog(true)
     appController.track('show_favorite_requests_panel')
   }
@@ -116,9 +116,9 @@ export default function RequestPanelContainer({appController}) {
         onRequestBodyChange={onRequestBodyChange}
 
         favoriteRequestID={favoriteRequestID}
-        showFavoriteRequestDialog={showFavoriteRequestDialog}
-        onFavoriteRequestSet={onFavoriteRequestSet}
-        onFavoriteRequestUnset={onFavoriteRequestUnset}
+        onFavoriteRequestDialogShow={onFavoriteRequestDialogShow}
+        onFavoriteRequestAdd={onFavoriteRequestAdd}
+        onFavoriteRequestRemove={onFavoriteRequestRemove}
 
         scheduleTimeInterval={localScheduleTimeInterval}
         onScheduleTimeIntervalChange={onScheduleTimeIntervalChange}

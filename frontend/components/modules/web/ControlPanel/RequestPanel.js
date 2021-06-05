@@ -41,9 +41,9 @@ export default function RequestPanel({
                                        onRequestBodyChange,
 
                                        favoriteRequestID,
-                                       showFavoriteRequestDialog,
-                                       onFavoriteRequestSet,
-                                       onFavoriteRequestUnset,
+                                       onFavoriteRequestDialogShow,
+                                       onFavoriteRequestAdd,
+                                       onFavoriteRequestRemove,
 
                                        scheduleTimeInterval,
                                        onScheduleTimeIntervalChange,
@@ -74,9 +74,9 @@ export default function RequestPanel({
             isConnected={isConnected}
 
             favoriteRequestID={favoriteRequestID}
-            onShowFavoriteRequestsClick={showFavoriteRequestDialog}
-            onFavoriteRequestSet={onFavoriteRequestSet}
-            onFavoriteRequestUnset={onFavoriteRequestUnset}
+            onFavoriteRequestDialogShow={onFavoriteRequestDialogShow}
+            onFavoriteRequestAdd={onFavoriteRequestAdd}
+            onFavoriteRequestRemove={onFavoriteRequestRemove}
 
             requestBody={requestBody}
             onRequestBodyChange={onRequestBodyChange}
@@ -89,9 +89,9 @@ export default function RequestPanel({
             isConnected={isConnected}
 
             favoriteRequestID={favoriteRequestID}
-            onShowFavoriteRequestsClick={showFavoriteRequestDialog}
-            onFavoriteRequestSet={onFavoriteRequestSet}
-            onFavoriteRequestUnset={onFavoriteRequestUnset}
+            onFavoriteRequestDialogShow={onFavoriteRequestDialogShow}
+            onFavoriteRequestAdd={onFavoriteRequestAdd}
+            onFavoriteRequestRemove={onFavoriteRequestRemove}
 
             requestBody={requestBody}
             onRequestBodyChange={onRequestBodyChange}
@@ -115,9 +115,9 @@ RequestPanel.propTypes = {
   onRequestBodyChange: PropTypes.func.isRequired,
 
   favoriteRequestID: PropTypes.string,
-  showFavoriteRequestDialog: PropTypes.func.isRequired,
-  onFavoriteRequestSet: PropTypes.func.isRequired,
-  onFavoriteRequestUnset: PropTypes.func.isRequired,
+  onFavoriteRequestDialogShow: PropTypes.func.isRequired,
+  onFavoriteRequestAdd: PropTypes.func.isRequired,
+  onFavoriteRequestRemove: PropTypes.func.isRequired,
 
   scheduleTimeInterval: PropTypes.number.isRequired,
   onScheduleTimeIntervalChange: PropTypes.func.isRequired,
