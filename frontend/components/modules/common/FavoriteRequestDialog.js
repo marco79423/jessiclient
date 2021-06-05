@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {useTranslation} from 'next-i18next'
-import {Grid} from '@material-ui/core'
+import {Grid, Paper} from '@material-ui/core'
 import BasicDialog from '../../elements/BasicDialog'
 import Button from '../../elements/Button'
-import EditableCard from '../../elements/EditableCard'
+import EditableText from '../../elements/EditableText'
+import {makeStyles} from '@material-ui/core/styles'
 
 
 export default function FavoriteRequestDialog({
@@ -50,7 +51,24 @@ FavoriteRequestDialog.propTypes = {
   onUpdate: PropTypes.func.isRequired,
 }
 
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: theme.spacing(2),
+    width: 350,
+    minHeight: 200,
+  },
+  title: {
+    fontSize: '1.2rem',
+  },
+  content: {
+    marginTop: theme.spacing(2),
+  }
+}))
+
+
 function FavoriteRequestItem({isConnected, favoriteRequest, onRemove, onApply, onSend, onUpdate}) {
+  const classes = useStyles()
   const {t} = useTranslation('ControlPanel')
 
   const updateName = (name) => {
@@ -75,26 +93,33 @@ function FavoriteRequestItem({isConnected, favoriteRequest, onRemove, onApply, o
 
   return (
     <Grid key={favoriteRequest.id} item>
-      <EditableCard
-        title={favoriteRequest.name}
-        setTitle={updateName}
-        content={favoriteRequest.body}
-        setContent={updateBody}
-        saveButtonLabel={t('儲存')}
-        actions={(
-          <>
-            <Grid container item xs spacing={1}>
-              <Grid item><Button primary onClick={onApplyButtonClicked}>{t('套用')}</Button></Grid>
-              <Grid item><Button onClick={onRemoveButtonClicked}>{t('刪除')}</Button> </Grid>
-            </Grid>
+      <Grid className={classes.root} container component={Paper} direction="column" justify="space-between">
+        <Grid item>
+          <EditableText
+            className={classes.title}
+            value={favoriteRequest.name}
+            setValue={updateName}
+            buttonLabel={t('儲存')}
+          />
+          <EditableText
+            className={classes.content}
+            value={favoriteRequest.body}
+            setValue={updateBody}
+            buttonLabel={t('儲存')}
+          />
+        </Grid>
+        <Grid container item>
+          <Grid container item xs spacing={1}>
+            <Grid item><Button primary onClick={onApplyButtonClicked}>{t('套用')}</Button></Grid>
+            <Grid item><Button onClick={onRemoveButtonClicked}>{t('刪除')}</Button> </Grid>
+          </Grid>
+          <Grid item>
             <Grid item>
-              <Grid item>
-                <Button primary disabled={!isConnected} onClick={onSendButtonClicked}>{t('直接送出')}</Button>
-              </Grid>
+              <Button primary disabled={!isConnected} onClick={onSendButtonClicked}>{t('直接送出')}</Button>
             </Grid>
-          </>
-        )}
-      />
+          </Grid>
+        </Grid>
+      </Grid>
     </Grid>
   )
 }
