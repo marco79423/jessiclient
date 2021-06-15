@@ -48,11 +48,12 @@ function App({Component, pageProps}) {
 
         <link rel="icon" href="/favicon.ico"/>
         <link rel="shortcut icon" href="/favicon.ico"/>
-        <link rel='apple-touch-icon' sizes='180x180' href='/logo-180x180.png' />
-        <link rel='icon' type='image/png' sizes='192x192' href='/logo-192x192.png' />
-        <link rel='icon' type='image/png' sizes='512x512' href='/logo-512x512.png' />
+        <link rel="apple-touch-icon" sizes="180x180" href="/logo-180x180.png"/>
+        <link rel="icon" type="image/png" sizes="192x192" href="/logo-192x192.png"/>
+        <link rel="icon" type="image/png" sizes="512x512" href="/logo-512x512.png"/>
 
-        <link rel="canonical" hrefLang="en" href="https://jessiclient.marco79423.net/"/>
+        <link rel="canonical" href="https://jessiclient.marco79423.net/"/>
+        <link rel="alternate" hrefLang="x-default" href="https://jessiclient.marco79423.net/en"/>
         <link rel="alternate" hrefLang="zh-TW" href="https://jessiclient.marco79423.net/zh-TW/"/>
         <link rel="alternate" hrefLang="zh-CN" href="https://jessiclient.marco79423.net/zh-CN/"/>
 
