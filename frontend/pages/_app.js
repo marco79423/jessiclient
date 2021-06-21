@@ -23,26 +23,27 @@ function App({Component, pageProps}) {
   return (
     <>
       <Head>
-        <title>Jessiclient</title>
+        <title>{t(Manifest.name)}</title>
 
-        <meta name="application-name" content={Manifest.name}/>
+        <meta name="application-name" content={t(Manifest.name)}/>
         <meta name="apple-mobile-web-app-capable" content="yes"/>
         <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
-        <meta name="apple-mobile-web-app-title" content={Manifest.name}/>
+        <meta name="apple-mobile-web-app-title" content={Manifest.short_name}/>
         <meta name="description" content={t(Manifest.description)}/>
+        <meta name="keywords" content="jessiclient,websocket,websocket client"/>
         <meta name="mobile-web-app-capable" content="yes"/>
         <meta name="theme-color" content={Manifest.theme_color}/>
 
         <meta name="twitter:card" content="summary"/>
         <meta name="twitter:url" content="https://jessiclient.marco79423.net"/>
-        <meta name="twitter:title" content={Manifest.name}/>
+        <meta name="twitter:title" content={t(Manifest.name)}/>
         <meta name="twitter:description" content={t(Manifest.description)}/>
         <meta name="twitter:image" content="https://jessiclient.marco79423.net/logo.jpg"/>
         <meta name="twitter:creator" content="@marco79423"/>
         <meta property="og:type" content="website"/>
-        <meta property="og:title" content={Manifest.name}/>
+        <meta property="og:title" content={t(Manifest.name)}/>
         <meta property="og:description" content={t(Manifest.description)}/>
-        <meta property="og:site_name" content={Manifest.name}/>
+        <meta property="og:site_name" content={Manifest.short_name}/>
         <meta property="og:url" content="https://jessiclient.marco74923.net"/>
         <meta property="og:image" content="https://jessiclient.marco79423.net/logo.jpg"/>
 

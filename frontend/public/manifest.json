@@ -1,7 +1,7 @@
 {
-  "name": "Jessiclient",
+  "name": "Jessiclient | Online Websocket Client",
   "short_name": "Jessiclient",
-  "description": "Online Websocket Client - Send and receive websocket messages with beautiful UI in the browser",
+  "description": "Send and receive websocket messages with beautiful UI in the browser",
   "icons": [
     {
       "src": "logo-192x192.png",

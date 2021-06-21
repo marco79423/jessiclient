@@ -1,5 +1,7 @@
 {
-  "Online Websocket Client - Send and receive websocket messages with beautiful UI in the browser": "Online Websocket Client - Send and receive websocket messages with beautiful UI in the browser",
+  "Jessiclient | Online Websocket Client": "Jessiclient | Online Websocket Client",
+
+  "Send and receive websocket messages with beautiful UI in the browser": "Send and receive websocket messages with beautiful UI in the browser",
   "連線建立失敗": "Unable to connect to the target url",
 
   "請求已送出": "The request is sent"

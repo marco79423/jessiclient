@@ -1,5 +1,7 @@
 {
-  "Online Websocket Client - Send and receive websocket messages with beautiful UI in the browser": "线上 Webclient 客户端，可以在浏览器上传送或接收 Websocket 讯息，并用美观的介面呈现，支援手机操作",
+  "Jessiclient | Online Websocket Client": "Jessiclient | 线上 Webclient 客户端",
+
+  "Send and receive websocket messages with beautiful UI in the browser": "在浏览器上传送或接收 Websocket 讯息，并用美观的介面呈现，支援手机操作",
   "連線建立失敗": "连接建立失败",
 
   "請求已送出": "请求已送出"
