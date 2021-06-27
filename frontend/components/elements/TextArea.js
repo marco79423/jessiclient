@@ -1,18 +1,43 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {TextField} from '@material-ui/core'
+import {FormControl, InputLabel, OutlinedInput} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 
+
+const hideScrollbar = {
+  scrollbarWidth: 'none', // IE and Edge
+  msOverflowStyle: 'none', // Firefox
+  '&::-webkit-scrollbar': {
+    display: 'none' // Chrome, Safari and Opera
+  },
+}
+
 const useStyles = makeStyles((theme) => ({
-  root: {
+  control: {
     height: '100%',
-    '& .MuiInputBase-root': {
-      height: "100%",
-      display: "flex",
-      alignItems: "start"
-    },
+  },
+
+  input: {
+    height: '100%',
+    alignItems: 'start',  // 將輸入框放至頂部
+  },
+
+  internalInput: {
+    height: '85%',     // 不要佔滿全部的輸入空間
+    overflow: 'auto',  // 自動產生 scrollbar
+
+    resize: 'none',  // 不需要自動調整大小的 grabber
+
+    ...hideScrollbar
   },
 }))
+
+
+function Input(props) {
+  return (
+    <textarea {...props} />
+  )
+}
 
 export default function TextArea({label, value, onChange}) {
   const classes = useStyles()
@@ -22,16 +47,20 @@ export default function TextArea({label, value, onChange}) {
   }
 
   return (
-    <TextField
-      className={classes.root}
-      variant="outlined"
-      margin="normal"
-      multiline
-      fullWidth
-      label={label}
-      value={value}
-      onChange={onValueChange}
-    />
+    <FormControl className={classes.control} variant="outlined" margin="normal" fullWidth>
+      <InputLabel shrink={!!value} htmlFor="component-outlined">{label}</InputLabel>
+      <OutlinedInput
+        className={classes.input}
+        classes={{
+          input: classes.internalInput,
+        }}
+        id="component-outlined"
+        value={value}
+        onChange={onValueChange}
+        label={!!value ? label : undefined}
+        inputComponent={Input}
+      />
+    </FormControl>
   )
 }
 

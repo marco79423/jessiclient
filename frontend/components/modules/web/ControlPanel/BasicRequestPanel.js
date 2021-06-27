@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   requestBody: {
     flex: 1,
     marginTop: theme.spacing(1),
-    maxHeight: 400,
+    maxHeight: 350,
   },
   bottomActions: {
     marginTop: theme.spacing(4),

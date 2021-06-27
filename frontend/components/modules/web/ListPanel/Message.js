@@ -1,10 +1,10 @@
 import React, {memo} from 'react'
+import PropTypes from 'prop-types'
 import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
 
 import {MessageSource} from '../../../../constants'
 import ListItem from '../../../elements/ListItem'
-import PropTypes from 'prop-types'
 
 const useStyles = makeStyles((theme) => ({
   messageTitle: ({fromClient}) => ({
@@ -14,6 +14,8 @@ const useStyles = makeStyles((theme) => ({
   messageContent: ({fromClient}) => ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+    width: '100%',
+    height: 40,
     color: fromClient ? theme.project.page.main.listPanel.message.client.textColor : theme.project.page.main.listPanel.message.server.textColor,
   }),
 }))
@@ -46,7 +48,7 @@ export function Message({message, selectedMessageID, onSelectedMessageChange}) {
       selected={selected}
       title={<MessageTitle message={message}/>}
       onClick={onSelected}>
-      <span className={classes.messageContent}>{message.body}</span>
+      <div className={classes.messageContent}>{message.body}</div>
     </ListItem>
   )
 }

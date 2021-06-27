@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   listPanel: {
     flex: 1,
+    overflow: 'hidden',
   },
   detailPanel: {
     flex: 1,
