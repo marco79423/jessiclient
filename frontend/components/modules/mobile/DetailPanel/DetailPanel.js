@@ -53,6 +53,8 @@ export default function DetailPanel({message, unselected}) {
   useEffect(() => {
     if (message) {
       setMessageText(message.body)
+    } else {
+      setMessageText('')
     }
   }, [message])
 
