@@ -1,11 +1,5 @@
 import React from 'react'
-import dynamic from 'next/dynamic'
 
+import JSONView from 'paji-sdk/dist/elements/JSONView'
 
-const ReactJson = dynamic(() => import('react-json-view'), {ssr: false})
-
-export default function JSONView({data}) {
-  return (
-    <ReactJson src={data} indentWidth={2}/>
-  )
-}
+export default JSONView

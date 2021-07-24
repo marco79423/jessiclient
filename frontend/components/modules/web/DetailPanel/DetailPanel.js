@@ -3,7 +3,8 @@ import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
 import {InputBase, Paper, Tab, Toolbar} from '@material-ui/core'
 import {TabContext, TabList, TabPanel} from '@material-ui/lab'
-import ReactJson from 'react-json-view'
+
+import JSONView from '../../../elements/JSONView'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -79,7 +80,7 @@ export default function DetailPanel({message}) {
             />
           </TabPanel>
           <TabPanel value={PanelTab.JSON}>
-            <ReactJson src={messageJsonData} indentWidth={2}/>
+            <JSONView data={messageJsonData}/>
           </TabPanel>
         </Paper>
         <Toolbar className={classes.controlBar}>
