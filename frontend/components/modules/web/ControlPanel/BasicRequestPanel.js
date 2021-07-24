@@ -61,6 +61,7 @@ export default function BasicRequestPanel({
     onFavoriteRequestAdd({
       name: requestName,
       body: requestBody,
+      category: t('未分類'),
     })
     onFavoriteRequestDialogShow()
   }

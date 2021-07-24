@@ -40,11 +40,12 @@ export default function RequestPanelContainer({appController}) {
     }
   }
 
-  const onFavoriteRequestAdd = ({name, body}) => {
+  const onFavoriteRequestAdd = ({name, body, category}) => {
     const favoriteRequest = {
       id: generateRandomString(),
       name: name,
       body: body,
+      category: category,
     }
     dispatch(addFavoriteRequest(favoriteRequest))
     setFavoriteRequestID(favoriteRequest.id)

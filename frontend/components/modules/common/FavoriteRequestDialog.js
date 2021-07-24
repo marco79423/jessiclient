@@ -17,6 +17,8 @@ export default function FavoriteRequestDialog({
 
   const {t} = useTranslation('ControlPanel')
 
+  const favoriteRequestCategories = favoriteRequests.map(favoriteRequest => favoriteRequest.category)
+
   return (
     <BasicDialog title={t('常用請求列表')} autoFullScreen open={open} onClose={onClose}>
       <Grid container spacing={2} justify="center">
@@ -38,13 +40,16 @@ export default function FavoriteRequestDialog({
 
 FavoriteRequestDialog.propTypes = {
   isConnected: PropTypes.bool.isRequired,
+
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+
   favoriteRequests: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
   })).isRequired,
+
   onRemove: PropTypes.func.isRequired,
   onApply: PropTypes.func.isRequired,
   onSend: PropTypes.func.isRequired,
@@ -61,6 +66,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontSize: '1.2rem',
   },
+  category: {
+    fontSize: '1.1rem',
+  },
   content: {
     marginTop: theme.spacing(2),
   }
@@ -73,6 +81,10 @@ function FavoriteRequestItem({isConnected, favoriteRequest, onRemove, onApply, o
 
   const updateName = (name) => {
     onUpdate({id: favoriteRequest.id, changes: {name}})
+  }
+
+  const updateCategory = (category) => {
+    onUpdate({id: favoriteRequest.id, changes: {category}})
   }
 
   const updateBody = (body) => {
@@ -95,12 +107,21 @@ function FavoriteRequestItem({isConnected, favoriteRequest, onRemove, onApply, o
     <Grid key={favoriteRequest.id} item>
       <Grid className={classes.root} container component={Paper} direction="column" justify="space-between">
         <Grid item>
-          <EditableText
-            className={classes.title}
-            value={favoriteRequest.name}
-            setValue={updateName}
-            buttonLabel={t('儲存')}
-          />
+          <Grid container justify="space-between">
+            <EditableText
+              className={classes.title}
+              value={favoriteRequest.name}
+              setValue={updateName}
+              buttonLabel={t('儲存')}
+            />
+            <EditableText
+              className={classes.category}
+              placeholder={'分類'}
+              value={favoriteRequest.category}
+              setValue={updateCategory}
+              buttonLabel={t('儲存')}
+            />
+          </Grid>
           <EditableText
             className={classes.content}
             value={favoriteRequest.body}
