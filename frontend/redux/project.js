@@ -27,8 +27,7 @@ export const removeFirstMessage = createAction('project/message/removeFirstMessa
 export const clearMessages = createAction('project/message/clearMessages')
 
 // Slice
-export const messageAdapter = createEntityAdapter()
-export const favoriteRequestAdapter = createEntityAdapter()
+export const entityAdapter = createEntityAdapter()
 const projectSlice = createSlice({
   name: 'project',
   initialState: {
@@ -53,10 +52,10 @@ const projectSlice = createSlice({
     },
 
     // 常用訊息
-    favoriteRequest: favoriteRequestAdapter.getInitialState(),
+    favoriteRequest: entityAdapter.getInitialState(),
 
     // 訊息
-    message: messageAdapter.getInitialState(),
+    message: entityAdapter.getInitialState(),
   },
   extraReducers: {
     [setProjectData]: (state, action) => {
@@ -75,29 +74,29 @@ const projectSlice = createSlice({
       state.schedule.timeInterval = action.payload
     },
     [addFavoriteRequest]: (state, action) => {
-      favoriteRequestAdapter.addOne(state.favoriteRequest, action.payload)
+      entityAdapter.addOne(state.favoriteRequest, action.payload)
     },
     [removeFavoriteRequest]: (state, action) => {
-      favoriteRequestAdapter.removeOne(state.favoriteRequest, action.payload)
+      entityAdapter.removeOne(state.favoriteRequest, action.payload)
     },
     [clearFavoriteRequests]: (state) => {
-      favoriteRequestAdapter.removeAll(state.favoriteRequest)
+      entityAdapter.removeAll(state.favoriteRequest)
     },
     [updateFavoriteRequest]: (state, action) => {
-      favoriteRequestAdapter.updateOne(state.favoriteRequest, action.payload)
+      entityAdapter.updateOne(state.favoriteRequest, action.payload)
     },
     [removeFirstMessage]: (state) => {
-      messageAdapter.removeOne(state.message, state.message.ids[0])
+      entityAdapter.removeOne(state.message, state.message.ids[0])
     },
     [appendMessage]: (state, action) => {
       const maxMessageCount = state.setting.maxMessageCount
       while (state.message.ids.length >= maxMessageCount) {
-        messageAdapter.removeOne(state.message, state.message.ids[0])
+        entityAdapter.removeOne(state.message, state.message.ids[0])
       }
-      messageAdapter.addOne(state.message, action.payload)
+      entityAdapter.addOne(state.message, action.payload)
     },
     [clearMessages]: (state) => {
-      messageAdapter.removeAll(state.message)
+      entityAdapter.removeAll(state.message)
     },
   },
 })

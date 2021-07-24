@@ -1,5 +1,5 @@
 import {createDraftSafeSelector} from '@reduxjs/toolkit'
-import {favoriteRequestAdapter, messageAdapter} from '../project'
+import {entityAdapter} from '../project'
 
 
 export const getProjectState = state => state.current.projectState
@@ -14,7 +14,7 @@ export const getProjectDataWithoutMessages = createDraftSafeSelector(
   getProjectData,
   projectData => ({
     ...projectData,
-    message: messageAdapter.getInitialState(),
+    message: entityAdapter.getInitialState(),
   })
 )
 export const getSettingMaxMessageCount = state => state.project.setting.maxMessageCount
@@ -25,10 +25,10 @@ export const getRequestBody = state => state.project.request.body
 
 export const getScheduleTimeInterval = state => state.project.schedule.timeInterval
 
-const favoriteRequestSelectors = favoriteRequestAdapter.getSelectors(state => state.project.favoriteRequest)
+const favoriteRequestSelectors = entityAdapter.getSelectors(state => state.project.favoriteRequest)
 export const getFavoriteRequests = state => favoriteRequestSelectors.selectAll(state)
 
-const messageSelectors = messageAdapter.getSelectors(state => state.project.message)
+const messageSelectors = entityAdapter.getSelectors(state => state.project.message)
 export const getMessageCount = state => messageSelectors.selectTotal(state)
 export const getMessages = state => messageSelectors.selectAll(state)
 export const getMessage = createDraftSafeSelector(
