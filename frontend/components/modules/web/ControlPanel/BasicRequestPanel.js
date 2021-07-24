@@ -62,6 +62,7 @@ export default function BasicRequestPanel({
       name: requestName,
       body: requestBody,
     })
+    onFavoriteRequestDialogShow()
   }
 
   return (

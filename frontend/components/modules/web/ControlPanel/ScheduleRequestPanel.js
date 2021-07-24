@@ -69,6 +69,7 @@ export default function ScheduleRequestPanel({
       name: requestName,
       body: requestBody,
     })
+    onFavoriteRequestDialogShow()
   }
 
   return (
