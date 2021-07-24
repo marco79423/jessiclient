@@ -86,7 +86,7 @@ export default function ScheduleRequestPanel({
         </div>
         <Grid className={classes.bottomActions} container alignItems="center" justify="space-between">
           <Grid item>
-            <Button disabled={scheduleEnabled} onClick={onSetFavoriteRequestButtonClick}>
+            <Button disabled={requestBody === '' || scheduleEnabled} onClick={onSetFavoriteRequestButtonClick}>
               {favoriteRequestID ? t('取消常用') : t('設為常用')}
             </Button>
           </Grid>

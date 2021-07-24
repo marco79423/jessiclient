@@ -77,7 +77,7 @@ export default function BasicRequestPanel({
         </div>
         <Grid className={classes.bottomActions} container justify="space-between">
           <Grid item>
-            <Button onClick={onSetFavoriteRequestButtonClick}>{favoriteRequestID ? t('取消常用') : t('設為常用')}</Button>
+            <Button disabled={requestBody === ''} onClick={onSetFavoriteRequestButtonClick}>{favoriteRequestID ? t('取消常用') : t('設為常用')}</Button>
           </Grid>
           <Grid item>
             <Button primary disabled={!isConnected} onClick={onSendButtonClick}>{t('送出')}</Button>
