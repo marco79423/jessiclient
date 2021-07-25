@@ -48,25 +48,31 @@ export default function FavoriteRequestDialog({
 
   return (
     <BasicDialog title={t('常用請求列表')} autoFullScreen open={open} onClose={onClose}>
-      <Select
-        className={classes.filter}
-        currentValue={currentFilterSelectionValue}
-        selections={filteredSelections}
-        onSelectionChange={setCurrentFilterSelectionValue}
-      />
-      <Grid container spacing={2} justify="center">
-        {filteredFavoriteRequests.map(favoriteRequest => (
-          <FavoriteRequestItem
-            key={favoriteRequest.id}
-            isConnected={isConnected}
-            favoriteRequest={favoriteRequest}
-            onRemove={onRemove}
-            onApply={onApply}
-            onSend={onSend}
-            onUpdate={onUpdate}
+      {filteredFavoriteRequests.length > 0 ? (
+        <>
+          <Select
+            className={classes.filter}
+            currentValue={currentFilterSelectionValue}
+            selections={filteredSelections}
+            onSelectionChange={setCurrentFilterSelectionValue}
           />
-        ))}
-      </Grid>
+          <Grid container spacing={2} justify="center">
+            {filteredFavoriteRequests.map(favoriteRequest => (
+              <FavoriteRequestItem
+                key={favoriteRequest.id}
+                isConnected={isConnected}
+                favoriteRequest={favoriteRequest}
+                onRemove={onRemove}
+                onApply={onApply}
+                onSend={onSend}
+                onUpdate={onUpdate}
+              />
+            ))}
+          </Grid>
+        </>
+      ) : (
+        t('目前沒有任何常用的請求')
+      )}
     </BasicDialog>
   )
 }
