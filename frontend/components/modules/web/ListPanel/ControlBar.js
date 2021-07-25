@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ControlBar({searchFilters, onSearchFilterChange, onClearAll}) {
   const classes = useStyles()
-  const {t} = useTranslation('ListPanel')
+  const {t} = useTranslation()
   const [clearAllDialogOn, setClearAllDialog] = useState(false)
 
   const onSearchButtonClick = (searchFilter) => {

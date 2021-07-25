@@ -4,5 +4,73 @@
   "Send and receive websocket messages with beautiful UI in the browser": "Send and receive websocket messages with beautiful UI in the browser",
   "連線建立失敗": "Unable to connect to the target url",
 
-  "請求已送出": "The request is sent"
+  "請求已送出": "The request is sent",
+
+  "展開訊息列表": "show message panel",
+  "關閉訊息列表": "close message panel",
+  "關閉訊息": "close detail",
+
+  "欲連線的網址": "Websocket url",
+  "建立連線": "Connect",
+  "關閉連線": "Close",
+  "連線中…": "Connecting ...",
+  "關閉中…": "Closing ...",
+
+  "請求控制區": "Control Panel",
+  "基本": "Basic",
+  "排程": "Schedule",
+
+  "請求內容": "Request Body",
+  "送出": "Send",
+
+  "展開常用列表": "Show Favorites",
+  "常用請求列表": "Favorite Requests",
+  "未分類": "Unclassified",
+  "套用": "Apply",
+  "刪除": "Delete",
+  "儲存": "Save",
+  "直接送出": "Send directly",
+  "設為常用": "Add to favorites",
+  "取消常用": "Remove from favorites",
+  "常用請求名稱": "Request name",
+  "設為常用請求": "Add to favorites",
+  "沒有任何常用請求": "The favorites is empty",
+  "確認": "Confirm",
+  "取消": "Cancel",
+
+  "每": "Send request every",
+  "秒傳送一次": "seconds",
+
+  "啟用": "Enable",
+  "停用": "Disable",
+
+  "請求傳送失敗": "Failed to send the request",
+
+  "純文字": "Plain Text",
+  "JSON": "JSON",
+
+  "搜尋訊息": "",
+  "搜尋": "Search",
+  "清空訊息": "Clear All",
+
+  "確定清空訊息嗎？": "Are you sure?",
+  "清空的訊息將不再能恢復": "Cleared messages is not recoverable",
+
+  "服務端": "Server",
+  "客戶端": "Client",
+
+   "保留實際請求和回傳訊息": "Including messages",
+
+  "分享專案": "Share Project",
+  "產生連結": "Generate",
+  "複製連結": "Copy",
+  "結束": "Close",
+  "產生的連結將保留 7 天": "Share link will be retained for 7 days",
+  "產生分享連結失敗": "Failed to generate share link",
+
+  "匯出專案": "Export Project",
+  "檔案名稱": "filename",
+  "匯出": "Export",
+
+  "匯入專案": "Import Project"
 }

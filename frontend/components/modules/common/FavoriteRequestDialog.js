@@ -22,7 +22,7 @@ export default function FavoriteRequestDialog({
                                                 onRemove, onApply, onSend, onUpdate
                                               }) {
   const classes = useStyles()
-  const {t} = useTranslation('ControlPanel')
+  const {t} = useTranslation()
   const [currentFilterSelectionValue, setCurrentFilterSelectionValue] = useState()
 
   const favoriteRequestCategories = React.useMemo(() => lodash(favoriteRequests)

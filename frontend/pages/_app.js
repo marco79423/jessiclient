@@ -10,7 +10,7 @@ import store from '../redux/store'
 import theme from '../components/themes/defaultTheme'
 
 function App({Component, pageProps}) {
-  const {t} = useTranslation('common')
+  const {t} = useTranslation()
 
   useEffect(() => {
     // Remove the server-side injected CSS.

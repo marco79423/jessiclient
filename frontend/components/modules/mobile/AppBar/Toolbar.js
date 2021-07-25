@@ -7,7 +7,7 @@ import ShareIcon from '@material-ui/icons/Share'
 import IconButton from '../../../elements/IconButton'
 
 export default function Toolbar({onShareButtonClick}) {
-  const {t} = useTranslation('Toolbar')
+  const {t} = useTranslation()
 
   return (
     <Grid container justify="space-between" alignItems="center">

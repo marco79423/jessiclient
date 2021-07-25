@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ClearAllDialog({open, onClose, onClearAll}) {
   const classes = useStyles()
-  const {t} = useTranslation('ListPanel')
+  const {t} = useTranslation()
 
   const onClearAllButtonClick = () => {
     onClearAll()

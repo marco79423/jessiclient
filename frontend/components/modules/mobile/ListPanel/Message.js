@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export function Message({message, selectedMessageID, onSelectedMessageChange}) {
-  const {t} = useTranslation('ListPanel')
+  const {t} = useTranslation()
   const fromClient = message.source === MessageSource.Client
   const classes = useStyles({fromClient})
   const selected = message.id === selectedMessageID

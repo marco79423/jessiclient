@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ShareDialog({open, onClose, shareLink, generateShareLink}) {
   const classes = useStyles()
-  const {t} = useTranslation('Toolbar')
+  const {t} = useTranslation()
   const [messageIncluded, setIncludeMessages] = useState(false)
 
   const onCopyLinkButtonClicked = async () => {

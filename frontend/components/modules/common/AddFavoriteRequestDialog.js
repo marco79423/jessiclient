@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AddFavoriteRequestDialog({open, onClose, onCreate}) {
   const classes = useStyles()
-  const {t} = useTranslation('ControlPanel')
+  const {t} = useTranslation()
   const [requestName, setRequestName] = useState('')
 
   const onNameChange = (value) => {

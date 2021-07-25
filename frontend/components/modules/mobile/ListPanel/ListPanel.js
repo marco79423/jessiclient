@@ -27,7 +27,7 @@ export default function ListPanel({
                                     onClearAllMessages
                                   }) {
   const classes = useStyles()
-  const {t} = useTranslation('ControlPanel')
+  const {t} = useTranslation()
   const [filteredMessages, setFilteredMessages] = useState(messages)
   const [searchFilters, setSearchFilters] = useState([])
 

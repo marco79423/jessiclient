@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ControlPanel({setDisplayMode, connectionPanel, requestPanel}) {
   const classes = useStyles()
-  const {t} = useTranslation('ControlPanel')
+  const {t} = useTranslation()
 
   const showListPanel = () => {
     setDisplayMode(AppMobileDisplayMode.ListPanel)

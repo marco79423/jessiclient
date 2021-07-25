@@ -16,7 +16,7 @@ import RequestPanel from '../../../modules/mobile/ControlPanel/RequestPanel'
 
 export default function RequestPanelContainer({appController}) {
   const dispatch = useDispatch()
-  const {t} = useTranslation('ControlPanel')
+  const {t} = useTranslation()
   const connectionState = useSelector(getConnectionState)
   const requestBody = useSelector(getRequestBody)
   const favoriteRequests = useSelector(getFavoriteRequests)

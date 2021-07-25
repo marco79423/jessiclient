@@ -7,7 +7,7 @@ import ShareDialogContainer from '../../common/ShareDialogContainer'
 import ExportDialogContainer from '../../common/ExportDialogContainer'
 
 export default function ToolbarContainer({appController}) {
-  const {t} = useTranslation('Toolbar')
+  const {t} = useTranslation()
   const [sharePanelOpen, setSharePanel] = useState(false)
   const [exportPanelOpen, setExportPanel] = useState(false)
 

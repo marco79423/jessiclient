@@ -10,7 +10,7 @@ import Checkbox from '../../elements/Checkbox'
 
 
 export default function ExportDialog({open, onClose, exportProject}) {
-  const {t} = useTranslation('Toolbar')
+  const {t} = useTranslation()
   const [filename, setFilename] = useState('')
   const [messageIncluded, setIncludeMessages] = useState(false)
 

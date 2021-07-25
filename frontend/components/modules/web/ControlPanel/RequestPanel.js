@@ -54,7 +54,7 @@ export default function RequestPanel({
                                        onEnableButtonClick,
                                      }) {
   const classes = useStyles()
-  const {t} = useTranslation('ControlPanel')
+  const {t} = useTranslation()
   const [tabValue, setTabValue] = useState(PanelTab.Basic)
 
   const handleTabChange = (event, newValue) => {

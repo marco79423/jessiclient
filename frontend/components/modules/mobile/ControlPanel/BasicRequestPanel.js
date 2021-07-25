@@ -40,7 +40,7 @@ export default function BasicRequestPanel({
                                             onSendButtonClick
                                           }) {
   const classes = useStyles()
-  const {t} = useTranslation('ControlPanel')
+  const {t} = useTranslation()
   const [addFavoriteRequestDialogOpen, setAddFavoriteRequestDialog] = useState(false)
 
   const onSetFavoriteRequestButtonClick = () => {

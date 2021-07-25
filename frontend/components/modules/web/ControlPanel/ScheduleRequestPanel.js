@@ -47,7 +47,7 @@ export default function ScheduleRequestPanel({
                                                onEnableButtonClick,
                                              }) {
   const classes = useStyles()
-  const {t} = useTranslation('ControlPanel')
+  const {t} = useTranslation()
   const [addFavoriteRequestDialogOpen, setAddFavoriteRequestDialog] = useState(false)
 
   const validTimeInterval = +scheduleTimeInterval > 0

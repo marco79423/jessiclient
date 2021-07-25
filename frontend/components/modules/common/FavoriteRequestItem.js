@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function FavoriteRequestItem({isConnected, favoriteRequest, onRemove, onApply, onSend, onUpdate}) {
   const classes = useStyles()
-  const {t} = useTranslation('ControlPanel')
+  const {t} = useTranslation()
 
   const updateName = (name) => {
     onUpdate({id: favoriteRequest.id, changes: {name}})

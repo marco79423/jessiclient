@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ControlBar({onClearAll}) {
   const classes = useStyles()
-  const {t} = useTranslation('ListPanel')
+  const {t} = useTranslation()
   const [clearAllDialogOn, setClearAllDialog] = useState(false)
 
   const showClearAllDialog = () => {

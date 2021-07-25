@@ -44,7 +44,7 @@ const PanelTab = Object.freeze({
 
 export default function DetailPanel({message, unselected}) {
   const classes = useStyles()
-  const {t} = useTranslation('DetailPanel')
+  const {t} = useTranslation()
   const [tabValue, setTabValue] = useState(PanelTab.PlainText)
 
   const [messageJsonData, setMessageJsonData] = useState(null)

@@ -11,7 +11,7 @@ import ShareDialog from '../../../modules/common/ShareDialog'
 export default function ShareDialogContainer({appController, open, onClose}) {
   const dispatch = useDispatch()
   const shareLink = useSelector(getShareLink)
-  const {t} = useTranslation('Toolbar')
+  const {t} = useTranslation()
 
   const generateShareLink = async ({messageIncluded}) => {
     try {

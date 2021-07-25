@@ -23,7 +23,7 @@ import Alert from '../elements/Alert'
 
 export default function AppController({children}) {
   const dispatch = useDispatch()
-  const {t} = useTranslation('common')
+  const {t} = useTranslation()
 
   const projectData = useSelector(getProjectData)
   const projectDataWithoutMessages = useSelector(getProjectDataWithoutMessages)

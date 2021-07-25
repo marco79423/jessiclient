@@ -8,13 +8,7 @@ import MainMobileContainer from '../components/containers/mobile/MainMobileConta
 
 export const getStaticProps = async ({locale}) => ({
   props: {
-    ...await serverSideTranslations(locale, [
-      'common',
-      'Toolbar',
-      'ControlPanel',
-      'ListPanel',
-      'DetailPanel',
-    ]),
+    ...await serverSideTranslations(locale, ['common']),
   }
 })
 

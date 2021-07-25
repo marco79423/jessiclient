@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Toolbar({onShareButtonClick, onExportButtonClick, onImportButtonClick}) {
   const classes = useStyles()
-  const {t, i18n} = useTranslation('Toolbar')
+  const {t, i18n} = useTranslation()
   const mobileMode = useMobileMode()
   const router = useRouter()
 

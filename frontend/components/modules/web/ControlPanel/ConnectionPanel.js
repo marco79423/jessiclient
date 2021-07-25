@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ConnectionPanel({state, url, connect, disconnect}) {
   const classes = useStyles()
-  const {t} = useTranslation('ControlPanel')
+  const {t} = useTranslation()
   const [localUrl, setLocalUrl] = useState('')
   const [buttonLabel, setButtonLabel] = useState('')
 
