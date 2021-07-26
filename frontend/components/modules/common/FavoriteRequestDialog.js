@@ -11,7 +11,7 @@ import FavoriteRequestItem from './FavoriteRequestItem'
 
 const useStyles = makeStyles((theme) => ({
   filter: {
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(1.5)
   }
 }))
 

@@ -57,19 +57,22 @@ export default function FavoriteRequestItem({isConnected, favoriteRequest, onRem
       <Grid className={classes.root} container component={Paper} direction="column" justify="space-between">
         <Grid item>
           <Grid container justify="space-between">
-            <EditableText
-              className={classes.title}
-              value={favoriteRequest.name}
-              setValue={updateName}
-              buttonLabel={t('儲存')}
-            />
-            <EditableText
-              className={classes.category}
-              placeholder={'分類'}
-              value={favoriteRequest.category}
-              setValue={updateCategory}
-              buttonLabel={t('儲存')}
-            />
+            <Grid item>
+              <EditableText
+                className={classes.title}
+                value={favoriteRequest.name}
+                setValue={updateName}
+                buttonLabel={t('儲存')}
+              />
+            </Grid>
+            <Grid>
+              <EditableText
+                className={classes.category}
+                value={favoriteRequest.category}
+                setValue={updateCategory}
+                buttonLabel={t('儲存')}
+              />
+            </Grid>
           </Grid>
           <EditableText
             className={classes.content}
