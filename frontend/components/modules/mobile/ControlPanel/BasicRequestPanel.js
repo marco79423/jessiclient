@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 export default function BasicRequestPanel({
                                             isConnected,
                                             requestBody,
+                                            favoriteRequestCategories,
                                             favoriteRequestID,
                                             onRequestBodyChange,
                                             onFavoriteRequestDialogShow,
@@ -55,11 +56,11 @@ export default function BasicRequestPanel({
     setAddFavoriteRequestDialog(false)
   }
 
-  const onAddFavoriteRequestDialogCreate = (requestName) => {
+  const onAddFavoriteRequestDialogCreate = ({name, categoryID}) => {
     onFavoriteRequestAdd({
-      name: requestName,
+      name: name,
       body: requestBody,
-      category: t('未分類'),
+      categoryID: categoryID,
     })
     onFavoriteRequestDialogShow()
   }
@@ -89,6 +90,7 @@ export default function BasicRequestPanel({
 
       <AddFavoriteRequestDialog
         open={addFavoriteRequestDialogOpen}
+        categories={favoriteRequestCategories}
         onClose={onAddFavoriteRequestDialogClose}
         onCreate={onAddFavoriteRequestDialogCreate}
       />

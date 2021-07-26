@@ -14,4 +14,10 @@ const Template = (args) => <AddFavoriteRequestDialog {...args} />
 export const Default = Template.bind({})
 Default.args = {
   open: true,
+  categories: [
+    {
+      id: 'id',
+      label: '未分類'
+    }
+  ],
 }

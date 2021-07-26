@@ -25,6 +25,9 @@ export const getRequestBody = state => state.project.request.body
 
 export const getScheduleTimeInterval = state => state.project.schedule.timeInterval
 
+const favoriteRequestCategorySelectors = entityAdapter.getSelectors(state => state.project.favoriteRequestCategory)
+export const getFavoriteRequestCategories = state => favoriteRequestCategorySelectors.selectAll(state)
+
 const favoriteRequestSelectors = entityAdapter.getSelectors(state => state.project.favoriteRequest)
 export const getFavoriteRequests = state => favoriteRequestSelectors.selectAll(state)
 

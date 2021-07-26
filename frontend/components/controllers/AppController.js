@@ -4,10 +4,10 @@ import {GA4React} from 'ga-4-react'
 import useAsyncEffect from 'use-async-effect'
 import {useTranslation} from 'next-i18next'
 
-import {getProjectData, getProjectDataWithoutMessages} from '../../redux/selectors'
+import {getFavoriteRequestCategories, getProjectData, getProjectDataWithoutMessages} from '../../redux/selectors'
 import {changeConnectionState, changeProjectState, changeScheduleEnabledStatus} from '../../redux/current'
 import {LoadingState, MessageSource} from '../../constants'
-import {appendMessage, setProjectData} from '../../redux/project'
+import {addFavoriteRequestCategory, appendMessage, setProjectData} from '../../redux/project'
 import generateRandomString from '../../utils/generateRandomString'
 import {
   loadProjectDataFromFile,
@@ -26,6 +26,7 @@ export default function AppController({children}) {
   const {t} = useTranslation()
 
   const projectData = useSelector(getProjectData)
+  const favoriteRequestCategories = useSelector(getFavoriteRequestCategories)
   const projectDataWithoutMessages = useSelector(getProjectDataWithoutMessages)
   const track = useTrackFunc()
 
@@ -146,6 +147,14 @@ export default function AppController({children}) {
     await dispatch(changeProjectState(LoadingState.Loaded))
   }, [])
 
+  useEffect(() => {
+    if (favoriteRequestCategories.length === 0) {
+      dispatch(addFavoriteRequestCategory({
+        id: generateRandomString(),
+        label: t('未分類'),
+      }))
+    }
+  }, [favoriteRequestCategories])
 
   const appController = {
     track,

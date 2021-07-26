@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ScheduleRequestPanel({
                                                isConnected,
                                                scheduleTimeInterval,
+                                               favoriteRequestCategories,
                                                favoriteRequestID,
                                                scheduleEnabled,
                                                requestBody,
@@ -64,11 +65,11 @@ export default function ScheduleRequestPanel({
     setAddFavoriteRequestDialog(false)
   }
 
-  const onAddFavoriteRequestDialogCreate = (requestName) => {
+  const onAddFavoriteRequestDialogCreate = ({name, categoryID}) => {
     onFavoriteRequestAdd({
-      name: requestName,
+      name: name,
       body: requestBody,
-      category: t('未分類'),
+      categoryID: categoryID,
     })
     onFavoriteRequestDialogShow()
   }
@@ -115,6 +116,7 @@ export default function ScheduleRequestPanel({
 
       <AddFavoriteRequestDialog
         open={addFavoriteRequestDialogOpen}
+        categories={favoriteRequestCategories}
         onClose={onAddFavoriteRequestDialogClose}
         onCreate={onAddFavoriteRequestDialogCreate}
       />

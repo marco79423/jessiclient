@@ -40,6 +40,7 @@ export default function RequestPanel({
                                        requestBody,
                                        onRequestBodyChange,
 
+                                       favoriteRequestCategories,
                                        favoriteRequestID,
                                        onFavoriteRequestDialogShow,
                                        onFavoriteRequestAdd,
@@ -73,6 +74,7 @@ export default function RequestPanel({
           <BasicRequestPanel
             isConnected={isConnected}
 
+            favoriteRequestCategories={favoriteRequestCategories}
             favoriteRequestID={favoriteRequestID}
             onFavoriteRequestDialogShow={onFavoriteRequestDialogShow}
             onFavoriteRequestAdd={onFavoriteRequestAdd}
@@ -88,6 +90,7 @@ export default function RequestPanel({
           <ScheduleRequestPanel
             isConnected={isConnected}
 
+            favoriteRequestCategories={favoriteRequestCategories}
             favoriteRequestID={favoriteRequestID}
             onFavoriteRequestDialogShow={onFavoriteRequestDialogShow}
             onFavoriteRequestAdd={onFavoriteRequestAdd}

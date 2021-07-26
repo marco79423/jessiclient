@@ -1,9 +1,10 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useTranslation} from 'next-i18next'
 import {useDispatch, useSelector} from 'react-redux'
 
 import {
   getConnectionState,
+  getFavoriteRequestCategories,
   getFavoriteRequests,
   getRequestBody,
   getScheduleEnabledStatus,
@@ -12,10 +13,11 @@ import {
 import generateRandomString from '../../../../utils/generateRandomString'
 import {
   addFavoriteRequest,
+  addFavoriteRequestCategory,
   changeRequestBody,
   changeScheduleTimeInterval,
-  removeFavoriteRequest,
-  updateFavoriteRequest
+  removeFavoriteRequest, removeFavoriteRequestCategory,
+  updateFavoriteRequest, updateFavoriteRequestCategory
 } from '../../../../redux/project'
 import {ConnectionState} from '../../../../constants'
 import FavoriteRequestDialog from '../../../modules/common/FavoriteRequestDialog'
@@ -28,11 +30,27 @@ export default function RequestPanelContainer({appController}) {
   const requestBody = useSelector(getRequestBody)
   const scheduleEnabled = useSelector(getScheduleEnabledStatus)
   const timeInterval = useSelector(getScheduleTimeInterval)
+  const favoriteRequestCategories = useSelector(getFavoriteRequestCategories)
   const favoriteRequests = useSelector(getFavoriteRequests)
   const [favoriteRequestID, setFavoriteRequestID] = useState(null)
   const [favoriteRequestDialogOpen, setFavoriteRequestDialog] = useState(false)
   const [localRequestBody, setLocalRequestBody] = useState(requestBody)
   const [localScheduleTimeInterval, setLocalTimeInterval] = useState(timeInterval)
+
+    const onAddFavoriteRequestCategory = (requestCategory) => {
+    dispatch(addFavoriteRequestCategory({
+      id: generateRandomString(),
+      ...requestCategory,
+    }))
+  }
+
+  const onUpdatedFavoriteRequestCategory = ({id, changes}) => {
+    dispatch(updateFavoriteRequestCategory({id, changes}))
+  }
+
+  const onRemoveFavoriteRequestCategory = (id) => {
+    dispatch(removeFavoriteRequestCategory(id))
+  }
 
   const onRequestBodyChange = (value) => {
     setLocalRequestBody(value)
@@ -55,12 +73,12 @@ export default function RequestPanelContainer({appController}) {
     }
   }
 
-  const onFavoriteRequestAdd = ({name, body, category}) => {
+  const onFavoriteRequestAdd = ({name, body, categoryID}) => {
     const favoriteRequest = {
       id: generateRandomString(),
       name: name,
       body: body,
-      category: category,
+      categoryID: categoryID,
     }
     dispatch(addFavoriteRequest(favoriteRequest))
     setFavoriteRequestID(favoriteRequest.id)
@@ -116,6 +134,7 @@ export default function RequestPanelContainer({appController}) {
         requestBody={localRequestBody}
         onRequestBodyChange={onRequestBodyChange}
 
+        favoriteRequestCategories={favoriteRequestCategories}
         favoriteRequestID={favoriteRequestID}
         onFavoriteRequestDialogShow={onFavoriteRequestDialogShow}
         onFavoriteRequestAdd={onFavoriteRequestAdd}
@@ -136,7 +155,12 @@ export default function RequestPanelContainer({appController}) {
         open={favoriteRequestDialogOpen}
         onClose={hideFavoriteRequestDialog}
 
+        favoriteRequestCategories={favoriteRequestCategories}
         favoriteRequests={favoriteRequests}
+
+        onAddFavoriteRequestCategory={onAddFavoriteRequestCategory}
+        onUpdatedFavoriteRequestCategory={onUpdatedFavoriteRequestCategory}
+        onRemoveFavoriteRequestCategory={onRemoveFavoriteRequestCategory}
 
         onRemove={onRemoveFavoriteRequest}
         onApply={onApplyFavoriteRequest}

@@ -44,6 +44,16 @@ class ProjectScheduleDataModel(pydantic.BaseModel):
         extra = pydantic.Extra.forbid
 
 
+class FavoriteRequestCategoryDataModel(pydantic.BaseModel):
+    id: str
+    label: pydantic.constr(min_length=1)
+
+    class Config:
+        alias_generator = to_camel
+        allow_population_by_field_name = True
+        extra = pydantic.Extra.forbid
+
+
 class FavoriteRequestDataModel(pydantic.BaseModel):
     id: str
     name: pydantic.constr(min_length=1)
@@ -77,6 +87,16 @@ class MessageDataModel(pydantic.BaseModel):
         extra = pydantic.Extra.forbid
 
 
+class ProjectFavoriteRequestCategoryDataModel(pydantic.BaseModel):
+    ids: List[str]
+    entities: Dict[str, FavoriteRequestCategoryDataModel]
+
+    class Config:
+        alias_generator = to_camel
+        allow_population_by_field_name = True
+        extra = pydantic.Extra.forbid
+
+
 class ProjectMessageDataModel(pydantic.BaseModel):
     ids: List[str]
     entities: Dict[str, MessageDataModel]
@@ -92,6 +112,7 @@ class ProjectDataModel(pydantic.BaseModel):
     connection: ProjectConnectionDataModel
     request: ProjectRequestDataModel
     schedule: ProjectScheduleDataModel
+    favorite_request_category: ProjectFavoriteRequestCategoryDataModel
     favorite_request: ProjectFavoriteRequestDataModel
     message: ProjectMessageDataModel
 

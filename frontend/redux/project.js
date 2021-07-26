@@ -12,6 +12,14 @@ export const changeRequestBody = createAction('project/request/changeRequestBody
 
 export const changeScheduleTimeInterval = createAction('project/schedule/changeScheduleTimeInterval')
 
+export const addFavoriteRequestCategory = createAction('project/request/addFavoriteRequestCategory')
+
+export const removeFavoriteRequestCategory = createAction('project/request/removeFavoriteRequestCategory')
+
+export const clearFavoriteRequestCategories = createAction('project/request/clearFavoriteRequestCategories')
+
+export const updateFavoriteRequestCategory = createAction('project/request/updateFavoriteRequestCategory')
+
 export const addFavoriteRequest = createAction('project/request/addFavoriteRequest')
 
 export const removeFavoriteRequest = createAction('project/request/removeFavoriteRequest')
@@ -51,7 +59,10 @@ const projectSlice = createSlice({
       timeInterval: 3,
     },
 
-    // 常用訊息
+    // 常用請求分類
+    favoriteRequestCategory: entityAdapter.getInitialState(),
+
+    // 常用請求分類
     favoriteRequest: entityAdapter.getInitialState(),
 
     // 訊息
@@ -73,6 +84,7 @@ const projectSlice = createSlice({
     [changeScheduleTimeInterval]: (state, action) => {
       state.schedule.timeInterval = action.payload
     },
+    // 常用請求分類
     [addFavoriteRequest]: (state, action) => {
       entityAdapter.addOne(state.favoriteRequest, action.payload)
     },
@@ -85,6 +97,22 @@ const projectSlice = createSlice({
     [updateFavoriteRequest]: (state, action) => {
       entityAdapter.updateOne(state.favoriteRequest, action.payload)
     },
+
+    // 常用請求
+    [addFavoriteRequestCategory]: (state, action) => {
+      entityAdapter.addOne(state.favoriteRequestCategory, action.payload)
+    },
+    [removeFavoriteRequestCategory]: (state, action) => {
+      entityAdapter.removeOne(state.favoriteRequestCategory, action.payload)
+    },
+    [clearFavoriteRequestCategories]: (state) => {
+      entityAdapter.removeAll(state.favoriteRequestCategory)
+    },
+    [updateFavoriteRequestCategory]: (state, action) => {
+      entityAdapter.updateOne(state.favoriteRequestCategory, action.payload)
+    },
+
+    // 訊息
     [removeFirstMessage]: (state) => {
       entityAdapter.removeOne(state.message, state.message.ids[0])
     },
