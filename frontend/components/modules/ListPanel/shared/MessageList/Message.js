@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
 
-import {MessageSource} from '../../../../constants'
-import ListItem from '../../../elements/ListItem'
+import {MessageSource} from '../../../../../constants'
+import ListItem from '../../../../elements/ListItem'
 
 const useStyles = makeStyles((theme) => ({
   messageTitle: ({fromClient}) => ({
@@ -23,30 +23,19 @@ const useStyles = makeStyles((theme) => ({
 export function Message({message, selectedMessageID, onSelectedMessageChange}) {
   const {t} = useTranslation()
   const fromClient = message.source === MessageSource.Client
-  const classes = useStyles({fromClient})
+  const time = new Date(message.time).toLocaleString()
   const selected = message.id === selectedMessageID
 
+  const classes = useStyles({fromClient})
+
   const onSelected = () => {
-    if (selected) {
-      onSelectedMessageChange(null)
-    } else {
-      onSelectedMessageChange(message.id)
-    }
-  }
-
-  const MessageTitle = ({message}) => {
-    const time = new Date(message.time).toLocaleString()
-    const source = fromClient ? t('客戶端') : t('服務端')
-
-    return (
-      <span className={classes.messageTitle}>{time} [{source}]</span>
-    )
+    onSelectedMessageChange(selected ? null : message.id)
   }
 
   return (
     <ListItem
       selected={selected}
-      title={<MessageTitle message={message}/>}
+      title={<span className={classes.messageTitle}>{time} [{fromClient ? t('客戶端') : t('服務端')}]</span>}
       onClick={onSelected}>
       <div className={classes.messageContent}>{message.body}</div>
     </ListItem>
@@ -60,7 +49,7 @@ Message.propTypes = {
     source: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
   }).isRequired,
-  selectedMessageID: PropTypes.string,
+  selectedMessageID: PropTypes.bool.isRequired,
   onSelectedMessageChange: PropTypes.func.isRequired,
 }
 

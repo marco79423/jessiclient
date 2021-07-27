@@ -1,15 +1,16 @@
 import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 
-import useWindowSize from '../../../hooks/useWindowSize'
-import List from '../../../elements/List'
+import useWindowSize from '../../../../hooks/useWindowSize'
+import List from '../../../../elements/List'
 import Message from './Message'
 
 
 export default function MessageList({messages, selectedMessageID, onSelectedMessageChange}) {
   const [height, setHeight] = useState(0)
-  const [_, windowHeight] = useWindowSize()
 
+  // TODO: 不要用這種方式定義高度
+  const [_, windowHeight] = useWindowSize()
   useEffect(() => {
     setHeight(windowHeight - 64 - 64)
   }, [windowHeight])

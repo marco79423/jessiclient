@@ -3,7 +3,7 @@ import {makeStyles} from '@material-ui/core/styles'
 import CloseIcon from '@material-ui/icons/Close'
 
 import ControlBar from './ControlBar'
-import MessageList from '../shared/MessageList'
+import MessageList from '../shared/MessageList/MessageList'
 import {AppMobileDisplayMode} from '../../../../constants'
 import IconButton from '../../../elements/IconButton'
 import {useTranslation} from 'next-i18next'

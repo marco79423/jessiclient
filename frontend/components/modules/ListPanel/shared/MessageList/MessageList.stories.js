@@ -1,7 +1,7 @@
 import React from 'react'
 
-import {MessageSource} from '../../../../constants'
-import generateRandomString from '../../../../utils/generateRandomString'
+import {MessageSource} from '../../../../../constants'
+import generateRandomString from '../../../../../utils/generateRandomString'
 import MessageList from './MessageList'
 
 

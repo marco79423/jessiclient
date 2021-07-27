@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {makeStyles} from '@material-ui/core/styles'
 
 import ControlBar from './ControlBar'
-import MessageList from '../shared/MessageList'
+import MessageList from '../shared/MessageList/MessageList'
 
 
 const useStyles = makeStyles((theme) => ({
