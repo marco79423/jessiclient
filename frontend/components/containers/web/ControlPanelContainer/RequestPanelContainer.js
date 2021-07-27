@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import {useTranslation} from 'next-i18next'
 import {useDispatch, useSelector} from 'react-redux'
 
@@ -16,8 +16,10 @@ import {
   addFavoriteRequestCategory,
   changeRequestBody,
   changeScheduleTimeInterval,
-  removeFavoriteRequest, removeFavoriteRequestCategory,
-  updateFavoriteRequest, updateFavoriteRequestCategory
+  removeFavoriteRequest,
+  removeFavoriteRequestCategory,
+  updateFavoriteRequest,
+  updateFavoriteRequestCategory
 } from '../../../../redux/project'
 import {ConnectionState} from '../../../../constants'
 import FavoriteRequestDialog from '../../../modules/common/FavoriteRequestDialog'
@@ -37,7 +39,7 @@ export default function RequestPanelContainer({appController}) {
   const [localRequestBody, setLocalRequestBody] = useState(requestBody)
   const [localScheduleTimeInterval, setLocalTimeInterval] = useState(timeInterval)
 
-    const onAddFavoriteRequestCategory = (requestCategory) => {
+  const onAddFavoriteRequestCategory = (requestCategory) => {
     dispatch(addFavoriteRequestCategory({
       id: generateRandomString(),
       ...requestCategory,

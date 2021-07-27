@@ -2,16 +2,16 @@ import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 
 import {getMessage} from '../../../../redux/selectors'
-import DetailPanel from '../../../modules/mobile/DetailPanel/DetailPanel'
 import {setSelectedMessageID} from '../../../../redux/current'
 import {AppMobileDisplayMode} from '../../../../constants'
+import DetailPanel from '../../../modules/mobile/DetailPanel/DetailPanel'
 
 
 export default function DetailPanelContainer({setDisplayMode}) {
   const dispatch = useDispatch()
   const message = useSelector(getMessage)
 
-    useEffect(() => {
+  useEffect(() => {
     if (message) {
       setDisplayMode(AppMobileDisplayMode.DetailPanel)
     } else {
