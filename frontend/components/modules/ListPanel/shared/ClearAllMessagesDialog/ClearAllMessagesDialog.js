@@ -4,8 +4,8 @@ import {makeStyles} from '@material-ui/core/styles'
 import {useTranslation} from 'next-i18next'
 import {Typography} from '@material-ui/core'
 
-import BasicDialog from '../../../elements/BasicDialog'
-import Button from '../../../elements/Button'
+import BasicDialog from '../../../../elements/BasicDialog'
+import Button from '../../../../elements/Button'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -18,12 +18,12 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-export default function ClearAllDialog({open, onClose, onClearAll}) {
+export default function ClearAllMessagesDialog({open, onClose, clearAll}) {
   const classes = useStyles()
   const {t} = useTranslation()
 
   const onClearAllButtonClick = () => {
-    onClearAll()
+    clearAll()
     onClose()
   }
 
@@ -44,8 +44,9 @@ export default function ClearAllDialog({open, onClose, onClearAll}) {
   )
 }
 
-ClearAllDialog.propTypes = {
+ClearAllMessagesDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  onClearAll: PropTypes.func.isRequired,
+
+  clearAll: PropTypes.func.isRequired,
 }

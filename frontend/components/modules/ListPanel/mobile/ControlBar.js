@@ -5,7 +5,7 @@ import {makeStyles} from '@material-ui/core/styles'
 import {Grid} from '@material-ui/core'
 
 import Button from '../../../elements/Button'
-import ClearAllDialog from '../shared/ClearAllDialog'
+import ClearAllDialog from '../shared/ClearAllMessagesDialog'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,7 +43,8 @@ export default function ControlBar({onClearAll}) {
         <ClearAllDialog
           open={clearAllDialogOn}
           onClose={hideClearAllDialog}
-          onClearAll={onClearAll}
+
+          clearAll={onClearAll}
         />
       </Grid>
     </Grid>
