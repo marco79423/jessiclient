@@ -19,8 +19,8 @@ import {
   updateFavoriteRequestCategory
 } from '../../../../redux/project'
 import {ConnectionState} from '../../../../constants'
-import FavoriteRequestDialog from '../../../modules/common/FavoriteRequestDialog'
-import RequestPanel from '../../../modules/mobile/ControlPanel/RequestPanel'
+import FavoriteRequestDialog from '../../../modules/ControlPanel/shared/FavoriteRequestDialog'
+import RequestPanel from '../../../modules/ControlPanel/mobile/RequestPanel'
 
 export default function RequestPanelContainer({appController}) {
   const dispatch = useDispatch()

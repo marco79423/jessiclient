@@ -1,13 +1,11 @@
 import React, {useState} from 'react'
 import PropTypes from 'prop-types'
-import {useTranslation} from 'next-i18next'
 
-import Toolbar from '../../../modules/web/AppBar'
+import Toolbar from '../../../modules/AppBar/web/Toolbar'
 import ShareDialogContainer from '../../common/ShareDialogContainer'
 import ExportDialogContainer from '../../common/ExportDialogContainer'
 
 export default function ToolbarContainer({appController}) {
-  const {t} = useTranslation()
   const [sharePanelOpen, setSharePanel] = useState(false)
   const [exportPanelOpen, setExportPanel] = useState(false)
 
@@ -34,9 +32,9 @@ export default function ToolbarContainer({appController}) {
   return (
     <>
       <Toolbar
-        onShareButtonClick={showSharePanel}
-        onExportButtonClick={showExportPanel}
-        onImportButtonClick={importProject}
+        shareProject={showSharePanel}
+        exportProject={showExportPanel}
+        importProject={importProject}
       />
 
       <ShareDialogContainer appController={appController} open={sharePanelOpen} onClose={hideSharePanel}/>

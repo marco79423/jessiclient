@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import ExportDialog from '../../modules/common/ExportDialog'
+import ExportDialog from '../../modules/AppBar/shared/ExportDialog/ExportDialog'
 
 
 export default function ExportDialogContainer({appController, open, onClose}) {

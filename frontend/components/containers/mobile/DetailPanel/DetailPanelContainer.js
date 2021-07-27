@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {getMessage} from '../../../../redux/selectors'
 import {setSelectedMessageID} from '../../../../redux/current'
 import {AppMobileDisplayMode} from '../../../../constants'
-import DetailPanel from '../../../modules/mobile/DetailPanel/DetailPanel'
+import DetailPanel from '../../../modules/DetailPanel/mobile/DetailPanel/DetailPanel'
 
 
 export default function DetailPanelContainer({setDisplayMode}) {

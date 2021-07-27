@@ -3,7 +3,7 @@ import {makeStyles} from '@material-ui/core/styles'
 import {AppBar as MuiAppBar, Backdrop, Grid, Slide} from '@material-ui/core'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
-import Logo from '../modules/web/AppBar/Logo'
+import Logo from '../modules/AppBar/shared/Logo'
 import {AppWebDisplayMode} from '../../constants'
 
 

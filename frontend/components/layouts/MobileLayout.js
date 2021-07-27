@@ -4,7 +4,7 @@ import {AppBar as MuiAppBar, Backdrop, Drawer, Grid} from '@material-ui/core'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
 import {AppMobileDisplayMode} from '../../constants'
-import Logo from '../modules/web/AppBar/Logo'
+import Logo from '../modules/AppBar/shared/Logo'
 import useWindowSize from '../hooks/useWindowSize'
 
 

@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux'
 
 import {changeConnectionUrl} from '../../../../redux/project'
 import {getConnectionState, getConnectionUrl} from '../../../../redux/selectors'
-import ConnectionPanel from '../../../modules/mobile/ControlPanel/ConnectionPanel'
+import ConnectionPanel from '../../../modules/ControlPanel/mobile/ConnectionPanel'
 
 
 export default function ConnectionPanelContainer({appController}) {

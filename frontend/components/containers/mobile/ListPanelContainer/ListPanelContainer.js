@@ -5,7 +5,7 @@ import {AppMobileDisplayMode} from '../../../../constants'
 import * as projectActions from '../../../../redux/project'
 import * as currentActions from '../../../../redux/current'
 import {getMessages, getSelectedMessageID} from '../../../../redux/selectors'
-import ListPanel from '../../../modules/mobile/ListPanel/ListPanel'
+import ListPanel from '../../../modules/ListPanel/mobile/ListPanel'
 
 
 export default function ListPanelContainer({setDisplayMode, appController}) {

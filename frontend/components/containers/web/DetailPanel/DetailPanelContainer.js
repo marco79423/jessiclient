@@ -2,7 +2,7 @@ import React from 'react'
 import {useSelector} from 'react-redux'
 
 import {getMessage} from '../../../../redux/selectors'
-import DetailPanel from '../../../modules/web/DetailPanel/DetailPanel'
+import DetailPanel from '../../../modules/DetailPanel/web/DetailPanel/DetailPanel'
 
 
 export default function DetailPanelContainer() {

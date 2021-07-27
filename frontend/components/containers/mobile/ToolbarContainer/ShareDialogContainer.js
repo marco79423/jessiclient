@@ -5,7 +5,7 @@ import {useTranslation} from 'next-i18next'
 
 import {changeShareLink, clearShareLink} from '../../../../redux/current'
 import {getShareLink} from '../../../../redux/selectors'
-import ShareDialog from '../../../modules/common/ShareDialog'
+import ShareDialog from '../../../modules/AppBar/shared/ShareDialog/ShareDialog'
 
 
 export default function ShareDialogContainer({appController, open, onClose}) {

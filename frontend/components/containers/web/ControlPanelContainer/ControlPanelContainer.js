@@ -2,7 +2,7 @@ import React from 'react'
 
 import ConnectionPanelContainer from './ConnectionPanelContainer'
 import RequestPanelContainer from './RequestPanelContainer'
-import ControlPanel from '../../../modules/web/ControlPanel/ControlPanel'
+import ControlPanel from '../../../modules/ControlPanel/web/ControlPanel'
 
 
 export default function ControlPanelContainer({appController}) {

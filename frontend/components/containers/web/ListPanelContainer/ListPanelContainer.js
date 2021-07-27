@@ -5,7 +5,7 @@ import {AppWebDisplayMode} from '../../../../constants'
 import * as projectActions from '../../../../redux/project'
 import * as currentActions from '../../../../redux/current'
 import {getMessages, getSelectedMessageID} from '../../../../redux/selectors'
-import ListPanel from '../../../modules/web/ListPanel/ListPanel'
+import ListPanel from '../../../modules/ListPanel/web/ListPanel'
 
 
 export default function ListPanelContainer({appController, setDisplayMode}) {
