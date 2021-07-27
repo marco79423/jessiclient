@@ -5,7 +5,8 @@ import ExportDialog from '../../modules/AppBar/shared/ExportDialog/ExportDialog'
 
 
 export default function ExportDialogContainer({appController, open, onClose}) {
-  const exportProject = async ({filename, messageIncluded}) => {
+
+  const onExportProject = async ({filename, messageIncluded}) => {
     await appController.exportProject({filename, messageIncluded})
     onClose()
   }
@@ -14,7 +15,7 @@ export default function ExportDialogContainer({appController, open, onClose}) {
     <ExportDialog
       open={open}
       onClose={onClose}
-      exportProject={exportProject}
+      onExportProject={onExportProject}
     />
   )
 }

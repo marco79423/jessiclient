@@ -13,7 +13,7 @@ export default function ShareDialogContainer({appController, open, onClose}) {
   const shareLink = useSelector(getShareLink)
   const {t} = useTranslation()
 
-  const generateShareLink = async ({messageIncluded}) => {
+  const onGenerateShareLink = async ({messageIncluded}) => {
     try {
       const shareLink = await appController.generateShareLink({messageIncluded})
       await dispatch(changeShareLink(shareLink))
@@ -23,7 +23,7 @@ export default function ShareDialogContainer({appController, open, onClose}) {
     }
   }
 
-  const wrappedOnClose = () => {
+  const onCloseWrapped = () => {
     dispatch(clearShareLink())
     onClose()
   }
@@ -31,9 +31,9 @@ export default function ShareDialogContainer({appController, open, onClose}) {
   return (
     <ShareDialog
       open={open}
-      onClose={wrappedOnClose}
+      onClose={onCloseWrapped}
       shareLink={shareLink}
-      generateShareLink={generateShareLink}
+      onGenerateShareLink={onGenerateShareLink}
     />
   )
 }

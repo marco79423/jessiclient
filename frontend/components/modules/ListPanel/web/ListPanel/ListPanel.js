@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {makeStyles} from '@material-ui/core/styles'
 
 import ControlBar from './ControlBar'
-import MessageList from '../shared/MessageList/MessageList'
+import MessageList from '../../shared/MessageList'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +22,7 @@ export default function ListPanel({messages, selectedMessageID, onSelectedMessag
     )
   }, [messages, searchFilters])
 
-  const onClearAll = () => {
+  const onClearAllMessagesWrapped = () => {
     onClearAllMessages()
     setSearchFilters([])
   }
@@ -32,7 +32,7 @@ export default function ListPanel({messages, selectedMessageID, onSelectedMessag
       <ControlBar
         searchFilters={searchFilters}
         onSearchFilterChange={setSearchFilters}
-        onClearAll={onClearAll}
+        onClearAllMessages={onClearAllMessagesWrapped}
       />
 
       <MessageList

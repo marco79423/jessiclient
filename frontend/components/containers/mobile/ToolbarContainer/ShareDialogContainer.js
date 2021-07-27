@@ -23,7 +23,7 @@ export default function ShareDialogContainer({appController, open, onClose}) {
     }
   }
 
-  const wrappedOnClose = () => {
+  const onCloseWrapped = () => {
     dispatch(clearShareLink())
     onClose()
   }
@@ -31,9 +31,9 @@ export default function ShareDialogContainer({appController, open, onClose}) {
   return (
     <ShareDialog
       open={open}
-      onClose={wrappedOnClose}
+      onClose={onCloseWrapped}
       shareLink={shareLink}
-      generateShareLink={generateShareLink}
+      onGenerateShareLink={generateShareLink}
     />
   )
 }

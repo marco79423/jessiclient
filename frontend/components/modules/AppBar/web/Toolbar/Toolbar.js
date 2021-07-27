@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function Toolbar({shareProject, exportProject, importProject}) {
+export default function Toolbar({onShareProject, onExportProject, onImportProject}) {
   const classes = useStyles()
   const {t, i18n} = useTranslation()
   const mobileMode = useMobileMode()
@@ -45,15 +45,15 @@ export default function Toolbar({shareProject, exportProject, importProject}) {
   }
 
   const onShareButtonClick = () => {
-    shareProject()
+    onShareProject()
   }
 
   const onExportButtonClick = () => {
-    exportProject()
+    onExportProject()
   }
 
   const onImportButtonClick = () => {
-    importProject()
+    onImportProject()
   }
 
   return (
@@ -86,7 +86,7 @@ export default function Toolbar({shareProject, exportProject, importProject}) {
 }
 
 Toolbar.propTypes = {
-  shareProject: PropTypes.func.isRequired,
-  exportProject: PropTypes.func.isRequired,
-  importProject: PropTypes.func.isRequired,
+  onShareProject: PropTypes.func.isRequired,
+  onExportProject: PropTypes.func.isRequired,
+  onImportProject: PropTypes.func.isRequired,
 }

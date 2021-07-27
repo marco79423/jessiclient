@@ -9,13 +9,13 @@ import TextField from '../../../../elements/TextField'
 import Checkbox from '../../../../elements/Checkbox'
 
 
-export default function ExportDialog({open, onClose, exportProject}) {
+export default function ExportDialog({open, onClose, onExportProject}) {
   const {t} = useTranslation()
   const [filename, setFilename] = useState('')
   const [messageIncluded, setIncludeMessages] = useState(false)
 
   const onExportButtonClicked = async () => {
-    await exportProject({filename, messageIncluded})
+    await onExportProject({filename, messageIncluded})
     onClose()
   }
 
@@ -46,5 +46,5 @@ export default function ExportDialog({open, onClose, exportProject}) {
 ExportDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  exportProject: PropTypes.func.isRequired,
+  onExportProject: PropTypes.func.isRequired,
 }

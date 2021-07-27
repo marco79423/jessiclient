@@ -62,7 +62,7 @@ export default function DetailPanel({message}) {
     }
   }, [messageText])
 
-  const handleTabChange = (event, newValue) => {
+  const onTabChange = (event, newValue) => {
     setTabValue(newValue)
   }
 
@@ -84,7 +84,7 @@ export default function DetailPanel({message}) {
           </TabPanel>
         </Paper>
         <Toolbar className={classes.controlBar}>
-          <TabList value={tabValue} onChange={handleTabChange}>
+          <TabList value={tabValue} onChange={onTabChange}>
             <Tab className={classes.tab} label={t('純文字')} value={PanelTab.PlainText}/>
             <Tab className={classes.tab} label={t('JSON')} value={PanelTab.JSON} disabled={messageJsonData === null}/>
           </TabList>

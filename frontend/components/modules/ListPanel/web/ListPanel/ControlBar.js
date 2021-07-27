@@ -4,10 +4,9 @@ import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
 import {Chip, Grid} from '@material-ui/core'
 
-import SearchField from '../../../elements/SearchField'
-import Button from '../../../elements/Button'
-import ClearAllDialog from '../shared/ClearAllMessagesDialog'
-
+import SearchField from '../../../../elements/SearchField'
+import Button from '../../../../elements/Button'
+import ClearAllDialog from '../../shared/ClearAllMessagesDialog'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -20,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-export default function ControlBar({searchFilters, onSearchFilterChange, onClearAll}) {
+export default function ControlBar({searchFilters, onSearchFilterChange, onClearAllMessages}) {
   const classes = useStyles()
   const {t} = useTranslation()
   const [clearAllDialogOn, setClearAllDialog] = useState(false)
@@ -71,7 +70,7 @@ export default function ControlBar({searchFilters, onSearchFilterChange, onClear
           open={clearAllDialogOn}
           onClose={hideClearAllDialog}
 
-          clearAll={onClearAll}
+          onClearAll={onClearAllMessages}
         />
       </Grid>
     </Grid>
@@ -81,5 +80,5 @@ export default function ControlBar({searchFilters, onSearchFilterChange, onClear
 ControlBar.propTypes = {
   searchFilters: PropTypes.arrayOf(PropTypes.string).isRequired,
   onSearchFilterChange: PropTypes.func.isRequired,
-  onClearAll: PropTypes.func.isRequired,
+  onClearAllMessages: PropTypes.func.isRequired,
 }

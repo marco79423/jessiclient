@@ -54,7 +54,7 @@ export default function RequestPanelContainer({appController}) {
     setFavoriteRequestID(null)
   }
 
-  const onSendMessage = async () => {
+  const onSendRequest = async () => {
     dispatch(changeRequestBody(localRequestBody))
     try {
       await appController.sendMessage(localRequestBody)
@@ -64,7 +64,7 @@ export default function RequestPanelContainer({appController}) {
     }
   }
 
-  const onFavoriteRequestAdd = ({name, body, categoryID}) => {
+  const onAddFavoriteRequest = ({name, body, categoryID}) => {
     const favoriteRequest = {
       id: generateRandomString(),
       name: name,
@@ -76,12 +76,7 @@ export default function RequestPanelContainer({appController}) {
     appController.track('add_favorite_message')
   }
 
-  const onFavoriteRequestRemove = (favoriteRequestID) => {
-    dispatch(removeFavoriteRequest(favoriteRequestID))
-    setFavoriteRequestID(null)
-  }
-
-  const onFavoriteRequestDialogShow = () => {
+  const onShowFavoriteRequestDialog = () => {
     setFavoriteRequestDialog(true)
     appController.track('show_favorite_requests_panel')
   }
@@ -116,14 +111,13 @@ export default function RequestPanelContainer({appController}) {
 
         requestBody={localRequestBody}
         onRequestBodyChange={onRequestBodyChange}
+        onSendRequest={onSendRequest}
 
         favoriteRequestCategories={favoriteRequestCategories}
         favoriteRequestID={favoriteRequestID}
-        onFavoriteRequestDialogShow={onFavoriteRequestDialogShow}
-        onFavoriteRequestAdd={onFavoriteRequestAdd}
-        onFavoriteRequestRemove={onFavoriteRequestRemove}
-
-        onSendMessage={onSendMessage}
+        onShowFavoriteRequestDialog={onShowFavoriteRequestDialog}
+        onAddFavoriteRequest={onAddFavoriteRequest}
+        onRemoveFavoriteRequest={onRemoveFavoriteRequest}
       />
 
       <FavoriteRequestDialog
@@ -141,7 +135,7 @@ export default function RequestPanelContainer({appController}) {
 
         onRemove={onRemoveFavoriteRequest}
         onApply={onApplyFavoriteRequest}
-        onSend={onSendMessage}
+        onSend={onSendRequest}
         onUpdate={onUpdateFavoriteRequest}
       />
     </>

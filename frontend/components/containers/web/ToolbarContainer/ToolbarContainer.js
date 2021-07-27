@@ -6,39 +6,39 @@ import ShareDialogContainer from '../../common/ShareDialogContainer'
 import ExportDialogContainer from '../../common/ExportDialogContainer'
 
 export default function ToolbarContainer({appController}) {
-  const [sharePanelOpen, setSharePanel] = useState(false)
-  const [exportPanelOpen, setExportPanel] = useState(false)
+  const [shareDialogOpen, setShareDialog] = useState(false)
+  const [exportDialogOpen, setExportDialog] = useState(false)
 
-  const importProject = async () => {
+  const onImportProject = async () => {
     await appController.importProject()
   }
 
-  const showSharePanel = () => {
-    setSharePanel(true)
+  const onShareProject = () => {
+    setShareDialog(true)
   }
 
-  const hideSharePanel = () => {
-    setSharePanel(false)
+  const onCloseShareDialog = () => {
+    setShareDialog(false)
   }
 
-  const showExportPanel = () => {
-    setExportPanel(true)
+  const onExportProject = () => {
+    setExportDialog(true)
   }
 
-  const hideExportPanel = () => {
-    setExportPanel(false)
+  const onCloseExportDialog = () => {
+    setExportDialog(false)
   }
 
   return (
     <>
       <Toolbar
-        shareProject={showSharePanel}
-        exportProject={showExportPanel}
-        importProject={importProject}
+        onShareProject={onShareProject}
+        onExportProject={onExportProject}
+        onImportProject={onImportProject}
       />
 
-      <ShareDialogContainer appController={appController} open={sharePanelOpen} onClose={hideSharePanel}/>
-      <ExportDialogContainer appController={appController} open={exportPanelOpen} onClose={hideExportPanel}/>
+      <ShareDialogContainer appController={appController} open={shareDialogOpen} onClose={onCloseShareDialog}/>
+      <ExportDialogContainer appController={appController} open={exportDialogOpen} onClose={onCloseExportDialog}/>
     </>
   )
 }

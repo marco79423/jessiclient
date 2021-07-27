@@ -4,8 +4,8 @@ import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
 import {Grid} from '@material-ui/core'
 
-import Button from '../../../elements/Button'
-import ClearAllDialog from '../shared/ClearAllMessagesDialog'
+import Button from '../../../../elements/Button'
+import ClearAllMessagesDialog from '../../shared/ClearAllMessagesDialog'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-export default function ControlBar({onClearAll}) {
+export default function ControlBar({onClearAllMessages}) {
   const classes = useStyles()
   const {t} = useTranslation()
   const [clearAllDialogOn, setClearAllDialog] = useState(false)
@@ -40,11 +40,11 @@ export default function ControlBar({onClearAll}) {
           {t('清空訊息')}
         </Button>
 
-        <ClearAllDialog
+        <ClearAllMessagesDialog
           open={clearAllDialogOn}
           onClose={hideClearAllDialog}
 
-          clearAll={onClearAll}
+          onClearAll={onClearAllMessages}
         />
       </Grid>
     </Grid>
@@ -52,5 +52,5 @@ export default function ControlBar({onClearAll}) {
 }
 
 ControlBar.propTypes = {
-  onClearAll: PropTypes.func.isRequired,
+  onClearAllMessages: PropTypes.func.isRequired,
 }

@@ -12,12 +12,12 @@ export default function ConnectionPanelContainer({appController}) {
   const connectionState = useSelector(getConnectionState)
   const connectionUrl = useSelector(getConnectionUrl)
 
-  const connect = async (url) => {
+  const onConnect = async (url) => {
     await dispatch(changeConnectionUrl(url))
     await appController.connect(url)
   }
 
-  const disconnect = async () => {
+  const onDisconnect = async () => {
     await appController.disconnect()
   }
 
@@ -25,8 +25,8 @@ export default function ConnectionPanelContainer({appController}) {
     <ConnectionPanel
       state={connectionState}
       url={connectionUrl}
-      connect={connect}
-      disconnect={disconnect}
+      onConnect={onConnect}
+      onDisconnect={onDisconnect}
     />
   )
 }

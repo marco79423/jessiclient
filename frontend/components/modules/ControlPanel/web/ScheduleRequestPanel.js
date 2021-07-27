@@ -35,17 +35,20 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ScheduleRequestPanel({
                                                isConnected,
-                                               scheduleTimeInterval,
-                                               favoriteRequestCategories,
-                                               favoriteRequestID,
-                                               scheduleEnabled,
+
                                                requestBody,
                                                onRequestBodyChange,
+
+                                               scheduleTimeInterval,
                                                onScheduleTimeIntervalChange,
-                                               onFavoriteRequestDialogShow,
-                                               onFavoriteRequestAdd,
-                                               onFavoriteRequestRemove,
-                                               onEnableButtonClick,
+                                               scheduleEnabled,
+                                               onEnableSchedule,
+
+                                               favoriteRequestCategories,
+                                               favoriteRequestID,
+                                               onShowFavoriteRequestDialog,
+                                               onAddFavoriteRequest,
+                                               onRemoveFavoriteRequest,
                                              }) {
   const classes = useStyles()
   const {t} = useTranslation()
@@ -55,7 +58,7 @@ export default function ScheduleRequestPanel({
 
   const onSetFavoriteRequestButtonClick = () => {
     if (favoriteRequestID) {
-      onFavoriteRequestRemove(favoriteRequestID)
+      onRemoveFavoriteRequest(favoriteRequestID)
     } else {
       setAddFavoriteRequestDialog(true)
     }
@@ -66,19 +69,19 @@ export default function ScheduleRequestPanel({
   }
 
   const onAddFavoriteRequestDialogCreate = ({name, categoryID}) => {
-    onFavoriteRequestAdd({
+    onAddFavoriteRequest({
       name: name,
       body: requestBody,
       categoryID: categoryID,
     })
-    onFavoriteRequestDialogShow()
+    onShowFavoriteRequestDialog()
   }
 
   return (
     <>
       <Paper className={classes.root}>
         <div className={classes.controlBar}>
-          <Button onClick={onFavoriteRequestDialogShow}>{t('展開常用列表')}</Button>
+          <Button onClick={onShowFavoriteRequestDialog}>{t('展開常用列表')}</Button>
         </div>
         <div className={classes.requestBody}>
           <TextArea
@@ -105,7 +108,7 @@ export default function ScheduleRequestPanel({
                 </Grid>
               </Grid>
               <Grid item>
-                <Button primary disabled={!isConnected || !validTimeInterval} onClick={onEnableButtonClick}>
+                <Button primary disabled={!isConnected || !validTimeInterval} onClick={onEnableSchedule}>
                   {scheduleEnabled ? t('停用') : t('啟用')}
                 </Button>
               </Grid>
@@ -126,14 +129,17 @@ export default function ScheduleRequestPanel({
 
 ScheduleRequestPanel.propTypes = {
   isConnected: PropTypes.bool.isRequired,
-  scheduleTimeInterval: PropTypes.number.isRequired,
+
   requestBody: PropTypes.string.isRequired,
-  favoriteRequestID: PropTypes.string,
-  scheduleEnabled: PropTypes.bool.isRequired,
   onRequestBodyChange: PropTypes.func.isRequired,
+
+  scheduleTimeInterval: PropTypes.number.isRequired,
   onScheduleTimeIntervalChange: PropTypes.func.isRequired,
-  onFavoriteRequestDialogShow: PropTypes.func.isRequired,
-  onFavoriteRequestAdd: PropTypes.func.isRequired,
-  onFavoriteRequestRemove: PropTypes.func.isRequired,
-  onEnableButtonClick: PropTypes.func.isRequired,
+  scheduleEnabled: PropTypes.bool.isRequired,
+  onEnableSchedule: PropTypes.func.isRequired,
+
+  favoriteRequestID: PropTypes.string,
+  onShowFavoriteRequestDialog: PropTypes.func.isRequired,
+  onAddFavoriteRequest: PropTypes.func.isRequired,
+  onRemoveFavoriteRequest: PropTypes.func.isRequired,
 }

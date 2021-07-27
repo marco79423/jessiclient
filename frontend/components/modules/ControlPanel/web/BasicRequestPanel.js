@@ -33,14 +33,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BasicRequestPanel({
                                             isConnected,
+
                                             requestBody,
+                                            onRequestBodyChange,
+                                            onSendRequest,
+
                                             favoriteRequestCategories,
                                             favoriteRequestID,
-                                            onRequestBodyChange,
-                                            onFavoriteRequestDialogShow,
-                                            onFavoriteRequestAdd,
-                                            onFavoriteRequestRemove,
-                                            onSendButtonClick
+                                            onShowFavoriteRequestDialog,
+                                            onAddFavoriteRequest,
+                                            onRemoveFavoriteRequest,
                                           }) {
   const classes = useStyles()
   const {t} = useTranslation()
@@ -48,7 +50,7 @@ export default function BasicRequestPanel({
 
   const onSetFavoriteRequestButtonClick = () => {
     if (favoriteRequestID) {
-      onFavoriteRequestRemove(favoriteRequestID)
+      onRemoveFavoriteRequest(favoriteRequestID)
     } else {
       setAddFavoriteRequestDialog(true)
     }
@@ -59,19 +61,19 @@ export default function BasicRequestPanel({
   }
 
   const onAddFavoriteRequestDialogCreate = ({name, categoryID}) => {
-    onFavoriteRequestAdd({
+    onAddFavoriteRequest({
       name: name,
       body: requestBody,
       categoryID: categoryID,
     })
-    onFavoriteRequestDialogShow()
+    onShowFavoriteRequestDialog()
   }
 
   return (
     <>
       <Paper className={classes.root}>
         <div className={classes.controlBar}>
-          <Button onClick={onFavoriteRequestDialogShow}>{t('展開常用列表')}</Button>
+          <Button onClick={onShowFavoriteRequestDialog}>{t('展開常用列表')}</Button>
         </div>
         <div className={classes.requestBody}>
           <TextArea
@@ -85,7 +87,7 @@ export default function BasicRequestPanel({
             <Button disabled={requestBody === ''} onClick={onSetFavoriteRequestButtonClick}>{favoriteRequestID ? t('取消常用') : t('設為常用')}</Button>
           </Grid>
           <Grid item>
-            <Button primary disabled={!isConnected} onClick={onSendButtonClick}>{t('送出')}</Button>
+            <Button primary disabled={!isConnected} onClick={onSendRequest}>{t('送出')}</Button>
           </Grid>
         </Grid>
       </Paper>
@@ -102,11 +104,17 @@ export default function BasicRequestPanel({
 
 BasicRequestPanel.propTypes = {
   isConnected: PropTypes.bool.isRequired,
+
   requestBody: PropTypes.string.isRequired,
-  favoriteRequestID: PropTypes.string,
   onRequestBodyChange: PropTypes.func.isRequired,
-  onFavoriteRequestDialogShow: PropTypes.func.isRequired,
-  onFavoriteRequestAdd: PropTypes.func.isRequired,
-  onFavoriteRequestRemove: PropTypes.func.isRequired,
-  onSendButtonClick: PropTypes.func.isRequired,
+  onSendRequest: PropTypes.func.isRequired,
+
+  favoriteRequestCategories: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+  })),
+  favoriteRequestID: PropTypes.string,
+  onShowFavoriteRequestDialog: PropTypes.func.isRequired,
+  onAddFavoriteRequest: PropTypes.func.isRequired,
+  onRemoveFavoriteRequest: PropTypes.func.isRequired,
 }

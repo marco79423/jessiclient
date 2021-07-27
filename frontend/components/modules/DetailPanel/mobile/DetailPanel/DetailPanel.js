@@ -42,7 +42,7 @@ const PanelTab = Object.freeze({
   JSON: 'json',
 })
 
-export default function DetailPanel({message, unselected}) {
+export default function DetailPanel({message, onClose}) {
   const classes = useStyles()
   const {t} = useTranslation()
   const [tabValue, setTabValue] = useState(PanelTab.PlainText)
@@ -68,14 +68,18 @@ export default function DetailPanel({message, unselected}) {
     }
   }, [messageText])
 
-  const handleTabChange = (event, newValue) => {
+  const onTabChange = (event, newValue) => {
     setTabValue(newValue)
+  }
+
+  const onCloseButtonClick = () => {
+    onClose()
   }
 
   return (
     <div className={classes.root}>
       <div className={classes.appBar}>
-        <IconButton description={t('關閉訊息')} icon={CloseIcon} onClick={unselected}/>
+        <IconButton description={t('關閉訊息')} icon={CloseIcon} onClick={onCloseButtonClick}/>
       </div>
       <TabContext value={tabValue}>
         <Paper className={classes.dataSection} square>
@@ -93,7 +97,7 @@ export default function DetailPanel({message, unselected}) {
           </TabPanel>
         </Paper>
         <Toolbar className={classes.controlBar}>
-          <TabList value={tabValue} onChange={handleTabChange}>
+          <TabList value={tabValue} onChange={onTabChange}>
             <Tab className={classes.tab} label={t('純文字')} value={PanelTab.PlainText}/>
             <Tab className={classes.tab} label={t('JSON')} value={PanelTab.JSON} disabled={messageJsonData === null}/>
           </TabList>

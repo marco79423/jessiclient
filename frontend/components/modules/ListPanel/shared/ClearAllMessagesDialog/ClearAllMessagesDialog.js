@@ -18,12 +18,12 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-export default function ClearAllMessagesDialog({open, onClose, clearAll}) {
+export default function ClearAllMessagesDialog({open, onClose, onClearAll}) {
   const classes = useStyles()
   const {t} = useTranslation()
 
   const onClearAllButtonClick = () => {
-    clearAll()
+    onClearAll()
     onClose()
   }
 
@@ -48,5 +48,5 @@ ClearAllMessagesDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
 
-  clearAll: PropTypes.func.isRequired,
+  onClearAll: PropTypes.func.isRequired,
 }

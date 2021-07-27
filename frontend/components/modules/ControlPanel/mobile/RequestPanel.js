@@ -9,29 +9,27 @@ export default function RequestPanel({
 
                                        requestBody,
                                        onRequestBodyChange,
+                                       onSendRequest,
 
                                        favoriteRequestCategories,
                                        favoriteRequestID,
-                                       onFavoriteRequestDialogShow,
-                                       onFavoriteRequestAdd,
-                                       onFavoriteRequestRemove,
-                                       onSendMessage,
+                                       onShowFavoriteRequestDialog,
+                                       onAddFavoriteRequest,
+                                       onRemoveFavoriteRequest,
                                      }) {
   return (
     <BasicRequestPanel
       isConnected={isConnected}
 
-      favoriteRequestCategories={favoriteRequestCategories}
-      favoriteRequestID={favoriteRequestID}
-
-      onFavoriteRequestDialogShow={onFavoriteRequestDialogShow}
-      onFavoriteRequestAdd={onFavoriteRequestAdd}
-      onFavoriteRequestRemove={onFavoriteRequestRemove}
-
       requestBody={requestBody}
       onRequestBodyChange={onRequestBodyChange}
+      onSendRequest={onSendRequest}
 
-      onSendButtonClick={onSendMessage}
+      favoriteRequestCategories={favoriteRequestCategories}
+      favoriteRequestID={favoriteRequestID}
+      onShowFavoriteRequestDialog={onShowFavoriteRequestDialog}
+      onAddFavoriteRequest={onAddFavoriteRequest}
+      onRemoveFavoriteRequest={onRemoveFavoriteRequest}
     />
   )
 }
@@ -41,15 +39,14 @@ RequestPanel.propTypes = {
 
   requestBody: PropTypes.string.isRequired,
   onRequestBodyChange: PropTypes.func.isRequired,
+  onSendRequest: PropTypes.func.isRequired,
 
   favoriteRequestCategories: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
   })).isRequired,
   favoriteRequestID: PropTypes.string,
-  onFavoriteRequestDialogShow: PropTypes.func.isRequired,
-  onFavoriteRequestAdd: PropTypes.func.isRequired,
-  onFavoriteRequestRemove: PropTypes.func.isRequired,
-
-  onSendMessage: PropTypes.func.isRequired,
+  onShowFavoriteRequestDialog: PropTypes.func.isRequired,
+  onAddFavoriteRequest: PropTypes.func.isRequired,
+  onRemoveFavoriteRequest: PropTypes.func.isRequired,
 }

@@ -5,7 +5,7 @@ import {AppMobileDisplayMode} from '../../../../constants'
 import * as projectActions from '../../../../redux/project'
 import * as currentActions from '../../../../redux/current'
 import {getMessages, getSelectedMessageID} from '../../../../redux/selectors'
-import ListPanel from '../../../modules/ListPanel/mobile/ListPanel'
+import ListPanel from '../../../modules/ListPanel/mobile/ListPanel/ListPanel'
 
 
 export default function ListPanelContainer({setDisplayMode, appController}) {
@@ -25,19 +25,23 @@ export default function ListPanelContainer({setDisplayMode, appController}) {
     dispatch(currentActions.setSelectedMessageID(id))
   }
 
-  const clearAllMessages = () => {
+  const onClearAllMessages = () => {
     dispatch(projectActions.clearMessages())
     dispatch(currentActions.setSelectedMessageID(null))
     appController.track('clear_messages')
   }
 
+  const onClose = () => {
+    setDisplayMode(AppMobileDisplayMode.MainPanel)
+  }
+
   return (
     <ListPanel
-      setDisplayMode={setDisplayMode}
+      onClose={onClose}
       messages={messages}
       selectedMessageID={selectedMessageID}
       onSelectedMessageChange={onSelectedMessageChange}
-      onClearAllMessages={clearAllMessages}
+      onClearAllMessages={onClearAllMessages}
     />
   )
 }

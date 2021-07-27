@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react'
+import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
 import CloseIcon from '@material-ui/icons/Close'
 
 import ControlBar from './ControlBar'
-import MessageList from '../shared/MessageList/MessageList'
-import {AppMobileDisplayMode} from '../../../../constants'
-import IconButton from '../../../elements/IconButton'
-import {useTranslation} from 'next-i18next'
+import MessageList from '../../shared/MessageList/MessageList'
+import IconButton from '../../../../elements/IconButton'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -20,11 +19,11 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function ListPanel({
-                                    setDisplayMode,
+                                    onClose,
                                     messages,
                                     selectedMessageID,
                                     onSelectedMessageChange,
-                                    onClearAllMessages
+                                    onClearAllMessages,
                                   }) {
   const classes = useStyles()
   const {t} = useTranslation()
@@ -37,23 +36,23 @@ export default function ListPanel({
     )
   }, [messages, searchFilters])
 
-  const onClearAll = () => {
+  const onClearAllMessagesWrapped = () => {
     onClearAllMessages()
     setSearchFilters([])
   }
 
-  const backToControlPanel = () => {
-    setDisplayMode(AppMobileDisplayMode.MainPanel)
+  const onCloseButtonClick = () => {
+    onClose()
   }
 
   return (
     <div className={classes.root}>
       <div className={classes.appBar}>
-        <IconButton description={t('關閉訊息列表')} icon={CloseIcon} onClick={backToControlPanel}/>
+        <IconButton description={t('關閉訊息列表')} icon={CloseIcon} onClick={onCloseButtonClick}/>
       </div>
 
       <ControlBar
-        onClearAll={onClearAll}
+        onClearAllMessages={onClearAllMessagesWrapped}
       />
 
       <MessageList

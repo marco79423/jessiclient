@@ -5,23 +5,27 @@ import Toolbar from '../../../modules/AppBar/mobile/Toolbar'
 import ShareDialogContainer from './ShareDialogContainer'
 
 export default function ToolbarContainer({appController}) {
-  const [sharePanelOpen, setSharePanel] = useState(false)
+  const [shareDialogOpen, setShareDialog] = useState(false)
 
-  const showSharePanel = () => {
-    setSharePanel(true)
+  const onShareProject = () => {
+    setShareDialog(true)
   }
 
-  const hideSharePanel = () => {
-    setSharePanel(false)
+  const onCloseShareDialog = () => {
+    setShareDialog(false)
   }
 
   return (
     <>
       <Toolbar
-        shareProject={showSharePanel}
+        onShareProject={onShareProject}
       />
 
-      <ShareDialogContainer appController={appController} open={sharePanelOpen} onClose={hideSharePanel}/>
+      <ShareDialogContainer
+        appController={appController}
+        open={shareDialogOpen}
+        onClose={onCloseShareDialog}
+      />
     </>
   )
 }

@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function ShareDialog({open, onClose, shareLink, generateShareLink}) {
+export default function ShareDialog({open, onClose, shareLink, onGenerateShareLink}) {
   const classes = useStyles()
   const {t} = useTranslation()
   const [messageIncluded, setIncludeMessages] = useState(false)
@@ -26,7 +26,7 @@ export default function ShareDialog({open, onClose, shareLink, generateShareLink
   }
 
   const onGenerateLinkButtonClick = async () => {
-    await generateShareLink({messageIncluded})
+    await onGenerateShareLink({messageIncluded})
   }
 
   const onCloseButtonClick = () => {
@@ -76,5 +76,5 @@ ShareDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   shareLink: PropTypes.string.isRequired,
-  generateShareLink: PropTypes.func.isRequired,
+  onGenerateShareLink: PropTypes.func.isRequired,
 }

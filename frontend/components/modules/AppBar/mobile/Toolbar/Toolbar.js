@@ -6,11 +6,11 @@ import ShareIcon from '@material-ui/icons/Share'
 
 import IconButton from '../../../../elements/IconButton'
 
-export default function Toolbar({shareProject}) {
+export default function Toolbar({onShareProject}) {
   const {t} = useTranslation()
 
   const onShareButtonClick = () => {
-    shareProject()
+    onShareProject()
   }
 
   return (
@@ -25,5 +25,5 @@ export default function Toolbar({shareProject}) {
 }
 
 Toolbar.propTypes = {
-  shareProject: PropTypes.func.isRequired,
+  onShareProject: PropTypes.func.isRequired,
 }

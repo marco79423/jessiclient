@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
 import {Link, Paper, Typography} from '@material-ui/core'
-
-import {AppMobileDisplayMode} from '../../../../constants'
 import Button from '../../../elements/Button'
 
 
@@ -32,18 +30,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function ControlPanel({setDisplayMode, connectionPanel, requestPanel}) {
+export default function ControlPanel({connectionPanel, requestPanel, onShowListPanel}) {
   const classes = useStyles()
   const {t} = useTranslation()
-
-  const showListPanel = () => {
-    setDisplayMode(AppMobileDisplayMode.ListPanel)
-  }
 
   return (
     <Paper className={classes.root} elevation={1} square>
       <div className={classes.controlBar}>
-        <Button onClick={showListPanel}>{t('展開訊息列表')}</Button>
+        <Button onClick={onShowListPanel}>{t('展開訊息列表')}</Button>
       </div>
       <div className={classes.connectionPanel}>
         {connectionPanel}
@@ -65,4 +59,6 @@ export default function ControlPanel({setDisplayMode, connectionPanel, requestPa
 ControlPanel.propTypes = {
   connectionPanel: PropTypes.element.isRequired,
   requestPanel: PropTypes.element.isRequired,
+
+  onShowListPanel: PropTypes.func.isRequired,
 }

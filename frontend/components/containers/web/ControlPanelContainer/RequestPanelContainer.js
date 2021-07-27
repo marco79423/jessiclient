@@ -65,7 +65,7 @@ export default function RequestPanelContainer({appController}) {
     dispatch(changeScheduleTimeInterval(+localScheduleTimeInterval))
   }
 
-  const onSendMessage = async () => {
+  const onSendRequest = async () => {
     dispatch(changeRequestBody(localRequestBody))
     try {
       await appController.sendMessage(localRequestBody)
@@ -75,7 +75,7 @@ export default function RequestPanelContainer({appController}) {
     }
   }
 
-  const onFavoriteRequestAdd = ({name, body, categoryID}) => {
+  const onAddFavoriteRequest = ({name, body, categoryID}) => {
     const favoriteRequest = {
       id: generateRandomString(),
       name: name,
@@ -87,11 +87,6 @@ export default function RequestPanelContainer({appController}) {
     appController.track('add_favorite_message')
   }
 
-  const onFavoriteRequestRemove = (favoriteRequestID) => {
-    dispatch(removeFavoriteRequest(favoriteRequestID))
-    setFavoriteRequestID(null)
-  }
-
   const onEnableButtonClick = async () => {
     if (scheduleEnabled) {
       await appController.disableScheduler()
@@ -100,12 +95,12 @@ export default function RequestPanelContainer({appController}) {
     }
   }
 
-  const onFavoriteRequestDialogShow = () => {
+  const onShowFavoriteRequestDialog = () => {
     setFavoriteRequestDialog(true)
     appController.track('show_favorite_requests_panel')
   }
 
-  const hideFavoriteRequestDialog = () => {
+  const onCloseFavoriteRequestDialog = () => {
     setFavoriteRequestDialog(false)
   }
 
@@ -135,27 +130,25 @@ export default function RequestPanelContainer({appController}) {
 
         requestBody={localRequestBody}
         onRequestBodyChange={onRequestBodyChange}
-
-        favoriteRequestCategories={favoriteRequestCategories}
-        favoriteRequestID={favoriteRequestID}
-        onFavoriteRequestDialogShow={onFavoriteRequestDialogShow}
-        onFavoriteRequestAdd={onFavoriteRequestAdd}
-        onFavoriteRequestRemove={onFavoriteRequestRemove}
+        onSendRequest={onSendRequest}
 
         scheduleTimeInterval={localScheduleTimeInterval}
         onScheduleTimeIntervalChange={onScheduleTimeIntervalChange}
-
-        onSendMessage={onSendMessage}
-
         scheduleEnabled={scheduleEnabled}
-        onEnableButtonClick={onEnableButtonClick}
+        onEnableSchedule={onEnableButtonClick}
+
+        favoriteRequestCategories={favoriteRequestCategories}
+        favoriteRequestID={favoriteRequestID}
+        onShowFavoriteRequestDialog={onShowFavoriteRequestDialog}
+        onAddFavoriteRequest={onAddFavoriteRequest}
+        onRemoveFavoriteRequest={onRemoveFavoriteRequest}
       />
 
       <FavoriteRequestDialog
         isConnected={isConnected}
 
         open={favoriteRequestDialogOpen}
-        onClose={hideFavoriteRequestDialog}
+        onClose={onCloseFavoriteRequestDialog}
 
         favoriteRequestCategories={favoriteRequestCategories}
         favoriteRequests={favoriteRequests}
@@ -166,7 +159,7 @@ export default function RequestPanelContainer({appController}) {
 
         onRemove={onRemoveFavoriteRequest}
         onApply={onApplyFavoriteRequest}
-        onSend={onSendMessage}
+        onSend={onSendRequest}
         onUpdate={onUpdateFavoriteRequest}
       />
     </>

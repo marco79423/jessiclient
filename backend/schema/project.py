@@ -56,6 +56,7 @@ class FavoriteRequestCategoryDataModel(pydantic.BaseModel):
 
 class FavoriteRequestDataModel(pydantic.BaseModel):
     id: str
+    categoryID: pydantic.constr(min_length=1)
     name: pydantic.constr(min_length=1)
     body: pydantic.constr(min_length=1)
 

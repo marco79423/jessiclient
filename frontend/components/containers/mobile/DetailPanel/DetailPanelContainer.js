@@ -19,11 +19,11 @@ export default function DetailPanelContainer({setDisplayMode}) {
     }
   }, [message])
 
-  const unselected = () => {
+  const onClose = () => {
     dispatch(setSelectedMessageID(null))
   }
 
   return (
-    <DetailPanel message={message} unselected={unselected}/>
+    <DetailPanel message={message} onClose={onClose}/>
   )
 }

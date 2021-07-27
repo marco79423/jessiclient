@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function ConnectionPanel({state, url, connect, disconnect}) {
+export default function ConnectionPanel({state, url, onConnect, onDisconnect}) {
   const classes = useStyles()
   const {t} = useTranslation()
   const [localUrl, setLocalUrl] = useState('')
@@ -48,10 +48,10 @@ export default function ConnectionPanel({state, url, connect, disconnect}) {
   const onButtonClicked = async () => {
     switch (state) {
       case ConnectionState.Idle:
-        await connect(localUrl)
+        await onConnect(localUrl)
         return
       case ConnectionState.Connected:
-        await disconnect()
+        await onDisconnect()
         return
     }
   }
@@ -82,6 +82,7 @@ export default function ConnectionPanel({state, url, connect, disconnect}) {
 ConnectionPanel.propTypes = {
   state: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
-  connect: PropTypes.func.isRequired,
-  disconnect: PropTypes.func.isRequired,
+
+  onConnect: PropTypes.func.isRequired,
+  onDisconnect: PropTypes.func.isRequired,
 }
