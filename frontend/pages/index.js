@@ -3,8 +3,7 @@ import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 
 import useMobileMode from '../components/hooks/useMobileMode'
 import AppController from '../components/controllers/AppController'
-import MainWebContainer from '../components/containers/web/MainWebContainer'
-import MainMobileContainer from '../components/containers/mobile/MainMobileContainer'
+import MainContainer from '../components/containers/main'
 
 export const getStaticProps = async ({locale}) => ({
   props: {
@@ -17,11 +16,7 @@ export default function Index() {
 
   return (
     <AppController>
-      {mobileMode ? (
-        <MainMobileContainer/>
-      ) : (
-        <MainWebContainer/>
-      )}
+      <MainContainer/>
     </AppController>
   )
 }

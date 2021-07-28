@@ -1,0 +1,3 @@
+import FavoriteRequestCategoryDialog from './FavoriteRequestCategoryDialog'
+
+export default FavoriteRequestCategoryDialog

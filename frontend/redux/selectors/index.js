@@ -9,6 +9,9 @@ export const getAppliedFavoriteRequestID = state => state.current.appliedFavorit
 export const getScheduleEnabledStatus = state => state.current.scheduleEnabled
 export const getShareLink = state => state.current.shareLink
 
+export const getWebDisplayMode = state => state.current.webDisplayMode
+export const getMobileDisplayMode = state => state.current.mobileDisplayMode
+
 export const getProjectData = state => state.project
 export const getProjectDataWithoutMessages = createDraftSafeSelector(
   getProjectData,

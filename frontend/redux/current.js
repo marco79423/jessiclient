@@ -1,6 +1,6 @@
 import {createAction, createSlice} from '@reduxjs/toolkit'
 
-import {ConnectionState, LoadingState} from '../constants'
+import {AppMobileDisplayMode, AppWebDisplayMode, ConnectionState, LoadingState} from '../constants'
 
 
 // Actions
@@ -16,6 +16,10 @@ export const changeShareLink = createAction('current/changeShareLink')
 
 export const clearShareLink = createAction('current/clearShareLink')
 
+export const changeWebDisplayMode = createAction('current/changeWebDisplayMode')
+
+export const changeMobileDisplayMode = createAction('current/changeMobileDisplayMode')
+
 // Slice
 const currentSlice = createSlice({
   name: 'current',
@@ -25,6 +29,9 @@ const currentSlice = createSlice({
     selectedMessageID: null,
     scheduleEnabled: false,
     shareLink: '',
+
+    webDisplayMode: AppWebDisplayMode.DetailPanelOff,
+    mobileDisplayMode: AppMobileDisplayMode.MainPanel,
   },
   extraReducers: {
     [changeProjectState]: (state, action) => {
@@ -44,6 +51,12 @@ const currentSlice = createSlice({
     },
     [clearShareLink]: (state) => {
       state.shareLink = ''
+    },
+    [changeWebDisplayMode]: (state, action) => {
+      state.webDisplayMode = action.payload
+    },
+    [changeMobileDisplayMode]: (state, action) => {
+      state.mobileDisplayMode = action.payload
     },
   }
 })
