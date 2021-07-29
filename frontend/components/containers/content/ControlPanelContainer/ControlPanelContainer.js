@@ -99,7 +99,7 @@ export default function ControlPanelContainer({appController}) {
     }
     dispatch(addFavoriteRequest(favoriteRequest))
     setFavoriteRequestID(favoriteRequest.id)
-    appController.track('add_favorite_message')
+    appController.tracker.trace('add_favorite_message')
   }
 
   const onEnableButtonClick = async () => {
@@ -112,7 +112,7 @@ export default function ControlPanelContainer({appController}) {
 
   const onShowFavoriteRequestDialog = () => {
     setFavoriteRequestDialog(true)
-    appController.track('show_favorite_requests_panel')
+    appController.tracker.trace('show_favorite_requests_panel')
   }
 
   const onCloseFavoriteRequestDialog = () => {

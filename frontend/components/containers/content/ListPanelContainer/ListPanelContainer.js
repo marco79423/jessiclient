@@ -20,7 +20,7 @@ export default function ListPanelContainer({appController}) {
   const onClearAllMessages = () => {
     dispatch(projectActions.clearMessages())
     dispatch(currentActions.setSelectedMessageID(null))
-    appController.track('clear_messages')
+    appController.tracker.trace('clear_messages')
   }
 
   const onChangeWebDisplayMode = (webDisplayMode) => {
