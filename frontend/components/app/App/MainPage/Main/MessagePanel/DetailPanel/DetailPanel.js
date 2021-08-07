@@ -9,6 +9,7 @@ import {setSelectedMessageID} from '../../../../../../../redux/current'
 import {getMessage} from '../../../../../../../redux/selectors'
 import JSONView from '../../../../../../elements/JSONView'
 import Button from '../../../../../../elements/Button'
+import useWindowSize from '../../../../../../hooks/useWindowSize'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -23,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     height: 64,
   },
   tab: {
+    minWidth: 120, // 覆蓋預設
     background: theme.project.page.main.detailPanel.controlBar.tab,
     borderTopLeftRadius: '0.3rem',
     borderTopRightRadius: '0.3rem',
@@ -49,6 +51,8 @@ export default function DetailPanel() {
   const classes = useStyles()
   const dispatch = useDispatch()
   const {t} = useTranslation()
+  const [windowWidth] = useWindowSize()
+
   const message = useSelector(getMessage)
 
   const [tabValue, setTabValue] = useState(PanelTab.PlainText)
@@ -87,11 +91,13 @@ export default function DetailPanel() {
         <Paper className={classes.dataSection} square>
           <Grid className={classes.controlBar} container justify="space-between" alignItems="flex-end">
             <Grid item>
-              <TabList value={tabValue} onChange={onTabChange}>
+              {windowWidth >= 1300 ? (
+                <TabList value={tabValue} onChange={onTabChange}>
                 <Tab className={classes.tab} label={t('純文字')} value={PanelTab.PlainText}/>
                 <Tab className={classes.tab} label={t('JSON')} value={PanelTab.JSON}
                      disabled={messageJsonData === null}/>
               </TabList>
+              ) : null}
             </Grid>
             <Grid item>
               <Grid className={classes.toolbar} container alignItems="center">

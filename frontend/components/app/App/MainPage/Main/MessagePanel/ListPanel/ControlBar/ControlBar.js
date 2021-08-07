@@ -8,7 +8,7 @@ import ClearAllMessagesDialog from './ClearAllMessagesDialog'
 import {useDispatch, useSelector} from 'react-redux'
 import * as currentActions from '../../../../../../../../redux/current'
 import {showMessagePanel} from '../../../../../../../../redux/current'
-import {getSearchFilters} from '../../../../../../../../redux/selectors'
+import {getMessage, getSearchFilters} from '../../../../../../../../redux/selectors'
 import useWindowSize from '../../../../../../../hooks/useWindowSize'
 
 
@@ -29,6 +29,7 @@ export default function ControlBar() {
   const [windowWidth] = useWindowSize()
 
   const searchFilters = useSelector(getSearchFilters)
+  const message = useSelector(getMessage)
 
   const [clearAllDialogOn, setClearAllDialog] = useState(false)
 
@@ -60,7 +61,7 @@ export default function ControlBar() {
         </Grid>
       ) : null}
       <Grid item>
-        {windowWidth >= 1000 ? (
+        {windowWidth >= (message ? 1500 : 1000)? (
           <Grid container alignItems="baseline" spacing={1}>
             <Grid item>
               <SearchField

@@ -12,10 +12,19 @@ import {removeFavoriteRequestCategory} from '../../../../../../../../../../../..
 import AddCategoryDialog from './AddCategoryDialog'
 import EditCategoryDialog from './EditCategoryDialog'
 import Button from '../../../../../../../../../../../elements/Button'
+import {makeStyles} from '@material-ui/core/styles'
 
+
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    minWidth: 220,
+  },
+}))
 
 export default function CategoryControl() {
   const dispatch = useDispatch()
+  const classes = useStyles()
 
   const favoriteRequestCategories = useSelector(getFavoriteRequestCategories)
   const filteredFavoriteRequests = useSelector(getFilteredFavoriteRequests)
@@ -47,7 +56,7 @@ export default function CategoryControl() {
 
   return (
     <>
-      <Grid container spacing={1}>
+      <Grid className={classes.root} container spacing={1}>
         <Grid item>
           <Button onClick={showAddFavoriteCategoryDialog}>新增</Button>
         </Grid>

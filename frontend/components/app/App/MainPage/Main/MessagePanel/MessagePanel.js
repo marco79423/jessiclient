@@ -29,7 +29,7 @@ export default function MessagePanel() {
 
   return (
     <div className={classes.root}>
-      {!message || (message && windowWidth > 1000) ? (
+      {(!message) || (message && windowWidth > 1000) ? (
         <div className={classes.listPanel}>
           <ListPanel/>
         </div>

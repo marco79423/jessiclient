@@ -14,7 +14,7 @@ export default function Control() {
       </Grid>
       <Grid item>
         <Grid container alignItems="center" spacing={3}>
-          <Grid item>
+          <Grid item xs>
             <TimeIntervalInput/>
           </Grid>
           <Grid item>
