@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export function IconButton({description, icon: Icon, onClick}) {
+function IconButton({description, icon: Icon, onClick}) {
   const classes = useStyles()
 
   return (
