@@ -6,9 +6,9 @@
 
   "請求已送出": "The request is sent",
 
-  "展開訊息列表": "show message panel",
-  "關閉訊息列表": "close message panel",
-  "關閉訊息": "close detail",
+  "展開訊息列表": "Show message panel",
+  "關閉訊息列表": "Close message panel",
+  "關閉詳細訊息": "Close detail",
 
   "欲連線的網址": "Websocket url",
   "建立連線": "Connect",
@@ -39,8 +39,8 @@
   "確認": "Confirm",
   "取消": "Cancel",
 
-  "每": "Send request every",
-  "秒傳送一次": "seconds",
+  "每": "",
+  "請求 / 秒": "req/sec",
 
   "啟用": "Enable",
   "停用": "Disable",

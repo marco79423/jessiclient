@@ -1,13 +1,15 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import {GA4React} from 'ga-4-react'
+import getConfig from 'next/config'
 
 
 export default function useTracker() {
-  const [gaObj, setGAObj] = useState(null)
+  const {publicRuntimeConfig} = getConfig()
+  const [gaObj, setGAObj] = React.useState(null)
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!gaObj) {
-      const ga4react = new GA4React('G-TQZV496TYL')
+      const ga4react = new GA4React(publicRuntimeConfig.gaTrackingCode)
       ga4react.initialize()
         .then((ga4) => {
           setGAObj(ga4)

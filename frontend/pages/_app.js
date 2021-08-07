@@ -1,13 +1,8 @@
 import {useEffect} from 'react'
-import {Provider} from 'react-redux'
 import {appWithTranslation, useTranslation} from 'next-i18next'
 import Head from 'next/head'
-import {CssBaseline} from '@material-ui/core'
-import {ThemeProvider} from '@material-ui/core/styles'
 
 import Manifest from '../public/manifest.json'
-import store from '../redux/store'
-import theme from '../components/themes/defaultTheme'
 
 function App({Component, pageProps}) {
   const {t} = useTranslation()
@@ -64,13 +59,7 @@ function App({Component, pageProps}) {
         <link rel="manifest" href="/manifest.json"/>
       </Head>
 
-      <CssBaseline/>
-
-      <ThemeProvider theme={theme}>
-        <Provider store={store}>
-          <Component {...pageProps} />
-        </Provider>
-      </ThemeProvider>
+      <Component {...pageProps} />
     </>
   )
 }

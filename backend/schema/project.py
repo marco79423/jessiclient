@@ -47,6 +47,7 @@ class ProjectScheduleDataModel(pydantic.BaseModel):
 class FavoriteRequestCategoryDataModel(pydantic.BaseModel):
     id: str
     label: pydantic.constr(min_length=1)
+    readonly: bool
 
     class Config:
         alias_generator = to_camel

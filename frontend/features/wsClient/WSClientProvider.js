@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {useDispatch} from 'react-redux'
 import useAsyncEffect from 'use-async-effect'
 
-import {changeConnectionState, changeScheduleEnabledStatus} from '../../redux/current'
+import {changeConnectionState, changeSchedulerEnabledStatus} from '../../redux/current'
 import {MessageSource} from '../../constants'
 import generateRandomString from '../../utils/generateRandomString'
 import WSClient from '../../utils/WSClient'
@@ -49,7 +49,7 @@ export default function WSClientProvider({children}) {
     wsClient.setOnClose(() => {
       scheduler.disable()
       setSchedulerEnabled(false)
-      dispatch(changeScheduleEnabledStatus(false))
+      dispatch(changeSchedulerEnabledStatus(false))
     })
     setWSClient(wsClient)
 
@@ -89,13 +89,13 @@ export default function WSClientProvider({children}) {
       await sendMessage(message)
     }, timeInterval)
     setSchedulerEnabled(true)
-    await dispatch(changeScheduleEnabledStatus(true))
+    await dispatch(changeSchedulerEnabledStatus(true))
   }
 
   const disableScheduler = async () => {
     scheduler.disable()
     setSchedulerEnabled(false)
-    await dispatch(changeScheduleEnabledStatus(false))
+    await dispatch(changeSchedulerEnabledStatus(false))
   }
 
   const context = {

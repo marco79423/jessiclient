@@ -1,6 +1,6 @@
 import {createAction, createSlice} from '@reduxjs/toolkit'
 
-import {AppMobileDisplayMode, AppWebDisplayMode, ConnectionState, LoadingState} from '../constants'
+import {ConnectionState, LoadingState} from '../constants'
 
 
 // Actions
@@ -8,17 +8,21 @@ export const changeProjectState = createAction('current/changeProjectState')
 
 export const changeConnectionState = createAction('current/changeConnectionState')
 
+export const setCurrencyFavoriteCategoryID = createAction('current/setCurrencyFavoriteCategoryID')
+
+export const setCurrentFavoriteRequestID = createAction('current/setCurrentFavoriteRequestID')
+
+export const setSearchFilters = createAction('current/setSearchFilters')
+
 export const setSelectedMessageID = createAction('current/setSelectedMessageID')
 
-export const changeScheduleEnabledStatus = createAction('current/changeScheduleEnabledStatus')
+export const changeSchedulerEnabledStatus = createAction('current/changeSchedulerEnabledStatus')
 
 export const changeShareLink = createAction('current/changeShareLink')
 
 export const clearShareLink = createAction('current/clearShareLink')
 
-export const changeWebDisplayMode = createAction('current/changeWebDisplayMode')
-
-export const changeMobileDisplayMode = createAction('current/changeMobileDisplayMode')
+export const showMessagePanel = createAction('current/showMessagePanel')
 
 // Slice
 const currentSlice = createSlice({
@@ -26,12 +30,14 @@ const currentSlice = createSlice({
   initialState: {
     projectState: LoadingState.Idle, // idle, loading, loaded, failed
     connectionState: ConnectionState.Idle, // idle, connecting, connected, closed
+    currencyFavoriteCategoryID: null,
+    currentFavoriteRequestID: null,
+    searchFilters: [],
     selectedMessageID: null,
-    scheduleEnabled: false,
+    schedulerEnabled: false,
     shareLink: '',
 
-    webDisplayMode: AppWebDisplayMode.DetailPanelOff,
-    mobileDisplayMode: AppMobileDisplayMode.MainPanel,
+    messagePanelOn: false,
   },
   extraReducers: {
     [changeProjectState]: (state, action) => {
@@ -40,11 +46,20 @@ const currentSlice = createSlice({
     [changeConnectionState]: (state, action) => {
       state.connectionState = action.payload
     },
+    [setCurrencyFavoriteCategoryID]: (state, action) => {
+      state.currencyFavoriteCategoryID = action.payload
+    },
+    [setCurrentFavoriteRequestID]: (state, action) => {
+      state.currentFavoriteRequestID = action.payload
+    },
+    [setSearchFilters]: (state, action) => {
+      state.searchFilters = action.payload
+    },
     [setSelectedMessageID]: (state, action) => {
       state.selectedMessageID = action.payload
     },
-    [changeScheduleEnabledStatus]: (state, action) => {
-      state.scheduleEnabled = action.payload
+    [changeSchedulerEnabledStatus]: (state, action) => {
+      state.schedulerEnabled = action.payload
     },
     [changeShareLink]: (state, action) => {
       state.shareLink = action.payload
@@ -52,11 +67,8 @@ const currentSlice = createSlice({
     [clearShareLink]: (state) => {
       state.shareLink = ''
     },
-    [changeWebDisplayMode]: (state, action) => {
-      state.webDisplayMode = action.payload
-    },
-    [changeMobileDisplayMode]: (state, action) => {
-      state.mobileDisplayMode = action.payload
+    [showMessagePanel]: (state, action) => {
+      state.messagePanelOn = action.payload
     },
   }
 })

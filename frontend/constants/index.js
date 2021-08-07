@@ -1,14 +1,3 @@
-export const AppWebDisplayMode = Object.freeze({
-  DetailPanelOff: 'DetailPanelOff',
-  DetailPanelOn: 'DetailPanelOn'
-})
-
-export const AppMobileDisplayMode = Object.freeze({
-  MainPanel: 'MainPanel',
-  ListPanel: 'ListPanel',
-  DetailPanel: 'DetailPanel',
-})
-
 export const LoadingState = Object.freeze({
   Idle: 'idle',
   Loading: 'loading',

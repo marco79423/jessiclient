@@ -1,9 +1,7 @@
 import React from 'react'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
-import AppController from '../components/controllers/AppController'
-import MainContainer from '../components/containers/main'
-import AlerterProvider from '../features/alerter/AlertProvider'
-import WSClientProvider from '../features/wsClient/WSClientProvider'
+
+import App from '../components/app/App'
 
 export const getStaticProps = async ({locale}) => ({
   props: {
@@ -13,12 +11,6 @@ export const getStaticProps = async ({locale}) => ({
 
 export default function Index() {
   return (
-    <AlerterProvider>
-      <WSClientProvider>
-        <AppController>
-          <MainContainer/>
-        </AppController>
-      </WSClientProvider>
-    </AlerterProvider>
+    <App/>
   )
 }

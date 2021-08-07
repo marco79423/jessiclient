@@ -114,6 +114,9 @@ const theme = createMuiTheme({
           }
         },
         detailPanel: {
+          appBar: {
+            background: colorTable['indigo-400'],
+          },
           controlBar: {
             tab: colorTable['indigo-200'],
           },
