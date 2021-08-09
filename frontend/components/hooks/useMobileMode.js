@@ -1,8 +1,6 @@
-import {useMediaQuery, useTheme} from '@material-ui/core'
+import useWindowSize from './useWindowSize'
 
 export default function useMobileMode() {
-  const theme = useTheme()
-  const matchXS = useMediaQuery(theme.breakpoints.up('xs'))
-  const matchSM = useMediaQuery(theme.breakpoints.up('sm'))
-  return matchXS && !matchSM
+  const {width: windowWidth} = useWindowSize()
+  return windowWidth <= 500
 }

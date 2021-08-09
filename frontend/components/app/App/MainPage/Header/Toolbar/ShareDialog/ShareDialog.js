@@ -5,10 +5,9 @@ import {useTranslation} from 'next-i18next'
 import {Grid, Typography} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 
-import {changeShareLink, clearShareLink} from '../../../../../../../redux/current'
+import {clearShareLink} from '../../../../../../../redux/current'
 import {getShareLink} from '../../../../../../../redux/selectors'
 import {useProject} from '../../../../../../../features/project'
-import useAlerter from '../../../../../../../features/alerter/useAlerter'
 import BasicDialog from '../../../../../../elements/BasicDialog'
 import Button from '../../../../../../elements/Button'
 import TextField from '../../../../../../elements/TextField'
@@ -26,7 +25,6 @@ export default function ShareDialog({open, onClose}) {
   const classes = useStyles()
   const {t} = useTranslation()
   const project = useProject()
-  const alerter = useAlerter()
 
   const shareLink = useSelector(getShareLink)
   const [messageIncluded, setIncludeMessages] = useState(false)
@@ -36,13 +34,7 @@ export default function ShareDialog({open, onClose}) {
   }
 
   const onGenerateLinkButtonClick = async () => {
-    try {
-      const shareLink = await project.generateShareLink({messageIncluded})
-      await dispatch(changeShareLink(shareLink))
-    } catch (e) {
-      console.log(e)
-      alerter.showErrorAlert(t('產生分享連結失敗'))
-    }
+    await project.generateShareLink({messageIncluded})
   }
 
   const onCloseButtonClick = () => {

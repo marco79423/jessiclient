@@ -4,8 +4,11 @@ import RequestPanel from './RequestPanel'
 
 
 export default {
-  title: 'modules/web/ControlPanel/RequestPanel',
+  title: 'App/MainPage/Main/ControlPanel/RequestPanel',
   component: RequestPanel,
+  parameters: {
+    backgrounds: {default: 'header',},
+  }
 }
 
 

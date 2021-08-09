@@ -26,7 +26,7 @@ export default function ControlBar() {
   const classes = useStyles()
   const {t} = useTranslation()
   const dispatch = useDispatch()
-  const [windowWidth] = useWindowSize()
+  const {width: windowWidth} = useWindowSize()
 
   const searchFilters = useSelector(getSearchFilters)
   const message = useSelector(getMessage)

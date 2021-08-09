@@ -22,7 +22,7 @@ export default function Toolbar() {
   const classes = useStyles()
   const tracker = useTracker()
   const dispatch = useDispatch()
-  const [windowWidth, _] = useWindowSize()
+  const {width: windowWidth} = useWindowSize()
   const {t} = useTranslation()
 
   const [favoriteRequestDialogOpen, setFavoriteRequestDialogOpen] = useState(false)
@@ -44,13 +44,13 @@ export default function Toolbar() {
     <>
       <Grid container className={classes.root} justify="space-between">
         <Grid item>
-        <Button onClick={showFavoriteRequestDialog}>{t('展開常用列表')}</Button>
+          <Button onClick={showFavoriteRequestDialog}>{t('展開常用列表')}</Button>
         </Grid>
         {windowWidth <= 500 ? (
           <Grid item>
-        <Button onClick={onShowMessagePanel}>{t('展開訊息列表')}</Button>
-        </Grid>
-          ): null}
+            <Button onClick={onShowMessagePanel}>{t('展開訊息列表')}</Button>
+          </Grid>
+        ) : null}
       </Grid>
 
       <FavoriteRequestDialog

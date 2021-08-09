@@ -13,7 +13,7 @@ export default function MessageList() {
   const [height, setHeight] = useState(0)
 
   // TODO: 不要用這種方式定義高度
-  const [_, windowHeight] = useWindowSize()
+  const {height: windowHeight} = useWindowSize()
   useEffect(() => {
     setHeight(windowHeight - 64 - 64)
   }, [windowHeight])

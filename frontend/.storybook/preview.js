@@ -1,7 +1,9 @@
 import React from 'react'
+import {setConfig} from 'next/config'
 import {ThemeProvider} from '@material-ui/core/styles'
 import {Provider} from 'react-redux'
 
+import publicRuntimeConfig from '../runtimeConfig'
 import theme from '../components/themes/defaultTheme'
 import store from '../redux/store'
 
@@ -12,6 +14,8 @@ export const decorators = [
     </ThemeProvider>
   ),
 ]
+
+setConfig({publicRuntimeConfig})
 
 export const parameters = {
   actions: {argTypesRegex: '^on[A-Z].*'},

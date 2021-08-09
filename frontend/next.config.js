@@ -12,24 +12,7 @@ module.exports = withPlugins([
     backendUrl: 'http://localhost:9001',
   },
 
-  publicRuntimeConfig: {
-    gaTrackingCode: '',
-
-    locales: [
-      {
-        label: 'English',
-        langCode: 'en',
-      },
-      {
-        label: '繁體中文',
-        langCode: 'zh-TW',
-      },
-      {
-        label: '简体中文',
-        langCode: 'zh-CN',
-      },
-    ],
-  },
+  publicRuntimeConfig: require('./runtimeConfig'),
 
   i18n,
   pwa: {

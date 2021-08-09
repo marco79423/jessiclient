@@ -51,7 +51,7 @@ export default function DetailPanel() {
   const classes = useStyles()
   const dispatch = useDispatch()
   const {t} = useTranslation()
-  const [windowWidth] = useWindowSize()
+  const {width: windowWidth} = useWindowSize()
 
   const message = useSelector(getMessage)
 

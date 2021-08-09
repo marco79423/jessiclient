@@ -4,14 +4,17 @@ import {makeStyles} from '@material-ui/core/styles'
 import {TabContext, TabList, TabPanel} from '@material-ui/lab'
 import {Tab} from '@material-ui/core'
 
+import useWindowSize from '../../../../../../hooks/useWindowSize'
 import BasicTabPanel from './BasicTabPanel/BasicTabPanel'
 import ScheduleTabPanel from './ScheculeTabPanel'
-import useWindowSize from '../../../../../../hooks/useWindowSize'
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100%',
+    maxWidth: 500,
+  },
+  tabs: {
   },
   tab: {
     background: theme.project.page.main.controlPanel.requestPanel.tab,
@@ -37,7 +40,7 @@ const PanelTab = Object.freeze({
 export default function RequestPanel() {
   const classes = useStyles()
   const {t} = useTranslation()
-  const [_, windowHeight] = useWindowSize()
+  const {height} = useWindowSize()
 
   const [tabValue, setTabValue] = useState(PanelTab.Basic)
 
@@ -48,11 +51,11 @@ export default function RequestPanel() {
   return (
     <div className={classes.root}>
       <TabContext value={tabValue}>
-        {windowHeight > 800 ? (
-        <TabList indicatorColor="secondary" aria-label={t('請求控制區')} value={tabValue} onChange={onTabChange}>
-          <Tab className={classes.tab} label={t('基本')} value={PanelTab.Basic}/>
-          <Tab className={classes.tab} label={t('排程')} value={PanelTab.Schedule}/>
-        </TabList>
+        {height > 800 ? (
+          <TabList className={classes.tabs} aria-label={t('請求控制區')} value={tabValue} onChange={onTabChange}>
+            <Tab className={classes.tab} label={t('基本')} value={PanelTab.Basic}/>
+            <Tab className={classes.tab} label={t('排程')} value={PanelTab.Schedule}/>
+          </TabList>
         ) : null}
 
         {/* Basic */}

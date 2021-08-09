@@ -1,7 +1,7 @@
 import React from 'react'
 
+import {ConnectionState} from '../../../../../../../constants'
 import ConnectionPanel from './ConnectionPanel'
-import {ConnectionState} from '../../../../../../../../constants'
 
 
 export default {

@@ -4,7 +4,7 @@ import ShareDialog from './ShareDialog'
 
 
 export default {
-  title: 'modules/common/ShareDialog',
+  title: 'App/MainPage/Header/Toolbar/ShareDialog',
   component: ShareDialog,
 }
 

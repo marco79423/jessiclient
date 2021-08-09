@@ -1,11 +1,23 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {CssBaseline} from '@material-ui/core'
 import Header from './Header'
 import Main from './Main'
-import {useDispatch, useSelector} from 'react-redux'
-import useMobileMode from '../../../hooks/useMobileMode'
-import {getSelectedMessageID} from '../../../../redux/selectors'
+import {makeStyles} from '@material-ui/core/styles'
+import useWindowSize from '../../../hooks/useWindowSize'
 
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  header: {
+    height: 64,
+  },
+  main: {
+    flexGrow: 1
+  }
+}))
 
 /**
  * 應用的主頁面
@@ -13,33 +25,24 @@ import {getSelectedMessageID} from '../../../../redux/selectors'
  * @constructor
  */
 export default function MainPage() {
-  const dispatch = useDispatch()
-  const mobileMode = useMobileMode()
+  const classes = useStyles()
 
-  const selectedMessageID = useSelector(getSelectedMessageID)
-  useEffect(() => {
-    // if (mobileMode) {
-    //   if (selectedMessageID) {
-    //     dispatch(changeMobileDisplayMode(AppMobileDisplayMode.DetailPanel))
-    //   } else {
-    //     dispatch(changeMobileDisplayMode(AppMobileDisplayMode.ListPanel))
-    //   }
-    // } else {
-    //   if (selectedMessageID) {
-    //     dispatch(changeWebDisplayMode(AppWebDisplayMode.DetailPanelOn))
-    //   } else {
-    //     dispatch(changeWebDisplayMode(AppWebDisplayMode.DetailPanelOff))
-    //   }
-    // }
-  }, [mobileMode, selectedMessageID])
+  // 解決 Safari 無法正常使用 100vh 的問題，所以直接使用 innerHeight
+  const {height} = useWindowSize()
 
   return (
     <>
       <CssBaseline/>
 
       {/*主要內容*/}
-      <Header/>
-      <Main/>
+      <div className={classes.root} style={{height: height}}>
+        <div className={classes.header}>
+          <Header/>
+        </div>
+        <div className={classes.main}>
+          <Main/>
+        </div>
+      </div>
     </>
   )
 }

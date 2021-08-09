@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function MessagePanel() {
-  const [windowWidth] = useWindowSize()
+  const {width: windowWidth} = useWindowSize()
 
   const classes = useStyles()
   const message = useSelector(getMessage)

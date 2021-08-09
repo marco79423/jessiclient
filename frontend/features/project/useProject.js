@@ -7,11 +7,14 @@ import useTracker from '../tracker/useTracker'
 import {downloadJsonData} from '../../utils/jsDownloader'
 import {getProjectData, getProjectDataWithoutMessages, getProjectState} from '../../redux/selectors'
 import {setProjectData} from '../../redux/project'
+import {changeShareLink} from '../../redux/current'
+import useAlerter from '../alerter/useAlerter'
 
 
 export default function useProject() {
   const dispatch = useDispatch()
   const tracker = useTracker()
+  const alerter = useAlerter()
 
   const projectState = useSelector(getProjectState)
   const projectData = useSelector(getProjectData)
@@ -29,10 +32,17 @@ export default function useProject() {
   }
 
   const generateShareLink = async ({messageIncluded}) => {
-    const projectCode = await saveProjectDataToSharingServer(messageIncluded ? projectData : projectDataWithoutMessages)
-    const shareLink = `${window.location.origin}?projectCode=${projectCode}`
     tracker.trace('generate_share_link', {messageIncluded})
-    return shareLink
+
+    try {
+      const projectCode = await saveProjectDataToSharingServer(messageIncluded ? projectData : projectDataWithoutMessages)
+      const shareLink = `${window.location.origin}?projectCode=${projectCode}`
+      await dispatch(changeShareLink(shareLink))
+      return shareLink
+    } catch (e) {
+      console.log(e)
+      alerter.showErrorAlert(t('產生分享連結失敗'))
+    }
   }
 
   return {

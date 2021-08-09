@@ -1,6 +1,6 @@
 import React from 'react'
 import {makeStyles} from '@material-ui/core/styles'
-import {Paper} from '@material-ui/core'
+import {Grid, Paper} from '@material-ui/core'
 
 import useWindowSize from '../../../../../hooks/useWindowSize'
 import ConnectionPanel from './ConnectionPanel'
@@ -10,39 +10,42 @@ import Copyright from './Copyright'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
-    flexDirection: 'column',
     background: theme.project.page.main.controlPanel.background,
     padding: theme.spacing(3),
     height: '100%',
+    maxWidth: 500,
   },
   connectionPanel: {
-    marginTop: windowHeight => theme.spacing(windowHeight > 800 ? 3 : 0),
+    marginTop: smallDeviceMode => theme.spacing(smallDeviceMode ? 0 : 3),
   },
   requestPanel: {
-    marginTop: windowHeight => theme.spacing(windowHeight > 800 ? 3 : 2),
-    flex: 1,
+    marginTop: smallDeviceMode => theme.spacing(smallDeviceMode ? 2 : 3),
   },
   copyright: {}
 }))
 
 export default function ControlPanel() {
-  const [_, windowHeight] = useWindowSize()
-  const classes = useStyles(windowHeight)
+  const smallDeviceMode = useSmallDeviceMode()
+  const classes = useStyles(smallDeviceMode)
 
   return (
-    <Paper className={classes.root} elevation={1} square>
-      <div className={classes.connectionPanel}>
+    <Grid className={classes.root} container direction="column" component={Paper} elevation={1} square>
+      <Grid className={classes.connectionPanel} item>
         <ConnectionPanel/>
-      </div>
-      <div className={classes.requestPanel}>
+      </Grid>
+      <Grid className={classes.requestPanel} item xs>
         <RequestPanel/>
-      </div>
-      {windowHeight > 800 ? (
-        <div className={classes.copyright}>
-        <Copyright/>
-      </div>
+      </Grid>
+      {!smallDeviceMode ? (
+        <Grid className={classes.copyright} item>
+          <Copyright/>
+        </Grid>
       ) : null}
-    </Paper>
+    </Grid>
   )
+}
+
+function useSmallDeviceMode() {
+  const {height} = useWindowSize()
+  return height <= 600
 }

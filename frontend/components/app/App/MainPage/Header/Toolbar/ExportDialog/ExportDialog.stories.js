@@ -4,7 +4,7 @@ import ExportDialog from './ExportDialog'
 
 
 export default {
-  title: 'modules/common/ExportDialog',
+  title: 'App/MainPage/Header/Toolbar/ExportDialog',
   component: ExportDialog,
 }
 
