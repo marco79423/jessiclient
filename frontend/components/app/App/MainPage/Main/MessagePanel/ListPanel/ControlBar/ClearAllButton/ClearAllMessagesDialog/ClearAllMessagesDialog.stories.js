@@ -4,7 +4,7 @@ import ClearAllMessagesDialog from './ClearAllMessagesDialog'
 
 
 export default {
-  title: 'modules/ListPanel/shared/ClearAllMessagesDialog',
+  title: 'App/MainPage/Main/MessagePanel/ListPanel/ControlBar/ClearAllButton/ClearAllMessagesDialog',
   component: ClearAllMessagesDialog,
 }
 

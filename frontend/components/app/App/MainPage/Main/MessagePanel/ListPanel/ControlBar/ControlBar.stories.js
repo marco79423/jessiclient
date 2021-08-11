@@ -1,9 +1,8 @@
-import React from 'react'
 import ControlBar from './ControlBar'
 
 
 export default {
-  title: 'modules/ListPanel/web/ControlBar',
+  title: 'App/MainPage/Main/MessagePanel/ListPanel/ControlBar',
   component: ControlBar,
 }
 
@@ -11,6 +10,4 @@ export default {
 const Template = (args) => <ControlBar {...args} />
 
 export const Default = Template.bind({})
-Default.args = {
-  searchFilters: ['搜尋 1', '搜尋 2'],
-}
+Default.args = {}

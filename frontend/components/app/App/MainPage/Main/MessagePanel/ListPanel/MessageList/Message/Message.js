@@ -1,13 +1,13 @@
-import React, {memo} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
 
-import {MessageSource} from '../../../../../../../../constants'
-import ListItem from '../../../../../../../elements/ListItem'
-import * as currentActions from '../../../../../../../../redux/current'
+import {MessageSource} from '../../../../../../../../../constants'
+import ListItem from '../../../../../../../../elements/ListItem'
+import * as currentActions from '../../../../../../../../../redux/current'
 import {useDispatch, useSelector} from 'react-redux'
-import {getSelectedMessageID} from '../../../../../../../../redux/selectors'
+import {getMessage, getSelectedMessageID} from '../../../../../../../../../redux/selectors'
 
 const useStyles = makeStyles((theme) => ({
   messageTitle: ({fromClient}) => ({
@@ -23,11 +23,13 @@ const useStyles = makeStyles((theme) => ({
   }),
 }))
 
-export function Message({message}) {
+export default function Message({id}) {
   const dispatch = useDispatch()
   const {t} = useTranslation()
 
   const selectedMessageID = useSelector(getSelectedMessageID)
+  const message = useSelector(getMessage(id))
+  console.log('aaaaa', id, message)
 
   const fromClient = message.source === MessageSource.Client
   const time = new Date(message.time).toLocaleString()
@@ -50,12 +52,5 @@ export function Message({message}) {
 }
 
 Message.propTypes = {
-  message: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    time: PropTypes.string.isRequired,
-    source: PropTypes.string.isRequired,
-    body: PropTypes.string.isRequired,
-  }).isRequired,
+  id: PropTypes.string.isRequired,
 }
-
-export default memo(Message)

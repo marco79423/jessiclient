@@ -1,6 +1,7 @@
-import {createAction, createSlice} from '@reduxjs/toolkit'
+import {createAction, createEntityAdapter, createSlice} from '@reduxjs/toolkit'
 
 import {ConnectionState, LoadingState} from '../constants'
+import {addFavoriteRequestCategory, clearFavoriteRequests, removeFavoriteRequestCategory} from './project'
 
 
 // Actions
@@ -12,7 +13,11 @@ export const setCurrencyFavoriteCategoryID = createAction('current/setCurrencyFa
 
 export const setCurrentFavoriteRequestID = createAction('current/setCurrentFavoriteRequestID')
 
-export const setSearchFilters = createAction('current/setSearchFilters')
+export const addSearchQuery = createAction('current/addSearchQuery')
+
+export const removeSearchQuery = createAction('current/removeSearchQuery')
+
+export const clearSearchQueries = createAction('current/clearSearchQueries')
 
 export const setSelectedMessageID = createAction('current/setSelectedMessageID')
 
@@ -25,6 +30,7 @@ export const clearShareLink = createAction('current/clearShareLink')
 export const showMessagePanel = createAction('current/showMessagePanel')
 
 // Slice
+export const entityAdapter = createEntityAdapter()
 const currentSlice = createSlice({
   name: 'current',
   initialState: {
@@ -32,7 +38,9 @@ const currentSlice = createSlice({
     connectionState: ConnectionState.Idle, // idle, connecting, connected, closed
     currencyFavoriteCategoryID: null,
     currentFavoriteRequestID: null,
-    searchFilters: [],
+
+    searchQuery: entityAdapter.getInitialState(),
+
     selectedMessageID: null,
     schedulerEnabled: false,
     shareLink: '',
@@ -52,8 +60,14 @@ const currentSlice = createSlice({
     [setCurrentFavoriteRequestID]: (state, action) => {
       state.currentFavoriteRequestID = action.payload
     },
-    [setSearchFilters]: (state, action) => {
-      state.searchFilters = action.payload
+    [addSearchQuery]: (state, action) => {
+      entityAdapter.addOne(state.searchQuery, action.payload)
+    },
+    [removeSearchQuery]: (state, action) => {
+      entityAdapter.removeOne(state.searchQuery, action.payload)
+    },
+    [clearSearchQueries]: (state) => {
+      entityAdapter.removeAll(state.searchQuery)
     },
     [setSelectedMessageID]: (state, action) => {
       state.selectedMessageID = action.payload

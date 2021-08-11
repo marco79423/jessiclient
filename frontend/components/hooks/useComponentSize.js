@@ -14,12 +14,12 @@ export default function useComponentSize(componentRef) {
 
   React.useEffect(() => {
     const handleResize = () => {
-      console.log(size)
-      setSize(getSize())
+      if (componentRef.current) {
+        setSize(getSize())
+      }
     }
 
     if (componentRef.current) {
-      console.log(size)
       setSize(getSize())
     }
 

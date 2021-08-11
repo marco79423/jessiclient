@@ -10,8 +10,6 @@ import MessagePanel from './MessagePanel'
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    // background: theme.project.page.main.background,
-    background: 'blue', // 測試用
     height: '100%',
   },
   controlPanel: {

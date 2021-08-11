@@ -1,9 +1,9 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import {useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
 
-import {getMessage} from '../../../../../../redux/selectors'
-import useWindowSize from '../../../../../hooks/useWindowSize'
+import {getSelectedMessage} from '../../../../../../redux/selectors'
+import useComponentSize from '../../../../../hooks/useComponentSize'
 import ListPanel from './ListPanel'
 import DetailPanel from './DetailPanel'
 
@@ -22,24 +22,35 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function MessagePanel() {
-  const {width: windowWidth} = useWindowSize()
-
+  const ref = useRef()
   const classes = useStyles()
-  const message = useSelector(getMessage)
+  const {width} = useComponentSize(ref)
+
+  const message = useSelector(getSelectedMessage)
+  const showDetail = !!message
 
   return (
-    <div className={classes.root}>
-      {(!message) || (message && windowWidth > 1000) ? (
-        <div className={classes.listPanel}>
-          <ListPanel/>
-        </div>
-      ) : null}
-
-      {message ? (
-        <div className={classes.detailPanel}>
-          <DetailPanel/>
-        </div>
-      ) : null}
+    <div ref={ref} className={classes.root}>
+      {showDetail ? (
+        <>
+          {/*顯示詳細模式*/}
+          {width > 500 ? (
+            <div className={classes.listPanel}>
+              <ListPanel/>
+            </div>
+          ) : null}
+          <div className={classes.detailPanel}>
+            <DetailPanel/>
+          </div>
+        </>
+      ) : (
+        <>
+          {/*不顯示詳細模式*/}
+          <div className={classes.listPanel}>
+            <ListPanel/>
+          </div>
+        </>
+      )}
     </div>
   )
 }

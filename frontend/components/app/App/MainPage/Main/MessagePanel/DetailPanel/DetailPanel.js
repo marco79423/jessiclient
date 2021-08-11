@@ -6,10 +6,11 @@ import {TabContext, TabList, TabPanel} from '@material-ui/lab'
 import {Grid, InputBase, Paper, Tab} from '@material-ui/core'
 
 import {setSelectedMessageID} from '../../../../../../../redux/current'
-import {getMessage} from '../../../../../../../redux/selectors'
+import {getSelectedMessage} from '../../../../../../../redux/selectors'
 import JSONView from '../../../../../../elements/JSONView'
 import Button from '../../../../../../elements/Button'
 import useWindowSize from '../../../../../../hooks/useWindowSize'
+import Select from '../../../../../../elements/Select'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -53,7 +54,7 @@ export default function DetailPanel() {
   const {t} = useTranslation()
   const {width: windowWidth} = useWindowSize()
 
-  const message = useSelector(getMessage)
+  const message = useSelector(getSelectedMessage)
 
   const [tabValue, setTabValue] = useState(PanelTab.PlainText)
   const [messageJsonData, setMessageJsonData] = useState(null)
@@ -89,15 +90,12 @@ export default function DetailPanel() {
     <div className={classes.root}>
       <TabContext value={tabValue}>
         <Paper className={classes.dataSection} square>
-          <Grid className={classes.controlBar} container justify="space-between" alignItems="flex-end">
+          <Grid className={classes.controlBar} container justify="space-between" alignItems="center">
             <Grid item>
-              {windowWidth >= 1300 ? (
-                <TabList value={tabValue} onChange={onTabChange}>
-                <Tab className={classes.tab} label={t('純文字')} value={PanelTab.PlainText}/>
-                <Tab className={classes.tab} label={t('JSON')} value={PanelTab.JSON}
-                     disabled={messageJsonData === null}/>
-              </TabList>
-              ) : null}
+              <Select currentValue={tabValue} onSelectionChange={onTabChange} selections={[
+                {key: PanelTab.PlainText, label: t('純文字'), value: PanelTab.PlainText},
+                {key: PanelTab.JSON, label: t('JSON'), value: PanelTab.JSON},
+              ]}/>
             </Grid>
             <Grid item>
               <Grid className={classes.toolbar} container alignItems="center">

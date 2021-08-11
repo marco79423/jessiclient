@@ -39,7 +39,7 @@ export default function AddFavoriteRequestDialog({open, onClose}) {
   const requestBody = useSelector(getRequestBody)
 
   const [requestName, setRequestName] = useState('')
-  const [categoryID, setCategoryID] = useState()
+  const [categoryID, setCategoryID] = useState('')
 
   useEffect(() => {
     if (categories.length > 0) {

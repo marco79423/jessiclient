@@ -1,5 +1,6 @@
 import React from 'react'
 import {makeStyles} from '@material-ui/core/styles'
+
 import ControlBar from './ControlBar'
 import MessageList from './MessageList'
 

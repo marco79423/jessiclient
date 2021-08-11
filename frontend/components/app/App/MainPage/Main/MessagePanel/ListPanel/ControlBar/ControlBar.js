@@ -1,15 +1,12 @@
-import React, {useState} from 'react'
-import {useTranslation} from 'next-i18next'
+import React, {useRef} from 'react'
 import {makeStyles} from '@material-ui/core/styles'
-import {Chip, Grid} from '@material-ui/core'
-import SearchField from '../../../../../../../elements/SearchField'
-import Button from '../../../../../../../elements/Button'
-import ClearAllMessagesDialog from './ClearAllMessagesDialog'
-import {useDispatch, useSelector} from 'react-redux'
-import * as currentActions from '../../../../../../../../redux/current'
-import {showMessagePanel} from '../../../../../../../../redux/current'
-import {getMessage, getSearchFilters} from '../../../../../../../../redux/selectors'
-import useWindowSize from '../../../../../../../hooks/useWindowSize'
+import {Grid} from '@material-ui/core'
+
+import useMobileMode from '../../../../../../../hooks/useMobileMode'
+import useComponentSize from '../../../../../../../hooks/useComponentSize'
+import ClearAllButton from './ClearAllButton'
+import MessageSearch from './MessageSearch'
+import CloseMessagePanelButton from './CloseMessagePanelButton'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -23,73 +20,25 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function ControlBar() {
+  const ref = useRef()
   const classes = useStyles()
-  const {t} = useTranslation()
-  const dispatch = useDispatch()
-  const {width: windowWidth} = useWindowSize()
-
-  const searchFilters = useSelector(getSearchFilters)
-  const message = useSelector(getMessage)
-
-  const [clearAllDialogOn, setClearAllDialog] = useState(false)
-
-  const onCloseButtonClick = () => {
-    dispatch(showMessagePanel(false))
-  }
-
-  const onSearchButtonClick = (searchFilter) => {
-    dispatch(currentActions.setSearchFilters([...searchFilters, searchFilter]))
-  }
-
-  const onClearButtonClick = (targetSearchFilter) => {
-    dispatch(currentActions.setSearchFilters(searchFilters.filter(searchFilter => searchFilter !== targetSearchFilter)))
-  }
-
-  const showClearAllDialog = () => {
-    setClearAllDialog(true)
-  }
-
-  const hideClearAllDialog = () => {
-    setClearAllDialog(false)
-  }
+  const mobileMode = useMobileMode()
+  const {width} = useComponentSize(ref)
 
   return (
-    <Grid className={classes.root} container justify="space-between" alignItems="center">
-      {windowWidth <= 500 ? (
+    <Grid ref={ref} className={classes.root} container justify="space-between" alignItems="center">
+      {mobileMode ? (
         <Grid item>
-          <Button onClick={onCloseButtonClick}>{t('關閉訊息列表')}</Button>
+          <CloseMessagePanelButton/>
         </Grid>
       ) : null}
-      <Grid item>
-        {windowWidth >= (message ? 1500 : 1000)? (
-          <Grid container alignItems="baseline" spacing={1}>
-            <Grid item>
-              <SearchField
-                placeholder={t('搜尋訊息')}
-                onSearch={onSearchButtonClick}
-                buttonLabel={t('搜尋')}
-              />
-            </Grid>
-            {searchFilters.map(searchFilter => (
-              <Grid key={searchFilter} item>
-                <Chip
-                  label={searchFilter}
-                  onDelete={() => onClearButtonClick(searchFilter)}
-                />
-              </Grid>
-            ))}
-          </Grid>
+      <Grid item xs>
+        {width >= 400 ? (
+          <MessageSearch/>
         ) : null}
       </Grid>
       <Grid item>
-        <Button onClick={showClearAllDialog}>
-          {t('清空訊息')}
-        </Button>
-
-        <ClearAllMessagesDialog
-          open={clearAllDialogOn}
-          onClose={hideClearAllDialog}
-        />
+        <ClearAllButton/>
       </Grid>
     </Grid>
   )

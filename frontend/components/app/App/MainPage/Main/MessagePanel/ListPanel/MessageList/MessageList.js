@@ -1,14 +1,24 @@
 import React, {useEffect, useState} from 'react'
 import {useSelector} from 'react-redux'
+import {makeStyles} from '@material-ui/core/styles'
 
-import {getFilterMessages} from '../../../../../../../../redux/selectors'
 import useWindowSize from '../../../../../../../hooks/useWindowSize'
+import {selectFilterMessageIDs} from '../../../../../../../../redux/selectors'
 import List from '../../../../../../../elements/List'
+import MessageFilters from './MessageFilters'
 import Message from './Message'
 
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    position: 'relative',
+  },
+}))
+
 export default function MessageList() {
-  const filteredMessages = useSelector(getFilterMessages)
+  const classes = useStyles()
+
+  const filteredMessageIDs = useSelector(selectFilterMessageIDs)
 
   const [height, setHeight] = useState(0)
 
@@ -19,14 +29,14 @@ export default function MessageList() {
   }, [windowHeight])
 
   return (
-    <List height={height}>
-      {filteredMessages.map(message => (
-        <Message
-          key={message.id}
-          message={message}
-        />
-      ))}
-    </List>
+    <div className={classes.root}>
+      <MessageFilters/>
+      <List height={height}>
+        {filteredMessageIDs.map(filteredMessageID => (
+          <Message key={filteredMessageID} id={filteredMessageID}/>
+        ))}
+      </List>
+    </div>
   )
 }
 

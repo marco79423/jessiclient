@@ -5,7 +5,7 @@ import ConnectionPanel from './ConnectionPanel'
 
 
 export default {
-  title: 'modules/web/ControlPanel/ConnectionPanel',
+  title: 'App/MainPage/Main/ControlPanel/ConnectionPanel',
   component: ConnectionPanel,
   argTypes: {
     state: {

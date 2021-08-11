@@ -1,15 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {makeStyles} from '@material-ui/core/styles'
+import {useDispatch} from 'react-redux'
 import {useTranslation} from 'next-i18next'
+import {makeStyles} from '@material-ui/core/styles'
 import {Typography} from '@material-ui/core'
 
-import BasicDialog from '../../../../../../../../elements/BasicDialog'
-import Button from '../../../../../../../../elements/Button'
-import * as projectActions from '../../../../../../../../../redux/project'
-import * as currentActions from '../../../../../../../../../redux/current'
-import {useDispatch} from 'react-redux'
-import useTracker from '../../../../../../../../../features/tracker/useTracker'
+import useTracker from '../../../../../../../../../../features/tracker/useTracker'
+import {clearMessages} from '../../../../../../../../../../redux/project'
+import {clearSearchQueries, setSelectedMessageID} from '../../../../../../../../../../redux/current'
+import BasicDialog from '../../../../../../../../../elements/BasicDialog'
+import Button from '../../../../../../../../../elements/Button'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -25,15 +25,15 @@ const useStyles = makeStyles((theme) => ({
 export default function ClearAllMessagesDialog({open, onClose}) {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const {t} = useTranslation()
   const tracker = useTracker()
+  const {t} = useTranslation()
 
-  const onClearAllButtonClick = () => {
-    dispatch(projectActions.clearMessages())
-    dispatch(currentActions.setSelectedMessageID(null))
-    dispatch(currentActions.setSearchFilters([]))
+  const onConfirm = () => {
     tracker.trace('clear_messages')
 
+    dispatch(clearMessages())
+    dispatch(setSelectedMessageID(null))
+    dispatch(clearSearchQueries())
     onClose()
   }
 
@@ -45,7 +45,7 @@ export default function ClearAllMessagesDialog({open, onClose}) {
       actions={
         <>
           <Button onClick={onClose}>{t('取消')}</Button>
-          <Button primary onClick={onClearAllButtonClick}>{t('清空訊息')}</Button>
+          <Button primary onClick={onConfirm}>{t('清空訊息')}</Button>
         </>
       }
     >

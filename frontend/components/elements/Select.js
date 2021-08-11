@@ -36,6 +36,6 @@ Select.propTypes = {
     key: PropTypes.any.isRequired,
     label: PropTypes.string.isRequired,
     value: PropTypes.any.isRequired,
-  })),
+  })).isRequired,
   onSelectionChange: PropTypes.func.isRequired,
 }

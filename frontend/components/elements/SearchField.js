@@ -5,7 +5,7 @@ import TextField from './TextField'
 import LinkButton from './LinkButton'
 
 
-export default function SearchField({placeholder, defaultValue, onSearch, buttonLabel = '搜尋'}) {
+export default function SearchField({className, placeholder, defaultValue, onSearch, buttonLabel = '搜尋'}) {
   const [value, setValue] = useState('')
 
   useEffect(() => {
@@ -20,10 +20,12 @@ export default function SearchField({placeholder, defaultValue, onSearch, button
 
   const onButtonClicked = () => {
     onSearch(value)
+    setValue('')
   }
 
   return (
     <TextField
+      className={className}
       placeholder={placeholder}
       value={value}
       onChange={onValueChange}
