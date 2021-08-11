@@ -1,10 +1,10 @@
 import React, {useState} from 'react'
 import {useDispatch} from 'react-redux'
 import useAsyncEffect from 'use-async-effect'
+import {nanoid} from 'nanoid'
 
 import {changeConnectionState, changeSchedulerEnabledStatus} from '../../redux/current'
 import {MessageSource} from '../../constants'
-import generateRandomString from '../../utils/generateRandomString'
 import WSClient from '../../utils/WSClient'
 import {appendMessage} from '../../redux/project'
 import useTracker from '../tracker/useTracker'
@@ -40,7 +40,7 @@ export default function WSClientProvider({children}) {
 
     wsClient.setOnNewMessage(async message => {
       await dispatch(appendMessage({
-        id: generateRandomString(),
+        id: nanoid(),
         time: new Date().toISOString(),
         source: MessageSource.Server,
         body: message,
@@ -71,17 +71,21 @@ export default function WSClientProvider({children}) {
   }
 
   const sendMessage = async (message) => {
-    wsClient.send(message)
-
-    await dispatch(appendMessage({
-      id: generateRandomString(),
-      time: new Date().toISOString(),
-      source: MessageSource.Client,
-      body: message,
-    }))
-
-    tracker.trace('send_message')
-    alerter.showSuccessAlert(t('請求已送出'))
+    try {
+      wsClient.send(message)
+      await dispatch(appendMessage({
+        id: nanoid(),
+        time: new Date().toISOString(),
+        source: MessageSource.Client,
+        body: message,
+      }))
+      alerter.showSuccessAlert(t('請求已送出'))
+    } catch (e) {
+      console.log(e)
+      alerter.showErrorAlert(t('請求傳送失敗'))
+    } finally {
+      tracker.trace('send_message')
+    }
   }
 
   const enableScheduler = async (message, timeInterval) => {

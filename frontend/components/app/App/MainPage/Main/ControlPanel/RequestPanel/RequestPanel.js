@@ -1,12 +1,12 @@
 import React, {useState} from 'react'
 import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
-import {TabContext, TabList, TabPanel} from '@material-ui/lab'
+import {TabContext, TabList, TabPanel as MuiTabPanel} from '@material-ui/lab'
 import {Tab} from '@material-ui/core'
 
+import {PanelTab} from '../../../../../../../constants'
 import useWindowSize from '../../../../../../hooks/useWindowSize'
-import BasicTabPanel from './BasicTabPanel/BasicTabPanel'
-import ScheduleTabPanel from './ScheculeTabPanel'
+import TabPanel from './TabPanel'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -14,8 +14,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     maxWidth: 500,
   },
-  tabs: {
-  },
+  tabs: {},
   tab: {
     background: theme.project.page.main.controlPanel.requestPanel.tab,
     fontSize: '1rem',
@@ -32,10 +31,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const PanelTab = Object.freeze({
-  Basic: 'basic',
-  Schedule: 'schedule',
-})
 
 export default function RequestPanel() {
   const classes = useStyles()
@@ -59,14 +54,14 @@ export default function RequestPanel() {
         ) : null}
 
         {/* Basic */}
-        <TabPanel className={classes.tabPanel} value={PanelTab.Basic}>
-          <BasicTabPanel/>
-        </TabPanel>
+        <MuiTabPanel className={classes.tabPanel} value={PanelTab.Basic}>
+          <TabPanel mode={PanelTab.Basic}/>
+        </MuiTabPanel>
 
         {/* Schedule */}
-        <TabPanel className={classes.tabPanel} value={PanelTab.Schedule}>
-          <ScheduleTabPanel/>
-        </TabPanel>
+        <MuiTabPanel className={classes.tabPanel} value={PanelTab.Schedule}>
+          <TabPanel mode={PanelTab.Schedule}/>
+        </MuiTabPanel>
       </TabContext>
     </div>
   )

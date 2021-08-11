@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import useAsyncEffect from 'use-async-effect'
-import generateRandomString from 'paji-sdk/dist/utils/generateRandomString'
+import {nanoid} from 'nanoid'
 import {useTranslation} from 'next-i18next'
 import {Backdrop, CircularProgress} from '@material-ui/core'
 
@@ -45,7 +45,7 @@ export default function ProjectProvider({children}) {
   useEffect(() => {
     if (favoriteRequestCategories.length === 0) {
       dispatch(addFavoriteRequestCategory({
-        id: generateRandomString(),
+        id: nanoid(),
         label: t('未分類'),
         readonly: true,
       }))

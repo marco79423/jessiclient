@@ -26,6 +26,8 @@
   "展開常用列表": "Show Favorites",
   "常用請求列表": "Favorite Requests",
   "未分類": "Unclassified",
+  "新增": "Add",
+  "修改": "Edit",
   "套用": "Apply",
   "刪除": "Delete",
   "儲存": "Save",
@@ -35,6 +37,9 @@
   "常用請求名稱": "Request name",
   "設為常用請求": "Add to favorites",
   "沒有常用請求": "The favorites is empty",
+  "新增常用請求分類": "Create new category",
+  "編輯常用請求分類": "Edit category",
+  "分類名稱": "Category name",
 
   "確認": "Confirm",
   "取消": "Cancel",

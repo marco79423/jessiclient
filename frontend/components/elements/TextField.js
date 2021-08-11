@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
   input: ({large, error}) => ({
     fontSize: large ? '1.3rem' : '1rem',
     width: '100%',
+    height: '100%',
     color: error ? theme.project.elements.textField.errorTextColor : undefined
   }),
 }))

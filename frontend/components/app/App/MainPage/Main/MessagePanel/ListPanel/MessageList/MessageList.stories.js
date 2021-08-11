@@ -1,7 +1,7 @@
 import React from 'react'
+import {nanoid} from 'nanoid'
 
 import {MessageSource} from '../../../../../../../../constants'
-import generateRandomString from '../../../../../../../../utils/generateRandomString'
 import MessageList from './MessageList'
 
 
@@ -17,37 +17,37 @@ export const Default = Template.bind({})
 Default.args = {
   messages: [
     {
-      id: generateRandomString(),
+      id: nanoid(),
       time: new Date(),
       source: MessageSource.Client,
       body: '內文 1'
     },
     {
-      id: generateRandomString(),
+      id: nanoid(),
       time: new Date(),
       source: MessageSource.Server,
       body: '內文 2'
     },
     {
-      id: generateRandomString(),
+      id: nanoid(),
       time: new Date(),
       source: MessageSource.Client,
       body: '內文 3'
     },
     {
-      id: generateRandomString(),
+      id: nanoid(),
       time: new Date(),
       source: MessageSource.Client,
       body: '內文 4'
     },
     {
-      id: generateRandomString(),
+      id: nanoid(),
       time: new Date(),
       source: MessageSource.Server,
       body: '內文 5'
     },
     {
-      id: generateRandomString(),
+      id: nanoid(),
       time: new Date(),
       source: MessageSource.Client,
       body: '內文 6'

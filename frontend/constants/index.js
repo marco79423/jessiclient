@@ -16,3 +16,8 @@ export const MessageSource = Object.freeze({
   Server: 'server',
   Client: 'client'
 })
+
+export const PanelTab = Object.freeze({
+  Basic: 'basic',
+  Schedule: 'schedule',
+})

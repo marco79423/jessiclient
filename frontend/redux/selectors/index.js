@@ -1,5 +1,6 @@
 import {createDraftSafeSelector} from '@reduxjs/toolkit'
 import {entityAdapter} from '../project'
+import React from 'react'
 
 
 export const getProjectState = state => state.current.projectState
@@ -29,6 +30,15 @@ export const getScheduleTimeInterval = state => state.project.schedule.timeInter
 
 const favoriteRequestCategorySelectors = entityAdapter.getSelectors(state => state.project.favoriteRequestCategory)
 export const getFavoriteRequestCategories = state => favoriteRequestCategorySelectors.selectAll(state)
+export const getFavoriteRequestCategorySelections = createDraftSafeSelector(
+  [getFavoriteRequestCategories],
+  (categories) => categories
+    .map(favoriteRequestCategory => ({
+      key: favoriteRequestCategory.id,
+      label: favoriteRequestCategory.label,
+      value: favoriteRequestCategory.id,
+    }))
+)
 
 export const getCurrentFavoriteRequestCategory = createDraftSafeSelector(
   [

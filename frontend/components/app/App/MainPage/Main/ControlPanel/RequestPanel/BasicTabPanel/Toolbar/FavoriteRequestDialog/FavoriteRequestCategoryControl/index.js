@@ -1,3 +1,0 @@
-import FavoriteRequestCategoryControl from './FavoriteRequestCategoryControl'
-
-export default FavoriteRequestCategoryControl
