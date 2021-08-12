@@ -10,7 +10,7 @@ import DetailPanel from './DetailPanel'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   listPanel: {
     flex: 1,

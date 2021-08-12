@@ -18,12 +18,11 @@ const useStyles = makeStyles((theme) => ({
 export default function MessageList() {
   const classes = useStyles()
 
-  const filteredMessageIDs = useSelector(selectFilterMessageIDs)
+  const messageIDs = useSelector(selectFilterMessageIDs)
 
-  const [height, setHeight] = useState(0)
-
-  // TODO: 不要用這種方式定義高度
+  // TODO: 未來希望能找到方法不要用這種方式定義高度
   const {height: windowHeight} = useWindowSize()
+  const [height, setHeight] = useState(0)
   useEffect(() => {
     setHeight(windowHeight - 64 - 64)
   }, [windowHeight])
@@ -32,8 +31,8 @@ export default function MessageList() {
     <div className={classes.root}>
       <MessageFilters/>
       <List height={height}>
-        {filteredMessageIDs.map(filteredMessageID => (
-          <Message key={filteredMessageID} id={filteredMessageID}/>
+        {messageIDs.map(messageID => (
+          <Message key={messageID} id={messageID}/>
         ))}
       </List>
     </div>

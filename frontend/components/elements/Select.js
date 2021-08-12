@@ -22,7 +22,10 @@ export default function Select({className, currentValue, selections, onSelection
     <Paper className={`${classes.root} ${className}`}>
       <TextField size="small" select value={currentValue} variant="outlined" onChange={onChange}>
         {selections.map(selection => (
-          <MenuItem key={selection.key} value={selection.value}>{selection.label}</MenuItem>
+          <MenuItem
+            key={selection.key}
+            disabled={selection.disabled}
+            value={selection.value}>{selection.label}</MenuItem>
         ))}
       </TextField>
     </Paper>
@@ -36,6 +39,7 @@ Select.propTypes = {
     key: PropTypes.any.isRequired,
     label: PropTypes.string.isRequired,
     value: PropTypes.any.isRequired,
+    disabled: PropTypes.bool,
   })).isRequired,
   onSelectionChange: PropTypes.func.isRequired,
 }

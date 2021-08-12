@@ -29,7 +29,6 @@ export default function Message({id}) {
 
   const selectedMessageID = useSelector(getSelectedMessageID)
   const message = useSelector(getMessage(id))
-  console.log('aaaaa', id, message)
 
   const fromClient = message.source === MessageSource.Client
   const time = new Date(message.time).toLocaleString()

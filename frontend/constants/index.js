@@ -21,3 +21,8 @@ export const PanelTab = Object.freeze({
   Basic: 'basic',
   Schedule: 'schedule',
 })
+
+export const DetailMode = Object.freeze({
+  PlainText: 'plain-text',
+  JSON: 'json',
+})
