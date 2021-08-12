@@ -16,7 +16,7 @@ export default function ControlBar() {
   const classes = useStyles()
 
   return (
-    <Grid className={classes.root} container spacing={4} alignItems="center">
+    <Grid className={classes.root} container spacing={2} alignItems="center">
       <Grid item>
         <CategorySelect/>
       </Grid>
