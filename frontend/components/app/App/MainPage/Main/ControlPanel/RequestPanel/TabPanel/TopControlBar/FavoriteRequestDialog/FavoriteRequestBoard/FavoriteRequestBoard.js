@@ -4,7 +4,7 @@ import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
 import {Grid} from '@material-ui/core'
 
-import {selectFilteredFavoriteRequests} from '../../../../../../../../../../../redux/selectors'
+import {selectFilteredFavoriteRequestIDs} from '../../../../../../../../../../../redux/selectors'
 import FavoriteRequestItem from './FavoriteRequestItem'
 
 
@@ -19,17 +19,18 @@ export default function FavoriteRequestBoard() {
   const classes = useStyles()
   const {t} = useTranslation()
 
-  const filteredFavoriteRequests = useSelector(selectFilteredFavoriteRequests)
+  const favoriteRequestIDs = useSelector(selectFilteredFavoriteRequestIDs)
 
   return (
     <>
-      {filteredFavoriteRequests.length > 0 ? (
+      {favoriteRequestIDs.length > 0 ? (
         <Grid container spacing={2} justify="center">
-          {filteredFavoriteRequests.map(favoriteRequest => (
-            <FavoriteRequestItem
-              key={favoriteRequest.id}
-              favoriteRequest={favoriteRequest}
-            />
+          {favoriteRequestIDs.map(favoriteRequestID => (
+            <Grid key={favoriteRequestID} item>
+              <FavoriteRequestItem
+                id={favoriteRequestID}
+              />
+            </Grid>
           ))}
         </Grid>
       ) : (

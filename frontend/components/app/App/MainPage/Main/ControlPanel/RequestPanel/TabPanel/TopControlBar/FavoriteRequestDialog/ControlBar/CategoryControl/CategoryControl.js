@@ -6,7 +6,7 @@ import {Grid} from '@material-ui/core'
 import {
   selectCurrentFavoriteRequestCategory,
   selectFavoriteRequestCategories,
-  selectFilteredFavoriteRequests
+  selectFilteredFavoriteRequestIDs
 } from '../../../../../../../../../../../../redux/selectors'
 import {setCurrencyFavoriteCategoryID} from '../../../../../../../../../../../../redux/current'
 import {removeFavoriteRequestCategory} from '../../../../../../../../../../../../redux/project'
@@ -28,14 +28,15 @@ export default function CategoryControl() {
   const {t} = useTranslation()
 
   const favoriteRequestCategories = useSelector(selectFavoriteRequestCategories)
-  const filteredFavoriteRequests = useSelector(selectFilteredFavoriteRequests)
+  const filteredFavoriteRequestIDs = useSelector(selectFilteredFavoriteRequestIDs)
   const currentCategory = useSelector(selectCurrentFavoriteRequestCategory)
 
   const [addCategoryDialogOpen, setAddCategoryDialogOpen] = React.useState(false)
   const [editCategoryDialogOpen, setEditCategoryDialogOpen] = React.useState(false)
 
   const removeButtonDisabled = (
-    filteredFavoriteRequests.length > 0 ||       // 如果最愛的 Request 不是空的
+    !currentCategory ||                          // 可能還不存在
+    filteredFavoriteRequestIDs.length > 0 ||     // 如果最愛的 Request 不是空的
     favoriteRequestCategories.length <= 1 ||     // 如果是唯一的分類
     currentCategory.readonly                     // 如果是唯讀的分類
   )

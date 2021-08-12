@@ -33,6 +33,8 @@ export const selectScheduleTimeInterval = state => state.project.schedule.timeIn
 
 const favoriteRequestCategorySelectors = entityAdapter.getSelectors(state => state.project.favoriteRequestCategory)
 export const selectFavoriteRequestCategories = state => favoriteRequestCategorySelectors.selectAll(state)
+export const selectFavoriteRequestCategoryID = state => favoriteRequestCategorySelectors.selectIds(state)
+export const selectFavoriteRequestCategory = id => state => favoriteRequestCategorySelectors.selectById(state, id)
 export const selectFavoriteRequestCategorySelections = createDraftSafeSelector(
   [selectFavoriteRequestCategories],
   (categories) => categories
@@ -53,13 +55,15 @@ export const selectCurrentFavoriteRequestCategory = createDraftSafeSelector(
 
 const favoriteRequestSelectors = entityAdapter.getSelectors(state => state.project.favoriteRequest)
 export const selectFavoriteRequests = state => favoriteRequestSelectors.selectAll(state)
-export const selectFilteredFavoriteRequests = createDraftSafeSelector(
+export const selectFavoriteRequest = id => state => favoriteRequestSelectors.selectById(state, id)
+export const selectFilteredFavoriteRequestIDs = createDraftSafeSelector(
   [
     selectFavoriteRequests,
     selectCurrencyFavoriteCategoryID,
   ],
   (favoriteRequests, currentFavoriteRequestCategoryID) => favoriteRequests
     .filter(favoriteRequest => favoriteRequest.categoryID === currentFavoriteRequestCategoryID)
+    .map(favoriteRequest => favoriteRequest.id)
 )
 
 const messageSelectors = entityAdapter.getSelectors(state => state.project.message)
