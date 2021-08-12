@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   tabPanel: {
-    padding: 0,
     height: '100%',
   },
 }))
@@ -53,15 +52,9 @@ export default function RequestPanel() {
           </TabList>
         ) : null}
 
-        {/* Basic */}
-        <MuiTabPanel className={classes.tabPanel} value={PanelTab.Basic}>
-          <TabPanel mode={PanelTab.Basic}/>
-        </MuiTabPanel>
-
-        {/* Schedule */}
-        <MuiTabPanel className={classes.tabPanel} value={PanelTab.Schedule}>
-          <TabPanel mode={PanelTab.Schedule}/>
-        </MuiTabPanel>
+        <div className={classes.tabPanel}>
+          <TabPanel mode={tabValue}/>
+        </div>
       </TabContext>
     </div>
   )

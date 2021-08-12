@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function Copyright() {
+function Copyright() {
   const classes = useStyles()
 
   return (
@@ -25,3 +25,5 @@ export default function Copyright() {
 }
 
 Copyright.propTypes = {}
+
+export default React.memo(Copyright)

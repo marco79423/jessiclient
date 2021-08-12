@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-export default function CloseButton() {
+function CloseButton() {
   const classes = useStyles()
   const dispatch = useDispatch()
   const {t} = useTranslation()
@@ -26,3 +26,5 @@ export default function CloseButton() {
     <Button className={classes.root} onClick={onClick}>{t('關閉詳細訊息')}</Button>
   )
 }
+
+export default React.memo(CloseButton)
