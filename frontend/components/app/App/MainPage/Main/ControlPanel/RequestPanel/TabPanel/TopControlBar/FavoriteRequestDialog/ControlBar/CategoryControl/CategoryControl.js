@@ -4,9 +4,9 @@ import {makeStyles} from '@material-ui/core/styles'
 import {Grid} from '@material-ui/core'
 
 import {
-  getCurrentFavoriteRequestCategory,
-  getFavoriteRequestCategories,
-  getFilteredFavoriteRequests
+  selectCurrentFavoriteRequestCategory,
+  selectFavoriteRequestCategories,
+  selectFilteredFavoriteRequests
 } from '../../../../../../../../../../../../redux/selectors'
 import {setCurrencyFavoriteCategoryID} from '../../../../../../../../../../../../redux/current'
 import {removeFavoriteRequestCategory} from '../../../../../../../../../../../../redux/project'
@@ -27,9 +27,9 @@ export default function CategoryControl() {
   const classes = useStyles()
   const {t} = useTranslation()
 
-  const favoriteRequestCategories = useSelector(getFavoriteRequestCategories)
-  const filteredFavoriteRequests = useSelector(getFilteredFavoriteRequests)
-  const currentCategory = useSelector(getCurrentFavoriteRequestCategory)
+  const favoriteRequestCategories = useSelector(selectFavoriteRequestCategories)
+  const filteredFavoriteRequests = useSelector(selectFilteredFavoriteRequests)
+  const currentCategory = useSelector(selectCurrentFavoriteRequestCategory)
 
   const [addCategoryDialogOpen, setAddCategoryDialogOpen] = React.useState(false)
   const [editCategoryDialogOpen, setEditCategoryDialogOpen] = React.useState(false)

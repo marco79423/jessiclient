@@ -10,9 +10,9 @@ import TextField from '../../../../../../../../../../elements/TextField'
 import Select from '../../../../../../../../../../elements/Select'
 import {useDispatch, useSelector} from 'react-redux'
 import {
-  getFavoriteRequestCategories,
-  getFavoriteRequestCategorySelections,
-  getRequestBody
+  selectFavoriteRequestCategories,
+  selectFavoriteRequestCategorySelections,
+  selectRequestBody
 } from '../../../../../../../../../../../redux/selectors'
 import {addFavoriteRequest} from '../../../../../../../../../../../redux/project'
 import {setCurrentFavoriteRequestID} from '../../../../../../../../../../../redux/current'
@@ -34,9 +34,9 @@ export default function AddFavoriteRequestDialog({open, onClose}) {
   const {t} = useTranslation()
   const tracker = useTracker()
 
-  const categories = useSelector(getFavoriteRequestCategories)
-  const selections = useSelector(getFavoriteRequestCategorySelections)
-  const requestBody = useSelector(getRequestBody)
+  const categories = useSelector(selectFavoriteRequestCategories)
+  const selections = useSelector(selectFavoriteRequestCategorySelections)
+  const requestBody = useSelector(selectRequestBody)
 
   const [requestName, setRequestName] = useState('')
   const [categoryID, setCategoryID] = useState('')

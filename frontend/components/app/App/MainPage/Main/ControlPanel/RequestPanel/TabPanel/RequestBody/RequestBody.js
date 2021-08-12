@@ -5,7 +5,7 @@ import {makeStyles} from '@material-ui/core/styles'
 
 import {changeRequestBody} from '../../../../../../../../../redux/project'
 import {setCurrentFavoriteRequestID} from '../../../../../../../../../redux/current'
-import {getRequestBody} from '../../../../../../../../../redux/selectors'
+import {selectRequestBody} from '../../../../../../../../../redux/selectors'
 import TextArea from '../../../../../../../../elements/TextArea'
 
 
@@ -22,7 +22,7 @@ export default function RequestBody() {
   const dispatch = useDispatch()
   const {t} = useTranslation()
 
-  const requestBody = useSelector(getRequestBody)
+  const requestBody = useSelector(selectRequestBody)
 
   const onChange = (value) => {
     dispatch(changeRequestBody(value))

@@ -5,10 +5,10 @@ import {useSelector} from 'react-redux'
 import {ConnectionState} from '../../../../../../../../../../constants'
 import {useWSClient} from '../../../../../../../../../../features/wsClient'
 import {
-  getConnectionState,
-  getRequestBody,
-  getSchedulerEnabledStatus,
-  getScheduleTimeInterval
+  selectConnectionState,
+  selectRequestBody,
+  selectSchedulerEnabledStatus,
+  selectScheduleTimeInterval
 } from '../../../../../../../../../../redux/selectors'
 import Button from '../../../../../../../../../elements/Button'
 
@@ -16,10 +16,10 @@ export default function EnableButton() {
   const {t} = useTranslation()
   const wsClient = useWSClient()
 
-  const connectionState = useSelector(getConnectionState)
-  const requestBody = useSelector(getRequestBody)
-  const scheduleTimeInterval = useSelector(getScheduleTimeInterval)
-  const schedulerEnabled = useSelector(getSchedulerEnabledStatus)
+  const connectionState = useSelector(selectConnectionState)
+  const requestBody = useSelector(selectRequestBody)
+  const scheduleTimeInterval = useSelector(selectScheduleTimeInterval)
+  const schedulerEnabled = useSelector(selectSchedulerEnabledStatus)
 
   const isConnected = connectionState === ConnectionState.Connected
   const validTimeInterval = +scheduleTimeInterval > 0

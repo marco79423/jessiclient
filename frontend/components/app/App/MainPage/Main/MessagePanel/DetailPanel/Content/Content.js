@@ -4,7 +4,7 @@ import {makeStyles} from '@material-ui/core/styles'
 import {InputBase} from '@material-ui/core'
 
 import {DetailMode} from '../../../../../../../../constants'
-import {getSelectedMessage} from '../../../../../../../../redux/selectors'
+import {selectSelectedMessage} from '../../../../../../../../redux/selectors'
 import JSONView from '../../../../../../../elements/JSONView'
 
 
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Content({detailMode}) {
   const classes = useStyles()
-  const message = useSelector(getSelectedMessage)
+  const message = useSelector(selectSelectedMessage)
 
   return (
     <div className={classes.root}>

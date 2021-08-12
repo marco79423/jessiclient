@@ -4,7 +4,7 @@ import {useTranslation} from 'next-i18next'
 
 import {removeFavoriteRequest} from '../../../../../../../../../../redux/project'
 import {setCurrentFavoriteRequestID} from '../../../../../../../../../../redux/current'
-import {getCurrentFavoriteRequestID, getRequestBody} from '../../../../../../../../../../redux/selectors'
+import {selectCurrentFavoriteRequestID, selectRequestBody} from '../../../../../../../../../../redux/selectors'
 import Button from '../../../../../../../../../elements/Button'
 import AddFavoriteRequestDialog from './AddFavoriteRequestDialog'
 
@@ -13,8 +13,8 @@ export default function SetFavoriteRequestButton() {
   const dispatch = useDispatch()
   const {t} = useTranslation()
 
-  const requestBody = useSelector(getRequestBody)
-  const currentFavoriteRequestID = useSelector(getCurrentFavoriteRequestID)
+  const requestBody = useSelector(selectRequestBody)
+  const currentFavoriteRequestID = useSelector(selectCurrentFavoriteRequestID)
 
   const [addFavoriteRequestDialogOpen, setAddFavoriteRequestDialogOpen] = useState(false)
 

@@ -7,7 +7,7 @@ import {MessageSource} from '../../../../../../../../../constants'
 import ListItem from '../../../../../../../../elements/ListItem'
 import * as currentActions from '../../../../../../../../../redux/current'
 import {useDispatch, useSelector} from 'react-redux'
-import {getMessage, getSelectedMessageID} from '../../../../../../../../../redux/selectors'
+import {selectMessage, selectSelectedMessageID} from '../../../../../../../../../redux/selectors'
 
 const useStyles = makeStyles((theme) => ({
   messageTitle: ({fromClient}) => ({
@@ -27,8 +27,8 @@ export default function Message({id}) {
   const dispatch = useDispatch()
   const {t} = useTranslation()
 
-  const selectedMessageID = useSelector(getSelectedMessageID)
-  const message = useSelector(getMessage(id))
+  const selectedMessageID = useSelector(selectSelectedMessageID)
+  const message = useSelector(selectMessage(id))
 
   const fromClient = message.source === MessageSource.Client
   const time = new Date(message.time).toLocaleString()

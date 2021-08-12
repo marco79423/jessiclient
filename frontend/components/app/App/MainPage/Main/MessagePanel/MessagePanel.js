@@ -2,7 +2,7 @@ import React, {useRef} from 'react'
 import {useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
 
-import {getSelectedMessage} from '../../../../../../redux/selectors'
+import {selectSelectedMessage} from '../../../../../../redux/selectors'
 import useComponentSize from '../../../../../hooks/useComponentSize'
 import ListPanel from './ListPanel'
 import DetailPanel from './DetailPanel'
@@ -26,7 +26,7 @@ export default function MessagePanel() {
   const classes = useStyles()
   const {width} = useComponentSize(ref)
 
-  const message = useSelector(getSelectedMessage)
+  const message = useSelector(selectSelectedMessage)
   const showDetail = !!message
 
   return (

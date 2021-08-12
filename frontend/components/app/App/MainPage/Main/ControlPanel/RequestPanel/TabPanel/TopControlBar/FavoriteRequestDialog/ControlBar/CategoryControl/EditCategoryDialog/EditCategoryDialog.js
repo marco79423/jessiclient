@@ -5,7 +5,7 @@ import {useTranslation} from 'next-i18next'
 import {Grid, makeStyles} from '@material-ui/core'
 
 import {updateFavoriteRequestCategory} from '../../../../../../../../../../../../../redux/project'
-import {getCurrentFavoriteRequestCategory} from '../../../../../../../../../../../../../redux/selectors'
+import {selectCurrentFavoriteRequestCategory} from '../../../../../../../../../../../../../redux/selectors'
 import BasicDialog from '../../../../../../../../../../../../elements/BasicDialog'
 import Button from '../../../../../../../../../../../../elements/Button'
 import TextField from '../../../../../../../../../../../../elements/TextField'
@@ -22,7 +22,7 @@ export default function EditCategoryDialog({open, onClose}) {
   const dispatch = useDispatch()
   const {t} = useTranslation()
 
-  const currentCategory = useSelector(getCurrentFavoriteRequestCategory)
+  const currentCategory = useSelector(selectCurrentFavoriteRequestCategory)
 
   const [categoryName, setCategoryName] = useState('')
 

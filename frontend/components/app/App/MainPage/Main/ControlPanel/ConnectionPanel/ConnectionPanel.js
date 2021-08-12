@@ -6,7 +6,7 @@ import {makeStyles} from '@material-ui/core/styles'
 import {ConnectionState} from '../../../../../../../constants'
 import validateWebsocketUrl from '../../../../../../../utils/validateWebsocketUrl'
 import {changeConnectionUrl} from '../../../../../../../redux/project'
-import {getConnectionState, getConnectionUrl} from '../../../../../../../redux/selectors'
+import {selectConnectionState, selectConnectionUrl} from '../../../../../../../redux/selectors'
 import useWSClient from '../../../../../../../features/wsClient/useWSClient'
 import LinkButton from '../../../../../../elements/LinkButton'
 import TextField from '../../../../../../elements/TextField'
@@ -23,8 +23,8 @@ export default function ConnectionPanel() {
   const wsClient = useWSClient()
   const {t} = useTranslation()
 
-  const connectionState = useSelector(getConnectionState)
-  const connectionUrl = useSelector(getConnectionUrl)
+  const connectionState = useSelector(selectConnectionState)
+  const connectionUrl = useSelector(selectConnectionUrl)
 
   const [localUrl, setLocalUrl] = useState('')
   const [buttonLabel, setButtonLabel] = useState('')

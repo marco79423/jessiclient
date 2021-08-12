@@ -4,7 +4,7 @@ import {makeStyles} from '@material-ui/core/styles'
 import {Chip} from '@material-ui/core'
 
 import {removeSearchQuery} from '../../../../../../../../../../redux/current'
-import {getSearchQuery} from '../../../../../../../../../../redux/selectors'
+import {selectSearchQuery} from '../../../../../../../../../../redux/selectors'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -16,7 +16,7 @@ export default function MessageFilter({id}) {
   const classes = useStyles()
   const dispatch = useDispatch()
 
-  const searchQuery = useSelector(getSearchQuery(id))
+  const searchQuery = useSelector(selectSearchQuery(id))
 
   const onDelete = () => {
     dispatch(removeSearchQuery(searchQuery.id))

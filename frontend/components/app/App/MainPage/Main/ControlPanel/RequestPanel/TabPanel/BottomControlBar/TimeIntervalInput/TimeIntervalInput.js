@@ -4,7 +4,7 @@ import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
 import {Grid} from '@material-ui/core'
 
-import {getSchedulerEnabledStatus, getScheduleTimeInterval} from '../../../../../../../../../../redux/selectors'
+import {selectSchedulerEnabledStatus, selectScheduleTimeInterval} from '../../../../../../../../../../redux/selectors'
 import NumberField from '../../../../../../../../../elements/NumberField'
 import {changeScheduleTimeInterval} from '../../../../../../../../../../redux/project'
 
@@ -21,8 +21,8 @@ export default function TimeIntervalInput() {
   const classes = useStyles()
   const dispatch = useDispatch()
 
-  const scheduleEnabled = useSelector(getSchedulerEnabledStatus)
-  const timeInterval = useSelector(getScheduleTimeInterval)
+  const scheduleEnabled = useSelector(selectSchedulerEnabledStatus)
+  const timeInterval = useSelector(selectScheduleTimeInterval)
   const validTimeInterval = +timeInterval > 0
 
   const onChange = (timeInterval) => {

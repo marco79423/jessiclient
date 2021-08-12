@@ -4,7 +4,7 @@ import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
 import {Grid} from '@material-ui/core'
 
-import {getSelectedMessage} from '../../../../../../../../redux/selectors'
+import {selectSelectedMessage} from '../../../../../../../../redux/selectors'
 import {DetailMode} from '../../../../../../../../constants'
 import Select from '../../../../../../../elements/Select'
 import CloseButton from './CloseButton'
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ControlBar({currentDetailMode, setCurrentDetailMode}) {
   const classes = useStyles()
   const {t} = useTranslation()
-  const message = useSelector(getSelectedMessage)
+  const message = useSelector(selectSelectedMessage)
 
   const [selections, setSelections] = useState([])
   useEffect(() => {

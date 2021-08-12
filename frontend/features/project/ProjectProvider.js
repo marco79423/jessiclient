@@ -6,7 +6,7 @@ import {useTranslation} from 'next-i18next'
 import {Backdrop, CircularProgress} from '@material-ui/core'
 
 import {LoadingState} from '../../constants'
-import {getFavoriteRequestCategories, getProjectData, getProjectState} from '../../redux/selectors'
+import {selectFavoriteRequestCategories, selectProjectData, selectProjectState} from '../../redux/selectors'
 import {changeProjectState} from '../../redux/current'
 import {addFavoriteRequestCategory, setProjectData} from '../../redux/project'
 import {
@@ -26,9 +26,9 @@ export default function ProjectProvider({children}) {
   const dispatch = useDispatch()
   const {t} = useTranslation()
 
-  const projectState = useSelector(getProjectState)
-  const projectData = useSelector(getProjectData)
-  const favoriteRequestCategories = useSelector(getFavoriteRequestCategories)
+  const projectState = useSelector(selectProjectState)
+  const projectData = useSelector(selectProjectData)
+  const favoriteRequestCategories = useSelector(selectFavoriteRequestCategories)
 
   useAsyncEffect(async () => {
     await dispatch(changeProjectState(LoadingState.Loading))

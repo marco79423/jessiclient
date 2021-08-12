@@ -4,7 +4,7 @@ import {useTranslation} from 'next-i18next'
 
 import {ConnectionState} from '../../../../../../../../../../constants'
 import {useWSClient} from '../../../../../../../../../../features/wsClient'
-import {getConnectionState, getRequestBody} from '../../../../../../../../../../redux/selectors'
+import {selectConnectionState, selectRequestBody} from '../../../../../../../../../../redux/selectors'
 import Button from '../../../../../../../../../elements/Button'
 
 
@@ -12,8 +12,8 @@ export default function SendRequestButton() {
   const {t} = useTranslation()
   const wsClient = useWSClient()
 
-  const requestBody = useSelector(getRequestBody)
-  const connectionState = useSelector(getConnectionState)
+  const requestBody = useSelector(selectRequestBody)
+  const connectionState = useSelector(selectConnectionState)
   const isConnected = connectionState === ConnectionState.Connected
 
   const onClick = async () => {

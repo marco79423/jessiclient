@@ -8,7 +8,7 @@ import React from 'react'
 import {changeRequestBody, removeFavoriteRequest, updateFavoriteRequest} from '../../../../../../../../../../../../redux/project'
 import {useDispatch, useSelector} from 'react-redux'
 import {setCurrentFavoriteRequestID} from '../../../../../../../../../../../../redux/current'
-import {getConnectionState, getCurrentFavoriteRequestID} from '../../../../../../../../../../../../redux/selectors'
+import {selectConnectionState, selectCurrentFavoriteRequestID} from '../../../../../../../../../../../../redux/selectors'
 import {ConnectionState} from '../../../../../../../../../../../../constants'
 import useWSClient from '../../../../../../../../../../../../features/wsClient/useWSClient'
 import useAlerter from '../../../../../../../../../../../../features/alerter/useAlerter'
@@ -38,8 +38,8 @@ export default function FavoriteRequestItem({favoriteRequest}) {
   const wsClient = useWSClient()
   const alerter = useAlerter()
 
-  const connectionState = useSelector(getConnectionState)
-  const currentFavoriteRequestID = useSelector(getCurrentFavoriteRequestID)
+  const connectionState = useSelector(selectConnectionState)
+  const currentFavoriteRequestID = useSelector(selectCurrentFavoriteRequestID)
   const isConnected = connectionState === ConnectionState.Connected
 
   const onNameChange = (name) => {

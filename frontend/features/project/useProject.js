@@ -5,7 +5,7 @@ import fileDialog from 'file-dialog'
 
 import useTracker from '../tracker/useTracker'
 import {downloadJsonData} from '../../utils/jsDownloader'
-import {getProjectData, getProjectDataWithoutMessages, getProjectState} from '../../redux/selectors'
+import {selectProjectData, selectProjectDataWithoutMessages, selectProjectState} from '../../redux/selectors'
 import {setProjectData} from '../../redux/project'
 import {changeShareLink} from '../../redux/current'
 import useAlerter from '../alerter/useAlerter'
@@ -16,9 +16,9 @@ export default function useProject() {
   const tracker = useTracker()
   const alerter = useAlerter()
 
-  const projectState = useSelector(getProjectState)
-  const projectData = useSelector(getProjectData)
-  const projectDataWithoutMessages = useSelector(getProjectDataWithoutMessages)
+  const projectState = useSelector(selectProjectState)
+  const projectData = useSelector(selectProjectData)
+  const projectDataWithoutMessages = useSelector(selectProjectDataWithoutMessages)
 
   const exportProject = ({filename, messageIncluded}) => {
     downloadJsonData(filename, messageIncluded ? projectData : projectDataWithoutMessages)

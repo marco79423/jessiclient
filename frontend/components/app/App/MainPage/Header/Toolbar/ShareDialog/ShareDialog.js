@@ -6,7 +6,7 @@ import {Grid, Typography} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 
 import {clearShareLink} from '../../../../../../../redux/current'
-import {getShareLink} from '../../../../../../../redux/selectors'
+import {selectShareLink} from '../../../../../../../redux/selectors'
 import {useProject} from '../../../../../../../features/project'
 import BasicDialog from '../../../../../../elements/BasicDialog'
 import Button from '../../../../../../elements/Button'
@@ -26,7 +26,7 @@ export default function ShareDialog({open, onClose}) {
   const {t} = useTranslation()
   const project = useProject()
 
-  const shareLink = useSelector(getShareLink)
+  const shareLink = useSelector(selectShareLink)
   const [messageIncluded, setIncludeMessages] = useState(false)
 
   const onCopyLinkButtonClick = async () => {

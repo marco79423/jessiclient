@@ -2,8 +2,8 @@ import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 
 import {
-  getCurrencyFavoriteCategoryID,
-  getFavoriteRequestCategorySelections
+  selectCurrencyFavoriteCategoryID,
+  selectFavoriteRequestCategorySelections
 } from '../../../../../../../../../../../../redux/selectors'
 import {setCurrencyFavoriteCategoryID} from '../../../../../../../../../../../../redux/current'
 import Select from '../../../../../../../../../../../elements/Select'
@@ -12,8 +12,8 @@ import Select from '../../../../../../../../../../../elements/Select'
 export default function CategorySelect() {
   const dispatch = useDispatch()
 
-  const selections = useSelector(getFavoriteRequestCategorySelections)
-  const currentCategoryID = useSelector(getCurrencyFavoriteCategoryID)
+  const selections = useSelector(selectFavoriteRequestCategorySelections)
+  const currentCategoryID = useSelector(selectCurrencyFavoriteCategoryID)
 
   useEffect(() => {
     if (!currentCategoryID && selections.length > 0) {
