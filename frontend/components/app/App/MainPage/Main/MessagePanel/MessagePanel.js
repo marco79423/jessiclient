@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 export default function MessagePanel() {
   const ref = useRef()
   const classes = useStyles()
-  const {width} = useComponentSize(ref)
+  const {width, ready} = useComponentSize(ref)
 
   const message = useSelector(selectSelectedMessage)
   const showDetail = !!message
@@ -33,8 +33,8 @@ export default function MessagePanel() {
     <div ref={ref} className={classes.root}>
       {showDetail ? (
         <>
-          {/*顯示詳細模式*/}
-          {width > 500 ? (
+          {/*顯示詳細模式 (預設)*/}
+          {!ready || width > 500 ? (
             <div className={classes.listPanel}>
               <ListPanel/>
             </div>

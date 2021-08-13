@@ -46,6 +46,12 @@ export default function ControlPanel() {
 }
 
 function useSmallDeviceMode() {
-  const {height} = useWindowSize()
+  const {height, ready} = useWindowSize()
+
+  // 初始的時候先給完整的內容
+  if (!ready) {
+    return false
+  }
+
   return height <= 600
 }

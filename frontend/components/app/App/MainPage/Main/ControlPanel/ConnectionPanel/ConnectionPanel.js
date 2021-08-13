@@ -26,8 +26,8 @@ export default function ConnectionPanel() {
   const connectionState = useSelector(selectConnectionState)
   const connectionUrl = useSelector(selectConnectionUrl)
 
-  const [localUrl, setLocalUrl] = useState('')
-  const [buttonLabel, setButtonLabel] = useState('')
+  const [localUrl, setLocalUrl] = useState(connectionUrl)
+  const [buttonLabel, setButtonLabel] = useState((t('建立連線')))
 
   useEffect(() => {
     setLocalUrl(connectionUrl)

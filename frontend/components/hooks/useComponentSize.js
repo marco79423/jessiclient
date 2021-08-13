@@ -5,7 +5,11 @@ export default function useComponentSize(componentRef) {
     throw new Error('必須要提供 ref (使用 useRef)')
   }
 
-  const [size, setSize] = React.useState({width: 0, height: 0})
+  const [size, setSize] = React.useState({
+    width: 0,
+    height: 0,
+    ready: false,
+  })
 
   const getSize = () => ({
     width: componentRef.current.offsetWidth,
@@ -15,12 +19,18 @@ export default function useComponentSize(componentRef) {
   React.useEffect(() => {
     const handleResize = () => {
       if (componentRef.current) {
-        setSize(getSize())
+        setSize({
+          ...getSize(),
+          ready: true,
+        })
       }
     }
 
     if (componentRef.current) {
-      setSize(getSize())
+      setSize({
+        ...getSize(),
+        ready: true,
+      })
     }
 
     window.addEventListener('resize', handleResize)
