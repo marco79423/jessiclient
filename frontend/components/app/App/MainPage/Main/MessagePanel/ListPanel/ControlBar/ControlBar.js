@@ -33,7 +33,7 @@ export default function ControlBar() {
         </Grid>
       ) : null}
       <Grid item xs>
-        {width >= 400 ? (
+        {!mobileMode && width >= 400 ? (
           <MessageSearch/>
         ) : null}
       </Grid>
