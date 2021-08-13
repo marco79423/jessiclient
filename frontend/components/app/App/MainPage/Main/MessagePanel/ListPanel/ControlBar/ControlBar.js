@@ -1,4 +1,4 @@
-import React, {useRef} from 'react'
+import React from 'react'
 import {makeStyles} from '@material-ui/core/styles'
 import {Grid} from '@material-ui/core'
 
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function ControlBar() {
-  const ref = useRef()
+  const ref = React.useRef()
   const classes = useStyles()
   const mobileMode = useMobileMode()
   const {width} = useComponentSize(ref)

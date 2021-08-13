@@ -1,4 +1,4 @@
-import React, {memo} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import {makeStyles} from '@material-ui/core/styles'
 import {Checkbox as MuiCheckbox, Grid, Typography} from '@material-ui/core'
@@ -40,4 +40,4 @@ Checkbox.propTypes = {
   label: PropTypes.string.isRequired,
 }
 
-export default memo(Checkbox)
+export default React.memo(Checkbox)

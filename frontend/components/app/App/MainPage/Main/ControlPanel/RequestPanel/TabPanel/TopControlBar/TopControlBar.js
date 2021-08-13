@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {useDispatch} from 'react-redux'
 import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
@@ -25,7 +25,7 @@ export default function TopControlBar() {
   const {t} = useTranslation()
   const mobileMode = useMobileMode()
 
-  const [favoriteRequestDialogOpen, setFavoriteRequestDialogOpen] = useState(false)
+  const [favoriteRequestDialogOpen, setFavoriteRequestDialogOpen] = React.useState(false)
 
   const showFavoriteRequestDialog = () => {
     setFavoriteRequestDialogOpen(true)

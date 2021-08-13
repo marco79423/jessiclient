@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {useDispatch} from 'react-redux'
 import useAsyncEffect from 'use-async-effect'
 import {useTranslation} from 'next-i18next'
@@ -13,7 +13,6 @@ import {useNotifications} from '../notifications'
 import {useTracker} from '../tracker'
 
 
-
 export const WSClientContext = React.createContext({
   ready: false,
 })
@@ -25,11 +24,11 @@ export default function WSClientProvider({children}) {
   const notifications = useNotifications()
   const {t} = useTranslation()
 
-  const [ready, setReady] = useState(false)
-  const [wsClient, setWSClient] = useState(null)
+  const [ready, setReady] = React.useState(false)
+  const [wsClient, setWSClient] = React.useState(null)
 
-  const [scheduler, setScheduler] = useState(null)
-  const [schedulerEnabled, setSchedulerEnabled] = useState(null)
+  const [scheduler, setScheduler] = React.useState(null)
+  const [schedulerEnabled, setSchedulerEnabled] = React.useState(null)
 
   useAsyncEffect(async () => {
     const wsClient = new WSClient()

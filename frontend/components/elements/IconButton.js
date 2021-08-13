@@ -1,4 +1,4 @@
-import React, {memo} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import {makeStyles} from '@material-ui/core/styles'
 import {IconButton as MuiIconButton, Tooltip} from '@material-ui/core'
@@ -31,4 +31,4 @@ IconButton.propTypes = {
   onClick: PropTypes.func.isRequired,
 }
 
-export default memo(IconButton)
+export default React.memo(IconButton)

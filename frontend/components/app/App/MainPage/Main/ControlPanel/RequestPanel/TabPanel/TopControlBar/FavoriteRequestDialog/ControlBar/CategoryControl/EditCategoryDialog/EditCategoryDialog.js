@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import {useDispatch, useSelector} from 'react-redux'
 import {useTranslation} from 'next-i18next'
@@ -24,9 +24,9 @@ export default function EditCategoryDialog({open, onClose}) {
 
   const currentCategory = useSelector(selectCurrentFavoriteRequestCategory)
 
-  const [categoryName, setCategoryName] = useState('')
+  const [categoryName, setCategoryName] = React.useState('')
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (currentCategory) {
       setCategoryName(currentCategory.label)
     }

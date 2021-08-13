@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import {useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
 
@@ -22,8 +22,8 @@ export default function MessageList() {
 
   // TODO: 未來希望能找到方法不要用這種方式定義高度
   const {height: windowHeight} = useWindowSize()
-  const [height, setHeight] = useState(0)
-  useEffect(() => {
+  const [height, setHeight] = React.useState(0)
+  React.useEffect(() => {
     setHeight(windowHeight - 64 - 64)
   }, [windowHeight])
 

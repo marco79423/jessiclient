@@ -1,4 +1,4 @@
-import React, {memo} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import {makeStyles} from '@material-ui/core/styles'
 import {List as MuiList} from '@material-ui/core'
@@ -27,4 +27,4 @@ List.propTypes = {
   height: PropTypes.number.isRequired,
 }
 
-export default memo(List)
+export default React.memo(List)

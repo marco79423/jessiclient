@@ -1,4 +1,4 @@
-import React, {memo} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import {Button as MuiButton} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
@@ -32,4 +32,4 @@ Button.propTypes = {
   onClick: PropTypes.func.isRequired,
 }
 
-export default memo(Button)
+export default React.memo(Button)

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
 import {TabContext, TabList, TabPanel as MuiTabPanel} from '@material-ui/lab'
@@ -36,7 +36,7 @@ export default function RequestPanel() {
   const {t} = useTranslation()
   const {height} = useWindowSize()
 
-  const [tabValue, setTabValue] = useState(PanelTab.Basic)
+  const [tabValue, setTabValue] = React.useState(PanelTab.Basic)
 
   const onTabChange = (event, newValue) => {
     setTabValue(newValue)

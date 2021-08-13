@@ -1,4 +1,4 @@
-import {useEffect} from 'react'
+import React from 'react'
 import {appWithTranslation, useTranslation} from 'next-i18next'
 import Head from 'next/head'
 
@@ -7,7 +7,7 @@ import Manifest from '../public/manifest.json'
 function App({Component, pageProps}) {
   const {t} = useTranslation()
 
-  useEffect(() => {
+  React.useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side')
     if (jssStyles) {

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import {useTranslation} from 'next-i18next'
 import {nanoid} from 'nanoid'
@@ -38,10 +38,10 @@ export default function AddFavoriteRequestDialog({open, onClose}) {
   const selections = useSelector(selectFavoriteRequestCategorySelections)
   const requestBody = useSelector(selectRequestBody)
 
-  const [requestName, setRequestName] = useState('')
-  const [categoryID, setCategoryID] = useState('')
+  const [requestName, setRequestName] = React.useState('')
+  const [categoryID, setCategoryID] = React.useState('')
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (categories.length > 0) {
       setCategoryID(categories[0].id)
     }

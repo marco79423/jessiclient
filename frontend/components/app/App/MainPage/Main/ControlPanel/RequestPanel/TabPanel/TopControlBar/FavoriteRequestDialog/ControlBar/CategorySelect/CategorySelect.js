@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 
 import {
@@ -15,7 +15,7 @@ export default function CategorySelect() {
   const selections = useSelector(selectFavoriteRequestCategorySelections)
   const currentCategoryID = useSelector(selectCurrencyFavoriteCategoryID)
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!currentCategoryID && selections.length > 0) {
       dispatch(setCurrencyFavoriteCategoryID(selections[0].value))
     }

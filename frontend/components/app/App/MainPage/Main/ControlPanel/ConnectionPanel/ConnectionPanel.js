@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import {useTranslation} from 'next-i18next'
 import {useDispatch, useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
@@ -26,14 +26,14 @@ export default function ConnectionPanel() {
   const connectionState = useSelector(selectConnectionState)
   const connectionUrl = useSelector(selectConnectionUrl)
 
-  const [localUrl, setLocalUrl] = useState(connectionUrl)
-  const [buttonLabel, setButtonLabel] = useState((t('建立連線')))
+  const [localUrl, setLocalUrl] = React.useState(connectionUrl)
+  const [buttonLabel, setButtonLabel] = React.useState((t('建立連線')))
 
-  useEffect(() => {
+  React.useEffect(() => {
     setLocalUrl(connectionUrl)
   }, [connectionUrl])
 
-  useEffect(() => {
+  React.useEffect(() => {
     switch (connectionState) {
       case ConnectionState.Idle:
         setButtonLabel(t('建立連線'))

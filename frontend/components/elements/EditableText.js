@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import {Typography} from '@material-ui/core'
 
@@ -7,10 +7,10 @@ import LinkButton from './LinkButton'
 
 
 export default function EditableText({className, value, setValue, allowEmpty, buttonLabel = '儲存'}) {
-  const [editMode, setEditMode] = useState(false)
-  const [localValue, setLocalValue] = useState(value)
+  const [editMode, setEditMode] = React.useState(false)
+  const [localValue, setLocalValue] = React.useState(value)
 
-  useEffect(() => {
+  React.useEffect(() => {
     setLocalValue(value)
   }, [value])
 

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import {useDispatch} from 'react-redux'
 import {nanoid} from 'nanoid'
@@ -22,7 +22,7 @@ export default function AddCategoryDialog({open, onClose}) {
   const dispatch = useDispatch()
   const {t} = useTranslation()
 
-  const [categoryName, setCategoryName] = useState('')
+  const [categoryName, setCategoryName] = React.useState('')
 
   const onCategoryChange = (value) => {
     setCategoryName(value)

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {makeStyles} from '@material-ui/core/styles'
 import {DetailMode} from '../../../../../../../constants'
 import ControlBar from './ControlBar/ControlBar'
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DetailPanel() {
   const classes = useStyles()
-  const [currentDetailMode, setCurrentDetailMode] = useState(DetailMode.PlainText)
+  const [currentDetailMode, setCurrentDetailMode] = React.useState(DetailMode.PlainText)
 
   return (
     <div className={classes.root}>

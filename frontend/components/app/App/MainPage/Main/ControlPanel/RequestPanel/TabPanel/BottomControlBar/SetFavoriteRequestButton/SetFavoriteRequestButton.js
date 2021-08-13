@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useTranslation} from 'next-i18next'
 
@@ -16,7 +16,7 @@ export default function SetFavoriteRequestButton() {
   const requestBody = useSelector(selectRequestBody)
   const currentFavoriteRequestID = useSelector(selectCurrentFavoriteRequestID)
 
-  const [addFavoriteRequestDialogOpen, setAddFavoriteRequestDialogOpen] = useState(false)
+  const [addFavoriteRequestDialogOpen, setAddFavoriteRequestDialogOpen] = React.useState(false)
 
   const onAddToFavoritesButtonClick = () => {
     showAddFavoriteRequestDialog()

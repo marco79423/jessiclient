@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import TextField from './TextField'
@@ -6,9 +6,9 @@ import LinkButton from './LinkButton'
 
 
 export default function SearchField({className, placeholder, defaultValue, onSearch, buttonLabel = '搜尋'}) {
-  const [value, setValue] = useState('')
+  const [value, setValue] = React.useState('')
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (defaultValue) {
       setValue(defaultValue)
     }

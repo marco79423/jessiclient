@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import {useDispatch, useSelector} from 'react-redux'
 import {useTranslation} from 'next-i18next'
@@ -27,7 +27,7 @@ export default function ShareDialog({open, onClose}) {
   const project = useProject()
 
   const shareLink = useSelector(selectShareLink)
-  const [messageIncluded, setIncludeMessages] = useState(false)
+  const [messageIncluded, setIncludeMessages] = React.useState(false)
 
   const onCopyLinkButtonClick = async () => {
     await navigator.clipboard.writeText(shareLink)

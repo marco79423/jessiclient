@@ -1,8 +1,8 @@
-import {useEffect, useState} from 'react'
+import React from 'react'
 
 export default function useWindowSize() {
-  const [size, setSize] = useState({width: 0, height: 0, ready: false})
-  useEffect(() => {
+  const [size, setSize] = React.useState({width: 0, height: 0, ready: false})
+  React.useEffect(() => {
     function updateSize() {
       setSize({
         width: window.innerWidth,

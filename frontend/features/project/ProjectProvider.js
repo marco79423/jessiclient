@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import useAsyncEffect from 'use-async-effect'
 import {nanoid} from 'nanoid'
@@ -42,7 +42,7 @@ export default function ProjectProvider({children}) {
   }, [])
 
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (favoriteRequestCategories.length === 0) {
       dispatch(addFavoriteRequestCategory({
         id: nanoid(),

@@ -1,4 +1,4 @@
-import React, {useRef} from 'react'
+import React from 'react'
 import {useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
 
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function MessagePanel() {
-  const ref = useRef()
+  const ref = React.useRef()
   const classes = useStyles()
   const {width, ready} = useComponentSize(ref)
 

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
 import {Grid, Toolbar as MuiToolbar} from '@material-ui/core'
@@ -26,8 +26,8 @@ export default function Toolbar() {
   const mobileMode = useMobileMode()
   const project = useProject()
 
-  const [shareDialogOpen, setShareDialog] = useState(false)
-  const [exportDialogOpen, setExportDialog] = useState(false)
+  const [shareDialogOpen, setShareDialog] = React.useState(false)
+  const [exportDialogOpen, setExportDialog] = React.useState(false)
 
   // Share Project
   const onShareButtonClick = () => {

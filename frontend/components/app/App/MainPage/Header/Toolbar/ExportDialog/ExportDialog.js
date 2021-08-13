@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import {useTranslation} from 'next-i18next'
 import {Grid} from '@material-ui/core'
@@ -14,8 +14,8 @@ export default function ExportDialog({open, onClose}) {
   const {t} = useTranslation()
   const project = useProject()
 
-  const [filename, setFilename] = useState('')
-  const [messageIncluded, setIncludeMessages] = useState(false)
+  const [filename, setFilename] = React.useState('')
+  const [messageIncluded, setIncludeMessages] = React.useState(false)
 
   const onExportButtonClick = async () => {
     await project.exportProject({filename, messageIncluded})

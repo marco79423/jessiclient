@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import {useSelector} from 'react-redux'
 import {useTranslation} from 'next-i18next'
 import {makeStyles} from '@material-ui/core/styles'
@@ -25,7 +25,7 @@ export default function ControlBar({currentDetailMode, setCurrentDetailMode}) {
   const {t} = useTranslation()
   const message = useSelector(selectSelectedMessage)
 
-  const [selections, setSelections] = useState([
+  const [selections, setSelections] = React.useState([
     {
       key: DetailMode.PlainText,
       label: t('純文字'),
@@ -39,7 +39,7 @@ export default function ControlBar({currentDetailMode, setCurrentDetailMode}) {
     }
   ])
 
-  useEffect(() => {
+  React.useEffect(() => {
     setSelections([
       {
         key: DetailMode.PlainText,
@@ -55,7 +55,7 @@ export default function ControlBar({currentDetailMode, setCurrentDetailMode}) {
     ])
   }, [message])
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (isJSONShowable(message.body)) {
       setCurrentDetailMode(DetailMode.JSON)
     } else {
