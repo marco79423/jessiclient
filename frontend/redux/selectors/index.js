@@ -8,7 +8,7 @@ export const selectCurrentFavoriteRequestID = state => state.current.currentFavo
 export const selectSelectedMessageID = state => state.current.selectedMessageID
 export const selectSchedulerEnabledStatus = state => state.current.schedulerEnabled
 export const selectShareLink = state => state.current.shareLink
-export const getMessagePanelOn = state => state.current.messagePanelOn
+export const selectMessagePanelOn = state => state.current.messagePanelOn
 
 const searchQuerySelectors = entityAdapter.getSelectors(state => state.current.searchQuery)
 export const selectSearchQueryIDs = state => searchQuerySelectors.selectIds(state)

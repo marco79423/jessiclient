@@ -2,7 +2,7 @@ import React from 'react'
 import {useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
 
-import {getMessagePanelOn} from '../../../../../redux/selectors'
+import {selectMessagePanelOn} from '../../../../../redux/selectors'
 import useMobileMode from '../../../../hooks/useMobileMode'
 import ControlPanel from './ControlPanel'
 import MessagePanel from './MessagePanel'
@@ -25,7 +25,7 @@ export default function Main() {
   const classes = useStyles()
   const mobileMode = useMobileMode()
 
-  const messagePanelOn = useSelector(getMessagePanelOn)
+  const messagePanelOn = useSelector(selectMessagePanelOn)
 
   return (
     <div className={classes.root}>
