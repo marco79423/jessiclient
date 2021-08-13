@@ -1,7 +1,6 @@
 import {createAction, createEntityAdapter, createSlice} from '@reduxjs/toolkit'
 
 import {ConnectionState, LoadingState} from '../constants'
-import {addFavoriteRequestCategory, clearFavoriteRequests, removeFavoriteRequestCategory} from './project'
 
 
 // Actions
