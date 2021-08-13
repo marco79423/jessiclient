@@ -1,4 +1,4 @@
-import {createMuiTheme} from '@material-ui/core/styles'
+import {createTheme} from '@material-ui/core/styles'
 
 export const colorTable = {
   'deep-purple-50': '#EDE7F6',
@@ -56,7 +56,7 @@ export const colorTable = {
   'grey-900': '#212121',
 }
 
-const theme = createMuiTheme({
+const theme = createTheme({
   project: {
     elements: {
       basicDialog: {

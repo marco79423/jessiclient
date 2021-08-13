@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import lodash from 'lodash'
 import {FormControl, InputLabel, OutlinedInput} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 
@@ -34,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 function Input(props) {
+  // 消除警告，因為 textarea 不支援 inputRef
+  props  = lodash.omit(props, ['inputRef'])
+
   return (
     <textarea {...props} />
   )

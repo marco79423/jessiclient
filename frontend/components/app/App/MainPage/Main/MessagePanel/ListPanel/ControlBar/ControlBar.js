@@ -26,7 +26,7 @@ export default function ControlBar() {
   const {width} = useComponentSize(ref)
 
   return (
-    <Grid ref={ref} className={classes.root} container justify="space-between" alignItems="center">
+    <Grid ref={ref} className={classes.root} container justifyContent="space-between" alignItems="center">
       {mobileMode ? (
         <Grid item>
           <CloseMessagePanelButton/>

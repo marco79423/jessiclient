@@ -25,7 +25,20 @@ export default function ControlBar({currentDetailMode, setCurrentDetailMode}) {
   const {t} = useTranslation()
   const message = useSelector(selectSelectedMessage)
 
-  const [selections, setSelections] = useState([])
+  const [selections, setSelections] = useState([
+    {
+      key: DetailMode.PlainText,
+      label: t('純文字'),
+      value: DetailMode.PlainText,
+    },
+    {
+      key: DetailMode.JSON,
+      label: t('JSON'),
+      value: DetailMode.JSON,
+      disabled: false,
+    }
+  ])
+
   useEffect(() => {
     setSelections([
       {
@@ -55,7 +68,7 @@ export default function ControlBar({currentDetailMode, setCurrentDetailMode}) {
   }
 
   return (
-    <Grid className={classes.root} container justify="space-between" alignItems="center">
+    <Grid className={classes.root} container justifyContent="space-between" alignItems="center">
       <Grid item>
         <Select
           currentValue={currentDetailMode}

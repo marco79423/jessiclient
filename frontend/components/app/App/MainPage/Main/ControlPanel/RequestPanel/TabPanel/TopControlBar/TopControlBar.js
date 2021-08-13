@@ -42,7 +42,7 @@ export default function TopControlBar() {
 
   return (
     <>
-      <Grid container className={classes.root} justify="space-between">
+      <Grid container className={classes.root} justifyContent="space-between">
         <Grid item>
           <Button onClick={showFavoriteRequestDialog}>{t('展開常用列表')}</Button>
         </Grid>

@@ -27,7 +27,7 @@ export default function FavoriteRequestItem({id}) {
   const classes = useStyles()
 
   return (
-    <Grid className={classes.root} container component={Paper} direction="column" justify="space-between">
+    <Grid className={classes.root} container component={Paper} direction="column" justifyContent="space-between">
       <Grid item>
         <Header id={id}/>
       </Grid>

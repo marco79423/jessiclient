@@ -47,7 +47,7 @@ export default function Header({id}) {
   }
 
   return (
-    <Grid container justify="space-between" alignItems="center" spacing={1}>
+    <Grid container justifyContent="space-between" alignItems="center" spacing={1}>
       <Grid item xs={8}>
         <EditableText
           className={classes.title}

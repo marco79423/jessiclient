@@ -18,7 +18,7 @@ export default function Header() {
 
   return (
     <MuiAppBar className={classes.root} position="relative" elevation={1}>
-      <Grid container justify="space-between" alignItems="center">
+      <Grid container justifyContent="space-between" alignItems="center">
         <Grid item>
           <Logo/>
         </Grid>

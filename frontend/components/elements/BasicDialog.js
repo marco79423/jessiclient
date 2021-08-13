@@ -56,7 +56,7 @@ export default function BasicDialog({children, autoFullScreen, title, open, onCl
         {/*Title*/}
         <Grid item>
           <DialogTitle disableTypography className={classes.header}>
-            <Grid container alignItems="center" justify="space-between">
+            <Grid container alignItems="center" justifyContent="space-between">
               <Grid item>{title}</Grid>
               <Grid item>
                 <IconButton className={classes.closeButton} aria-label="close" onClick={onClose}>

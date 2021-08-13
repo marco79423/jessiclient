@@ -49,7 +49,7 @@ export default function Control({id}) {
   }
 
   return (
-    <Grid className={classes.root} container justify="space-between">
+    <Grid className={classes.root} container justifyContent="space-between">
       <Grid item>
         <Grid container spacing={1}>
           <Grid item><Button primary onClick={onApplyButtonClick}>{t('套用')}</Button></Grid>

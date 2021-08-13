@@ -54,7 +54,7 @@ export default function Toolbar() {
 
   return (
     <>
-      <Grid container justify="space-between" alignItems="center">
+      <Grid container justifyContent="space-between" alignItems="center">
         <Grid item>
           <MuiToolbar>
             <IconButton description={t('分享專案')} icon={ShareIcon} onClick={onShareButtonClick}/>

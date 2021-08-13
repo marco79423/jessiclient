@@ -20,7 +20,7 @@ export default function BottomControlBar({mode}) {
   const classes = useStyles()
 
   return (
-    <Grid className={classes.root} container justify="space-between">
+    <Grid className={classes.root} container justifyContent="space-between">
       <Grid item>
         <SetFavoriteRequestButton/>
       </Grid>

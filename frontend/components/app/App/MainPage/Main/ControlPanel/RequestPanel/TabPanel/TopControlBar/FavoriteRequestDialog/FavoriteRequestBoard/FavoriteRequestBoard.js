@@ -24,7 +24,7 @@ export default function FavoriteRequestBoard() {
   return (
     <>
       {favoriteRequestIDs.length > 0 ? (
-        <Grid container spacing={2} justify="center">
+        <Grid container spacing={2} justifyContent="center">
           {favoriteRequestIDs.map(favoriteRequestID => (
             <Grid key={favoriteRequestID} item>
               <FavoriteRequestItem
