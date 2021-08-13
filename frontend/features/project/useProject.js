@@ -2,19 +2,21 @@ import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import axios from 'axios'
 import fileDialog from 'file-dialog'
+import {useTranslation} from 'next-i18next'
 
 import useTracker from '../tracker/useTracker'
 import {downloadJsonData} from '../../utils/jsDownloader'
 import {selectProjectData, selectProjectDataWithoutMessages, selectProjectState} from '../../redux/selectors'
 import {setProjectData} from '../../redux/project'
 import {changeShareLink} from '../../redux/current'
-import useAlerter from '../alerter/useAlerter'
+import {useNotifications} from '../notifications'
 
 
 export default function useProject() {
   const dispatch = useDispatch()
   const tracker = useTracker()
-  const alerter = useAlerter()
+  const notifications = useNotifications()
+  const {t} = useTranslation()
 
   const projectState = useSelector(selectProjectState)
   const projectData = useSelector(selectProjectData)
@@ -41,7 +43,7 @@ export default function useProject() {
       return shareLink
     } catch (e) {
       console.log(e)
-      alerter.showErrorAlert(t('產生分享連結失敗'))
+      notifications.showErrorMessage(t('產生分享連結失敗'))
     }
   }
 

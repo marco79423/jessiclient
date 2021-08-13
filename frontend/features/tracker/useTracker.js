@@ -1,6 +1,6 @@
 import React from 'react'
-import {GA4React} from 'ga-4-react'
 import getConfig from 'next/config'
+import {GA4React} from 'ga-4-react'
 
 
 export default function useTracker() {

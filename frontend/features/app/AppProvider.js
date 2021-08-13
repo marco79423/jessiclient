@@ -6,7 +6,7 @@ import store from '../../redux/store'
 import theme from '../../components/themes/defaultTheme'
 import ProviderComposer, {provider} from '../../components/elements/ProviderCompose'
 import {WSClientProvider} from '../wsClient'
-import {AlerterProvider} from '../alerter'
+import {NotificationsProvider} from '../notifications'
 import {ProjectProvider} from '../project'
 
 
@@ -25,8 +25,8 @@ function AppProvider({children}) {
       provider(Provider, {store}),
       // Project 的 Provider (提供處理專案資料相關功能)
       provider(ProjectProvider),
-      // Alerter 的 Provider (提供 Popup 訊息的功能)
-      provider(AlerterProvider),
+      // 通知的 Provider (提供 Popup 訊息的功能)
+      provider(NotificationsProvider),
       // WSClient 的 Provider (提供 Websocket 相關的功能)
       provider(WSClientProvider),
     ]}>
