@@ -6,7 +6,7 @@ import {makeStyles} from '@material-ui/core/styles'
 import {ConnectionState} from '../../../../../../../constants'
 import validateWebsocketUrl from '../../../../../../../utils/validateWebsocketUrl'
 import {changeConnectionUrl} from '../../../../../../../redux/project'
-import {selectConnectionState, selectConnectionUrl} from '../../../../../../../redux/selectors'
+import {selectConnectionUrl} from '../../../../../../../redux/selectors'
 import useWSClient from '../../../../../../../features/wsClient/useWSClient'
 import LinkButton from '../../../../../../elements/LinkButton'
 import TextField from '../../../../../../elements/TextField'
@@ -23,7 +23,6 @@ export default function ConnectionPanel() {
   const wsClient = useWSClient()
   const {t} = useTranslation()
 
-  const connectionState = useSelector(selectConnectionState)
   const connectionUrl = useSelector(selectConnectionUrl)
 
   const [localUrl, setLocalUrl] = React.useState(connectionUrl)
@@ -34,7 +33,7 @@ export default function ConnectionPanel() {
   }, [connectionUrl])
 
   React.useEffect(() => {
-    switch (connectionState) {
+    switch (wsClient.connectionState) {
       case ConnectionState.Idle:
         setButtonLabel(t('建立連線'))
         return
@@ -48,7 +47,7 @@ export default function ConnectionPanel() {
         setButtonLabel(t('關閉中…'))
         return
     }
-  }, [connectionState])
+  }, [wsClient.connectionState])
 
 
   const onUrlChange = (value) => {
@@ -56,7 +55,7 @@ export default function ConnectionPanel() {
   }
 
   const onButtonClick = async () => {
-    switch (connectionState) {
+    switch (wsClient.connectionState) {
       case ConnectionState.Idle:
         await dispatch(changeConnectionUrl(localUrl))
         await wsClient.connect(localUrl)
@@ -76,13 +75,13 @@ export default function ConnectionPanel() {
       placeholder={t('欲連線的網址')}
       value={localUrl}
       onChange={onUrlChange}
-      disabled={connectionState !== ConnectionState.Idle}
+      disabled={wsClient.connectionState !== ConnectionState.Idle}
       error={!isValidWSUrl}
       action={
         <LinkButton
           primary
           large
-          disabled={(connectionState === ConnectionState.Connecting || connectionState === ConnectionState.Closing) || !isValidWSUrl}
+          disabled={(wsClient.connectionState === ConnectionState.Connecting || wsClient.connectionState === ConnectionState.Closing) || !isValidWSUrl}
           onClick={onButtonClick}
         >{buttonLabel}</LinkButton>
       }

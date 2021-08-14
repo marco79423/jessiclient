@@ -1,12 +1,10 @@
 import {createAction, createEntityAdapter, createSlice} from '@reduxjs/toolkit'
 
-import {ConnectionState, LoadingState} from '../constants'
+import {LoadingState} from '../constants'
 
 
 // Actions
 export const changeProjectState = createAction('current/changeProjectState')
-
-export const changeConnectionState = createAction('current/changeConnectionState')
 
 export const setCurrencyFavoriteCategoryID = createAction('current/setCurrencyFavoriteCategoryID')
 
@@ -20,8 +18,6 @@ export const clearSearchQueries = createAction('current/clearSearchQueries')
 
 export const setSelectedMessageID = createAction('current/setSelectedMessageID')
 
-export const changeSchedulerEnabledStatus = createAction('current/changeSchedulerEnabledStatus')
-
 export const changeShareLink = createAction('current/changeShareLink')
 
 export const clearShareLink = createAction('current/clearShareLink')
@@ -34,14 +30,12 @@ const currentSlice = createSlice({
   name: 'current',
   initialState: {
     projectState: LoadingState.Idle, // idle, loading, loaded, failed
-    connectionState: ConnectionState.Idle, // idle, connecting, connected, closed
     currencyFavoriteCategoryID: null,
     currentFavoriteRequestID: null,
 
     searchQuery: entityAdapter.getInitialState(),
 
     selectedMessageID: null,
-    schedulerEnabled: false,
     shareLink: '',
 
     messagePanelOn: false,
@@ -49,9 +43,6 @@ const currentSlice = createSlice({
   extraReducers: {
     [changeProjectState]: (state, action) => {
       state.projectState = action.payload
-    },
-    [changeConnectionState]: (state, action) => {
-      state.connectionState = action.payload
     },
     [setCurrencyFavoriteCategoryID]: (state, action) => {
       state.currencyFavoriteCategoryID = action.payload
@@ -70,9 +61,6 @@ const currentSlice = createSlice({
     },
     [setSelectedMessageID]: (state, action) => {
       state.selectedMessageID = action.payload
-    },
-    [changeSchedulerEnabledStatus]: (state, action) => {
-      state.schedulerEnabled = action.payload
     },
     [changeShareLink]: (state, action) => {
       state.shareLink = action.payload

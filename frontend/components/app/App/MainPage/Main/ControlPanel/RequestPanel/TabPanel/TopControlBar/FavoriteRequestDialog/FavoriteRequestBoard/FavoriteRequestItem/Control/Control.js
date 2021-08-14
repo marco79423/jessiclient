@@ -4,12 +4,9 @@ import {useDispatch, useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
 import {useTranslation} from 'next-i18next'
 import {Grid} from '@material-ui/core'
-
-import {ConnectionState} from '../../../../../../../../../../../../../constants'
 import {changeRequestBody, removeFavoriteRequest} from '../../../../../../../../../../../../../redux/project'
 import {setCurrentFavoriteRequestID} from '../../../../../../../../../../../../../redux/current'
 import {
-  selectConnectionState,
   selectCurrentFavoriteRequestID,
   selectFavoriteRequest
 } from '../../../../../../../../../../../../../redux/selectors'
@@ -28,9 +25,7 @@ export default function Control({id}) {
   const wsClient = useWSClient()
 
   const favoriteRequest = useSelector(selectFavoriteRequest(id))
-  const connectionState = useSelector(selectConnectionState)
   const currentFavoriteRequestID = useSelector(selectCurrentFavoriteRequestID)
-  const isConnected = connectionState === ConnectionState.Connected
 
   const onApplyButtonClick = () => {
     dispatch(setCurrentFavoriteRequestID(favoriteRequest.id))
@@ -57,7 +52,7 @@ export default function Control({id}) {
         </Grid>
       </Grid>
       <Grid item>
-        <Button primary disabled={!isConnected} onClick={onSendButtonClick}>{t('直接送出')}</Button>
+        <Button primary disabled={!wsClient.isConnected} onClick={onSendButtonClick}>{t('直接送出')}</Button>
       </Grid>
     </Grid>
   )

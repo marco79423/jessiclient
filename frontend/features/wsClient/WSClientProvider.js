@@ -4,10 +4,9 @@ import useAsyncEffect from 'use-async-effect'
 import {useTranslation} from 'next-i18next'
 import {nanoid} from 'nanoid'
 
-import {MessageSource} from '../../constants'
+import {ConnectionState, MessageSource} from '../../constants'
 import WSClient from '../../utils/WSClient'
 import Scheduler from '../../utils/Scheduler'
-import {changeConnectionState, changeSchedulerEnabledStatus} from '../../redux/current'
 import {appendMessage} from '../../redux/project'
 import {useNotifications} from '../notifications'
 import {useTracker} from '../tracker'
@@ -27,12 +26,13 @@ export default function WSClientProvider({children}) {
   const [ready, setReady] = React.useState(false)
   const [wsClient, setWSClient] = React.useState(null)
 
+  const [connectionState, setConnectionState] = React.useState(ConnectionState.Idle)
   const [scheduler, setScheduler] = React.useState(null)
   const [schedulerEnabled, setSchedulerEnabled] = React.useState(null)
 
   useAsyncEffect(async () => {
     const wsClient = new WSClient()
-    wsClient.setOnConnectionChange(connectionState => dispatch(changeConnectionState(connectionState)))
+    wsClient.setOnConnectionChange(connectionState => setConnectionState(connectionState))
     wsClient.setOnError(error => {
       console.log(error)
       notifications.showErrorMessage(t('連線建立失敗'))
@@ -49,7 +49,6 @@ export default function WSClientProvider({children}) {
     wsClient.setOnClose(() => {
       scheduler.disable()
       setSchedulerEnabled(false)
-      dispatch(changeSchedulerEnabledStatus(false))
     })
     setWSClient(wsClient)
 
@@ -93,20 +92,23 @@ export default function WSClientProvider({children}) {
       await sendMessage(message)
     }, timeInterval)
     setSchedulerEnabled(true)
-    await dispatch(changeSchedulerEnabledStatus(true))
   }
 
   const disableScheduler = async () => {
     scheduler.disable()
     setSchedulerEnabled(false)
-    await dispatch(changeSchedulerEnabledStatus(false))
   }
+
+  const isConnected = connectionState === ConnectionState.Connected
 
   const context = {
     ready,
 
+    connectionState,
+    isConnected,
     connect,
     disconnect,
+
     sendMessage,
 
     schedulerEnabled,

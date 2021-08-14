@@ -2,11 +2,9 @@ import {createDraftSafeSelector} from '@reduxjs/toolkit'
 import {entityAdapter} from '../project'
 
 export const selectProjectState = state => state.current.projectState
-export const selectConnectionState = state => state.current.connectionState
 export const selectCurrencyFavoriteCategoryID = state => state.current.currencyFavoriteCategoryID
 export const selectCurrentFavoriteRequestID = state => state.current.currentFavoriteRequestID
 export const selectSelectedMessageID = state => state.current.selectedMessageID
-export const selectSchedulerEnabledStatus = state => state.current.schedulerEnabled
 export const selectShareLink = state => state.current.shareLink
 export const selectMessagePanelOn = state => state.current.messagePanelOn
 
