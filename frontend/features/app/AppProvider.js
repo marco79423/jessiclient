@@ -23,12 +23,12 @@ function AppProvider({children}) {
       provider(ThemeProvider, {theme}),
       // Redux 的 Provider
       provider(Provider, {store}),
-      // Project 的 Provider (提供處理專案資料相關功能)
-      provider(ProjectProvider),
       // 通知的 Provider (提供 Popup 訊息的功能)
       provider(NotificationsProvider),
       // WSClient 的 Provider (提供 Websocket 相關的功能)
       provider(WSClientProvider),
+      // Project 的 Provider (提供處理專案資料相關功能)
+      provider(ProjectProvider),
     ]}>
       {children}
     </ProviderComposer>

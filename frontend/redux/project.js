@@ -1,5 +1,7 @@
 import {createAction, createEntityAdapter, createSlice} from '@reduxjs/toolkit'
 
+import {ProjectVersion} from '../features/project/ProjectProvider'
+
 
 // Actions
 export const setProjectData = createAction('project/setProjectData')
@@ -35,10 +37,12 @@ export const removeFirstMessage = createAction('project/message/removeFirstMessa
 export const clearMessages = createAction('project/message/clearMessages')
 
 // Slice
-export const entityAdapter = createEntityAdapter()
+const entityAdapter = createEntityAdapter()
 const projectSlice = createSlice({
   name: 'project',
   initialState: {
+    version: ProjectVersion,
+
     // 設定
     setting: {
       maxMessageCount: 100,

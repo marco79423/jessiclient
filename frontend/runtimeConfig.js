@@ -1,4 +1,6 @@
 module.exports = {
+  projectVersion: 2,
+
   gaTrackingCode: 'G-TQZV496TYL',
 
   locales: [

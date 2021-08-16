@@ -1,5 +1,6 @@
-import {createDraftSafeSelector} from '@reduxjs/toolkit'
-import {entityAdapter} from '../project'
+import {createDraftSafeSelector, createEntityAdapter} from '@reduxjs/toolkit'
+
+const entityAdapter = createEntityAdapter()
 
 export const selectProjectState = state => state.current.projectState
 export const selectCurrencyFavoriteCategoryID = state => state.current.currencyFavoriteCategoryID
