@@ -50,7 +50,8 @@ const projectSlice = createSlice({
 
     // 連線資訊
     connection: {
-      url: 'wss://echo.websocket.org',
+      // url: 'wss://echo.websocket.org',  // 這個網站時常會連不上
+      url: 'wss://ws.marco79423.net/echo',
     },
 
     // 請求
