@@ -8,9 +8,6 @@ module.exports = withPlugins([
   future: {
     webpack5: true,
   },
-  serverRuntimeConfig: {
-    backendUrl: 'http://localhost:9001',
-  },
 
   publicRuntimeConfig: require('./runtimeConfig'),
 
