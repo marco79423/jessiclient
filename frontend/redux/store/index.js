@@ -1,10 +1,7 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit'
 
-import {LoadingState} from '../../constants'
 import currentSlice from '../current'
 import projectSlice from '../project'
-import {selectProjectData, selectProjectState} from '../selectors'
-import {saveProjectDataToLocalStorage} from '../../features/project/useProject'
 
 const store = configureStore({
   reducer: combineReducers({
