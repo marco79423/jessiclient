@@ -21,10 +21,8 @@ import {useNotifications} from '../notifications'
 import {useTracker} from '../tracker'
 import {downloadJsonData} from '../../utils/jsDownloader'
 
-
 const {publicRuntimeConfig} = getConfig()
 export const ProjectVersion = publicRuntimeConfig.projectVersion
-export const BackendURL = publicRuntimeConfig.backendUrl
 
 export const ProjectContext = React.createContext({})
 
@@ -142,12 +140,12 @@ async function loadProjectData() {
 }
 
 export async function saveProjectDataToSharingServer(projectData) {
-  const resp = await axios.post(`${BackendURL}/api/jessiclient/sharing/projects`, projectData)
+  const resp = await axios.post('/api/sharing/projects', projectData)
   return resp.data.data.projectCode
 }
 
 export async function loadProjectDataFromSharingServer(projectCode) {
-  const resp = await axios.get(`${BackendURL}/api/jessiclient/sharing/projects/${projectCode}`)
+  const resp = await axios.get(`/api/sharing/projects/${projectCode}`)
   return resp.data.data
 }
 

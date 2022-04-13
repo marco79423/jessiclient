@@ -2,10 +2,10 @@ name: Build frontend docker image
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - *
     paths:
-      - frontend/**
+      - backend/**
 
 jobs:
   build-and-deploy:
@@ -27,7 +27,7 @@ jobs:
       # 建置和推送
       - name: Get Version
         run: |
-          export VERSION=$(date +"%Y%m%d%H%M%S")-${GITHUB_SHA::5}
+          export VERSION=${GITHUB_REF#refs/*/}
           echo "::env VERSION=${VERSION}"
           echo "VERSION=${VERSION}" >> $GITHUB_ENV
 
