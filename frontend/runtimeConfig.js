@@ -1,7 +1,8 @@
 module.exports = {
   projectVersion: 2,
 
-  backendUrl: 'https://paji.marco79423.net',
+  // backendUrl: 'https://paji.marco79423.net',
+  backendUrl: 'http://localhost:8000',
   gaTrackingCode: 'G-TQZV496TYL',
 
   locales: [

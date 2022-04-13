@@ -1,7 +1,5 @@
 # jessiclient
 
-> **註：**  專案已移至 [mysite-frontend](https://github.com/marco79423/mysite-frontend) 和 [paji](https://github.com/marco79423/paji) 專案
-
 ![jessiclient](./logo.jpg)
 
 網站連結： https://jessiclient.marco79423.net
