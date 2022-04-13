@@ -3,7 +3,7 @@ name: Build frontend docker image
 on:
   push:
     tags:
-      - *
+      - '*'
     paths:
       - backend/**
 
