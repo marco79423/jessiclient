@@ -5,7 +5,7 @@ on:
     tags:
       - '*'
     paths:
-      - backend/**
+      - frontend/**
 
 jobs:
   build-and-deploy:
