@@ -1,13 +1,13 @@
 import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import useAsyncEffect from 'use-async-effect'
-import getConfig from 'next/config'
 import {nanoid} from 'nanoid'
 import axios from 'axios'
 import fileDialog from 'file-dialog'
 import {useTranslation} from 'next-i18next'
 import {Backdrop, CircularProgress} from '@material-ui/core'
 
+import * as config from './../../config'
 import {LoadingState} from '../../constants'
 import {
   selectFavoriteRequestCategories,
@@ -20,9 +20,6 @@ import {addFavoriteRequestCategory, setProjectData} from '../../redux/project'
 import {useNotifications} from '../notifications'
 import {useTracker} from '../tracker'
 import {downloadJsonData} from '../../utils/jsDownloader'
-
-const {publicRuntimeConfig} = getConfig()
-export const ProjectVersion = publicRuntimeConfig.projectVersion
 
 export const ProjectContext = React.createContext({})
 
@@ -48,8 +45,7 @@ export default function ProjectProvider({children}) {
 
     const projectData = await loadProjectData()
     if (projectData) {
-      console.log('aaaa', projectData.version, ProjectVersion)
-      if (projectData.version !== ProjectVersion) {
+      if (projectData.version !== config.ProjectVersion) {
         await saveProjectDataToLocalStorage(null)
         notifications.showErrorMessage(t('本地專案版本過期'))
       } else {
