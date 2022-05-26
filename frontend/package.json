@@ -6,6 +6,7 @@
     "next": "next",
     "dev": "next dev -p 9000",
     "build": "next build",
+    "postbuild": "next-sitemap --config next-sitemap.config.js",
     "start": "next start",
     "storybook": "start-storybook -p 6006 -s ./public",
     "build-storybook": "build-storybook"
@@ -28,6 +29,7 @@
     "next-http-proxy-middleware": "^1.2.4",
     "next-i18next": "^8.1.0",
     "next-pwa": "^5.2.12",
+    "next-sitemap": "^2.5.25",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
