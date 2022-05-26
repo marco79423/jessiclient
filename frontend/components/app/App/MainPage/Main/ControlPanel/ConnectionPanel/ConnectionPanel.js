@@ -10,6 +10,8 @@ import {selectConnectionUrl} from '../../../../../../../redux/selectors'
 import useWSClient from '../../../../../../../features/wsClient/useWSClient'
 import LinkButton from '../../../../../../elements/LinkButton'
 import TextField from '../../../../../../elements/TextField'
+import validateWSS from '../../../../../../../utils/validateWebsocketUrl'
+import ChangeSiteDialog from './ChangeSiteDialog'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,9 +56,24 @@ export default function ConnectionPanel() {
     setLocalUrl(value)
   }
 
+  const [changeSiteDialogOn, setChangeSiteDialog] = React.useState(false)
+
+  const showChangeSiteDialog = () => {
+    setChangeSiteDialog(true)
+  }
+
+  const hideChangeSiteDialog = () => {
+    setChangeSiteDialog(false)
+  }
+
   const onButtonClick = async () => {
     switch (wsClient.connectionState) {
       case ConnectionState.Idle:
+        if (!localUrl.toLowerCase().startsWith('wss://')) {
+          showChangeSiteDialog()
+          return
+        }
+
         await dispatch(changeConnectionUrl(localUrl))
         await wsClient.connect(localUrl)
         return
@@ -69,23 +86,30 @@ export default function ConnectionPanel() {
   const isValidWSUrl = validateWebsocketUrl(localUrl)
 
   return (
-    <TextField
-      className={classes.root}
-      large
-      placeholder={t('欲連線的網址')}
-      value={localUrl}
-      onChange={onUrlChange}
-      disabled={wsClient.connectionState !== ConnectionState.Idle}
-      error={!isValidWSUrl}
-      action={
-        <LinkButton
-          primary
-          large
-          disabled={(wsClient.connectionState === ConnectionState.Connecting || wsClient.connectionState === ConnectionState.Closing) || !isValidWSUrl}
-          onClick={onButtonClick}
-        >{buttonLabel}</LinkButton>
-      }
-    />
+    <>
+      <TextField
+        className={classes.root}
+        large
+        placeholder={t('欲連線的網址')}
+        value={localUrl}
+        onChange={onUrlChange}
+        disabled={wsClient.connectionState !== ConnectionState.Idle}
+        error={!isValidWSUrl}
+        action={
+          <LinkButton
+            primary
+            large
+            disabled={(wsClient.connectionState === ConnectionState.Connecting || wsClient.connectionState === ConnectionState.Closing) || !isValidWSUrl}
+            onClick={onButtonClick}
+          >{buttonLabel}</LinkButton>
+        }
+      />
+
+      <ChangeSiteDialog
+        open={changeSiteDialogOn}
+        onClose={hideChangeSiteDialog}
+      />
+    </>
   )
 }
 
