@@ -57,6 +57,9 @@ function App({Component, pageProps}) {
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
 
         <link rel="manifest" href="/manifest.json"/>
+
+        {/* 解決可能會連 ws 會發生 Mixed-content 的問題 */}
+        <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests"/>
       </Head>
 
       <Component {...pageProps} />
