@@ -12,6 +12,7 @@ import LinkButton from '../../../../../../elements/LinkButton'
 import TextField from '../../../../../../elements/TextField'
 import validateWSS from '../../../../../../../utils/validateWebsocketUrl'
 import ChangeSiteDialog from './ChangeSiteDialog'
+import {useRouter} from 'next/router'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,7 +70,7 @@ export default function ConnectionPanel() {
   const onButtonClick = async () => {
     switch (wsClient.connectionState) {
       case ConnectionState.Idle:
-        if (!localUrl.toLowerCase().startsWith('wss://')) {
+        if (!localUrl.toLowerCase().startsWith('wss://') && window.location.protocol !== 'http:') {
           showChangeSiteDialog()
           return
         }
