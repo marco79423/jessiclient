@@ -19,7 +19,8 @@
   "連線中…": "Connecting ...",
   "關閉中…": "Closing ...",
   "前往": "Goto",
-  "HTTPS 不能連 WS，將前往到 HTTP 版本的 Jessiclient": "HTTPS disallow WS connection, will go to HTTP version jessiclient",
+  "警告": "Warning",
+  "Jessiclient 不支援使用 WS": "WS is not supported in Jessiclient",
 
   "請求控制區": "Control Panel",
   "基本": "Basic",

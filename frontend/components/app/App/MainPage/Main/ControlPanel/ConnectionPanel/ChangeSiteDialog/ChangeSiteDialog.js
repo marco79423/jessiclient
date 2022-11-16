@@ -33,17 +33,17 @@ export default function ChangeSiteDialog({open, onClose}) {
 
   return (
     <BasicDialog
-      title={t('前往 HTTP 版本的 Jessiclient？')}
+      title={t('警告')}
       open={open}
       onClose={onClose}
       actions={
         <>
           <Button onClick={onClose}>{t('取消')}</Button>
-          <Button primary onClick={onConfirm}>{t('前往')}</Button>
+          <Button primary disabled onClick={onConfirm}>{t('前往')}</Button>
         </>
       }
     >
-      <Typography className={classes.message}>{t('HTTPS 不能連 WS，將前往到 HTTP 版本的 Jessiclient')}</Typography>
+      <Typography className={classes.message}>{t('Jessiclient 不支援使用 WS')}</Typography>
     </BasicDialog>
   )
 }

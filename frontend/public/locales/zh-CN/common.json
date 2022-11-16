@@ -19,7 +19,8 @@
   "連線中…": "连接中…",
   "關閉中…": "关闭中…",
   "前往": "前往",
-  "HTTPS 不能連 WS，將前往到 HTTP 版本的 Jessiclient": "HTTPS 不能连 WS，将前往 HTTP 版本的 Jessiclient",
+  "警告": "警告",
+  "Jessiclient 不支援使用 WS": "Jessiclient 不支援使用 WS",
 
   "請求控制區": "请求控制区",
   "基本": "基础",
